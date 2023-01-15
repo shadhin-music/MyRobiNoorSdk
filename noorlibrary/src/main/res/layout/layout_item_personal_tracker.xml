@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="constant"
+            type="com.gakk.noorlibrary.util.ConstantsKt" />
+
+        <variable
+            name="contentbaseurl"
+            type="java.lang.String" />
+
+        <variable
+            name="tracker"
+            type="com.gakk.noorlibrary.model.home.Item" />
+
+        <variable
+            name="data"
+            type="com.gakk.noorlibrary.model.home.Data" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/CardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/small_spacing"
+        android:layout_marginEnd="@dimen/standard_margin">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/headerLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:paddingTop="@dimen/small_spacing"
+                android:paddingBottom="@dimen/small_spacing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgInspiration"
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:patchImageFullUrl="@{data.fullImageUrl}"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_calendar_check" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitleInspiration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/small_spacing"
+                    android:layout_toEndOf="@+id/imgInspiration"
+                    android:text="@{data.patchName}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/txt_color_title"
+                    android:fontFamily="sans-serif-medium"
+                    tools:text="@string/title_personal_tracker" />
+
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/layoutSwitch"
+                layout="@layout/layout_item_tracker_switch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerLayout" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardImgTracker"
+                style="@style/CardViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:visibility="gone"
+                app:cardElevation="0dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerLayout">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgBgTracker"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@null"
+                        android:fullImageUrl="@{contentbaseurl.concat(@string/slash).concat(tracker.imageUrl)}"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/place_holder_16_9_ratio"
+                        app:attachedProgressBar="@{progressBar}"
+                        app:layout_constraintDimensionRatio="h,1:0.27027"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:placeHolderDimension="@{constant.PLACE_HOLDER_16_9}">
+
+                    </androidx.appcompat.widget.AppCompatImageView>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgBgTracker"
+                        app:layout_constraintEnd_toEndOf="@+id/imgBgTracker"
+                        app:layout_constraintStart_toStartOf="@+id/imgBgTracker"
+                        app:layout_constraintTop_toTopOf="@+id/imgBgTracker" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPrayerToday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_spacing"
+                        android:layout_marginEnd="@dimen/small_spacing"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:text="Have you prayed Dhur"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif"
+                        app:layout_constraintBottom_toBottomOf="@id/imgBgTracker"
+                        app:layout_constraintEnd_toEndOf="@id/imgBgTracker"
+                        app:layout_constraintStart_toStartOf="@id/imgBgTracker"
+                        app:layout_constraintTop_toTopOf="@id/imgBgTracker" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:id="@+id/rlNotYet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/standard_margin"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@id/rlPrayed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardImgTracker">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgRead"
+                    android:layout_width="@dimen/margin_20"
+                    android:layout_height="@dimen/margin_20"
+                    android:src="@drawable/ic_close" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvRead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/standard_margin"
+                    android:layout_toEndOf="@id/imgRead"
+                    android:text="@string/txt_not_yet"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ash"
+                    android:textSize="@dimen/margin_12" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlPrayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/standard_margin"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rlNotYet"
+                app:layout_constraintTop_toBottomOf="@id/cardImgTracker">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgPrayed"
+                    android:layout_width="@dimen/margin_20"
+                    android:layout_height="@dimen/margin_20"
+                    android:src="@drawable/ic_check_green" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrayed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/standard_margin"
+                    android:layout_toEndOf="@id/imgPrayed"
+                    android:text="@string/txt_prayed"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/margin_12" />
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/progressLayout"
+            layout="@layout/layout_circular_progress"
+            android:visibility="gone" />
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <!-- fill/color -->
+
+    <gradient
+        android:startColor="#FF1A756F"
+        android:endColor="#FF4ABA91"/>
+
+    <!-- Control the width and height of the shape -->
+    <size
+        android:width="260dp"
+        android:height="215dp"/>
+
+</shape>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="listItem"
+            type="com.gakk.noorlibrary.model.literature.Literature" />
+
+        <variable
+            name="constant"
+            type="com.gakk.noorlibrary.util.ConstantsKt" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/btnBookPackage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/appCompatImageView18"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:fullImageUrl="@{listItem.fullImageUrl}"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/place_holder_16_9_ratio"
+                    app:attachedProgressBar="@{progressBar}"
+                    app:layout_constraintDimensionRatio="h,1:0.59"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:placeHolderDimension="@{constant.PLACE_HOLDER_16_9}" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView18"
+                    app:layout_constraintEnd_toEndOf="@+id/appCompatImageView18"
+                    app:layout_constraintStart_toStartOf="@+id/appCompatImageView18"
+                    app:layout_constraintTop_toTopOf="@+id/appCompatImageView18" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_margin"
+                    android:layout_marginBottom="@dimen/standard_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appCompatImageView18">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/appCompatTextView19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/small_spacing"
+                        android:layout_marginStart="@dimen/standard_margin"
+                        android:fontFamily="sans-serif"
+                        android:text="@{listItem.title}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/txt_color_black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="প্যাকেজ ১" />
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/CardViewStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_margin"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:layout_marginEnd="@dimen/standard_margin"
+                        android:layout_marginBottom="@dimen/standard_margin"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView19">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosansbengali_regular"
+                            android:justificationMode="inter_word"
+                            android:text="@{listItem.text}"
+                            android:layout_margin="@dimen/standard_margin"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/ash"
+                            tools:text="প্যাকেজ ওভারভিউঃ \n \nসুপার ডিলাক্স প্যাকেজ ৩০ - ৩২ দিনের প্যাকেজ \nএক্সক্লুসিভ হজ প্যাকেজ।\n\nথাকার অবস্থানকালঃ +/-৪ সপ্তাহ (স্থানান্তর) \n\nপ্যাকেজ খরচঃ মাত্র ৫২0,000 থেকে শুরু  ( এই হজ্জ প্যাকেজের মুল্য সৌদি সরকার ও ধর্ম মন্ত্রণালয়ের সিদ্ধান্ত অনুযায়ী পরিবর্তিত হতে পারে )" />
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBookPackage"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/btn_height"
+            android:layout_margin="@dimen/standard_margin"
+            android:background="@drawable/ic_bg_login_disable"
+            android:text="প্যাকেজ বুকিং"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/txt_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,35 @@
+<resources>
+
+    <dimen name="standard_margin">16dp</dimen>
+    <dimen name="double_margin">32dp</dimen>
+    <dimen name="btn_height">56dp</dimen>
+    <dimen name="small_spacing">8dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_12">12dp</dimen>
+    <dimen name="margin_14">14dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_43">43dp</dimen>
+    <dimen name="size_24">24dp</dimen>
+    <dimen name="isCalWeekTitleTxtSiz">13sp</dimen>
+
+
+    <dimen name="hajjMapLeftIconHeight">30dp</dimen>
+    <dimen name="hajjMapLeftIconLinHeight">100dp</dimen>
+    <dimen name="hajjMapLeftIconLinWidth">50dp</dimen>
+    <dimen name="hajjMapPlaceSelectMargin">5dp</dimen>
+    <dimen name="hajjMapPlaceSelectPaddingLR">10dp</dimen>
+
+    <dimen name="clock_face_size">115dp</dimen>
+    <dimen name="clock_face_outside_progress_size">145dp</dimen>
+
+    <dimen name="exo_default_time_bar_height">3dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="day_label_size_events_enabled">30dp</dimen>
+    <dimen name="day_label_size_events_disabled">38dp</dimen>
+    <dimen name="abbreviation_text_size_max">14sp</dimen>
+
+
+</resources>

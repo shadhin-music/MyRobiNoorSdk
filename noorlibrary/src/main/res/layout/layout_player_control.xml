@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_secondary"
+        android:clickable="true">
+
+        <LinearLayout
+            android:id="@+id/timeBarContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransperant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/exo_progress_mini"
+                style="@style/MySeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginLeft="-16dp"
+                android:layout_marginTop="-12dp"
+                android:layout_marginRight="-16dp"
+                android:splitTrack="false"
+                android:thumb="@color/colorTransperant" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCurrentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:clickable="false"
+            android:text="০০:০০"
+            android:textColor="@color/txt_color_black"
+            android:textFontWeight="400"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/margin_12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeBarContainer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:clickable="false"
+            android:text="5০:1০"
+            android:textColor="@color/black_secondary"
+            android:textFontWeight="400"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/margin_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeBarContainer" />
+
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_marginStart="40dp"
+            android:background="@color/white_secondary"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_next"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPlayPause"
+            app:layout_constraintStart_toEndOf="@+id/btnPlayPause"
+            app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
+
+        <ImageButton
+            android:id="@+id/btnPlayPause"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginBottom="22dp"
+            android:background="@color/white_secondary"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_play"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btnPrev"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_marginEnd="40dp"
+            android:background="@color/white_secondary"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_prev"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPlayPause"
+            app:layout_constraintEnd_toStartOf="@+id/btnPlayPause"
+            app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

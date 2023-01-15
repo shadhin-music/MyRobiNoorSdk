@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.gakk.noorlibrary.model.ImageFromOnline" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg"
+            android:paddingBottom="@dimen/margin_20">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appCompatImageView3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:imageUrl="@{item.fullImageUrl}"
+                android:scaleType="centerCrop"
+                app:attachedProgressBar="@{progressBar}"
+                app:layout_constraintDimensionRatio="h,1:0.85"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView3"
+                app:layout_constraintEnd_toEndOf="@+id/appCompatImageView3"
+                app:layout_constraintStart_toStartOf="@+id/appCompatImageView3"
+                app:layout_constraintTop_toTopOf="@+id/appCompatImageView3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_donate"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewNormal7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_donate_des"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_color_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewBold" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDonate"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_donate"
+                app:layout_constraintDimensionRatio="h,1:0.19512195"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNormal7" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appCompatImageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_donate"
+                app:layout_constraintBottom_toBottomOf="@+id/ivDonate"
+                app:layout_constraintStart_toStartOf="@+id/ivDonate"
+                app:layout_constraintTop_toTopOf="@+id/ivDonate" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDonate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView5"
+                app:layout_constraintStart_toEndOf="@+id/appCompatImageView5"
+                app:layout_constraintTop_toTopOf="@+id/appCompatImageView5" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_spacing"
+                android:src="@drawable/ic_right_arrow_white"
+                app:layout_constraintBottom_toBottomOf="@+id/ivDonate"
+                app:layout_constraintEnd_toEndOf="@+id/ivDonate"
+                app:layout_constraintTop_toTopOf="@+id/ivDonate" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clOrganisations"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivDonate">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivCharityOrganization"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_charity"
+                    app:layout_constraintDimensionRatio="h,1:0.19512195"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/appCompatImageView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/standard_margin"
+                    android:src="@drawable/ic_charity"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivCharityOrganization"
+                    app:layout_constraintStart_toStartOf="@+id/ivCharityOrganization"
+                    app:layout_constraintTop_toTopOf="@+id/ivCharityOrganization" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/standard_margin"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/txt_charity_organization"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView7"
+                    app:layout_constraintStart_toEndOf="@+id/appCompatImageView7"
+                    app:layout_constraintTop_toTopOf="@+id/appCompatImageView7" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/small_spacing"
+                    android:src="@drawable/ic_right_arrow_white"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivCharityOrganization"
+                    app:layout_constraintEnd_toEndOf="@+id/ivCharityOrganization"
+                    app:layout_constraintTop_toTopOf="@+id/ivCharityOrganization" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDonationImportance"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_donate_importance"
+                app:layout_constraintDimensionRatio="h,1:0.19512195"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clOrganisations" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appCompatImageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:src="@drawable/ic_donate_impotance"
+                app:layout_constraintBottom_toBottomOf="@+id/ivDonationImportance"
+                app:layout_constraintStart_toStartOf="@+id/ivDonationImportance"
+                app:layout_constraintTop_toTopOf="@+id/ivDonationImportance" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_charity_importance"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView9"
+                app:layout_constraintStart_toEndOf="@+id/appCompatImageView9"
+                app:layout_constraintTop_toTopOf="@+id/appCompatImageView9" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_spacing"
+                android:src="@drawable/ic_right_arrow_white"
+                app:layout_constraintBottom_toBottomOf="@+id/ivDonationImportance"
+                app:layout_constraintEnd_toEndOf="@+id/ivDonationImportance"
+                app:layout_constraintTop_toTopOf="@+id/ivDonationImportance" />
+
+            <include
+                android:id="@+id/progressLayout"
+                layout="@layout/layout_circular_progress"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

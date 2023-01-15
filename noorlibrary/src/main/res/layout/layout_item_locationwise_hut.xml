@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.gakk.noorlibrary.model.ImageFromOnline" />
+
+        <variable
+            name="itemNorth"
+            type="com.gakk.noorlibrary.model.ImageFromOnline" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/standard_margin"
+        android:paddingEnd="@dimen/standard_margin">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitleHut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:fontFamily="sans-serif-medium"
+            android:text="এলাকা ভিত্তিক হাট"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/txt_color_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitleHut">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivNorthCity"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:imageUrl="@{itemNorth.fullImageUrl}"
+                android:scaleType="centerCrop"
+                app:attachedProgressBar="@{progressBarNorth}"
+                app:layout_constraintEnd_toStartOf="@+id/ivSouthCity"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progressBarNorth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/ivNorthCity"
+                app:layout_constraintEnd_toEndOf="@+id/ivNorthCity"
+                app:layout_constraintStart_toStartOf="@+id/ivNorthCity"
+                app:layout_constraintTop_toTopOf="@+id/ivNorthCity" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSouthCity"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginStart="@dimen/small_spacing"
+                android:imageUrl="@{item.fullImageUrl}"
+                android:scaleType="centerCrop"
+                app:attachedProgressBar="@{progressBar}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivNorthCity"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/ivSouthCity"
+                app:layout_constraintEnd_toEndOf="@+id/ivSouthCity"
+                app:layout_constraintStart_toStartOf="@+id/ivSouthCity"
+                app:layout_constraintTop_toTopOf="@+id/ivSouthCity" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

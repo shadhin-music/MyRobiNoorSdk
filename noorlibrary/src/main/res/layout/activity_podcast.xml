@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.gakk.noorlibrary.model.podcast.LiveVideosResponse.Data" />
+
+        <variable
+            name="constant"
+            type="com.gakk.noorlibrary.util.ConstantsKt" />
+
+        <variable
+            name="itemNoData"
+            type="com.gakk.noorlibrary.model.ImageFromOnline" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg">
+
+        <RelativeLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/videoView"
+                app:cardElevation="2dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/videoTitleLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    tools:ignore="MissingClass">
+
+                    <TextView
+                        android:id="@+id/videoTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@{item.title}"
+                        android:textColor="@color/txt_color_black"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Live Islamic session | Episode 01" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSpeaker"
+                        android:layout_width="0dp"
+                        android:layout_height="22dp"
+                        android:layout_marginTop="@dimen/small_spacing"
+                        android:layout_marginBottom="12dp"
+                        android:text="@{item.text}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/videoTitle"
+                        app:layout_constraintTop_toBottomOf="@id/videoTitle"
+                        tools:text="Dr Mohammad Monzur E Elahi" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardLive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardTitle"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:visibility="gone"
+                app:cardElevation="2dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    tools:ignore="MissingClass">
+
+                    <TextView
+                        android:id="@+id/liveTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="আপনার জিজ্ঞাসা"
+                        android:textColor="@color/txt_color_black"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/ivExpand"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/small_spacing"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:src="@drawable/ic_chat"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/liveTitle"
+                        app:layout_constraintTop_toBottomOf="@id/liveTitle" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_spacing"
+                        app:layout_constraintBottom_toBottomOf="@id/ivCount"
+                        app:layout_constraintEnd_toStartOf="@id/ivExpand"
+                        app:layout_constraintStart_toEndOf="@id/ivCount"
+                        app:layout_constraintTop_toTopOf="@id/ivCount" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivExpand"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_marginEnd="@dimen/standard_margin"
+                        android:src="@drawable/ic_expand_more"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLiveVideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardLive"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/margin_20"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/txt_color_title"
+                tools:text="Live Videos" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLiveVideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvLiveVideos"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingBottom="56dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_live_videos">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:id="@+id/llNoLiveVideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvLiveVideos"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/margin_12"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgNoInternet"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@null"
+                    android:imageUrlNoProgress="@{itemNoData.fullImageUrl}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:text="No Live Videos"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/black_secondary"
+                    android:textFontWeight="800"
+                    android:textSize="@dimen/margin_14" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/cardLiveCollapse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:background="@color/white"
+                android:visibility="gone">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    tools:ignore="MissingClass">
+
+                    <TextView
+                        android:id="@+id/liveTitleCollapse"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="আপনার জিজ্ঞাসা"
+                        android:textColor="@color/txt_color_black"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/ivCollapse"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCountCollapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/small_spacing"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:src="@drawable/ic_chat"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/liveTitleCollapse"
+                        app:layout_constraintTop_toBottomOf="@id/liveTitleCollapse" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCountCollapse"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_spacing"
+                        app:layout_constraintBottom_toBottomOf="@id/ivCountCollapse"
+                        app:layout_constraintEnd_toStartOf="@id/ivCollapse"
+                        app:layout_constraintStart_toEndOf="@id/ivCountCollapse"
+                        app:layout_constraintTop_toTopOf="@id/ivCountCollapse" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCollapse"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_marginEnd="@dimen/standard_margin"
+                        android:src="@drawable/ic_expand_less"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:id="@+id/playerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@color/black1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.exoplayer2.ui.PlayerView
+                        android:id="@+id/playerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:controller_layout_id="@layout/exo_video_controller_view">
+
+                    </com.google.android.exoplayer2.ui.PlayerView>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivOverlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:imageUrl="@{item.fullImageUrl}"
+                        app:attachedProgressBar="@{progressBar}"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/place_holder_16_9_ratio"
+                        android:visibility="gone" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" >
+
+                    </ProgressBar>
+
+                    <ProgressBar
+                        android:id="@+id/bufferProgress"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </FrameLayout>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/comment_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardLive"
+                android:visibility="gone">
+
+                <include
+                    android:id="@+id/commentLayout"
+                    layout="@layout/layout_podcast_comment" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</layout>

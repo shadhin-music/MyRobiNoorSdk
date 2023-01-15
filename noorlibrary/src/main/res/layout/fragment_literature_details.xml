@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.fragments.LiteratureDetailsFragment">
+
+    <data>
+
+        <variable
+            name="literature"
+            type="com.gakk.noorlibrary.model.literature.Literature" />
+
+        <variable
+            name="constant"
+            type="com.gakk.noorlibrary.util.ConstantsKt" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@+id/prevNextPanel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/standard_margin">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutTextContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/standard_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imgSymbol"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="@dimen/standard_margin"
+                        android:background="@null"
+                        android:src="@drawable/ic_islam"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/standard_margin"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{literature.title}"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/txt_color_black"
+                        android:fontFamily="sans-serif"
+                        android:textFontWeight="800"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imgSymbol"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="title" />
+
+
+                    <com.gakk.noorlibrary.views.TextViewNormalArabic
+                        android:id="@+id/tvDesArabic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:lineSpacingMultiplier="1.5"
+                        android:text="@{literature.textInArabic}"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/txt_color_black"
+                        android:textFontWeight="400"
+                        app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                        app:layout_constraintStart_toStartOf="@+id/imgSymbol"
+                        app:layout_constraintTop_toBottomOf="@+id/imgSymbol"
+                        tools:text="title" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingMultiplier="1"
+                        android:text="@{literature.text}"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/txt_color_black"
+                        android:textFontWeight="400"
+                        app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                        app:layout_constraintStart_toStartOf="@+id/imgSymbol"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDesArabic"
+                        tools:text="title" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMeaning"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingMultiplier="1"
+                        android:text="@{literature.pronunciation}"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/txt_color_black"
+                        android:textFontWeight="400"
+                        app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                        app:layout_constraintStart_toStartOf="@+id/imgSymbol"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDes"
+                        tools:text="title" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutDownloadableContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/imgThumbContainer"
+                        style="@style/CardViewStyleNoElevation"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/standard_margin"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:layout_marginEnd="@dimen/standard_margin"
+                        app:layout_constraintDimensionRatio="h,2:3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imgThumb"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fullImageUrl="@{literature.fullImageUrl}"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/place_holder_2_3_ratio"
+                            app:attachedProgressBar="@{progressBar}"
+                            app:placeHolderDimension="@{constant.PLACE_HOLDER_2_3}" />
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutDownload"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="@dimen/standard_margin"
+                        android:layout_marginBottom="@dimen/double_margin"
+                        android:background="@drawable/bg_border_rounded_disabled"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/imgThumbContainer"
+                        app:layout_constraintStart_toStartOf="@+id/imgThumbContainer"
+                        app:layout_constraintTop_toBottomOf="@+id/imgThumbContainer">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/textViewNormal2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/download"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/txt_color_black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.45"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <ImageButton
+                            android:id="@+id/btnDownload"
+                            android:layout_width="@dimen/size_24"
+                            android:layout_height="@dimen/size_24"
+                            android:layout_marginStart="@dimen/small_spacing"
+                            android:background="@null"
+                            android:clickable="false"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/selector_download"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textViewNormal2"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <com.gakk.noorlibrary.util.CircleImageView
+                            android:id="@+id/imgDownloadProgressShadow"
+                            android:layout_width="@dimen/size_24"
+                            android:layout_height="@dimen/size_24"
+                            android:background="@null"
+                            android:clickable="false"
+                            android:scaleType="centerCrop"
+                            android:src="@color/colorWhiteDisabled"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="@+id/btnDownload"
+                            app:layout_constraintEnd_toEndOf="@+id/btnDownload"
+                            app:layout_constraintStart_toStartOf="@+id/btnDownload"
+                            app:layout_constraintTop_toTopOf="@+id/btnDownload" />
+
+
+                        <ImageView
+                            android:id="@+id/imgDownloadProgress"
+                            android:layout_width="@dimen/size_24"
+                            android:layout_height="@dimen/size_24"
+                            android:clickable="false"
+                            android:scaleType="centerCrop"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="@+id/btnDownload"
+                            app:layout_constraintEnd_toEndOf="@+id/btnDownload"
+                            app:layout_constraintStart_toStartOf="@+id/btnDownload"
+                            app:layout_constraintTop_toTopOf="@+id/btnDownload" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgThumbContainer"
+                        app:layout_constraintEnd_toEndOf="@+id/imgThumbContainer"
+                        app:layout_constraintStart_toStartOf="@+id/imgThumbContainer"
+                        app:layout_constraintTop_toTopOf="@+id/imgThumbContainer" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include
+                    android:id="@+id/progressLayout"
+                    layout="@layout/layout_circular_progress"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </ScrollView>
+
+        <include
+            android:id="@+id/prevNextPanel"
+            layout="@layout/layout_prev_next_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

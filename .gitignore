@@ -1,0 +1,17 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches/
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/app/build
+/build
+/captures
+/noorlibrary/build
+/library/build
+/customCalendar/build
+/cardstackview/build
+.externalNativeBuild

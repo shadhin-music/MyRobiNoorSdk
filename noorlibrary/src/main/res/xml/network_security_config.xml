@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">27.131.15.19</domain>
+        <domain includeSubdomains="true">43.240.103.34</domain>
+        <domain includeSubdomains="true">27.131.15.12</domain>
+        <domain includeSubdomains="true">wap.gakkcontent.com</domain>
+        <domain includeSubdomains="true">api.mobileplay.co</domain>
+        <domain includeSubdomains="true">myplay.games</domain>
+
+        <domain includeSubdomains="true">aarong.com</domain>
+        <domain includeSubdomains="true">yellowclothing.net</domain>
+        <domain includeSubdomains="true">lerevecraze.com</domain>
+        <domain includeSubdomains="true">ecstasybd.com</domain>
+        <domain includeSubdomains="true">batabd.com</domain>
+        <domain includeSubdomains="true">apex4u.com</domain>
+        <domain includeSubdomains="true">kaykraft.com</domain>
+        <domain includeSubdomains="true">grameenuniqlo.com</domain>
+        <domain includeSubdomains="true">infinitymegamall.com</domain>
+
+        <domain includeSubdomains="true">iub.edu.bd</domain>
+        <domain includeSubdomains="true">ewubd.edu</domain>
+        <domain includeSubdomains="true">bracu.ac.bd</domain>
+        <domain includeSubdomains="true">northsouth.edu</domain>
+        <domain includeSubdomains="true">dhakacitycollege.edu.bd</domain>
+        <domain includeSubdomains="true">acc.edu.bd</domain>
+        <domain includeSubdomains="true">imperialcollege.edu.bd</domain>
+        <domain includeSubdomains="true">noormohammadcollege.ac.bd</domain>
+        <domain includeSubdomains="true">bafsk.edu.bd</domain>
+        <domain includeSubdomains="true">www.idp.com</domain>
+        <domain includeSubdomains="true">bitm.org.bd</domain>
+        <domain includeSubdomains="true">msisdn.mife-aoc.com</domain>
+        <domain includeSubdomains="true">data.fixer.io</domain>
+        <domain includeSubdomains="true">nagadpay.techapi24.com</domain>
+        <domain includeSubdomains="true">flags.fmcdn.net</domain>
+        <domain includeSubdomains="true">ibadat.co</domain>
+
+    </domain-config>
+</network-security-config>

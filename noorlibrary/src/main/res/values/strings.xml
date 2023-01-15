@@ -1,0 +1,661 @@
+<resources>
+    <string name="app_name">নূর</string>
+
+    <string name="map_key" translatable="false">AIzaSyDZp4Om8x8i6UQDfyXMGERlt8pyNgddhFE</string>
+
+    <string-array name="bd_divisions">
+        <item>ঢাকা (Dhaka)</item>
+        <item>বরিশাল (Barisal)</item>
+        <item>চট্টগ্রাম (Chittagong)</item>
+        <item>সিলেট (Sylhet)</item>
+        <item>রংপুর (Rangpur)</item>
+        <item>রাজশাহী (Rajshahi)</item>
+        <item>খুলনা (Khulna)</item>
+        <item>ময়মনসিংহ (Mymensingh)</item>
+    </string-array>
+
+    <string-array name="bd_districts">
+        <item>নির্বাচন করুন</item>
+        <item>বরগুনা</item>
+        <item>বরিশাল</item>
+        <item>ভোলা</item>
+        <item>ঝালকাঠি</item>
+        <item>পটুয়াখালী</item>
+        <item>পিরোজপুর</item>
+        <item>বান্দরবান</item>
+        <item>ব্রাহ্মণবাড়িয়া</item>
+        <item>চাঁদপুর</item>
+        <item>চট্টগ্রাম</item>
+        <item>কুমিল্লা</item>
+        <item>কক্সবাজার</item>
+        <item>ফেনী</item>
+        <item>খাগড়াছড়ি</item>
+        <item>লক্ষ্মীপুর</item>
+        <item>রাঙ্গামাটি</item>
+        <item>ঢাকা</item>
+        <item>ফরিদপুর</item>
+        <item>গাজীপুর</item>
+        <item>গোপালগঞ্জ</item>
+        <item>কিশোরগঞ্জ</item>
+        <item>মাদারীপুর</item>
+        <item>মানিকগঞ্জ</item>
+        <item>মুন্সীগঞ্জ</item>
+        <item>নারায়ণগঞ্জ</item>
+        <item>নরসিংদী</item>
+        <item>রাজবাড়ী</item>
+        <item>শরীয়তপুর</item>
+        <item>টাঙ্গাইল</item>
+        <item>বাগেরহাট</item>
+        <item>চুয়াডাঙ্গা</item>
+        <item>যশোর</item>
+        <item>ঝিনাইদহ</item>
+        <item>খুলনা</item>
+        <item>কুষ্টিয়া</item>
+        <item>মাগুরা</item>
+        <item>মেহেরপুর</item>
+        <item>নড়াইল</item>
+        <item>সাতক্ষীরা</item>
+        <item>জামালপুর</item>
+        <item>ময়মনসিংহ</item>
+        <item>নেত্রকোণা</item>
+        <item>শেরপুর</item>
+        <item>বগুড়া</item>
+        <item>জয়পুরহাট</item>
+        <item>নওগাঁ</item>
+        <item>নাটোর</item>
+        <item>চাঁপাইনবাবগঞ্জ</item>
+        <item>পাবনা</item>
+        <item>রাজশাহী</item>
+        <item>সিরাজগঞ্জ</item>
+        <item>দিনাজপুর</item>
+        <item>গাইবান্ধা</item>
+        <item>কুড়িগ্রাম</item>
+        <item>লালমনিরহাট</item>
+        <item>নীলফামারী</item>
+        <item>পঞ্চগড়</item>
+        <item>রংপুর</item>
+        <item>ঠাকুরগাঁও</item>
+        <item>হবিগঞ্জ</item>
+        <item>মৌলভীবাজার</item>
+        <item>সুনামগঞ্জ</item>
+        <item>সিলেট</item>
+    </string-array>
+
+    <!--Home page strings-->
+    <string name="text_good_morning">শুভ সকাল</string>
+    <string name="text_good_afternoon">শুভ অপরাহ্ন</string>
+    <string name="text_good_evening">শুভ সন্ধ্যা</string>
+    <string name="text_good_night">শুভ রাত্রি</string>
+    <string name="text_namaz_dak">নামাজের ডাক</string>
+    <string name="txt_read_surah">সূরাটি পড়ুন</string>
+    <string name="txt_share">শেয়ার</string>
+
+    <string name="txt_am">AM</string>
+    <string name="txt_pm">PM</string>
+    <string name="tct_next_prayer">পরবর্তী প্রার্থনা</string>
+    <string name="tct_next_prayer_robi">পরবর্তী নামাজ</string>
+    <string name="txt_fajr">ফযর</string>
+    <string name="txt_johr">জোহর</string>
+    <string name="txt_asr">আসর</string>
+    <string name="txt_magrib">মাগরিব</string>
+    <string name="txt_esha">ইশা</string>
+    <string name="txt_title_inspiration">ইসলামের অনুপ্রেরণা</string>
+    <string name="txt_more_inspiration">আরও ইসলামের অনুপ্রেরণা</string>
+    <string name="txt_title_scholar_video">স্কলার ভিডিও</string>
+    <string name="txt_learn_more">আরও জানুন</string>
+    <string name="txt_title_quran_learn">২৭ ঘন্টায় কুরআন শিখুন</string>
+    <string name="txt_minute">মিনিট</string>
+    <string name="txt_more_category">আরও ক্যাটাগরি</string>
+    <string name="title_subscribe">নূরে সাবস্ক্রাইব করুন</string>
+    <string name="des_subscribe">এক জায়গায় সমস্ত ইসলামী পরিষেবা উপভোগ করুন</string>
+    <string name="txt_profile">প্রোফাইল</string>
+    <string name="txt_subscribe">সাবস্ক্রাইব</string>
+    <string name="cat_quran">পবিত্র কুরআন</string>
+    <string name="cat_roja">রোজা</string>
+    <string name="cat_dua">দোয়া</string>
+    <string name="cat_hadith">হাদিস</string>
+    <string name="cat_namaz_sikhha">নামাজ শিক্ষা</string>
+    <string name="cat_wallpaper">ওয়ালপেপার</string>
+    <string name="cat_animation">এনিমেশন</string>
+    <string name="cat_ninety_nine_names_allah">আল্লাহর ৯৯ নাম</string>
+    <string name="title_ninety_nine_names_allah">আল্লাহর ৯৯ নাম</string>
+    <string name="cat_islamic_video">ইসলামিক ভিডিও</string>
+    <string name="cat_islamic_name">ইসলামিক নাম</string>
+    <string name="cat_compass">কম্পাস</string>
+    <string name="cat_nearest_mosque">নিকটবর্তী মসজিদ</string>
+    <string name="cat_quran_school">কুরআন স্কুল</string>
+    <string name="cat_tasbih">তাসবীহ</string>
+    <string name="cat_scholar_video">স্কলার ভিডিও</string>
+    <string name="title_personal_tracker">ব্যক্তিগত ট্র্যাকার</string>
+    <string name="txt_not_yet">এখনো না</string>
+    <string name="txt_prayed">প্রার্থিত</string>
+    <string name="txt_today">আপনি কি আজ</string>
+    <string name="txt_pray">নামাজ পড়েছেন?</string>
+
+    <string name="cat_instructive_video">ইসলামিক শিক্ষনীয় ভিডিও</string>
+    <string name="cat_islamic_song">ইসলামিক গান</string>
+    <string name="cat_donation">ডোনেশন</string>
+    <string name="cat_ijtema">বিশ্ব ইজতেমা</string>
+    <string name="cat_quiz">কুইজ</string>
+
+
+    <string name="fajr" translatable="false">Fajr</string>
+    <string name="dhuhr" translatable="false">Dhuhr</string>
+    <string name="asr" translatable="false">Asr</string>
+    <string name="maghrib" translatable="false">Maghrib</string>
+    <string name="isha" translatable="false">Isha</string>
+
+    <!--Quran Home & Subscreens-->
+
+    <string name="play_it">প্লে করুন</string>
+    <string name="pause_it">বিরতি</string>
+    <string name="favourite_surah">প্রিয় সূরা</string>
+
+    <string name="surah_list">সূরা সমূহ</string>
+    <string name="fav_list">প্রিয় তালিকা</string>
+    <string name="bismillah_native">বিসমিল্লাহির রহমানির রাহীম</string>
+    <string name="bismillah_translation">পরম করুণাময় অতি দয়ালু আল্লাহর নামে</string>
+    <string name="select_item">নির্বাচন করুন</string>
+    <string name="next_surah">পরবর্তী সূরা</string>
+
+    <string name="copy_surah">সূরা কপি করুন </string>
+    <string name="share">শেয়ার করুন</string>
+    <string name="favourite">ফেভারিট</string>
+    <string name="play_audio">প্লে অডিও</string>
+
+    <string name="copy_ayah">আয়াত কপি করুন </string>
+    <string name="ayah">আয়াত</string>
+
+
+    <!--Settings page strings-->
+
+
+    <!--Profile page strings-->
+    <string name="txt_mobile_number">মোবাইল নাম্বার</string>
+    <string name="txt_save">সেভ করুন</string>
+
+    <!--Nearest Mosque strings -->
+    <string name="title_near_mosque">নিকটস্থ মসজিদ</string>
+    <string name="one_km_txt">১কিমি</string>
+    <string name="three_km_txt">৩কিমি</string>
+    <string name="five_km_text">৫কিমি</string>
+    <string name="ten_km_txt">১০কিমি</string>
+    <string name="txt_distance">দূরত্ব</string>
+    <string name="des_near_mosque">সঠিক পরিষেবা পেতে মোবাইলের লোকেশন সার্ভিস অন রাখুন</string>
+    <string name="txt_map_view">ম্যাপ ভিউ</string>
+
+    <string name="txt_title_compass">সঠিক দিক নির্দেশনার জন্য ফোনটি ক্যালিব্রেট (Calibrate) করুন এবং লোকেশন সার্ভিস অন করুন</string>
+    <string name="km_text">" কিলোমিটার"</string>
+    <string name="makkah_distance">"মক্কা থেকে দূরত্ব "</string>
+    <string name="degree_txt">  ভৌগলিক উত্তর থেকে</string>
+    <string name="turn_on_txt">সঠিক দিক নির্দেশনা পেতে আপনার লোকেশন অন করুন</string>
+
+    <!--Ramadan Details -->
+    <string name="time_for_iftari">ইফতারির সময় শুরু হয়েছে</string>
+    <string name="sehri_time_up">সেহরির সময় শেষ</string>
+    <string name="time_left_till_ramadan">রমজানের আর বাকি আছে</string>
+    <string name="only_more">মাত্র</string>
+    <string name="day_meaning_v2">দিন</string>
+    <string name="holy_ramadan">পবিত্র মাহে রমজান </string>
+    <string name="today">আজ</string>
+    <string name="evening">সন্ধ্যা</string>
+
+    <string name="today_sehri_iftar_robi">আজকের সাহরী ও ইফতারের সময়</string>
+    <string name="today_sehri_iftar_time_table_robi">সাহরী ও ইফতারের সময়সূচি </string>
+    <string name="ifter_time_today">ইফতারের সময়</string>
+    <string name="last_sehri_time_today">সাহরীর শেষ সময়</string>
+    <string name="rahmat">রহমত</string>
+    <string name="magfirat">মাগফিরাত</string>
+    <string name="nazat">নাজাত</string>
+    <string name="ramadan">রমজান</string>
+    <string name="day">দিবস</string>
+    <string name="date">তারিখ</string>
+    <string name="essential_duas">প্রয়োজনীয় দোয়া সমূহ</string>
+
+    <string name="sehri_alert">সেহরি এলার্ট</string>
+    <string name="ifter_alert">ইফতার এলার্ট</string>
+    <string name="notification_sound">নোটিফিকেশন সাউন্ড</string>
+    <string name="notification_vibration">ভাইব্রেশন</string>
+    <string name="select_district">জেলা নির্বাচন করুন</string>
+
+    <!-- Dua & Hadis -->
+    <string name="text_doa_count">টি দোয়া</string>
+    <string name="category_list">ক্যাটাগরি সমূহ </string>
+    <string name="hadis_list">হাদিস সমূহ</string>
+
+    <!--Namaz Sikkha -->
+    <string name="namaz_visual">নামাজ ভিজ্যুয়াল</string>
+    <string name="for_men">পুরুষ</string>
+    <string name="for_women">মহিলা</string>
+
+    <!--Error Messages-->
+    <string name="error_message">আপনার ইন্টারনেট পরীক্ষা করুন এবং আবার চেষ্টা করুন</string>
+
+    <string name="previous_content">পূর্ববর্তী</string>
+    <string name="next_content">পরবর্তী</string>
+
+    <string name="retry">আবার চেষ্টা কর</string>
+    <string name="no_data">কোন তথ্য নেই</string>
+
+    <!--Wallpaper & Animation !-->
+    <string name="download">ডাউনলোড</string>
+    <string name="download_confirmation">এই ফাইলটি ডাউনলোড করুন?</string>
+    <string name="yes">হ্যাঁ</string>
+    <string name="no">না</string>
+    <string name="download_success">ডাউনলোড শেষ হয়েছে</string>
+
+    <!--99 Names of Allah !-->
+    <string name="name_fazilat">ফজিলত</string>
+
+    <string name="slash">/</string>
+
+    <!--Zakat Page !-->
+    <string name="txt_jakat_calculator">যাকাত ক্যালকুলেটর</string>
+    <string name="txt_save_calculation">হিসাব সংরক্ষণ</string>
+    <string name="txt_new_calculation">নতুন হিসাব</string>
+    <string name="txt_jakat_description">ইসলামে ৭.৫ ভরি স্বর্ণ কিংবা ৫২.৫ ভরি রুপা অথবা সমপরিমাণ অর্থ এক বছর যাবত গচ্ছিত থাকলে তার বাজার মুল্য অনুযায়ী মোট অর্থের শতকরা ২.৫% যাকাত দেওয়ার বিধান রয়েছে</string>
+    <string name="txt_total_asset">মোট সম্পদ</string>
+    <string name="txt_jakat_baki">যাকাত বাকী</string>
+    <string name="txt_title_total_asset">চন্দ্র বছরে আপনার দখলে থাকা সমস্ত সম্পদের পরিমান প্রবেশ করুন:</string>
+    <string name="title_nogod_taka">নগদ টাকা</string>
+    <string name="title_bank_nogod_taka">ব্যাংক অ্যাকাউন্টে নগদ টাকা</string>
+    <string name="title_ornament_header">সোনা রূপার পরিমান</string>
+    <string name="text_gold_amount">সোনার মান (টাকায়)</string>
+    <string name="text_silver_amount">রূপার মান (টাকায়)</string>
+    <string name="title_investment">বিনিয়োগ</string>
+    <string name="text_share_market">শেয়ার বাজার</string>
+    <string name="text_other_investment">অন্যান্য বিনিয়োগ</string>
+    <string name="title_asset">সম্পত্তি</string>
+    <string name="text_house_rent">বাসা ভাড়া</string>
+    <string name="title_business">ব্যবসা</string>
+    <string name="text_nogod_business">নগদ ব্যবসা</string>
+    <string name="text_product">পণ্য</string>
+    <string name="title_other">অন্যান্য</string>
+    <string name="text_pension">পেনশন</string>
+    <string name="text_family_loan">পারিবারিক ঋণ এবং অন্যান্য</string>
+    <string name="text_other_capital">অন্যান্য মূলধন</string>
+    <string name="title_farming">কৃষিকাজ</string>
+    <string name="text_taka_amount">টাকার পরিমান</string>
+    <string name="title_lialibility">দায়</string>
+    <string name="text_credit_card">ক্রেডিট কার্ড পেমেন্ট</string>
+    <string name="text_car_payment">গাড়ির পেমেন্ট</string>
+    <string name="text_business_payment">ব্যবসার পেমেন্ট</string>
+    <string name="text_family_loan_liability">ফ্যামিলি ঋণ</string>
+    <string name="text_other_loan">অন্যান্য ঋণ</string>
+
+    <string name="description_nogod_taka">আপনার যাবতীয় নগদ টাকা যা আপনার কাছে আছে অথবা ব্যাংকে গচ্ছিত আছে, তার উপর ২.৫ হারে যাকাত প্রযোজ্য হবে। নগদ টাকার পরিমাণটি যদি ১ বছর ধরে ব্যাংকে সুরক্ষিত থাকে তবে শুধুমাত্র সেক্ষেত্রেই যাকাত প্রযোজ্য হবে। মৌলিক প্রয়োজন থেকে উদ্ধৃত্ত টাকা-পয়সা নিসাব পরিমাণ হলে এবং এক বছর স্থায়ী হলে বছর শেষে তার যাকাত আদায় করা ফরয হয়। তদ্রূপ  ব্যাংক ব্যালেন্স, ফিক্সড ডিপোজিট, বন্ড, সার্টিফিকেট ইত্যাদিও নগদ টাকা-পয়সার মতোই। এসবের ওপরও যাকাত ফরয হয়।</string>
+    <string name="description_gold_amount">সোনা-রুপার অলংকার সর্বদা বা কালেভদ্রে ব্যবহৃত হোক কিংবা একেবারেই ব্যবহার না করা হোক সর্বাবস্থাতেই তার যাকাত দিতে হবে। যেদিন যাকাত হিসাব করা হবে সেদিনের বাজারদর অনুযায়ী হিসাব করতে হবে এবং তার উপর ২.৫ হারে যাকাত প্রযোজ্য হবে।
+    সাড়ে বায়ান্ন ভরি রুপা তা অলংকার হোক বা অন্য কোন আকৃতিতে হোক তার উপর যাকাত প্রযোজ্য হবে। যেদিন যাকাত হিসাব করা হবে সেদিনের বাজারদর অনুযায়ী হিসাব করতে হবে এবং তার উপর ২.৫ হারেযাকাতপ্রযোজ্যহবে।
+    </string>
+
+    <string name="description_investment">শেয়ার, বৈদেশিক মুদ্রা, প্রাইজবন্ড বা সঞ্চয়পত্রও নগদ টাকার মতই । তাই এগুলোর মূল্য হিসাব সকরে যাকাত দিতে হবে । তবে এগুলো থেকে কেউ সুদপ্রাপ্ত হলে তার পূর্ণটাই সদকা করে দিতে হবে। আপনার ব্যাংকে জমান টাকা, সঞ্চয়পত্র, লাইফ ইনস্যুরেন্স, শেয়ারে বিনয়োগ বা অন্য কোন ব্যাবসায় বিনিয়োগ করলে তার উপর যাকাত হিসাব করতে হবে। যাকাত হিসেবের দিন ওই খাতে ক্যাশ যোগ্য টাকা যাকাত যোগ্য সম্পদ হিসেবে গণ্য হবে। যদি আপনার শেয়ার কেনা থাকে যাকাতের হিসাবের দিন ওই শেয়ারের বিক্রয় মূল্য আপনার যাকাত যোগ্য সম্পদ হিসাবে গণ্য করতে হবে। তেমনি, যদি আপনার ডিপিএস অ্যাকাউন্ট থাকে যাকাতের হিসাবের দিন ওই অ্যাকাউন্ট ভাঙলে যে টাকা পাওয়া যাবে তা আপনার যাকাত যোগ্য সম্পদের সাথে যোগ হবে।</string>
+    <string name="description_asset">কারো একাধিক বাড়ি রয়েছে। তার উদ্দেশ্য হল ভাড়া খাটিয়ে টাকা অর্জন। তবে উক্ত বাড়ীগুলোর মূল্যের উপর যাকাত আসবে না। তবে ভাড়া বাবদ অর্জিত টাকার উপর যাকাত আসবে যদি নেসাব পরিমান হয়। অনুরূপভাবে থাকার জন্য নির্মাণকৃত বাড়ির উপরেও যাকাত আসে না। ফসলী জমি, বাড়ি নির্মাণের জন্য ক্রয়কৃত জমি এবং এমনিতে ফেলে রাখা জমির উপর যাকাত ফরজ নয়। তবে এগুলো ব্যবসার উদ্দেশ্যে ক্রয় করলে যাকাত দিতে হবে যদি নেসাব পরিমান হয়।</string>
+    <string name="description_business">সব ব্যবসায়ীদের জন্যই যাকাত প্রযোজ্য। যে কোন ধরণের ব্যাবসাই হোক না কেন সকল পন্যের বানিজ্যিক লেন দেনের উপর যাকাত দিতে হবে। মিল, কলকারখানা ও বিভিন্ন ব্যবসায়িক প্রতিষ্ঠানে যে সকল আসবাব রাখা রয়েছে সেগুলোর উপর যাকাত ফরজ নয়। কেননা এ সকল জিনিষ বিক্রি করা হয় না। তবে মেশিন থেকে উৎপন্ন পন্যের উপর যাকাত আসবে। অনুরূপভাবে কারখানায় যে সকল কাঁচামাল বিভিন্ন পর্যায়ে রয়েছে তার উপরও যাকাত আসবে। যেমন গার্মেন্টস এ জামা-কাপড়, সুতা, বোতাম, চেইন ইত্যাদি। কাজেই এগুলোর উপর যাকাত আসবে।</string>
+    <string name="description_other">আপনার ঋণ থাকলে তা যাকাত যোগ্য সম্পদ থেকে বাদ যাবে। আপনি অন্যকে ঋণ দিয়ে থাকলে, তা আপনার যাকাত যোগ্য সম্পদের হিসাবে গন্য হবে। তবে যদি কোন ঋণ মন্দ ঋণে (অর্থাৎ টাকা না পাওয়ার সম্ভাবনা থাকে) পরিণত হয় তা যাকাত যোগ্য সম্পদ থেকে বাদ দিতে পারেন। প্রভিদেন্ত ফান্ডের টাকা যাকাত যোগ্য সম্পদের হিসাবে গন্য হবে না। যেহেতু এই টাকা আপনার ইচ্ছামত ইন ক্যাশ করার সুযোগ নেই। তবে এই টাকা গ্রহণ করার পর একবছর পূর্ণ হলে সম্পূর্ণ টাকার উপর যাকাত প্রদান করতে হবে।</string>
+
+    <string name="description_farming">নিসাব পরিমাণ স্বীয় সম্পদ ১ বছর নিজ আয়ত্তাধীন থাকাই যাকাত ওয়াজিব হওয়ার পূর্বশর্ত। তবে কৃষিজাত ফসল, খনিজ সম্পদ ইত্যাদির যাকাত প্রতিবার ফসল তোলার সময়ই দিতে হবে।গৃহপালিত পশুর যাকাত ফরয হওয়ার জন্য ইসলামী শরী‘আত কর্তৃক নির্ধারিত নিছাব সংখ্যক পশুর মালিক হতে হবে। আর তা হল, ছাগল, ভেড়া ও দুম্বা ৪০ টি, গরু ৩০ টি এবং উট ৫ টি। উল্লিখিত সংখ্যা হতে কম হলে তার উপর যাকাত ফরয নয়।</string>
+
+    <string name="description_liability">যদি সরকারের নিকট আপনার কোন কর বকেয়া থাকে তাহলে যেদিন যাকাত হিসাব করা হবে সেদিন মুল সম্পদ থেকে দায় টুকু বাদ দিতে হবে। যদি আপনি কোনও ব্যক্তি বা প্রতিষ্ঠান থেকে কোনও ঋণ গ্রহণ করেন এবং যদি আপনি উপরে বর্ণিত যে কোনও বিভাগ থেকে ইতিমধ্যেই বাদ না করে থাকেন, তাহলে আপনি এখানে আপনার অর্থপ্রদানের হার কমাতে পারেন। গাড়ী, বাড়ি ইত্যাদি যাকাতযোগ্য সম্পদ নয়। সততার সাথে যাকাত প্রদান করুন কারণ যাকাত আপনার সম্পদকে রক্ষা করার একটি উপায়। যদি যাকাত জমাকৃত হয়, তবে তা নিয়মিতভাবে বা সম্পূর্ণরূপে পরিশোধ করতে হবে।</string>
+
+    <string name="save_message">সফলভাবে সংরক্ষিত!</string>
+    <string name="text_symbol_tk">৳</string>
+
+    <!--Donation Page !-->
+    <string name="txt_donate">দান করুন</string>
+    <string name="txt_donate_des">আপনার দান আমাদের কাছে সুরক্ষিত</string>
+    <string name="txt_charity_organization">দাতব্য সংস্থা সমূহ</string>
+    <string name="txt_charity_importance">দানের গুরুত্ব</string>
+    <string name="txt_donate_zakat">যাকাত প্রদান</string>
+    <string name="txt_choose_organization">দাতব্য সংস্থা নির্বাচন করুন</string>
+    <string name="txt_amount_tk">টাকার পরিমান*</string>
+    <string name="txt_five_hundred">৫০০</string>
+    <string name="txt_thousand">১০০০</string>
+    <string name="txt_five_thousand">৫০০০</string>
+    <string name="txt_ten_thousand">১০০০০</string>
+    <string name="txt_error_name">নাম লিখুন</string>
+    <string name="txt_error_dob">আপনার জন্ম তারিখ নির্বাচন করুন</string>
+    <string name="txt_error_correct_dob">সঠিক জন্ম তারিখ নির্বাচন করুন</string>
+    <string name="txt_error_nid">আপনার জাতীয় পরিচয় পত্র নম্বর লিখুন</string>
+    <string name="txt_error_bc">আপনার জন্ম নিবন্ধন নম্বর লিখুন</string>
+    <string name="txt_error_number">মোবাইল নম্বর প্রদান করুন</string>
+    <string name="txt_error_correct_number">সঠিক মোবাইল নম্বর দিন</string>
+    <string name="txt_error_email">ইমেইল এড্রেস প্রদান করুন</string>
+    <string name="txt_error_correct_email">সঠিক ইমেইল এড্রেস দিন</string>
+    <string name="txt_error_address">সম্পূর্ণ এড্রেস প্রদান করুন</string>
+    <string name="hint_amount">পরিমাণ লিখুন</string>
+    <string name="txt_tk">টাকা</string>
+    <string name="txt_info">আপনার তথ্য*</string>
+    <string name="hint_name">আপনার নাম</string>
+    <string name="hint_mobile_number">মোবাইল নাম্বার</string>
+    <string name="hint_email">ইমেইল</string>
+    <string name="hint_address">সম্পূর্ণ ঠিকানা</string>
+    <string name="des_donation">দানকৃত পরিমাণের সাথে লেনদেন প্রক্রিয়ার নির্ধারিত চার্জ প্রযোজ্য হবে</string>
+    <string name="txt_next">পরবর্তী</string>
+    <string name="txt_term">এই সেবার <font color='#009966'>শর্তাবলীর</font> সাথে আমি সহমত পোষণ করছি</string>
+    <string name="txt_visit">ভিজিট</string>
+    <string name="description_donation">\n<br>আপনার দানকৃত অর্থ সমূহ আপনার নির্ধারিত প্রতিষ্ঠানে সরাসরি পৌঁছে যাবে।  এই দানকৃত অর্থে রবি বা অন্য কোন প্রতিষ্ঠানের কোন সম্পৃক্ততা  নেই।</br></string>
+
+    <!--Category IDS !-->
+    <string name="jakat_cat_id">6047013cf255bfe281719874</string>
+    <string name="hadis_cat_id">601f8eced3753b861d75d8e7</string>
+    <string name="dua_cat_id">601932aa577a7df13eda4c58</string>
+    <string name="namaz_rules_cat_id">602cf1171d1390756aafe4ab</string>
+    <string name="wallpaper_cat_id">60336ba7433147fb20a887a1</string>
+    <string name="animation_cat_id">60336bdd433147fb20a887a2</string>
+    <string name="roza_cat_id">6069660048296ec92f3435d0</string>
+    <string name="namaz_visual_men_id">60641ac2c05da82c4b23ebde</string>
+    <string name="namaz_visual_women_id">60641ae0c05da82c4b23ebdf</string>
+    <string name="namaz_dak_id">609174b4840f26f2643a3473</string>
+    <string name="live_video_id">60aa033b29304542a2482b9c</string>
+
+    <string name="kalima_sub_cat_id">602cf1e01d1390756aafe4ad</string>
+    <string name="hajj_cateogry_id">60373df75d7a4acd37d5b4de</string>
+    <string name="hajj_pre_registration_category_id">625cf907bf0f1370b2ed535d</string>
+    <string name="hajj_map_cateogry_id">6087a1ae5b10ee41c9e7d69a</string>
+    <string name="hajj_currency_cateogry_id">6087a2265b10ee41c9e7d69b</string>
+    <string name="qurbani_cateogry_id">60cadb9fdd1390a52293934c</string>
+    <string name="quran_class_cat_id">6061659ee03cc3b3f50e09bd</string>
+    <string name="instructive_video_cat_id">612378552d5c4aaaa1fe7645</string>
+    <string name="miladunnobi_cateogry_id">6134511e857486b08405e9fd</string>
+    <string name="biography_cateogry_id">6135e007d076c519c2e145c9</string>
+    <string name="donation_id">615e7c5322348fc226f6f24a</string>
+    <string name="charity_organisation_id">615e7c7122348fc226f6f24b</string>
+    <string name="donation_importance_id">615e7c7f22348fc226f6f24c</string>
+    <string name="ijtema_id">61515463910e7aed861b79e2</string>
+    <string name="corona_funeral_id">61dff7c43f2e99556e5fa6af</string>
+    <string name="corona_funeral_subcategory_id">61dff9d93f2e99556e5fa6b0</string>
+    <string name="ambulance_subcategory_id">61dffa763f2e99556e5fa6b1</string>
+    <string name="event_cateogry_id">62022d5f680c4f8afc5a6317</string>
+    <string name="eid_jamat_id">623053463468b928f271d8d9</string>
+    <string name="live_qa_cat_id">62415b6dfa79873a11c9000a</string>
+    <string name="hajj_refund_category_id">628b19bf265a6b36210e5df5</string>
+    <string name="hajj_preregistration_sub_category_id">625d20b93e65c410063b7360</string>
+    <string name="online_hut_category_id">62aedc0cdd05dd1c77226d4b</string>
+    <string name="online_hut_subcategory_id">62b056d9a56104af33764576</string>
+    <string name="online_hut_north_subcategory_id">62b05782ee00d1a45ccd01bd</string>
+    <string name="online_hut_sounth_subcategory_id">62b057b4ee00d1a45ccd01be</string>
+    <string name="hajj_guide_category_id">62bc022291776fe33f8b9fe1</string>
+    <string name="hajj_guide_sub_category_id">62c687407441a12ee460d041</string>
+    <string name="hajj_package_id">62d4f2d7f91b8f49a6bfca8d</string>
+
+    <string name="default_content_des">content description image</string>
+    <string name="digital_school">নূর কুরআন স্কুল</string>
+    <string name="next_video">পরবর্তী ভিডিও </string>
+    <string name="next_video_not_found">পরবর্তী ভিডিও নেই </string>
+    <string name="next_video_not_found_details">পরবর্তী ভিডিও গুলো এখানে যুক্ত হবে</string>
+    <string name="live_clasess">লাইভ ক্লাস সমূহ</string>
+    <string name="title_scholars">ইসলামিক স্কলারস</string>
+
+    <string name="quran_clasess">কুরআন শিক্ষা ক্লাস</string>
+
+
+    <string name="cat_nearest_retuarant">নিকটবর্তী রেস্তরাঁ</string>
+    <string name="cat_live_video">লাইভ ভিডিও</string>
+    <string name="tab_home">হোম</string>
+    <string name="tab_compass">কম্পাস</string>
+    <string name="tab_more">আরও</string>
+    <string name="search_islamic_name_text">মুসলিম বেবির জন্য পছন্দের ইসলামিক নাম খুঁজে নিন</string>
+    <string name="names_of_male">ছেলেদের</string>
+    <string name="islamic_name">ইসলামিক নাম</string>
+    <string name="names_of_female">মেয়েদের</string>
+    <string name="names">নাম সমূহ</string>
+    <string name="male_islamic_names">ছেলেদের ইসলামিক নাম</string>
+    <string name="female_islamic_names">মেয়েদের ইসলামিক নাম</string>
+    <string name="nam_meaning">নামের অর্থ</string>
+    <string name="favourite_name">প্রিয় নাম</string>
+    <string name="cat_hajj">হজ্জ</string>
+    <string name="cat_hajj_tracker">হজ্জ ট্র্যাকার</string>
+    <string name="hajj_header_dua_one">"লাব্বাইকা <br />আল্লাহুম্মা লাব্বাইক"</string>
+    <string name="hajj_header_dua_two">লাব্বাইকা লা শারিকা লাকা লাব্বাইক … </string>
+
+    <!--Tasbih Page !-->
+    <string name="text_zero">০০</string>
+    <string name="text_thirty_three">৩৩ বার</string>
+    <string name="text_thirty_four">৩৪ বার</string>
+    <string name="text_ninety_nine">৯৯ বার</string>
+
+    <string name="txt_times">বার</string>
+    <string name="txt_total_count">মোট গণনা</string>
+    <string name="txt_your_count">আপনার গণনা</string>
+    <string name="count_complete">আপনার গণনা সম্পন্ন হয়ছেে</string>
+    <string name="txt_round">রাউন্ড</string>
+    <string name="txt_reset_count">গণনা রিসেট</string>
+    <string name="reset_des">রিসেট সম্পন্ন হলে, মোট/বর্তমান গণনা রিকভার করা সম্ভব না</string>
+    <string name="current_count">বর্তমান গণনা</string>
+
+    <string name="hajj_map_title">হজ্জ্ব ম্যাপ </string>
+    <string name="select_currency">মুদ্রা নির্বাচন করুন</string>
+    <string name="currency_update">"সর্বশেষ আপডেট "</string>
+    <string name="hjCurrencyConvert">কনভার্ট করুন</string>
+
+    <!--Subscription Page !-->
+    <string name="page_title_subscription">সাবস্ক্রিপশন</string>
+    <string name="sub_title">এই সেবা শুধুমাত্র সেলকম এবং নূর ব্যাবহারকারীর জন্য</string>
+    <string name="sub_des">সাবস্ক্রিপশন ছাড়াও পবিত্র কুরআন, নামাজের সময়সূচী, নিকটবর্তী মসজিদ, কম্পাস, দোয়া, আল্লাহ্‌র ৯৯টি নাম, তাসবিহ ও যাকাত ক্যালকুলেটর ফ্রি দেখতে পাবেন।</string>
+    <string name="txt_weekly_service">নূর সাপ্তাহিক সার্ভিস</string>
+    <string name="txt_amount">RM ৩</string>
+    <string name="txt_content">কনটেন্ট ডাউনলোড সম্পূর্ণ ফ্রি</string>
+    <string name="txt_sub">সাবস্ক্রাইব</string>
+    <string name="txt_auto_renewal">(অটো রিনিউয়াল)</string>
+    <string name="txt_amount_fifteen">RM ১২</string>
+    <string name="txt_unsub">আনসাবস্ক্রাইব</string>
+    <string name="txt_dialog_sub_des_weekly">আপনি কি নূর সাপ্তাহিক সার্ভিস টি এক্টিভেট করতে চান? চার্জ RM ৩ প্রতি সপ্তাহের জন্য (অটো রিনিউয়াল)</string>
+    <string name="txt_dialog_sub_des_monthly">আপনি কি নূর মাসিক সার্ভিস টি এক্টিভেট করতে চান? চার্জ RM ১২ প্রতি মাসের জন্য (অটো রিনিউয়াল)</string>
+    <string name="txt_dialog_unsub_des_weekly">আপনি কি নূর সাপ্তাহিক সার্ভিস টি আনসাবস্ক্রাইব করতে চান?</string>
+    <string name="txt_dialog_unsub_des_monthly">আপনি কি নূর মাসিক সার্ভিস টি আনসাবস্ক্রাইব করতে চান?</string>
+    <string name="unsubscribe_success">Successfully Unsubscribed!</string>
+    <string name="sub_fail">Subscription Failed! Please try again.</string>
+    <string name="unsubscribe_monthly">Please unsubscribe monthly plan first !</string>
+    <string name="unsubscribe_weekly">Please unsubscribe weekly plan first !</string>
+
+    <!--Subscription Page Robi !-->
+    <string name="sub_title_robi">এই সেবা শুধুমাত্র নূর ব্যবহারকারীদের জন্য</string>
+    <string name="sub_des_robi">সাবস্ক্রিপ্সন ছাড়াও পবিত্র কুরআন, নামাজের সময়সূচী, নিকটবর্তী মসজিদের অবস্থান এবং কম্পাস ফ্রি দেখতে পারবেন।</string>
+    <string name="txt_daily_service">নূর ডেইলি সার্ভিস</string>
+    <string name="txt_monthly_service">নূর মাসিক সার্ভিস</string>
+    <string name="txt_amount_robi">২.৬৭ টাকা</string>
+    <string name="txt_fifteen_day_service">নূর ১৫ দিন সার্ভিস</string>
+    <string name="txt_amount_fifteen_robi">৯.৩৩ টাকা</string>
+
+
+    <!--Subscription Page Nagad !-->
+
+    <string name="txt_dialog_sub_des_daily">আপনি কি নূর ডেইলি সার্ভিস টি এক্টিভেট করতে চান? চার্জ ২.৬৭ টাকা প্রতি দিনের জন্য (অটো রিনিউয়াল)</string>
+    <string name="txt_dialog_unsub_des_daily">আপনি কি নূর ডেইলি সার্ভিস টি আনসাবস্ক্রাইব করতে চান?</string>
+    <string name="txt_dialog_sub_des_fifteen_robi">আপনি কি নূর ১৫ দিনের সার্ভিস টি এক্টিভেট করতে চান? চার্জ ৯.৩৩ টাকা প্রতি ১৫ দিনের জন্য (অটো রিনিউয়াল)</string>
+    <string name="txt_dialog_unsub_des_fifteen_robi">আপনি কি নূর ১৫ দিনের সার্ভিস টি আনসাবস্ক্রাইব করতে চান?</string>
+    <string name="unsubscribe_daily">Please unsubscribe Daily plan first !</string>
+    <string name="unsubscribe_fifteen_robi">Please unsubscribe 15 days plan first !</string>
+
+
+    <string name="currency_converter">কারেন্সি কনভার্টার </string>
+    <string name="name">নাম</string>
+    <string name="cat_islamic_calender">ইসলামিক ক্যালেন্ডার</string>
+    <string name="cat_tracker">ট্র্যাকার</string>
+    <string name="cat_qurbani">কুরবানী</string>
+    <string name="cat_corona_funeral_service">করোনা দাফন সেবা</string>
+    <string name="cat_islamic_event">ইসলামিক ইভেন্ট</string>
+    <string name="title_online_hut">অনলাইন গরুর হাট</string>
+    <string name="cat_islamic_podcast">ইসলামিক পডকাস্ট</string>
+    <string name="cat_khatam_quran">খতমে কুরআন</string>
+    <string name="cat_eid_jamat">ঈদ জামাতের স্থান</string>
+    <string name="cat_hajj_package">হজ্জ প্যাকেজ</string>
+    <string name="cat_live_qa">নূর জিজ্ঞাসা</string>
+
+
+    <string name="cat_eid_e_miladunnobi">ঈদ ই মিলাদুন্নবী</string>
+    <string name="cat_eid_e_miladunnobi_robi">ঈদ ই মিলাদুন্নবী</string>
+    <string name="title_eid_e_miladunnobi_robi">ঈদ ই মিলাদুন্নবী</string>
+    <string name="cat_quran_learning">কুরআন শিক্ষা ক্লাস</string>
+
+    <string name="sat">শনি</string>
+    <string name="sun">রবি</string>
+    <string name="mon">সোম</string>
+    <string name="tue">মঙ্গল</string>
+    <string name="wed">বুধ</string>
+    <string name="thu">বৃহ:</string>
+    <string name="fri">শুক্র</string>
+    <string name="muslim_holiday">ইসলামিক ছুটিরদিন</string>
+    <string name="islamicCalendarTxt">"*স্থান ভেদে চাঁদ দেখার উপর নির্ভর করে আরবি মাসের তারিখ পরিবর্তন হতে পারে "</string>
+    <string name="cat_azan">আযান</string>
+
+    <string name="current_time_txt">এখন সময়</string>
+
+    <string name="next_azan">পরবর্তী আযান</string>
+    <string name="restaturant_disclaimer">রেস্টুরেন্টের অবস্থান এবং হালাল সার্টিফিকেশন গুগল ম্যাপের উপর ভিত্তি করে নির্ধারিত</string>
+
+    <!--Tracker Page !-->
+    <string name="prayer_tracker">নামাজ ট্র্যাকার</string>
+    <string name="ramadan_tracker">রোজা ট্র্যাকার</string>
+    <string name="des_prayer_tracker">নূর অ্যাপ দিয়ে নামাজ ট্র্যাক করুন</string>
+    <string name="des_ramadan_tracker">নূর অ্যাপ দিয়ে রোজা ট্র্যাক করুন</string>
+    <string name="txt_are_you_fasting_today">আপনি কি আজ রোজা রেখেছেন?</string>
+    <string name="txt_not_fasting">রোজা নেই</string>
+    <string name="txt_yes_fasting">হ্যাঁ রোজা</string>
+
+    <string name="material_calendar_monday">সোম</string>
+    <string name="material_calendar_tuesday">মঙ্গল</string>
+    <string name="material_calendar_wednesday">বুধ</string>
+    <string name="material_calendar_thursday">বৃহস্পতি</string>
+    <string name="material_calendar_friday">শুক্র</string>
+    <string name="material_calendar_saturday">শনি</string>
+    <string name="material_calendar_sunday">রবি</string>
+
+    <!--Eid-E-Miladunnanbi Page !-->
+    <string name="title_miladunnanbi">ভিজ্যুয়াল জীবনী</string>
+    <string name="des_miladunnanbi">নবী (সা:) এর \n<br>সংক্ষিপ্ত জীবনী</br></string>
+
+
+    <!--Covid Funeral Page !-->
+    <string name="title_ambulance_service">অ্যাম্বুলেন্স সেবা</string>
+    <string name="txt_fb_page">ফেসবুক পেজ</string>
+    <string name="txt_website">ওয়েবসাইট</string>
+    <string name="txt_call">যোগাযোগ করুন</string>
+    <string name="ambulace_list">অ্যাম্বুলেন্স তালিকা</string>
+    <string name="see_map">ম্যাপ দেখুন</string>
+    <string name="txt_call_ambulance">কল অ্যাম্বুলেন্স</string>
+    <string name="txt_see_on_map">ম্যাপ দেখুন</string>
+
+    <!--Custom month !-->
+    <string name="txt_jan">জানুয়ারি</string>
+    <string name="txt_feb">ফেব্রুয়ারি</string>
+    <string name="txt_mar">মার্চ</string>
+    <string name="txt_apr">এপ্রিল</string>
+    <string name="txt_may">মে</string>
+    <string name="txt_jun">জুন</string>
+    <string name="txt_jul">জুলাই</string>
+    <string name="txt_aug">আগস্ট</string>
+    <string name="txt_sep">সেপ্টেম্বর</string>
+    <string name="txt_oct">অক্টোবর</string>
+    <string name="txt_nov">নভেম্বর</string>
+    <string name="txt_dec">ডিসেম্বর</string>
+
+    <string name="txt_mohram">মহররম</string>
+    <string name="txt_safar">সফর</string>
+    <string name="txt_awal">রবিউল আউয়াল</string>
+    <string name="txt_sani">রবিউস সানি</string>
+    <string name="txt_jomadiul">জমাদিউল আউয়াল</string>
+    <string name="txt_jomadius_sani">জমাদিউস সানি</string>
+    <string name="txt_rajab">রজব</string>
+    <string name="txt_saban">শাবান</string>
+    <string name="txt_ramjan">রমজান</string>
+    <string name="txt_sawal">শাওয়াল</string>
+    <string name="txt_jilkod">জিলকদ</string>
+    <string name="txt_jilhazz">জিলহজ্জ</string>
+
+    <string name="txt_sunday">রবিবার</string>
+    <string name="txt_monday">সোমবার</string>
+    <string name="txt_tuesday">মঙ্গলবার</string>
+    <string name="txt_wednesday">বুধবার</string>
+    <string name="txt_thursday">বৃহস্পতিবার</string>
+    <string name="txt_friday">শুক্রবার</string>
+    <string name="txt_saturday">শনিবার</string>
+
+    <string name="txt_male">পুরুষ</string>
+    <string name="txt_female">মহিলা</string>
+
+    <string name="txt_dua_one">সুবহানআল্লাহ</string>
+    <string name="txt_dua_two">আলহামদুলিল্লাহ্</string>
+    <string name="txt_dua_three">বিসমিল্লাহ্</string>
+    <string name="txt_dua_four">আল্লাহু আকবার</string>
+    <string name="txt_dua_five">আস্তাগফিরুল্লাহ</string>
+    <string name="txt_dua_six">আল্লাহ্</string>
+    <string name="txt_dua_seven">লা ইলাহা ইল্লালা</string>
+    <string name="txt_dua_eight">লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ</string>
+    <string name="see_more_text">see more</string>
+
+    <!--Hajj preregistration Page !-->
+    <string name="hajj_pre_registration">হজ্জ প্রাক নিবন্ধন</string>
+    <string name="do_hajj_pre_reg">হজ্জ প্রাক নিবন্ধন করুন</string>
+
+    <string name="hint_dob">জন্ম তারিখ</string>
+    <string name="hint_gender">লিঙ্গ</string>
+    <string name="txt_Nid">জাতীয় পরিচয়পত্র</string>
+    <string name="hint_personal_identity">ব্যাক্তিগত পরিচয়</string>
+    <string name="txt_BirthCertificate">জন্ম সনদ</string>
+    <string name="hint_birth_certificate_number">জন্ম সনদ নম্বর</string>
+    <string name="txt_marital_status">বৈবাহিক অবস্থা</string>
+    <string name="hint_nid_number">জাতীয় পরিচয়পত্র নম্বর</string>
+
+    <string name="text_pre_reg">প্রাক-নিবন্ধনঃ </string>
+
+    <string name="txt_error_district">আপনার জেলা নির্বাচন করুন</string>
+    <string name="txt_error_permanent_address">স্থায়ী ঠিকানা লিখুন</string>
+    <string name="txt_error_persent_address">বর্তমান ঠিকানা লিখুন</string>
+    <string name="txt_error_mobile_number">মোবাইল নম্বর লিখুন</string>
+    <string name="txt_error_correct_mobile_number">সঠিক মোবাইল নম্বর লিখুন</string>
+    <string name="txt_error_valid_nid_number">বৈধ এনআইডি নম্বর লিখুন</string>
+    <string name="txt_error_valid_bc_number">বৈধ জন্ম নিবন্ধন নম্বর লিখুন</string>
+    <string name="txt_error_file_nid">জাতীয় পরিচয় পত্র সংযুক্ত করুন</string>
+    <string name="txt_error_file_bc">জন্ম নিবন্ধন সংযুক্ত করুন</string>
+    <string name="zilla">স্থায়ী জেলা</string>
+    <string name="permanent_address">স্থায়ী ঠিকানা</string>
+    <string name="choose_a_payment_option">একটি পেমেন্ট অপশন চয়ন করুন</string>
+    <string name="present_address">বর্তমান ঠিকানা</string>
+    <string name="hajj_pre_registration_fee">হজ্জ প্রাক-নিবন্ধন ফি</string>
+    <string name="hajj_payment_term">অর্থপ্রদানের <font color='#009966'>শর্তাবলীর এবং রিফান্ড</font> নীতিমালার সাথে একমত পোষণ করছি।</string>
+    <string name="txt_error_tracking_no">আপনার ট্র্যাকিং নম্বর লিখুন</string>
+
+    <string name="number_hint">মোবাইল নম্বর</string>
+    <string name="api_error_msg">Something went wrong, try again!</string>
+    <string name="txt_check_internet">Please check internet connection!</string>
+
+    <string name="title_hajj_guide">হজ্জ গাইড</string>
+    <string name="txt_have_you_done">আপনি কি এই ধাপটি সম্পন্ন করেছেন?</string>
+    <string name="txt_done">হ্যা</string>
+
+    <string name="title_notification">নোটিফিকেশন</string>
+    <string name="select_a_country_cpp">Select a country</string>
+    <string name="search_ccp">Search...</string>
+
+
+
+    <array name="material_calendar_day_abbreviations_array">
+        <item>@string/material_calendar_sunday</item>
+        <item>@string/material_calendar_monday</item>
+        <item>@string/material_calendar_tuesday</item>
+        <item>@string/material_calendar_wednesday</item>
+        <item>@string/material_calendar_thursday</item>
+        <item>@string/material_calendar_friday</item>
+        <item>@string/material_calendar_saturday</item>
+    </array>
+
+    <array name="material_calendar_months_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
+
+    <string name="material_calendar_today_button">Today</string>
+    <string name="material_calendar_positive_button">OK</string>
+    <string name="material_calendar_negative_button">Cancel</string>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.gakk.noorlibrary.model.quranSchool.Scholar" />
+
+        <variable
+            name="constant"
+            type="com.gakk.noorlibrary.util.ConstantsKt" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_spacing">
+
+        <com.gakk.noorlibrary.util.CircleImageView
+            android:id="@+id/scholars_img"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/default_content_des"
+            android:fullImageUrl="@{data.fullImageUrl}"
+            android:scaleType="centerCrop"
+            android:src="@drawable/place_holder_1_1_ratio"
+            app:attachedProgressBar="@{progressBar}"
+            app:placeHolderDimension="@{constant.PLACE_HOLDER_1_1}" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/scholars_img"
+            android:layout_alignBottom="@+id/scholars_img"
+            android:layout_centerHorizontal="true" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scholars_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{data.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            tools:text="Nouman Ali Khan"
+            android:fontFamily="sans-serif-medium"/>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="surah"
+            type="com.gakk.noorlibrary.model.quran.surahDetail.Data" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@color/bg">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            style="@style/CardViewStyleNoElevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/surahBasicInfoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhiteDisabled">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSurahName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/standard_margin"
+                    android:clickable="false"
+                    android:text="@{surah.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/txt_color_black"
+                    android:fontFamily="sans-serif"
+                    android:textFontWeight="400"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnShowSurahList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/standard_margin"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:src="@drawable/ic_arrow_drop_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvSurahName"
+                    app:layout_constraintStart_toEndOf="@+id/tvSurahName"
+                    app:layout_constraintTop_toTopOf="@+id/tvSurahName" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBanglaNamePlusAyaCountPlusLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="@dimen/small_spacing"
+                    android:clickable="false"
+                    android:text="@{surah.surahBasicInfo}"
+                    android:textColor="@color/disabled_color"
+                    android:textFontWeight="400"
+                    android:fontFamily="sans-serif"
+                    android:textSize="@dimen/margin_10"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imgBgLocation"
+                    app:layout_constraintStart_toStartOf="@+id/tvSurahName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSurahName" />
+
+                <ImageView
+                    android:id="@+id/imgBgLocation"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@null"
+                    android:clickable="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CLPlay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:background="@drawable/bg_rectangle_green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/CLFavourite"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView">
+
+            <ImageButton
+                android:id="@+id/btnPlayPause"
+                android:layout_width="@dimen/standard_margin"
+                android:layout_height="@dimen/standard_margin"
+                android:layout_marginEnd="4dp"
+                android:background="@null"
+                android:clickable="false"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_pause_filled_enabled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewNormal4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewNormal4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:clickable="false"
+                android:text="@string/play_it"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="@dimen/margin_12"
+                android:fontFamily="sans-serif"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CLFavourite"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_border_rounded_green"
+            app:layout_constraintBottom_toBottomOf="@+id/CLPlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/CLPlay"
+            app:layout_constraintTop_toTopOf="@+id/CLPlay">
+
+            <ImageButton
+                android:id="@+id/btnFav"
+                android:layout_width="@dimen/standard_margin"
+                android:layout_height="@dimen/standard_margin"
+                android:layout_marginEnd="4dp"
+                android:background="@null"
+                android:clickable="false"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_favorite_filled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewNormal5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewNormal5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:clickable="false"
+                android:text="@string/favourite_surah"
+                android:textColor="@color/colorPrimary"
+                android:textFontWeight="400"
+                android:textSize="@dimen/margin_12"
+                android:fontFamily="sans-serif"
+                app:layout_constraintBottom_toBottomOf="@+id/btnFav"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnFav" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBgTotalAsset"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/standard_margin"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_bg_total_asset"
+                app:layout_constraintDimensionRatio="h,1:0.3048780"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvtitle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/margin_20"
+                android:text="@string/txt_total_asset"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_white"
+                android:textFontWeight="400"
+                app:layout_constraintStart_toStartOf="@id/ivBgTotalAsset"
+                app:layout_constraintTop_toTopOf="@id/ivBgTotalAsset" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:background="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_colon_white"
+                app:layout_constraintBottom_toBottomOf="@+id/tvtitle"
+                app:layout_constraintStart_toEndOf="@+id/tvtitle"
+                app:layout_constraintTop_toTopOf="@+id/tvtitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTotalAsset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_24"
+                android:layout_marginEnd="16dp"
+                android:text="0.0"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_white"
+                android:textFontWeight="400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/tvtitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvtitleJakat"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12"
+                android:text="@string/txt_jakat_baki"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/yellow_light"
+                android:textFontWeight="400"
+                android:fontFamily="sans-serif"
+                app:layout_constraintStart_toStartOf="@id/tvtitle"
+                app:layout_constraintTop_toBottomOf="@id/tvtitle" />
+
+            <ImageView
+                android:id="@+id/imageViewColon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:background="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_colon_white"
+                app:layout_constraintBottom_toBottomOf="@+id/tvtitleJakat"
+                app:layout_constraintStart_toEndOf="@+id/tvtitleJakat"
+                app:layout_constraintTop_toTopOf="@+id/tvtitleJakat" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textTotalJakat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_24"
+                android:layout_marginEnd="16dp"
+                android:text="0.0"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/yellow_light"
+                android:textFontWeight="400"
+                android:fontFamily="sans-serif"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageViewColon"
+                app:layout_constraintTop_toTopOf="@+id/tvtitleJakat" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitleTotalAsset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:text="@string/txt_title_total_asset"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_color_black"
+                android:textFontWeight="400"
+                android:fontFamily="sans-serif"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivBgTotalAsset" />
+
+            <include
+                android:id="@+id/layoutNagadTakaHeader"
+                layout="@layout/layout_zakat_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleTotalAsset" />
+
+            <include
+                android:id="@+id/layoutNagadTakacontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/layoutNagadTakaHeader"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <include
+                android:id="@+id/layoutBankNagadTakacontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutNagadTakacontent" />
+
+            <include
+                android:id="@+id/layoutOrnamentAmtHeader"
+                layout="@layout/layout_zakat_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutBankNagadTakacontent" />
+
+            <include
+                android:id="@+id/layoutGoldAmtcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutOrnamentAmtHeader" />
+
+            <include
+                android:id="@+id/layoutSilverAmtcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutGoldAmtcontent" />
+
+            <include
+                android:id="@+id/layoutInvestmentAmtHeader"
+                layout="@layout/layout_zakat_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSilverAmtcontent" />
+
+            <include
+                android:id="@+id/layoutShareMarketcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutInvestmentAmtHeader" />
+
+            <include
+                android:id="@+id/layoutOtherInvestcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutShareMarketcontent" />
+
+            <include
+                android:id="@+id/layoutAssetHeader"
+                layout="@layout/layout_zakat_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutOtherInvestcontent" />
+
+            <include
+                android:id="@+id/layoutHouseRentcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutAssetHeader" />
+
+            <include
+                android:id="@+id/layoutAssetcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutHouseRentcontent" />
+
+            <include
+                android:id="@+id/layoutBusinessHeader"
+                layout="@layout/layout_zakat_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutAssetcontent" />
+
+            <include
+                android:id="@+id/layoutNogodBusinescontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutBusinessHeader" />
+
+            <include
+                android:id="@+id/layoutProductcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutNogodBusinescontent" />
+
+            <include
+                android:id="@+id/layoutOtherHeader"
+                layout="@layout/layout_zakat_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutProductcontent" />
+
+            <include
+                android:id="@+id/layoutPensioncontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutOtherHeader" />
+
+            <include
+                android:id="@+id/layoutLoancontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutPensioncontent" />
+
+            <include
+                android:id="@+id/layoutCapitalcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutLoancontent" />
+
+            <include
+                android:id="@+id/layoutFarmingHeader"
+                layout="@layout/layout_zakat_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutCapitalcontent" />
+
+            <include
+                android:id="@+id/layoutFarmingcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutFarmingHeader" />
+
+            <include
+                android:id="@+id/layoutLiabilityHeader"
+                layout="@layout/layout_zakat_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutFarmingcontent" />
+
+            <include
+                android:id="@+id/layoutCreditCardcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                app:layout_constraintTop_toBottomOf="@+id/layoutLiabilityHeader" />
+
+            <include
+                android:id="@+id/layoutCarcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutCreditCardcontent" />
+
+            <include
+                android:id="@+id/layoutBusinessPaymentcontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutCarcontent" />
+
+            <include
+                android:id="@+id/layoutFamilyLoancontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutBusinessPaymentcontent" />
+
+            <include
+                android:id="@+id/layoutOtherLoancontent"
+                layout="@layout/layout_zakat_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutFamilyLoancontent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:layout_marginBottom="@dimen/standard_margin"
+                android:background="@drawable/ic_rectangle_save"
+                android:text="@string/txt_save"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutOtherLoancontent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

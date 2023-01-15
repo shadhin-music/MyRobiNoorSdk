@@ -1,0 +1,46 @@
+{
+  "iChhuti": [
+    {
+      "id": 1,
+      "chutiTitle": "Lailat Al Miraj",
+      "iDate": "Hijri 27 Rojob 1443 ",
+      "gragrian": "28 February 2022"
+    },
+    {
+      "id": 2,
+      "chutiTitle": "Laylat Al Baraat",
+      "iDate": "Hijri 15 Shaban 1443",
+      "gragrian": "18 March 2022"
+    },
+    {
+      "id": 3,
+      "chutiTitle": "Laylat Al Qadr",
+      "iDate": "27 Ramaḍan 1443",
+      "gragrian": "28 April 2022"
+    },
+    {
+      "id": 4,
+      "chutiTitle": "Eid Ul Fitr",
+      "iDate": "Hijri 1st Shawwal 1443",
+      "gragrian": "02 May 2022"
+    },
+    {
+      "id": 5,
+      "chutiTitle": "Eid Ul Adha",
+      "iDate": "Hijri 10 Zilhajj 1443",
+      "gragrian": "09 July 2022"
+    },
+    {
+      "id": 6,
+      "chutiTitle": "Ashura",
+      "iDate": "Hijri 10 Muharram 1444",
+      "gragrian": "08 August 2022"
+    },
+    {
+      "id": 7,
+      "chutiTitle": "Eid E-Milad-Un-Nabi",
+      "iDate": "Hijri 12 Rabi Ul-Awal 1444",
+      "gragrian": "08 October 2022"
+    }
+  ]
+}

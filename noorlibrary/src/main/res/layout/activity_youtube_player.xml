@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/videoView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:controller_layout_id="@layout/layout_exo_video_control_view"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/videoView">
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/standard_margin">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitlePlayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/black"
+                    android:fontFamily="sans-serif-medium"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/scholars_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/black_secondary"
+                    android:fontFamily="sans-serif"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/margin"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/header"
+                android:background="#1F000000" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/next_video_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/margin"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/next_video"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/next_video_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/next_video_title"
+                android:clipToPadding="false"
+                android:padding="@dimen/standard_margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <RelativeLayout
+                android:id="@+id/empty_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/next_video_title">
+
+                <ImageView
+                    android:id="@+id/empty_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/default_content_des"
+                    android:src="@drawable/ic_empty_video" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/next_video_not_found"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/empty_img"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:text="@string/next_video_not_found"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/black"
+                    android:fontFamily="sans-serif-medium"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/next_video_not_found"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:text="@string/next_video_not_found_details"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/black_secondary"
+                    android:fontFamily="sans-serif"/>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

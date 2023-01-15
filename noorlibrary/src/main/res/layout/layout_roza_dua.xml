@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="dua"
+            type="com.gakk.noorlibrary.model.literature.Literature" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg">
+
+        <androidx.cardview.widget.CardView
+            style="@style/CardViewStyleNoElevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginBottom="@dimen/small_spacing"
+            android:paddingBottom="@dimen/standard_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/standard_margin"
+                android:paddingBottom="@dimen/standard_margin">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDuaTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/standard_margin"
+                    android:layout_marginEnd="@dimen/small_spacing"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{dua.title}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/txt_color_black"
+                    android:textFontWeight="400"
+                    app:layout_constraintEnd_toStartOf="@+id/btnToggleCollapse"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="title of the dua" />
+
+                <ImageView
+                    android:id="@+id/btnToggleCollapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/standard_margin"
+                    android:background="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_plus"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDuaTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvDuaTitle" />
+
+                <com.gakk.noorlibrary.views.TextViewNormalArabic
+                    android:id="@+id/tvDesArabic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_margin"
+                    android:layout_marginEnd="@dimen/standard_margin"
+                    android:text="@{dua.textInArabic}"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/txt_color_black"
+                    android:textFontWeight="400"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tvDuaTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDuaTitle"
+                    tools:text="title" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDuaDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:layout_marginEnd="@dimen/standard_margin"
+                    android:fontFamily="sans-serif"
+                    android:text="@{dua.text}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/txt_color_black"
+                    android:textFontWeight="400"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tvDuaTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDesArabic"
+                    tools:text="description " />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDuaMeaning"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:layout_marginEnd="@dimen/standard_margin"
+                    android:fontFamily="sans-serif"
+                    android:text="@{dua.pronunciation}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/txt_color_black"
+                    android:textFontWeight="400"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tvDuaTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDuaDesc"
+                    tools:text="description " />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

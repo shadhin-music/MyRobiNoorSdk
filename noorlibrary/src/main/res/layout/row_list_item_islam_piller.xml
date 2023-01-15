@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="contentbaseurl"
+            type="java.lang.String" />
+
+        <variable
+            name="item"
+            type="com.gakk.noorlibrary.model.home.Item" />
+
+        <variable
+            name="constant"
+            type="com.gakk.noorlibrary.util.ConstantsKt" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        style="@style/CardViewStyle"
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_spacing"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgBgPiller"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:fullImageUrl="@{contentbaseurl.concat(@string/slash).concat(item.imageUrl)}"
+                android:scaleType="centerCrop"
+                android:src="@drawable/place_holder_4_3_ratio"
+                app:attachedProgressBar="@{progressBar}"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeHolderDimension="@{constant.PLACE_HOLDER_4_3}" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/imgBgPiller"
+                app:layout_constraintEnd_toEndOf="@+id/imgBgPiller"
+                app:layout_constraintStart_toStartOf="@+id/imgBgPiller"
+                app:layout_constraintTop_toTopOf="@+id/imgBgPiller" />
+
+            <RelativeLayout
+                android:id="@+id/rlMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/standard_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgBgPiller">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_read" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/small_spacing"
+                    android:layout_toEndOf="@id/imgMore"
+                    android:text="@string/txt_learn_more"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/ash"
+                    android:fontFamily="sans-serif"/>
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

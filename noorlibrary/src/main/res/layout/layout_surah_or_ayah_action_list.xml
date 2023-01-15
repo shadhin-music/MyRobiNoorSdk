@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg"
+        android:paddingBottom="@dimen/standard_margin"
+        tools:ignore="UnusedAttribute">
+
+        <ImageButton
+            android:id="@+id/btnDismiss"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:padding="@dimen/margin_12"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSurahOrAyahNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:text="০২"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="400"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnDismiss" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSurahNameOrAyahTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="আল বাকারাহ্"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/txt_color_black"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="400"
+            app:layout_constraintStart_toEndOf="@+id/tvSurahOrAyahNumber"
+            app:layout_constraintTop_toBottomOf="@+id/btnDismiss" />
+
+
+        <include
+            android:id="@+id/layoutCopyAction"
+            layout="@layout/layout_surah_or_ayah_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSurahNameOrAyahTxt" />
+
+        <include
+            android:id="@+id/layoutShareAction"
+            layout="@layout/layout_surah_or_ayah_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutCopyAction" />
+
+        <include
+            android:id="@+id/layoutFavAction"
+            layout="@layout/layout_surah_or_ayah_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutShareAction" />
+
+        <include
+            android:id="@+id/layoutPlayAudioAction"
+            layout="@layout/layout_surah_or_ayah_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutFavAction" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

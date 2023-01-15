@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="literature"
+            type="com.gakk.noorlibrary.model.literature.Literature" />
+
+        <variable
+            name="constant"
+            type="com.gakk.noorlibrary.util.ConstantsKt" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgBg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:fullImageUrl="@{literature.fullImageUrl}"
+                android:scaleType="centerCrop"
+                android:src="@drawable/place_holder_16_9_ratio"
+                app:attachedProgressBar="@{progressBar}"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeHolderDimension="@{constant.PLACE_HOLDER_16_9}" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/imgBg"
+                app:layout_constraintEnd_toEndOf="@+id/imgBg"
+                app:layout_constraintStart_toStartOf="@+id/imgBg"
+                app:layout_constraintTop_toTopOf="@+id/imgBg" />
+
+            <com.gakk.noorlibrary.views.TextViewNormalArabic
+                android:id="@+id/tvDesArabic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@{literature.title}"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/txt_color_black"
+                android:textFontWeight="400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgBg"
+                tools:text="للَّهُمَّ إِنِّي أَسْأَلُكَ عِلْماً نَافِعاً، وَرِزْقاً طَيِّباً، وَعَمَلاً مُتَقَبَّلاً" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPronunciation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:lineSpacingMultiplier="1"
+                android:text="@{literature.pronunciation}"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_color_black"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="400"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imgBg"
+                app:layout_constraintTop_toBottomOf="@+id/tvDesArabic"
+                tools:text="ওলা তুসাআইর খাদ্দকা লিলিন্নাসি বালা তামশা ফী আলার্দি মারাহান ইন্না আল্লাহ লা যুহিব্বু কুল্লা মুখতালিন ফাখোরিন " />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMeaning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:lineSpacingMultiplier="1"
+                android:text="@{literature.text}"
+                android:fontFamily="sans-serif"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_color_black"
+                android:textFontWeight="400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPronunciation"
+                tools:text="''আর মানুষের প্রতি তোমার চিবুক ঘুরিয়ে নিও না, আর পৃথিবীতে গর্বভরে চলাফেরা কর না। নিঃসন্দেহ আল্লাহ্ প্রত্যেকটি উদ্ধত অহংকারীকে ভালবাসেন না।" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMoreInspirationVideo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:text="@string/txt_more_inspiration"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMeaning" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMoreInspiration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:layout_marginBottom="@dimen/standard_margin"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/standard_margin"
+                android:paddingEnd="@dimen/standard_margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMoreInspirationVideo"
+                tools:listitem="@layout/layout_item_inspiration">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <include
+                android:id="@+id/progressLayout"
+                layout="@layout/layout_circular_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

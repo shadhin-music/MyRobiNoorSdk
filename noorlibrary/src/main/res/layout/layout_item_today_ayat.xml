@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.gakk.noorlibrary.model.home.Data" />
+
+        <variable
+            name="ayat"
+            type="com.gakk.noorlibrary.model.home.Item" />
+
+        <variable
+            name="constant"
+            type="com.gakk.noorlibrary.util.ConstantsKt" />
+
+        <variable
+            name="item"
+            type="com.gakk.noorlibrary.model.ImageFromOnline" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_spacing">
+
+        <RelativeLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="@dimen/standard_margin"
+            android:paddingTop="@dimen/small_spacing"
+            android:paddingEnd="@dimen/standard_margin"
+            android:paddingBottom="@dimen/small_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgAyat"
+                android:layout_width="@dimen/size_24"
+                android:layout_height="@dimen/size_24"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:patchImageFullUrl="@{data.fullImageUrl}"
+                android:scaleType="fitXY"
+                tools:src="@drawable/ic_romjan_amol" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAyat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/small_spacing"
+                android:layout_toEndOf="@+id/imgAyat"
+                android:text="@{data.patchName}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_color_title"
+                android:fontFamily="sans-serif-medium"
+                tools:text="today's verse, read this every day" />
+        </RelativeLayout>
+
+
+        <androidx.cardview.widget.CardView
+            style="@style/CardViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:layout_marginEnd="@dimen/standard_margin"
+            app:cardElevation="0dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headerLayout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/small_spacing"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:layout_marginEnd="@dimen/small_spacing">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardImg"
+                    style="@style/CardViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgBg"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:adjustViewBounds="true"
+                            android:imageUrl="@{item.fullImageUrl}"
+                            app:attachedProgressBar="@{progressBar}"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="h,1:0.5608974"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgBg"
+                            app:layout_constraintEnd_toEndOf="@+id/imgBg"
+                            app:layout_constraintStart_toStartOf="@+id/imgBg"
+                            app:layout_constraintTop_toTopOf="@+id/imgBg">
+
+                        </ProgressBar>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_12"
+                            android:layout_marginEnd="@dimen/margin_12"
+                            android:fontFamily="@font/notosansbengali_regular"
+                            android:justificationMode="inter_word"
+                            android:text="@{ayat.text}"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgBg"
+                            app:layout_constraintEnd_toEndOf="@+id/imgBg"
+                            app:layout_constraintStart_toStartOf="@+id/imgBg"
+                            app:layout_constraintTop_toTopOf="@+id/imgBg"
+                            tools:text="হে মুমিনগণ! তোমাদের জন্যে সিয়ামের বিধান দেওয়া হলো, যেমন বিধান তোমাদের পূর্ববর্তীগণকে দেওয়া হয়েছিল, যাতে
+তোমরা মুত্তাকী হতে পার।
+
+- সূরা বাকারা [২:১৮৩]" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cardImg"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RelativeLayout
+                        android:id="@+id/rlRead"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/standard_margin">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgRead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_read" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/small_spacing"
+                            android:layout_toEndOf="@id/imgRead"
+                            android:text="@string/txt_read_surah"
+                            android:fontFamily="sans-serif"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/ash" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlShare"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/standard_margin">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgShare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_share" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvShareAyat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/small_spacing"
+                            android:layout_toEndOf="@id/imgShare"
+                            android:text="@string/txt_share"
+                            android:fontFamily="sans-serif"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/txt_color" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="month_name" translatable="false">
+        <item>@string/txt_jan</item>
+        <item>@string/txt_feb</item>
+        <item>@string/txt_mar</item>
+        <item>@string/txt_apr</item>
+        <item>@string/txt_may</item>
+        <item>@string/txt_jun</item>
+        <item>@string/txt_jul</item>
+        <item>@string/txt_aug</item>
+        <item>@string/txt_sep</item>
+        <item>@string/txt_oct</item>
+        <item>@string/txt_nov</item>
+        <item>@string/txt_dec</item>
+    </array>
+
+    <string-array name="custom_months" translatable="false">
+        <item>@string/txt_mohram</item>
+        <item>@string/txt_safar</item>
+        <item>@string/txt_awal</item>
+        <item>@string/txt_sani</item>
+        <item>@string/txt_jomadiul</item>
+        <item>@string/txt_jomadius_sani</item>
+        <item>@string/txt_rajab</item>
+        <item>@string/txt_saban</item>
+        <item>@string/txt_ramjan</item>
+        <item>@string/txt_sawal</item>
+        <item>@string/txt_jilkod</item>
+        <item>@string/txt_jilhazz</item>
+
+    </string-array>
+
+    <array name="week_name" translatable="false">
+        <item>@string/txt_sunday</item>
+        <item>@string/txt_monday</item>
+        <item>@string/txt_tuesday</item>
+        <item>@string/txt_wednesday</item>
+        <item>@string/txt_thursday</item>
+        <item>@string/txt_friday</item>
+        <item>@string/txt_saturday</item>
+    </array>
+
+    <array name="tasbih_duas" translatable="false">
+        <item>@string/txt_dua_one</item>
+        <item>@string/txt_dua_two</item>
+        <item>@string/txt_dua_three</item>
+        <item>@string/txt_dua_four</item>
+        <item>@string/txt_dua_five</item>
+        <item>@string/txt_dua_six</item>
+        <item>@string/txt_dua_seven</item>
+        <item>@string/txt_dua_eight</item>
+    </array>
+
+    <array name="hajj_tracker_places">
+        <item>Lokasi pertama di Mekah</item>
+        <item>Hari pertama di Mina</item>
+        <item>Hari kedua di Gunung Arafah</item>
+        <item>Hari kedua – Muzdalifah</item>
+        <item>Hari ketiga – Jambatan Jamrah</item>
+        <item>Hari keenam – Mekah</item>
+        <item>Hari keempat dan kelima – Berkhemah di Mina</item>
+    </array>
+    <array name="hajjDetailsText">
+        <item>Semasa Haji benar-benar bermula sesudah jemaah haji itu meninggalkan rumah, perkara
+            pertama yang akan dilaksanakan ialah tawaf dan saie di Mekah. Jemaah haji seterusnya
+            akan melakukan tawaf sebanyak 7 kali. Kemudian para jemaah akan berjalan atau berlari
+            tujuh kali di antara bukit-bukit Safa dan Marwah (Saie), melakonkan semula tindakan
+            Hajar, isteri kepada Abraham, ketika ia berlari berputus asa mencari air setelah
+            terkandas di sana.
+        </item>
+        <item>Pada hari kelapan bulan ZulHijjah, jemaah haji menuju Mina, di mana ribuan khemah
+            telah dibina untuk menempatkan mereka. Jemaah haji akan bermalam di sini semalaman.
+        </item>
+        <item>Pada hari kedua, para jemaah berjalan ke dataran Arafat - dimana Gunung Arafat berada
+            ditengahnya. Di sinilah Nabi Muhammad memberikan khutbah perpisahannya. Jemaah haji akan
+            kekal di sini, menunaikan solat sehingga matahari terbenam.
+        </item>
+        <item>Selepas matahari terbenam, jemaah haji menuju Muzdalifah pada malam itu. Di sana
+            mereka mengumpulkan kerikil untuk digunakan dalam upacara pada hari berikutnya.
+        </item>
+        <item>Jemaah haji kembali ke Jambatan Jamrah di Mina untuk upacara "Melontar Jamrah". Mereka
+            membuang kerikil pada tiga tiang berturut-turut yang mewakili Syaitan/Iblis. Hari ini,
+            hari ke-10 ZulHijjah, juga AidilAdha untuk umat Islam di seluruh dunia. Hari ini ditanda
+            dengan mengorbankan ternakan dan berkongsi daging dengan keluarga dan orang miskin.
+        </item>
+        <item>Selepas meninggalkan Jambatan Jamrah di Mina, para jemaah menunaikan tawaf sekali lagi
+            di Mekah. Tetapi tidak ada rehat dan mereka kembali ke Mina sekali lagi untuk bermalam.
+        </item>
+        <item>Jemaah haji menghabiskan malam hari 3, serta dua hari yang akan datang berkhemah di
+            Mina. Pada kedua hari ini, mereka kembali ke Jambatan Jamrah untuk membuang kerikil pada
+            ketiga-tiga dinding yang mewakili syaitan, arah dari timur ke barat. Pada akhir hari
+            kelima, mereka telah menyelesaikan Haji mereka.
+        </item>
+    </array>
+
+    <array name="hajj_title">
+        <item>ব্যক্তিগত তথ্য</item>
+        <item>ঠিকানা</item>
+        <item>পেমেন্ট</item>
+
+    </array>
+
+    <declare-styleable name="CalendarView">
+        <attr name="cc_headerColor" format="color" />
+        <attr name="cc_headerLabelColor" format="color" />
+        <attr name="cc_previousButtonSrc" format="integer" />
+        <attr name="cc_forwardButtonSrc" format="integer" />
+        <attr name="cc_todayLabelColor" format="color" />
+        <attr name="cc_selectionColor" format="color" />
+        <attr name="cc_selectionLabelColor" format="color" />
+        <attr name="cc_disabledDaysLabelsColor" format="color" />
+        <attr name="cc_highlightedDaysLabelsColor" format="color" />
+        <attr name="cc_pagesColor" format="color" />
+        <attr name="cc_abbreviationsBarColor" format="color" />
+        <attr name="cc_abbreviationsLabelsColor" format="color" />
+        <attr name="cc_abbreviationsLabelsSize" format="dimension" />
+        <attr name="cc_daysLabelsColor" format="color" />
+        <attr name="cc_anotherMonthsDaysLabelsColor" format="color" />
+        <attr name="cc_eventsEnabled" format="boolean" />
+        <attr name="cc_swipeEnabled" format="boolean" />
+        <attr name="cc_selectionDisabled" format="boolean" />
+        <attr name="cc_selectionBetweenMonthsEnabled" format="boolean" />
+        <attr name="cc_maximumDaysRange" format="integer" />
+        <attr name="cc_typeface" format="integer" />
+        <attr name="cc_todayTypeface" format="integer" />
+        <attr name="cc_type" />
+        <attr name="cc_firstDayOfWeek" />
+    </declare-styleable>
+
+    <attr name="cc_type" format="enum">
+        <enum name="classic" value="0" />
+        <enum name="one_day_picker" value="1" />
+        <enum name="many_days_picker" value="2" />
+        <enum name="range_picker" value="3" />
+    </attr>
+
+    <attr name="cc_firstDayOfWeek" format="enum">
+        <enum name="sunday" value="1" />
+        <enum name="monday" value="2" />
+        <enum name="tuesday" value="3" />
+        <enum name="wednesday" value="4" />
+        <enum name="thursday" value="5" />
+        <enum name="friday" value="6" />
+        <enum name="saturday" value="7" />
+    </attr>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:clickable="false"
+            android:id="@+id/page_stepper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginEnd="@dimen/standard_margin"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+        <com.gakk.noorlibrary.util.CustomViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/page_stepper" />
+
+    </RelativeLayout>
+
+
+</layout>

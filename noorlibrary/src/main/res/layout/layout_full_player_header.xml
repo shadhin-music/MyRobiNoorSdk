@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="surah"
+            type="com.gakk.noorlibrary.model.quran.surah.Data" />
+
+        <variable
+            name="item"
+            type="com.gakk.noorlibrary.model.ImageFromOnline" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            style="@style/CardViewStyleNoElevation"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="@dimen/size_24"
+            android:layout_marginEnd="@dimen/double_margin"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ivTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:imageUrl="@{item.fullImageUrl}"
+                    app:attachedProgressBar="@{progressBar}"
+                    android:scaleType="centerCrop" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivTop"
+                    app:layout_constraintEnd_toEndOf="@+id/ivTop"
+                    app:layout_constraintStart_toStartOf="@+id/ivTop"
+                    app:layout_constraintTop_toTopOf="@+id/ivTop">
+
+                </ProgressBar>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSurahTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:text="@{surah.name}"
+            android:textAlignment="center"
+            android:textColor="@color/txt_color_black"
+            android:textFontWeight="400"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAyahTxt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:text="@{surah.ayahCountWithPrefix}"
+            android:textAlignment="center"
+            android:textColor="@color/black_secondary"
+            android:textFontWeight="400"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSurahTitle" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:text="@string/next_surah"
+            android:fontFamily="sans-serif"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAyahTxt" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

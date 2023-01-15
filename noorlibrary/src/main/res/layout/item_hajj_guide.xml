@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.gakk.noorlibrary.model.literature.Literature" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_spacing"
+        android:background="@drawable/bg_border_rounded_gray"
+        android:padding="@dimen/small_spacing">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clContainerParent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/margin_12"
+            android:paddingBottom="@dimen/margin_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSerialStep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_color_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="01" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView26"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:fontFamily="sans-serif-medium"
+                android:text="@{item.title}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/ivStatus"
+                app:layout_constraintStart_toEndOf="@+id/tvSerialStep"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pre Hajj Preparation" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivStatus"
+                android:layout_width="@dimen/standard_margin"
+                android:layout_height="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/margin_12"
+                android:src="@drawable/ic_checked_circle"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/ivItemToogle"
+                app:layout_constraintEnd_toStartOf="@id/ivItemToogle"
+                app:layout_constraintTop_toTopOf="@id/ivItemToogle"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivItemToogle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_12"
+                android:src="@drawable/ic_expand_more"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clToogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clContainerParent"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView27"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12"
+                android:fontFamily="sans-serif"
+                android:text="@{item.text}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/txt_color_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/test_hajj_guide_text" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/viewYourCourse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@drawable/ic_line"
+                app:layout_constraintEnd_toEndOf="@+id/appCompatTextView27"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView27"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView27" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStep"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_have_you_done"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/ash"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/viewYourCourse" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvStep">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbDone"
+                    android:layout_width="81dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_done"
+                    android:text="@string/txt_done" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbNotYet"
+                    android:layout_width="81dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="@dimen/small_spacing"
+                    android:background="@drawable/ic_done"
+                    android:text="@string/txt_not_yet" />
+            </RadioGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

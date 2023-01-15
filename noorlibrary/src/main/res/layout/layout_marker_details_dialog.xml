@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="@dimen/standard_margin"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/standard_margin">
+
+            <ImageView
+                android:id="@+id/ic_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/default_content_des"
+                android:padding="@dimen/small_spacing"
+                android:src="@drawable/ic_close" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hajjDayTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/ic_close"
+                android:layout_toStartOf="@+id/ic_close"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                tools:text="Day 1: DDD" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hajjDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/hajjDayTitle"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif"
+                tools:text="descrtiption" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
+

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.gakk.noorlibrary.model.ImageFromOnline" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg"
+        android:paddingBottom="@dimen/margin_10">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="18dp"
+            android:text="রমজানের আর বাকি আছে"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/txt_color_black"
+            android:textFontWeight="400"
+            android:fontFamily="sans-serif"
+            app:layout_constraintEnd_toStartOf="@id/imageFilterView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvInfoLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="আজ ০১ রোজা"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/colorPrimary"
+            android:textFontWeight="400"
+            android:fontFamily="sans-serif"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/tvInfo"
+            app:layout_constraintTop_toBottomOf="@+id/tvInfo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/txt_color_black"
+            android:textFontWeight="400"
+            android:fontFamily="sans-serif"
+            app:layout_constraintEnd_toEndOf="@+id/layoutIfterInfo"
+            app:layout_constraintStart_toStartOf="@+id/layoutSehriInfo"
+            app:layout_constraintTop_toBottomOf="@+id/imageFilterView" />
+
+        <include
+            android:id="@+id/layoutSehriInfo"
+            layout="@layout/layout_sehri_or_ifter_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/margin_12"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/layoutIfterInfo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <include
+            android:id="@+id/layoutIfterInfo"
+            layout="@layout/layout_sehri_or_ifter_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="@dimen/margin_12"
+            android:layout_marginEnd="@dimen/standard_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/layoutSehriInfo"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/imageFilterView"
+            android:layout_width="144dp"
+            android:layout_height="80dp"
+            android:background="@null"
+            android:imageUrl="@{item.fullImageUrl}"
+            android:scaleType="centerCrop"
+            app:attachedProgressBar="@{progressBar}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/imageFilterView"
+            app:layout_constraintEnd_toEndOf="@+id/imageFilterView"
+            app:layout_constraintStart_toStartOf="@+id/imageFilterView"
+            app:layout_constraintTop_toTopOf="@+id/imageFilterView">
+        </ProgressBar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutDivisionContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/bg_border_rounded_green"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/layoutIfterInfo"
+            app:layout_constraintStart_toStartOf="@+id/layoutSehriInfo"
+            app:layout_constraintTop_toBottomOf="@+id/layoutIfterInfo">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDivision"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/margin_12"
+                android:layout_marginBottom="@dimen/margin_12"
+                android:textColor="@color/colorPrimary"
+                android:textFontWeight="400"
+                android:fontFamily="sans-serif"
+                android:textSize="@dimen/standard_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@null"
+                android:src="@drawable/ic_dropdown"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/colorPrimary" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

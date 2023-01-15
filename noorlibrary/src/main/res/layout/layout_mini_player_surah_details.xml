@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="surah"
+            type="com.gakk.noorlibrary.model.quran.surah.Data" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:clickable="true"
+        android:background="@color/white_secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/timeBarContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransperant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/exo_progress_mini"
+                style="@style/MySeekBar"
+                android:thumb="@color/colorTransperant"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginLeft="-16dp"
+                android:layout_marginTop="-12dp"
+                android:layout_marginRight="-16dp"
+                android:splitTrack="false" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCurrentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:text="০০:০০"
+            android:clickable="false"
+            android:textColor="@color/txt_color_black"
+            android:textFontWeight="400"
+            android:fontFamily="sans-serif"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeBarContainer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDuration"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:text="5০:1০"
+            android:textColor="@color/txt_color_black"
+            android:textFontWeight="400"
+            android:fontFamily="sans-serif"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeBarContainer" />
+
+        <ImageView
+            android:id="@+id/imgQuranMini"
+            android:clickable="false"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:background="@null"
+            android:src="@drawable/bg_quran_mini_player"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvCurrentTime"
+            app:layout_constraintTop_toBottomOf="@+id/tvCurrentTime" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSurahName"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_12"
+            android:text="@{surah.name}"
+            android:textColor="@color/txt_color_black"
+            android:textFontWeight="400"
+            android:fontFamily="sans-serif"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_constraintStart_toEndOf="@+id/imgQuranMini"
+            app:layout_constraintTop_toTopOf="@+id/imgQuranMini" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAyahNum"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_12"
+            android:layout_marginTop="@dimen/margin_4"
+            android:text="@{surah.ayahCountWithPrefix}"
+            android:textColor="@color/black_secondary"
+            android:textFontWeight="400"
+            android:textSize="@dimen/margin_12"
+            android:fontFamily="sans-serif"
+            app:layout_constraintStart_toEndOf="@+id/imgQuranMini"
+            app:layout_constraintTop_toBottomOf="@+id/tvSurahName" />
+
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="@dimen/margin_20"
+            android:layout_height="@dimen/margin_20"
+            android:background="@color/white_secondary"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_next"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPlayPause"
+            app:layout_constraintEnd_toEndOf="@+id/tvDuration"
+            app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
+
+        <ImageButton
+            android:id="@+id/btnPlayPause"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_marginEnd="16dp"
+            android:background="@color/white_secondary"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_play_filled_enabled"
+            app:layout_constraintBottom_toBottomOf="@+id/imgQuranMini"
+            app:layout_constraintEnd_toStartOf="@+id/btnNext"
+            app:layout_constraintTop_toBottomOf="@+id/tvCurrentTime" />
+
+        <ImageButton
+            android:id="@+id/btnPrev"
+            android:layout_width="@dimen/margin_20"
+            android:layout_height="@dimen/margin_20"
+            android:layout_marginEnd="16dp"
+            android:background="@color/white_secondary"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_prev"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPlayPause"
+            app:layout_constraintEnd_toStartOf="@+id/btnPlayPause"
+            app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.43">
+
+            <ImageView
+                android:id="@+id/imgNoInternet"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@null"
+                android:src="@drawable/bg_no_internet" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/standard_margin"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="@dimen/standard_margin"
+                android:text="@string/error_message"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black_secondary"
+                android:textFontWeight="800"
+                android:textSize="@dimen/margin_14" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRetry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_rectangle_green"
+                android:text="@string/retry"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="@dimen/margin_14"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
