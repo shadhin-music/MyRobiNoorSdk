@@ -112,7 +112,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = "com.gakk.noorlibrary"
-                artifactId = "MyRobiNoorSdk"
+                artifactId = "robi_noor_sdk"
                 version = "0.0.1"
             }
         }
