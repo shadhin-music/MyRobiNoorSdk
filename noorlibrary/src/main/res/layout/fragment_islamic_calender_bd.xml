@@ -9,5 +9,12 @@
         <include
             android:id="@+id/calender_view"
             layout="@layout/content_islamic_calendar_bd" />
+
+        <include
+            android:id="@+id/progressLayout"
+            layout="@layout/layout_circular_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
     </RelativeLayout>
 </layout>

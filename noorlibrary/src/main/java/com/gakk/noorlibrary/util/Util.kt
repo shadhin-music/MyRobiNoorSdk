@@ -4,16 +4,20 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.provider.Settings
 import android.util.Base64
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.prefs.AppPreference
@@ -69,20 +73,20 @@ object Util {
 
     fun checkSub(): Boolean {
         return true
-      /*  if (AppPreference.subWeekly || AppPreference.subMonthly || AppPreference.subWeeklySoftBundle
-            || AppPreference.subMonthlySoftBundle || AppPreference.subMonthlySoftBundleRobi ||
-            AppPreference.subWeeklySoftBundleRobi || AppPreference.subSoftBundleRobi ||
-            AppPreference.subSoftBundleRamadanRobi || AppPreference.subSoftBundleSevenDaysRobi ||
-            AppPreference.subSoftBundleFifteenDaysRobi || AppPreference.subYearly
-            || AppPreference.subMonthlyGpay
-            || AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad
-            || AppPreference.subYearlyNagad
-            || AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl
-            || AppPreference.subYearlySsl || AppPreference.subQuran
-        ) {
-            return true
-        }
-        return false*/
+        /*  if (AppPreference.subWeekly || AppPreference.subMonthly || AppPreference.subWeeklySoftBundle
+              || AppPreference.subMonthlySoftBundle || AppPreference.subMonthlySoftBundleRobi ||
+              AppPreference.subWeeklySoftBundleRobi || AppPreference.subSoftBundleRobi ||
+              AppPreference.subSoftBundleRamadanRobi || AppPreference.subSoftBundleSevenDaysRobi ||
+              AppPreference.subSoftBundleFifteenDaysRobi || AppPreference.subYearly
+              || AppPreference.subMonthlyGpay
+              || AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad
+              || AppPreference.subYearlyNagad
+              || AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl
+              || AppPreference.subYearlySsl || AppPreference.subQuran
+          ) {
+              return true
+          }
+          return false*/
     }
 
     fun checkSelectedDate(selectedDate: String?): Boolean {
@@ -256,4 +260,32 @@ fun getDay(date: Date?): Int {
     cal.time = date
     cal.add(Calendar.DATE, -1)
     return cal[Calendar.DAY_OF_MONTH]
+}
+
+ fun getBitmapFromView(ctx: Context, view: View): Bitmap? {
+    view.layoutParams = FrameLayout.LayoutParams(
+        FrameLayout.LayoutParams.MATCH_PARENT,
+        FrameLayout.LayoutParams.MATCH_PARENT)
+
+    val dm = ctx.resources.displayMetrics
+    view.measure(
+        View.MeasureSpec.makeMeasureSpec(
+            dm.widthPixels,
+            View.MeasureSpec.EXACTLY
+        ),
+        View.MeasureSpec.makeMeasureSpec(
+            dm.heightPixels,
+            View.MeasureSpec.EXACTLY
+        )
+    )
+    view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+    val bitmap = Bitmap.createBitmap(
+        view.measuredWidth,
+        view.measuredHeight,
+        Bitmap.Config.ARGB_8888
+    )
+    val canvas = Canvas(bitmap)
+    view.layout(view.left, view.top, view.right, view.bottom)
+    view.draw(canvas)
+    return bitmap
 }

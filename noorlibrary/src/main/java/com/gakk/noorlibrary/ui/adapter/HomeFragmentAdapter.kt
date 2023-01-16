@@ -283,7 +283,12 @@ class HomeFragmentAdapter(
 
             holder.bindingAyat?.rlShare?.handleClickEvent {
 
-                mHomeCellItemControl.shareImage(list.contentBaseUrl + "/" + list.items?.get(0)?.imageUrl?.trim())
+                mHomeCellItemControl.shareBitMap(
+                    getBitmapFromView(
+                        holder.bindingAyat?.clImg?.context!!,
+                        holder.bindingAyat?.clImg!!
+                    )
+                )
             }
         }
 
@@ -299,12 +304,18 @@ class HomeFragmentAdapter(
         holder.bindingPrayer?.let {
             it.data = list
             it.recyclerViewPrayer.adapter =
-                HomePrayerAdapter(list.contentBaseUrl!!, list.items!!, mCallBack)
+                HomePrayerAdapter(
+                    list.contentBaseUrl!!,
+                    list.items!!,
+                    mCallBack,
+                    mHomeCellItemControl
+                )
         }
 
         holder.bindingIslamicInspiraton?.let {
             it.data = list
-            it.inspiration = list.items?.get(0)
+            val inspirationItem = list.items?.get(0)
+            it.inspiration = inspirationItem
 
 
             if (!list.about?.trim().equals(PAGE_CAT_INSLAMIC_INSPIRATION)) {
@@ -322,6 +333,7 @@ class HomeFragmentAdapter(
 
                 if (list.about?.trim().equals(PAGE_CAT_INSLAMIC_INSPIRATION)) {
 
+                    mHomeCellItemControl.shareImage(list.contentBaseUrl + "/" + inspirationItem?.imageUrl)
                 } else if (list.about?.trim().equals(PAGE_VIRTUAL_KAFELA)) {
                     holder.bindingIslamicInspiraton?.imgBg?.context?.startActivity(
                         Intent(

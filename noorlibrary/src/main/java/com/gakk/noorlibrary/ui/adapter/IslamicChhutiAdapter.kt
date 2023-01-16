@@ -7,18 +7,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.databinding.ItemIslamicChutiBinding
-import com.gakk.noorlibrary.model.calender.IslamicChhutiModel
+import com.gakk.noorlibrary.model.literature.Literature
 
 
 /**
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/29/2021, Thu
  */
-class IslamicChhutiAdapter(arrayList: ArrayList<IslamicChhutiModel>) :
+class IslamicChhutiAdapter(val mDataList: MutableList<Literature>) :
     RecyclerView.Adapter<IslamicChhutiAdapter.ViewHolder>() {
 
     private var listItemClickListener: ListItemClickListener? = null
-    private val mDataList: ArrayList<IslamicChhutiModel> = arrayList
+    // private val mDataList: ArrayList<IslamicChhutiModel> = arrayList
 
     interface ListItemClickListener {
         fun onItemClick(i: Int, view: View?)
@@ -34,31 +34,33 @@ class IslamicChhutiAdapter(arrayList: ArrayList<IslamicChhutiModel>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        if (mDataList[i].chutiTitle != null
-            && mDataList[i].chutiTitle?.isNotEmpty() == true
-            && !mDataList[i].chutiTitle
-                .equals("null", false)
-        ) {
-            viewHolder.binding.txtVwTitle.text = mDataList[i].chutiTitle
-        }
-        var dateTV = ""
-        if (mDataList[i].gragrian != null && mDataList[i].gragrian?.isNotEmpty() == true && !mDataList[i].gragrian.equals(
-                "null",
-                false
-            )
-        ) {
-            dateTV = mDataList[i].gragrian ?: ""
-        }
 
-        if (mDataList[i].iDate != null && mDataList[i].iDate?.isNotEmpty() == true && !mDataList[i].iDate.equals(
-                "null",
-                false
-            )
-        ) {
-            dateTV = dateTV + " • " + mDataList[i].iDate
-        }
+        viewHolder.binding.literature = mDataList.get(i)
+        /*  if (mDataList[i].chutiTitle != null
+              && mDataList[i].chutiTitle?.isNotEmpty() == true
+              && !mDataList[i].chutiTitle
+                  .equals("null", false)
+          ) {
+              viewHolder.binding.txtVwTitle.text = mDataList[i].chutiTitle
+          }
+          var dateTV = ""
+          if (mDataList[i].gragrian != null && mDataList[i].gragrian?.isNotEmpty() == true && !mDataList[i].gragrian.equals(
+                  "null",
+                  false
+              )
+          ) {
+              dateTV = mDataList[i].gragrian ?: ""
+          }
 
-        viewHolder.binding.txtDate.text = dateTV
+          if (mDataList[i].iDate != null && mDataList[i].iDate?.isNotEmpty() == true && !mDataList[i].iDate.equals(
+                  "null",
+                  false
+              )
+          ) {
+              dateTV = dateTV + " • " + mDataList[i].iDate
+          }
+
+          viewHolder.binding.txtDate.text = dateTV*/
     }
 
     fun setOnItemClickListener(listItemClickListener2: ListItemClickListener?) {

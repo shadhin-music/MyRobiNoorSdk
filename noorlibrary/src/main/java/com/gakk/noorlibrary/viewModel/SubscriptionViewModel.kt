@@ -17,28 +17,12 @@ class SubscriptionViewModel(private val repository: RestRepository) : ViewModel(
     var weeklySubInfo: MutableLiveData<Resource<CheckSubResponse>> = MutableLiveData()
     var monthlySubInfo: MutableLiveData<Resource<CheckSubResponse>> = MutableLiveData()
     var canelSubInfo: MutableLiveData<Resource<String>> = MutableLiveData()
-    var weeklySubInfoSoftBundle: MutableLiveData<Resource<String>> = MutableLiveData()
-    var monthlySubInfoSoftBundle: MutableLiveData<Resource<String>> = MutableLiveData()
     var weeklySubInfoRobi: MutableLiveData<Resource<String>> = MutableLiveData()
     var monthlySubInfoRobi: MutableLiveData<Resource<String>> = MutableLiveData()
-    var monthlySoftBundleRobi: MutableLiveData<Resource<String>> = MutableLiveData()
-    var weeklySoftBundleRobi: MutableLiveData<Resource<String>> = MutableLiveData()
-    var softBundleRobi: MutableLiveData<Resource<String>> = MutableLiveData()
-    var softBundleRamadanRobi: MutableLiveData<Resource<String>> = MutableLiveData()
-    var softBundleSevenDaysRobi: MutableLiveData<Resource<String>> = MutableLiveData()
-    var softBundleFifteenDaysRobi: MutableLiveData<Resource<String>> = MutableLiveData()
     var networkInfo: MutableLiveData<Resource<String>> = MutableLiveData()
-    var paymentNagad: MutableLiveData<Resource<PaymentInitiateResponse>> = MutableLiveData()
-    var nagadSubInfoMonthly: MutableLiveData<Resource<NagadSubStatusResponse>> = MutableLiveData()
     var nagadSubInfoHalfYearly: MutableLiveData<Resource<NagadSubStatusResponse>> =
         MutableLiveData()
-    var nagadSubInfoYearly: MutableLiveData<Resource<NagadSubStatusResponse>> = MutableLiveData()
     var paymentSsl: MutableLiveData<Resource<SslPaymentInitiateResponse>> = MutableLiveData()
-
-    var sslSubInfoMonthly: MutableLiveData<Resource<NagadSubStatusResponse>> = MutableLiveData()
-    var sslSubInfoHalfYearly: MutableLiveData<Resource<NagadSubStatusResponse>> =
-        MutableLiveData()
-    var sslSubInfoYearly: MutableLiveData<Resource<NagadSubStatusResponse>> = MutableLiveData()
 
 
     companion object {

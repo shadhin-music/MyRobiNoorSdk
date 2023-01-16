@@ -89,7 +89,7 @@ class InspirationAdapter(
     fun getLocalBitmapUri(bmp: Bitmap): Uri? {
         var bmpUri: Uri? = null
         try {
-            val file: File = File(
+            val file = File(
                 BaseApplication.getAppContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                 "share_image_" + System.currentTimeMillis() + ".png"
             )
@@ -98,7 +98,7 @@ class InspirationAdapter(
             out.close()
             bmpUri = FileProvider.getUriForFile(
                 BaseApplication.getAppContext(),
-                BaseApplication.getAppContext().getPackageName() + ".provider",
+                "com.gakk.noorlibrary" + ".provider",
                 file
             )
         } catch (e: IOException) {

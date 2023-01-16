@@ -270,5 +270,6 @@
                     android:padding="@dimen/standard_margin" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
     </RelativeLayout>
 </layout>

@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.ui.fragments.tabs
 
+import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
@@ -530,6 +531,12 @@ class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl, Card
 
     override fun getTasbihCount() = localcount
     override fun getTasbihTimes() = userSelectCount
+    override fun shareBitMap(bitmap: Bitmap?) {
+        val uri = bitmap?.saveToInternalStorage(requireContext())
+
+        requireActivity().shareCacheDirBitmapV2(uri)
+    }
+
     override fun shareImage(imageUrl: String) {
         lifecycleScope.launch {
             getBitmapFromUrlX(imageUrl, activity)
@@ -846,5 +853,6 @@ interface HomeCellItemControl : Serializable {
     fun tasbihResetButtonClick()
     fun getTasbihCount(): Int
     fun getTasbihTimes(): Int
+    fun shareBitMap(bitmap: Bitmap?)
     fun shareImage(imageUrl: String)
 }

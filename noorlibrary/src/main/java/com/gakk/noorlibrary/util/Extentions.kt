@@ -262,10 +262,10 @@ fun Activity.shareCacheDirBitmap(uri: Uri) {
     }
 }
 
-fun Activity.shareCacheDirBitmapV2(uri: Uri) {
+fun Activity.shareCacheDirBitmapV2(uri: Uri?) {
     val txtShare = "Lead your life in an Islamic way. Get the Noor app now. https://cutt.ly/z2V8tm8"
 
-    val fis = FileInputStream(uri.path)
+    val fis = FileInputStream(uri?.path)
     val bitmap = BitmapFactory.decodeStream(fis)
     fis.close()
 

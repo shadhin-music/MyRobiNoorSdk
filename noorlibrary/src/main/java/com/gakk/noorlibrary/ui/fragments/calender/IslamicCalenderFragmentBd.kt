@@ -9,18 +9,26 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
+import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.databinding.FragmentIslamicCalenderBdBinding
 import com.gakk.noorlibrary.model.calender.IslamicCalendarModel
 import com.gakk.noorlibrary.model.calender.IslamicChhutiModel
 import com.gakk.noorlibrary.ui.adapter.IslamicCalendarAdapter
 import com.gakk.noorlibrary.ui.adapter.IslamicChhutiAdapter
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.CalendarUtility
+import com.gakk.noorlibrary.util.RepositoryProvider
+import com.gakk.noorlibrary.util.TimeFormtter
+import com.gakk.noorlibrary.util.getLocalisedTextFromResId
+import com.gakk.noorlibrary.viewModel.LiteratureViewModel
+import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
@@ -39,8 +47,9 @@ class IslamicCalenderFragmentBd : Fragment() {
     private var mCallback: DetailsCallBack? = null
 
     private var mResponseDataIslCht: ArrayList<IslamicChhutiModel>? = null
-    private var mDataAdapterIslCht: RecyclerView.Adapter<*>? = null
     private var mLayoutManagerIslCht: GridLayoutManager? = null
+    private lateinit var repository: RestRepository
+    private lateinit var model: LiteratureViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,10 +86,50 @@ class IslamicCalenderFragmentBd : Fragment() {
         initFunctionality()
         initialListener()
         loadData()
+
+        lifecycleScope.launch {
+            val job = launch {
+                repository = RepositoryProvider.getRepository()
+            }
+            job.join()
+
+            model = ViewModelProvider(
+                this@IslamicCalenderFragmentBd,
+                LiteratureViewModel.FACTORY(repository)
+            ).get(LiteratureViewModel::class.java)
+
+
+            model.loadTextBasedLiteratureListBySubCategory(
+                R.string.islamic_chuti_id.getLocalisedTextFromResId(),
+                "undefined",
+                "1"
+            )
+
+            subscribeObserver()
+        }
+    }
+
+    private fun subscribeObserver() {
+        model.literatureListData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    binding.progressLayout.root.visibility = View.VISIBLE
+                }
+                Status.ERROR -> {
+                    binding.progressLayout.root.visibility = View.GONE
+                }
+
+                Status.SUCCESS -> {
+                    val literatureList = it.data?.data ?: mutableListOf()
+                    binding.calenderView.recyclerViewIslamicChhuti.adapter =
+                        IslamicChhutiAdapter(literatureList)
+                    binding.progressLayout.root.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun loadData() {
-        loadIslamicChhutiData()
         loadIslamicCalendar(currentMonthIndex)
     }
 
@@ -123,24 +172,6 @@ class IslamicCalenderFragmentBd : Fragment() {
         mDataAdapter?.notifyDataSetChanged()
     }
 
-    private fun loadIslamicChhutiData() {
-        var loadJSONFromAsset: String = loadJSONFromAsset("islamic_chuti.json")
-        val string: String = AppPreference.language!!
-        if (string.equals(LAN_ENGLISH, ignoreCase = true)) {
-            loadJSONFromAsset = loadJSONFromAsset("islamic_chuti_en.json")
-        }
-        val jSONByIndex: ArrayList<Array<String>> = Parser.getJSONByIndex(
-            loadJSONFromAsset + "", "iChhuti", arrayOf("id", "chutiTitle", "iDate", "gragrian")
-        )
-        if (jSONByIndex.size > 0) {
-            for (i in 0 until jSONByIndex.size) {
-                mResponseDataIslCht?.add(IslamicChhutiModel(strArr = jSONByIndex[i]))
-            }
-            mDataAdapterIslCht?.notifyDataSetChanged()
-        }
-    }
-
-
     private fun initialListener() {
         binding.calenderView.llNext.setOnClickListener { nextPrevious(1) }
         binding.calenderView.llLftPrevious.setOnClickListener { nextPrevious(2) }
@@ -181,21 +212,5 @@ class IslamicCalenderFragmentBd : Fragment() {
         binding.calenderView.recyclerViewIslamicChhuti.layoutManager = gridLayoutManager
         val arrayList: ArrayList<IslamicChhutiModel> = ArrayList()
         this.mResponseDataIslCht = arrayList
-        val islamicChhutiAdapter = IslamicChhutiAdapter(arrayList)
-        this.mDataAdapterIslCht = islamicChhutiAdapter
-        binding.calenderView.recyclerViewIslamicChhuti.adapter = islamicChhutiAdapter
-    }
-
-    private fun loadJSONFromAsset(str: String): String {
-        return try {
-            val open: InputStream = requireActivity().getAssets().open(str)
-            val bArr = ByteArray(open.available())
-            open.read(bArr)
-            open.close()
-            String(bArr, StandardCharsets.UTF_8)
-        } catch (e: IOException) {
-            e.printStackTrace()
-            ""
-        }
     }
 }
