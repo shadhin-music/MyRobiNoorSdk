@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import coil.Coil
 import coil.request.ImageRequest
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.model.khatam.KhatamQuranVideosResponse
@@ -152,7 +153,7 @@ fun View.resizeView(viewDimen: ViewDimension, screenWdth: Int?, context: Context
 
 fun Int.getLocalisedTextFromResId(): String {
     var text = "N/A"
-    BaseApplication.getAppContext()?.let {
+    Noor.appContext?.let {
         text = it.resources.getString(this)
     }
     return text

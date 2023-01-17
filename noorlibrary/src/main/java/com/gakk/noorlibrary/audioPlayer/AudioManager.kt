@@ -3,6 +3,7 @@ package com.gakk.noorlibrary.audioPlayer
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import com.gakk.noorlibrary.Noor
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.MediaSource
@@ -29,68 +30,64 @@ object AudioManager {
     private var audioPlayer: ExoPlayer? = null
     private var mediaSource: MediaSource? = null
 
-    fun getAudioPlayer() = com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer
+    fun getAudioPlayer() = audioPlayer
 
 
     private var trackEndedListener: Player.Listener? = null
 
     object PlayListControl {
         fun setPlayListType(type: String) {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.listType = type
+            listType = type
         }
 
-        fun getPlayListType() = com.gakk.noorlibrary.audioPlayer.AudioManager.listType
+        fun getPlayListType() = listType
 
         fun setplayList(surahs: MutableList<Data>? = null) {
             surahs?.let {
-                com.gakk.noorlibrary.audioPlayer.AudioManager.surahList = surahs
+                surahList = surahs
             }
         }
 
-        fun getSurahList() = com.gakk.noorlibrary.audioPlayer.AudioManager.surahList
+        fun getSurahList() = surahList
 
-        fun getCurrentSurah() = com.gakk.noorlibrary.audioPlayer.AudioManager.surahList?.get(
-            com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex ?: 0)
-
-//        fun clearPlayList(){
-//            surahList= null
-//        }
+        fun getCurrentSurah() = surahList?.get(
+            currentIndex ?: 0)
 
         fun isPlayListNull(): Boolean {
-            when (com.gakk.noorlibrary.audioPlayer.AudioManager.listType) {
-                SURAH_LIST_TYPE -> return com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.isSurahListNull()
-                else -> return com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.isIslamicSongListNull()
+            when (listType) {
+                SURAH_LIST_TYPE -> return isSurahListNull()
+                else -> return isIslamicSongListNull()
             }
         }
 
-        fun isSurahListNull() = com.gakk.noorlibrary.audioPlayer.AudioManager.surahList == null
+        fun isSurahListNull() = surahList == null
         fun isIslamicSongListNull() = true
 
         fun setCurrentIndex(index: Int) {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex = index
+            currentIndex = index
         }
 
         fun getCurrentIndex(): Int {
-            return com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex ?: 0
+            return currentIndex ?: 0
         }
 
         fun incrementCurrentIndex() {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex?.let {
-                if (com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex!! < com.gakk.noorlibrary.audioPlayer.AudioManager.surahList!!.size - 1) {
-                    com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex = com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex!! + 1
+            currentIndex?.let {
+                if (currentIndex!! < surahList!!.size - 1) {
+                    currentIndex = currentIndex!! + 1
                 }
-                Log.e("SERVICE___", "Current Surah Index : ${com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex}")
+                Log.e("SERVICE___", "Current Surah Index : $currentIndex")
             }
 
 
         }
 
         fun decrementCurrentIndex() {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex?.let {
-                if (com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex!! > 0) {
-                    com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex = com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex!! - 1
+            currentIndex?.let {
+                if (currentIndex!! > 0) {
+                    currentIndex = currentIndex!! - 1
                 }
-                Log.i("SERVICE___", "Current Surah Index : ${com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex}")
+                Log.i("SERVICE___", "Current Surah Index : $currentIndex")
             }
 
 
@@ -101,19 +98,18 @@ object AudioManager {
 
     object InstanceControl {
 
-        //fun isPlayerInitialised()= audioPlayer!=null
         fun initAudioPlayer(context: Context) {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.InstanceControl.destroyAudioPlayerInstance()
+            destroyAudioPlayerInstance()
 
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer = ExoPlayer.Builder(context).build()
+            audioPlayer = ExoPlayer.Builder(context).build()
             val audioAttributes: AudioAttributes = AudioAttributes.Builder()
                 .setUsage(C.USAGE_MEDIA)
                 .setContentType(C.CONTENT_TYPE_MUSIC)
                 .build()
 
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer?.setAudioAttributes(audioAttributes, /* handleAudioFocus= */ true)
+            audioPlayer?.setAudioAttributes(audioAttributes, /* handleAudioFocus= */ true)
 
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer?.addListener(object : Player.Listener {
+            audioPlayer?.addListener(object : Player.Listener {
                 override fun onPlayerStateChanged(
                     playWhenReady: Boolean,
                     playbackState: Int
@@ -146,19 +142,19 @@ object AudioManager {
             })
 
 
-            com.gakk.noorlibrary.audioPlayer.AudioManager.InstanceControl.initTrackEndedListener()
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer?.addListener(com.gakk.noorlibrary.audioPlayer.AudioManager.trackEndedListener!!)
+            initTrackEndedListener()
+            audioPlayer?.addListener(trackEndedListener!!)
 
         }
 
         fun initTrackEndedListener() {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.trackEndedListener = object : Player.Listener {
+            trackEndedListener = object : Player.Listener {
                 override fun onPlayerStateChanged(
                     playWhenReady: Boolean,
                     playbackState: Int
                 ) {
                     if (playbackState == ExoPlayer.STATE_ENDED) {
-                        BaseApplication.getAppContext().let {
+                       Noor.appContext.let {
                             AudioPlayerService.executePlayerCommand(NEXT_COMMAND)
                         }
 
@@ -168,10 +164,10 @@ object AudioManager {
         }
 
         fun destroyAudioPlayerInstance() {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer?.let {
+            audioPlayer?.let {
                 it.release()
             }
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer = null
+            audioPlayer = null
         }
 
 
@@ -180,18 +176,18 @@ object AudioManager {
     object PlayerControl {
 
         fun setIsNotPauseToTrue() {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.isNotPaused = true
+            isNotPaused = true
         }
 
-        fun getIsNotPaused(): Boolean = com.gakk.noorlibrary.audioPlayer.AudioManager.isNotPaused
+        fun getIsNotPaused(): Boolean = isNotPaused
 
         fun playAction(context: Context) {
 
-            val appName = com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.getApplicationName(
+            val appName = getApplicationName(
                 context!!
             )!!
             val path =
-                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.getPathByListType()
+               getPathByListType()
             val dataSourceFactory: DataSource.Factory =
                 DefaultDataSourceFactory(
                     context,
@@ -201,7 +197,7 @@ object AudioManager {
                     )
                 )
 
-            com.gakk.noorlibrary.audioPlayer.AudioManager.mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+            mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(
                     MediaItem.fromUri(
                         Uri.parse(
@@ -210,11 +206,11 @@ object AudioManager {
                     )
                 )
 
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer?.prepare(com.gakk.noorlibrary.audioPlayer.AudioManager.mediaSource!!)
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer?.playWhenReady =
-                com.gakk.noorlibrary.audioPlayer.AudioManager.isNotPaused
+            audioPlayer?.prepare(mediaSource!!)
+            audioPlayer?.playWhenReady =
+                isNotPaused
 
-            Log.i("SERVICE___", "ISNOTPAUSED:${com.gakk.noorlibrary.audioPlayer.AudioManager.isNotPaused}")
+            Log.i("SERVICE___", "ISNOTPAUSED:${isNotPaused}")
 
         }
 
@@ -227,33 +223,33 @@ object AudioManager {
         }
 
         fun getPathByListType(): String {
-            when (com.gakk.noorlibrary.audioPlayer.AudioManager.listType) {
-                SURAH_LIST_TYPE -> return com.gakk.noorlibrary.audioPlayer.AudioManager.surahList!!.get(
-                    com.gakk.noorlibrary.audioPlayer.AudioManager.currentIndex!!).audioUrl
+            when (listType) {
+                SURAH_LIST_TYPE -> return surahList!!.get(
+                    currentIndex!!).audioUrl
                 else -> return ""
             }
         }
 
         fun pauseAction() {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.isNotPaused = false
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer?.playWhenReady =
-                com.gakk.noorlibrary.audioPlayer.AudioManager.isNotPaused
+            isNotPaused = false
+            audioPlayer?.playWhenReady =
+               isNotPaused
         }
 
         fun resumeAction() {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.isNotPaused = true
-            com.gakk.noorlibrary.audioPlayer.AudioManager.audioPlayer?.playWhenReady =
-                com.gakk.noorlibrary.audioPlayer.AudioManager.isNotPaused
+            isNotPaused = true
+            audioPlayer?.playWhenReady =
+                isNotPaused
         }
 
         fun nextAction(context: Context) {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.incrementCurrentIndex()
-            com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.playAction(context)
+            PlayListControl.incrementCurrentIndex()
+            playAction(context)
         }
 
         fun prevAction(context: Context) {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.decrementCurrentIndex()
-            com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.playAction(context)
+            PlayListControl.decrementCurrentIndex()
+            playAction(context)
         }
 
     }

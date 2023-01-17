@@ -82,8 +82,6 @@ object AppPreference {
 
     private lateinit var SET_LANGUAGE: Pair<String, String>
 
-    private val IS_FIRST_RUN = Pair(ISFIRST, false)
-
     private val SET_NUMBER = Pair(USER_NUMBER, NUMBER)
     private val NOTIFICATION_FLAG = Pair(ISNOTIFICATIONON, true)
     private val SOUND_FLAG = Pair(ISSOUNDON, true)

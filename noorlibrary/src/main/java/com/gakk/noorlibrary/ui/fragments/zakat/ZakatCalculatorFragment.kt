@@ -14,6 +14,7 @@ import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.roomdb.RoomRepository
+import com.gakk.noorlibrary.data.roomdb.ZakatRoomDatabase
 import com.gakk.noorlibrary.databinding.FragmentJakatCalculatorBinding
 import com.gakk.noorlibrary.model.zakat.ZakatDataModel
 import com.gakk.noorlibrary.ui.fragments.ZakatCalculationObserver
@@ -35,6 +36,9 @@ class ZakatCalculatorFragment : Fragment() {
     private lateinit var binding: FragmentJakatCalculatorBinding
     private lateinit var viewModel: ZakatViewModel
     private lateinit var repository: RoomRepository
+
+    val database by lazy { ZakatRoomDatabase.getDatabase(requireContext()) }
+    val repositoryRoom by lazy { RoomRepository(database.zakatDao()) }
 
     companion object {
 
@@ -63,7 +67,7 @@ class ZakatCalculatorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        repository = BaseApplication.getApplicationInstance().repository
+        repository = repositoryRoom
 
         viewModel = ViewModelProvider(
             this@ZakatCalculatorFragment, ZakatViewModel.FACTORY(repository)

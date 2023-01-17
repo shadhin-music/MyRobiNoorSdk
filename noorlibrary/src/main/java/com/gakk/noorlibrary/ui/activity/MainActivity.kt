@@ -56,7 +56,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import java.io.Serializable
 
-class MainActivity : BaseActivity(), MainCallback {
+internal class MainActivity : BaseActivity(), MainCallback {
     private lateinit var binding: ActivityMainBinding
     private val fragmentList = ArrayList<Fragment>()
     private lateinit var model: QuranViewModel
@@ -68,6 +68,7 @@ class MainActivity : BaseActivity(), MainCallback {
     private var surahList: MutableList<Data>? = null
     private var surahId: String? = null
     private var moreFragment: MoreFragment? = null
+    var mainCallback: MainCallback? = null
 
 
     val settingsActLauncher =
@@ -81,9 +82,7 @@ class MainActivity : BaseActivity(), MainCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (applicationContext as BaseApplication).mainCallback = this
-
-        AppPreference.language?.let { setApplicationLanguage(it) }
+        mainCallback = this
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
@@ -342,6 +341,8 @@ class MainActivity : BaseActivity(), MainCallback {
                 }
             }
         }
+
+
     }
 
 

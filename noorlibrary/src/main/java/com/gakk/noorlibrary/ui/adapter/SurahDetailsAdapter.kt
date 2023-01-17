@@ -15,8 +15,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
@@ -34,35 +34,42 @@ import com.gakk.noorlibrary.util.handleClickEvent
 
 const val CELL_HEADER = 0
 const val CELL_AYAH = 1
-const val CELL_AYAH_FOOTER=2
+const val CELL_AYAH_FOOTER = 2
 
-class SurahDetailsAdapter(detailsCallBack: DetailsCallBack?,surahDetailsCallBack: SurahDetailsCallBack,hideShowSurahListBtn:Boolean=false,surahDetails:Data?=null,ayatList:MutableList<com.gakk.noorlibrary.model.quran.ayah.Data>?=null,pagingViewCallBack: PagingViewCallBack?=null,pageReloadCallBack: PageReloadCallBack,playPauseFavControl: PlayPauseFavControl) :
+class SurahDetailsAdapter(
+    detailsCallBack: DetailsCallBack?,
+    surahDetailsCallBack: SurahDetailsCallBack,
+    hideShowSurahListBtn: Boolean = false,
+    surahDetails: Data? = null,
+    ayatList: MutableList<com.gakk.noorlibrary.model.quran.ayah.Data>? = null,
+    pagingViewCallBack: PagingViewCallBack? = null,
+    pageReloadCallBack: PageReloadCallBack,
+    playPauseFavControl: PlayPauseFavControl
+) :
     RecyclerView.Adapter<SurahDetailsAdapter.SurahDetailsViewHolder>() {
 
     private val surahListAdapterProvider: SurahListAdapterProvider
     private val fontControlSurahDetail: SurahDetailAyahLayoutFontControl
     private val mDetailsCallBack = detailsCallBack
-    private val mSurahDetailsCallBack=surahDetailsCallBack
+    private val mSurahDetailsCallBack = surahDetailsCallBack
 
 
-    private var mSurahDetails=surahDetails
-    private var mAyahList=ayatList
-    private val mPagingViewCallBack=pagingViewCallBack
-    private val mPageReloadCallBack=pageReloadCallBack
-    private val mPlayPauseFavControl=playPauseFavControl
-
-
-
+    private var mSurahDetails = surahDetails
+    private var mAyahList = ayatList
+    private val mPagingViewCallBack = pagingViewCallBack
+    private val mPageReloadCallBack = pageReloadCallBack
+    private val mPlayPauseFavControl = playPauseFavControl
 
 
     init {
         fontControlSurahDetail = SurahDetailAyahLayoutFontControl()
-        surahListAdapterProvider = SurahListAdapterProvider(mSurahDetailsCallBack,mPageReloadCallBack)
+        surahListAdapterProvider =
+            SurahListAdapterProvider(mSurahDetailsCallBack, mPageReloadCallBack)
 
     }
 
     fun getFontControl() = fontControlSurahDetail
-    fun getSurahListAdapterProvider()=surahListAdapterProvider
+    fun getSurahListAdapterProvider() = surahListAdapterProvider
 
     inner class SurahDetailsViewHolder : RecyclerView.ViewHolder {
 
@@ -77,7 +84,8 @@ class SurahDetailsAdapter(detailsCallBack: DetailsCallBack?,surahDetailsCallBack
                     mDetailsCallBack?.showDialogWithActionAndParam(
                         dialogType = DialogType.SurahListDialog,
                         pageReloadCallBack = mPageReloadCallBack,
-                        surahListAdapter = surahListAdapterProvider.getAdapter())
+                        surahListAdapter = surahListAdapterProvider.getAdapter()
+                    )
 
                 }
             }
@@ -103,8 +111,11 @@ class SurahDetailsAdapter(detailsCallBack: DetailsCallBack?,surahDetailsCallBack
             ayahBinding?.btnMore?.let {
 
                 it.handleClickEvent {
-                   mDetailsCallBack?.showDialogWithActionAndParam(dialogType = DialogType.AyahActionListDialog,
-                       numberAyah = binding.tvAyahNum.text.toString(),textAyah = binding.tvAyaNative.text.toString())
+                    mDetailsCallBack?.showDialogWithActionAndParam(
+                        dialogType = DialogType.AyahActionListDialog,
+                        numberAyah = binding.tvAyahNum.text.toString(),
+                        textAyah = binding.tvAyaNative.text.toString()
+                    )
                 }
             }
         }
@@ -119,9 +130,10 @@ class SurahDetailsAdapter(detailsCallBack: DetailsCallBack?,surahDetailsCallBack
             }
         }
 
-        var footerBinding:LayoutFooterBinding?=null
-        constructor(binding: LayoutFooterBinding):super(binding.root){
-            footerBinding=binding
+        var footerBinding: LayoutFooterBinding? = null
+
+        constructor(binding: LayoutFooterBinding) : super(binding.root) {
+            footerBinding = binding
 
         }
     }
@@ -160,77 +172,85 @@ class SurahDetailsAdapter(detailsCallBack: DetailsCallBack?,surahDetailsCallBack
 
     override fun onBindViewHolder(holder: SurahDetailsViewHolder, position: Int) {
 
-        holder?.headerBinding?.let { layout->
-            layout.surah=mSurahDetails
+        holder?.headerBinding?.let { layout ->
+            layout.surah = mSurahDetails
 
             when (mSurahDetails?.origin?.trim()) {
-                "Meccan", "মাক্কী" ->  {
+                "Meccan", "মাক্কী" -> {
                     val item = ImageFromOnline("bg_makkah.png")
-                    Glide.with(BaseApplication.getAppContext())
-                        .load(item.fullImageUrl)
-                        .listener(object : RequestListener<Drawable> {
-                            override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                isFirstResource: Boolean
-                            ): Boolean {
 
-                                return false
-                            }
+                    Noor?.appContext?.let {
+                        Glide.with(it)
+                            .load(item.fullImageUrl)
+                            .listener(object : RequestListener<Drawable> {
+                                override fun onLoadFailed(
+                                    e: GlideException?,
+                                    model: Any?,
+                                    target: Target<Drawable>?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
 
-                            override fun onResourceReady(
-                                resource: Drawable?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
+                                    return false
+                                }
 
-                                return false
-                            }
+                                override fun onResourceReady(
+                                    resource: Drawable?,
+                                    model: Any?,
+                                    target: Target<Drawable>?,
+                                    dataSource: DataSource?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
 
-                        })
-                        .error(R.drawable.place_holder_2_3_ratio)
-                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                        .into(holder?.headerBinding?.imgBgLocation!!)
+                                    return false
+                                }
+
+                            })
+                            .error(R.drawable.place_holder_2_3_ratio)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                            .into(holder?.headerBinding?.imgBgLocation!!)
+                    }
+
                 }
                 else -> {
                     val item = ImageFromOnline("bg_madinah.png")
-                    Glide.with(BaseApplication.getAppContext())
-                        .load(item.fullImageUrl)
-                        .listener(object : RequestListener<Drawable> {
-                            override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                isFirstResource: Boolean
-                            ): Boolean {
 
-                                return false
-                            }
+                    Noor.appContext?.let {
+                        Glide.with(it)
+                            .load(item.fullImageUrl)
+                            .listener(object : RequestListener<Drawable> {
+                                override fun onLoadFailed(
+                                    e: GlideException?,
+                                    model: Any?,
+                                    target: Target<Drawable>?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
 
-                            override fun onResourceReady(
-                                resource: Drawable?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
+                                    return false
+                                }
 
-                                return false
-                            }
+                                override fun onResourceReady(
+                                    resource: Drawable?,
+                                    model: Any?,
+                                    target: Target<Drawable>?,
+                                    dataSource: DataSource?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
 
-                        })
-                        .error(R.drawable.place_holder_2_3_ratio)
-                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                        .into(holder?.headerBinding?.imgBgLocation!!)
+                                    return false
+                                }
+
+                            })
+                            .error(R.drawable.place_holder_2_3_ratio)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                            .into(holder?.headerBinding?.imgBgLocation!!)
+                    }
+
                 }
             }
 
             layout?.root?.let {
-                it.tag=mSurahDetails?.id?:"-1"
-                Log.i("TAG_UPDATE",mSurahDetails?.id?:"-1")
+                it.tag = mSurahDetails?.id ?: "-1"
+                Log.i("TAG_UPDATE", mSurahDetails?.id ?: "-1")
             }
 
             SurahDetailsHeaderPlayStatControl.attatchHeaderLayout(layout)
@@ -239,23 +259,23 @@ class SurahDetailsAdapter(detailsCallBack: DetailsCallBack?,surahDetailsCallBack
             mSurahDetails?.let {
                 layout.btnPlayPause.setImageResource(R.drawable.ic_play_filled_enabled)
                 layout.textViewNormal4.setText(layout.root.context.resources.getText(R.string.play_it))
-                when(AudioPlayerService.isCurrentSurahPlaying(it.id)){
-                    true->{
+                when (AudioPlayerService.isCurrentSurahPlaying(it.id)) {
+                    true -> {
                         layout.btnPlayPause.setImageResource(R.drawable.ic_pause_filled_enabled)
                         layout.textViewNormal4.setText(layout.root.context.resources.getText(R.string.pause_it))
                     }
-                    false->{
+                    false -> {
                         layout.btnPlayPause.setImageResource(R.drawable.ic_play_filled_enabled)
                         layout.textViewNormal4.setText(layout.root.context.resources.getText(R.string.play_it))
                     }
                 }
 
-                when(it.isSurahFavByThisUser){
-                    true->{
+                when (it.isSurahFavByThisUser) {
+                    true -> {
                         layout.btnFav.setImageResource(R.drawable.ic_favorite_filled)
                         layout.textViewNormal5.setTextColor(layout.root.context.resources.getColor(R.color.colorPrimary))
                     }
-                    false->{
+                    false -> {
                         layout.btnFav.setImageResource(R.drawable.ic_favorite)
                         layout.textViewNormal5.setTextColor(layout.root.context.resources.getColor(R.color.txt_color_black))
                     }
@@ -263,20 +283,20 @@ class SurahDetailsAdapter(detailsCallBack: DetailsCallBack?,surahDetailsCallBack
             }
 
 
-
         }
         holder?.ayahBinding?.let {
-            mAyahList?.let { list->
-               it.ayat=list.get(position-1)
+            mAyahList?.let { list ->
+                it.ayat = list.get(position - 1)
             }
             fontControlSurahDetail.updateFontSizeForAyahBinding(it)
         }
         holder?.footerBinding?.let {
-            when(mPagingViewCallBack?.hasMoreData()){
-                true->{mPagingViewCallBack?.loadNextPage()
-                    it.root.visibility= VISIBLE
+            when (mPagingViewCallBack?.hasMoreData()) {
+                true -> {
+                    mPagingViewCallBack?.loadNextPage()
+                    it.root.visibility = VISIBLE
                 }
-                else->it.root.visibility=GONE
+                else -> it.root.visibility = GONE
             }
         }
 
@@ -290,33 +310,33 @@ class SurahDetailsAdapter(detailsCallBack: DetailsCallBack?,surahDetailsCallBack
     override fun getItemViewType(position: Int): Int {
         return when (position) {
             0 -> CELL_HEADER
-            mAyahList!!.size+1-> CELL_AYAH_FOOTER
+            mAyahList!!.size + 1 -> CELL_AYAH_FOOTER
             else -> CELL_AYAH
         }
     }
 
     override fun getItemCount(): Int {
-        return 2+(mAyahList?.size?:0)
+        return 2 + (mAyahList?.size ?: 0)
     }
 
-    fun hideFooter(){
-        notifyItemChanged(mAyahList!!.size+1)
+    fun hideFooter() {
+        notifyItemChanged(mAyahList!!.size + 1)
     }
-    fun addItemToList(list:MutableList<com.gakk.noorlibrary.model.quran.ayah.Data>){
-        var startPos=mAyahList!!.size+1
+
+    fun addItemToList(list: MutableList<com.gakk.noorlibrary.model.quran.ayah.Data>) {
+        var startPos = mAyahList!!.size + 1
         mAyahList?.addAll(list)
-        notifyItemChanged(startPos,list.size)
+        notifyItemChanged(startPos, list.size)
     }
 
-    fun updateSurahDetails(surahDetails: Data?){
-        this.mSurahDetails=surahDetails
+    fun updateSurahDetails(surahDetails: Data?) {
+        this.mSurahDetails = surahDetails
     }
 
-    fun updateAyahList(list:MutableList<com.gakk.noorlibrary.model.quran.ayah.Data>){
-        mAyahList=list
+    fun updateAyahList(list: MutableList<com.gakk.noorlibrary.model.quran.ayah.Data>) {
+        mAyahList = list
         notifyDataSetChanged()
     }
-
 
 
 }
@@ -373,14 +393,19 @@ class SurahDetailAyahLayoutFontControl {
 
 }
 
-class SurahListAdapterProvider(surahDetailsCallBack: SurahDetailsCallBack?,pageReloadCallBack: PageReloadCallBack) {
+class SurahListAdapterProvider(
+    surahDetailsCallBack: SurahDetailsCallBack?,
+    pageReloadCallBack: PageReloadCallBack
+) {
     private val msurahDetailsCallBack: SurahDetailsCallBack
-    private val mPageReloadCallBack=pageReloadCallBack
+    private val mPageReloadCallBack = pageReloadCallBack
+
     init {
-        msurahDetailsCallBack=surahDetailsCallBack!!
+        msurahDetailsCallBack = surahDetailsCallBack!!
 
 
     }
+
     fun getAdapter() = SurahListAdapter(msurahDetailsCallBack)
 }
 

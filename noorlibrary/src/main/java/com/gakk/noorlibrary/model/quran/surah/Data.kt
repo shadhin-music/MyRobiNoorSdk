@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.model.quran.surah
 
+import com.gakk.noorlibrary.Noor
 import com.google.gson.annotations.SerializedName
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
@@ -95,7 +96,7 @@ data class Data(
 
     var ayahCountWithPrefix: String
         get() {
-            return "${BaseApplication.getAppContext().resources.getString(R.string.ayah)} ${
+            return "${Noor.appContext?.resources?.getString(R.string.ayah)} ${
                 TimeFormtter.getNumberByLocale(
                     totalAyat.toString()
                 )

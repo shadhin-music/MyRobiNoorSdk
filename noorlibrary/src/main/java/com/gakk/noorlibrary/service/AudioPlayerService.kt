@@ -10,28 +10,26 @@ import android.os.Build
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
-import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.audioPlayer.AudioManager
-import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.notification.NotificationControl
 import com.gakk.noorlibrary.ui.fragments.SurahDetailsAudioPlayerCallBack
 import com.gakk.noorlibrary.ui.fragments.SurahDetailsHeaderPlayStatControl
 import com.gakk.noorlibrary.ui.fragments.SurahFullPlayerAudioPlayerCallBack
 import com.gakk.noorlibrary.util.*
+import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import kotlinx.coroutines.*
-import java.lang.Exception
 import java.lang.ref.WeakReference
 
 class AudioPlayerService : Service() {
     private lateinit var serviceScope: CoroutineScope
 
-
     fun dismissForegroundService() {
         Log.i("DISMISSFG", "DISMISS_FOREGROUND CALLED")
-        com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.setIsNotPauseToTrue()
-        com.gakk.noorlibrary.audioPlayer.AudioManager.InstanceControl.destroyAudioPlayerInstance()
+        AudioManager.PlayerControl.setIsNotPauseToTrue()
+        AudioManager.InstanceControl.destroyAudioPlayerInstance()
         try {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -53,7 +51,7 @@ class AudioPlayerService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         Log.e("ClearFromRecentService", "END")
-        Intent(BaseApplication.getAppContext(), AudioPlayerService::class.java).also {
+        Intent(Noor.appContext, AudioPlayerService::class.java).also {
             stopService(it)
         }
         stopSelf()
@@ -64,9 +62,8 @@ class AudioPlayerService : Service() {
         var context: Context? = null
         var weakReference: WeakReference<AudioPlayerService>? = null
 
-
         fun isCurrentSurahPlaying(id: String): Boolean {
-            return com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getPlayListType() == SURAH_LIST_TYPE && com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getCurrentSurah()?.id ?: "-1" == id && com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.getIsNotPaused() == true && isServiceRunning == true
+            return AudioManager.PlayListControl.getPlayListType() == SURAH_LIST_TYPE && AudioManager.PlayListControl.getCurrentSurah()?.id ?: "-1" == id && AudioManager.PlayerControl.getIsNotPaused() == true && isServiceRunning == true
         }
 
         var surahDetailsCallBack: SurahDetailsAudioPlayerCallBack? = null
@@ -101,26 +98,26 @@ class AudioPlayerService : Service() {
                     true -> {
                         when (command) {
                             PLAY_COMMAND -> {
-                                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.setIsNotPauseToTrue()
-                                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.playAction(context!!)
+                                AudioManager.PlayerControl.setIsNotPauseToTrue()
+                                AudioManager.PlayerControl.playAction(context!!)
                                 surahDetailsCallBack?.updateMiniPlayerPlayPauseButton(true)
                                 surahFullPlayerCallBack?.updatePlayerControlPlayPauseButton(true)
                             }
 
                             RESUME_COMMAND -> {
-                                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.resumeAction()
+                                AudioManager.PlayerControl.resumeAction()
                                 surahDetailsCallBack?.updateMiniPlayerPlayPauseButton(true)
                                 surahFullPlayerCallBack?.updatePlayerControlPlayPauseButton(true)
                             }
 
                             PAUSE_COMMAND -> {
-                                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.pauseAction()
+                                AudioManager.PlayerControl.pauseAction()
                                 surahDetailsCallBack?.updateMiniPlayerPlayPauseButton(false)
                                 surahFullPlayerCallBack?.updatePlayerControlPlayPauseButton(false)
                             }
                             PREV_COMMAND -> {
-                                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.prevAction(context!!)
-                                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getCurrentSurah()?.id?.let { it1 ->
+                                AudioManager.PlayerControl.prevAction(context!!)
+                                AudioManager.PlayListControl.getCurrentSurah()?.id?.let { it1 ->
                                     surahDetailsCallBack?.reloadDetailsWithUpdatedSurahIndex(
                                         it1
                                     )
@@ -128,20 +125,18 @@ class AudioPlayerService : Service() {
                                 surahFullPlayerCallBack?.loadUIWithUpdatedIndex()
                             }
                             NEXT_COMMAND -> {
-                                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.nextAction(context!!)
-                                com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getCurrentSurah()?.id?.let { it1 ->
+                                AudioManager.PlayerControl.nextAction(context!!)
+                                AudioManager.PlayListControl.getCurrentSurah()?.id?.let { it1 ->
                                     surahDetailsCallBack?.reloadDetailsWithUpdatedSurahIndex(
                                         it1
                                     )
                                 }
-                                // surahFullPlayerCallBack?.incrementSelectedIndex()
                                 surahFullPlayerCallBack?.loadUIWithUpdatedIndex()
 
                             }
 
                             DISMISS_COMMAND -> {
                                 AudioPlayerServiceInstanceControl.stopService(context!!)
-                                // dismissForegroundService()
                             }
                         }
 
@@ -154,7 +149,8 @@ class AudioPlayerService : Service() {
                                 context!!.getResources(),
                                 R.drawable.bg_quran
                             )
-                            val duration = AudioManager.PlayListControl.getCurrentSurah()?.durationInMs
+                            val duration =
+                                AudioManager.PlayListControl.getCurrentSurah()?.durationInMs
                             val builder = ayahCountWithPrefix?.let { it1 ->
                                 title?.let { it2 ->
                                     duration?.let { it3 ->
@@ -172,9 +168,12 @@ class AudioPlayerService : Service() {
                             }
 
 
-                            if (builder!=null){
+                            if (builder != null) {
                                 weakReference?.get()
-                                    ?.startForeground(AUDIO_PLAYER_NOTIFICATION_ID, builder!!.build())
+                                    ?.startForeground(
+                                        AUDIO_PLAYER_NOTIFICATION_ID,
+                                        builder!!.build()
+                                    )
                             } else {
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                     weakReference!!.get()!!.stopForeground(true)
@@ -191,8 +190,6 @@ class AudioPlayerService : Service() {
             }
 
         }
-
-        fun isPlayListNull() = com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.isPlayListNull()
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -208,17 +205,16 @@ class AudioPlayerService : Service() {
         serviceScope = CoroutineScope(Job())
 
 
-
         serviceScope.launch(Dispatchers.Main) {
             while (true) {
-                com.gakk.noorlibrary.audioPlayer.AudioManager?.getAudioPlayer()?.duration?.let {
+                AudioManager?.getAudioPlayer()?.duration?.let {
                     withContext(Dispatchers.Main) {
                         surahDetailsCallBack?.updateMiniPlayerTotalDuration(it)
                         surahFullPlayerCallBack?.updatePlayerControlTotalDuration(it)
                     }
                 }
 
-                com.gakk.noorlibrary.audioPlayer.AudioManager?.getAudioPlayer()?.currentPosition?.let {
+                AudioManager?.getAudioPlayer()?.currentPosition?.let {
                     withContext(Dispatchers.Main) {
                         surahDetailsCallBack?.updateMiniPlayerCurrentDuration(it)
                         surahFullPlayerCallBack?.updatePlayerControlCurrentDuration(it)
@@ -230,9 +226,9 @@ class AudioPlayerService : Service() {
                     SurahDetailsHeaderPlayStatControl.updatePlayStat()
                     Log.i(
                         "CONFIG_",
-                        "IsServiceRunning-$isServiceRunning AudioManager.PlayListControl.getPlayListType()== SURAH_LIST_TYPE ${com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getPlayListType() == SURAH_LIST_TYPE}"
+                        "IsServiceRunning-$isServiceRunning AudioManager.PlayListControl.getPlayListType()== SURAH_LIST_TYPE ${AudioManager.PlayListControl.getPlayListType() == SURAH_LIST_TYPE}"
                     )
-                    if (isServiceRunning == true && com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getPlayListType() == SURAH_LIST_TYPE) {
+                    if (isServiceRunning == true && AudioManager.PlayListControl.getPlayListType() == SURAH_LIST_TYPE) {
                         surahDetailsCallBack?.inflateMiniPlayerWithSelectedSurah()
                         surahDetailsCallBack?.toggleMiniPlayerVisibility(true)
                         surahFullPlayerCallBack?.togglePlayerControlVisibility(true)
@@ -250,7 +246,7 @@ class AudioPlayerService : Service() {
             }
         }
         isServiceRunning = true
-        com.gakk.noorlibrary.audioPlayer.AudioManager.InstanceControl.initAudioPlayer(context!!)
+        AudioManager.InstanceControl.initAudioPlayer(context!!)
         NotificationControl.initNotificationManager(context!!)
         NotificationControl.createNotificationChannel(
             AUDIO_PLAYER_NOTIFICATION_CHANNEL_NAME,
@@ -273,7 +269,7 @@ class AudioPlayerService : Service() {
         connector = MediaSessionConnector(mediaSession)
 
         mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS or MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
-        connector.setPlayer(com.gakk.noorlibrary.audioPlayer.AudioManager.getAudioPlayer())
+        connector.setPlayer(AudioManager.getAudioPlayer())
         mediaSession.isActive = true
 
         mediaSession.setCallback(object : MediaSessionCompat.Callback() {
@@ -294,7 +290,7 @@ class AudioPlayerService : Service() {
             }
 
             override fun onSeekTo(pos: Long) {
-                com.gakk.noorlibrary.audioPlayer.AudioManager?.getAudioPlayer()?.seekTo(pos)
+                AudioManager?.getAudioPlayer()?.seekTo(pos)
                 surahDetailsCallBack?.updateMiniPlayerCurrentDuration(pos)
             }
         })
@@ -302,20 +298,21 @@ class AudioPlayerService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.setPlayListType(SURAH_LIST_TYPE)
+        AudioManager.PlayListControl.setPlayListType(SURAH_LIST_TYPE)
 
 
         var currentSurahIndex = intent?.getIntExtra(CURRENT_INDEX, 0)
         if (currentSurahIndex != null) {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.setCurrentIndex(currentSurahIndex)
+            AudioManager.PlayListControl.setCurrentIndex(currentSurahIndex)
         }
-        var surahList :MutableList<Data>? = intent?.getSerializableExtra(PLAY_LIST) as MutableList<Data>?
+        var surahList: MutableList<Data>? =
+            intent?.getSerializableExtra(PLAY_LIST) as MutableList<Data>?
         surahList?.let {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.setplayList(it)
+            AudioManager.PlayListControl.setplayList(it)
             executePlayerCommand(PLAY_COMMAND)
         }
 
-        Log.e("audioplayer","service called")
+        Log.e("audioplayer", "service called")
 
         return START_STICKY
     }

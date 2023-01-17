@@ -8,14 +8,14 @@ import java.io.Serializable
 
 object AudioPlayerServiceInstanceControl {
 
-    fun startService(context: Context,type:String,index:Int?=null,surahList:MutableList<Data>){
+    fun startService(context: Context?,type:String,index:Int?=null,surahList:MutableList<Data>){
        Intent(context,AudioPlayerService::class.java).also {
             when(type){
                 SURAH_LIST_TYPE->{
                     it.putExtra(PLAY_LIST_TYPE,type)
                     it.putExtra(CURRENT_INDEX,index)
                     it.putExtra(PLAY_LIST,surahList as Serializable)
-                    context.startService(it)
+                    context?.startService(it)
                 }
             }
 

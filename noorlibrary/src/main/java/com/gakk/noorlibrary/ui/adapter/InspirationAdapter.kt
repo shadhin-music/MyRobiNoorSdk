@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.ui.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -52,7 +53,7 @@ class InspirationAdapter(
         holder.inspirationBinding?.item = list
 
         holder.inspirationBinding?.rlShare?.handleClickEvent {
-          Glide.with(BaseApplication.getAppContext()).asBitmap().load(list.fullImageUrl)
+          Glide.with(holder.inspirationBinding?.rlShare?.context!!).asBitmap().load(list.fullImageUrl)
               .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
               .listener(object :RequestListener<Bitmap>{
                   override fun onLoadFailed(
@@ -73,7 +74,7 @@ class InspirationAdapter(
                   ): Boolean {
                       val i = Intent(Intent.ACTION_SEND)
                       i.type = "image/*"
-                      i.putExtra(Intent.EXTRA_STREAM, resource?.let { getLocalBitmapUri(it) })
+                      i.putExtra(Intent.EXTRA_STREAM, resource?.let { getLocalBitmapUri(it, holder.inspirationBinding?.rlShare?.context!!) })
                       holder.inspirationBinding?.rlShare?.context!!.startActivity(Intent.createChooser(i, "Share Image"))
                       return false
                   }
@@ -86,7 +87,7 @@ class InspirationAdapter(
         return imageList.size
     }
 
-    fun getLocalBitmapUri(bmp: Bitmap): Uri? {
+    fun getLocalBitmapUri(bmp: Bitmap, context: Context): Uri? {
         var bmpUri: Uri? = null
         try {
             val file = File(
@@ -96,8 +97,9 @@ class InspirationAdapter(
             val out = FileOutputStream(file)
             bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
             out.close()
+
             bmpUri = FileProvider.getUriForFile(
-                BaseApplication.getAppContext(),
+                context,
                 "com.gakk.noorlibrary" + ".provider",
                 file
             )

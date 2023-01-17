@@ -41,7 +41,7 @@ import java.io.File
 import java.util.*
 
 
-class DetailsActivity : BaseActivity(), DetailsCallBack {
+internal class DetailsActivity : BaseActivity(), DetailsCallBack {
 
     private var binding: ActivityDetailsBinding? = null
     private lateinit var mPage: String

@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.audioPlayer.AudioManager
 import com.gakk.noorlibrary.callbacks.*
@@ -31,7 +33,6 @@ import java.io.Serializable
 
 
 private const val ARG_SURAH_ID = "surahId"
-private const val ARG_DETAILS_CALL_BACK = "detailsCallBack"
 private const val MAX_ZOOM_LEVEL = 10
 private const val ARG_SURAH_LIST = "surahList"
 
@@ -63,7 +64,6 @@ class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingViewCallBac
         super.onCreate(savedInstanceState)
         arguments?.let {
             mSurahId = it.getString(ARG_SURAH_ID)
-           // mDetailsCallBack = it.getSerializable(ARG_DETAILS_CALL_BACK) as DetailsCallBack
             SurahListControl.copySurahList((it.getSerializable(ARG_SURAH_LIST) as MutableList<com.gakk.noorlibrary.model.quran.surah.Data>?))
             SurahListControl.updateSelectedIndex(mSurahId!!)
         }
@@ -75,7 +75,6 @@ class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingViewCallBac
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_surah_details, container, false)
 
@@ -456,7 +455,7 @@ class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingViewCallBac
                         when (AudioPlayerService.isServiceRunning) {
                             null, false -> {
                                 AudioPlayerServiceInstanceControl.startService(
-                                    requireContext(),
+                                    Noor.appContext,
                                     SURAH_LIST_TYPE,
                                     SurahListControl.curIndex!!,
                                     SurahListControl.surahList!!
@@ -600,7 +599,7 @@ class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingViewCallBac
                     when (AudioPlayerService.isServiceRunning) {
                         null, false -> {
                             AudioPlayerServiceInstanceControl.startService(
-                                requireContext(),
+                                Noor.appContext,
                                 SURAH_LIST_TYPE,
                                 SurahListControl.curIndex!!,
                                 SurahListControl.surahList!!
@@ -621,7 +620,7 @@ class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingViewCallBac
                 }//different surah
                 else {
                     AudioPlayerServiceInstanceControl.startService(
-                        requireContext(),
+                        Noor.appContext,
                         SURAH_LIST_TYPE,
                         SurahListControl.curIndex!!,
                         SurahListControl.surahList!!

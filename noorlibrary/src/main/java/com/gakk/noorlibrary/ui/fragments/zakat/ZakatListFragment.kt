@@ -13,6 +13,7 @@ import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.roomdb.RoomRepository
+import com.gakk.noorlibrary.data.roomdb.ZakatRoomDatabase
 import com.gakk.noorlibrary.databinding.FragmentZakatListBinding
 import com.gakk.noorlibrary.model.zakat.ZakatDataModel
 import com.gakk.noorlibrary.ui.adapter.ZakatListAdapter
@@ -28,6 +29,9 @@ class ZakatListFragment : Fragment(), DeleteOperation {
     private lateinit var viewModel: ZakatViewModel
     private lateinit var repository: RoomRepository
     private var adapter: ZakatListAdapter? = null
+
+    val database by lazy { ZakatRoomDatabase.getDatabase(requireContext()) }
+    val repositoryRoom by lazy { RoomRepository(database.zakatDao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +57,7 @@ class ZakatListFragment : Fragment(), DeleteOperation {
             false
         )
 
-        repository = BaseApplication.getApplicationInstance().repository
+        repository = repositoryRoom
 
         viewModel = ViewModelProvider(
             this@ZakatListFragment,

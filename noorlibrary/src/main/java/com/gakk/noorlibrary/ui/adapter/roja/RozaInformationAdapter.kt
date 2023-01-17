@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.databinding.*
@@ -111,13 +112,13 @@ class RozaInformationAdapter(
             calHijri.add(Calendar.DAY_OF_MONTH, -1)
             var dateTxt = ""
             dateTxt =
-                (TimeFormtter.getNumberByLocale(day.toString()) + " " + BaseApplication.getAppContext()
+                (TimeFormtter.getNumberByLocale(day.toString()) + " " + Noor.appContext
                     ?.let {
                         TimeFormtter.getBanglaMonthName(month, it)
                     } + " " + TimeFormtter.getNumberByLocale(year.toString())
                         + "   |   " + TimeFormtter.getNumberByLocale(
                     (CalendarDay.from(Date()).getDay() - 1).toString()
-                ) + " " + BaseApplication.getAppContext()!!.resources.getStringArray(R.array.custom_months)[CalendarDay.from(
+                ) + " " + Noor.appContext?.resources!!.getStringArray(R.array.custom_months)[CalendarDay.from(
                     Date()
                 ).getMonth()] + " " + TimeFormtter.getNumberByLocale(
                     CalendarDay.from(Date()).getYear().toString()
@@ -338,7 +339,7 @@ class RozaInformationAdapter(
                             )
                         )
                         else -> holder.rozaInfoCellBinding?.tvDay?.setText(
-                            BaseApplication.getAppContext().resources.getText(
+                            Noor.appContext?.resources?.getText(
                                 R.string.date
                             )
                         )

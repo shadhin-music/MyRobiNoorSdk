@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import java.util.*
@@ -34,35 +35,38 @@ fun setImageFromUrl(
     url?.let {
         progressBar.visibility = VISIBLE
         val placeHolder = getPlaceHolder(dimen)
-        Glide.with(BaseApplication.getAppContext())
-            .load(url.replace("<size>", "1280"))
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    progressBar.visibility = GONE
 
-                    return false
-                }
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(url.replace("<size>", "1280"))
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = GONE
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    progressBar.visibility = GONE
-                    return false
-                }
+                        return false
+                    }
 
-            })
-            .error(placeHolder)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .into(imageView)
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = GONE
+                        return false
+                    }
+
+                })
+                .error(placeHolder)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(imageView)
+        }
     }
 }
 
@@ -77,35 +81,39 @@ fun setSqureImageFromUrl(
     url?.let {
         progressBar.visibility = VISIBLE
         val placeHolder = getPlaceHolder(dimen)
-        Glide.with(BaseApplication.getAppContext())
-            .load(url.replace("<size>", "400"))
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    progressBar.visibility = GONE
 
-                    return false
-                }
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(url.replace("<size>", "400"))
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = GONE
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    progressBar.visibility = GONE
-                    return false
-                }
+                        return false
+                    }
 
-            })
-            .error(placeHolder)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .into(imageView)
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = GONE
+                        return false
+                    }
+
+                })
+                .error(placeHolder)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(imageView)
+        }
+
     }
 }
 
@@ -114,34 +122,38 @@ fun setImageFromUrl(imageView: ImageView, url: String?, progressBar: ProgressBar
 
     if (!url.isNullOrEmpty()) {
         progressBar.visibility = VISIBLE
-        Glide.with(BaseApplication.getAppContext())
-            .load(url)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    progressBar.visibility = GONE
-                    return false
-                }
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    progressBar.visibility = GONE
-                    return false
-                }
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(url)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = GONE
+                        return false
+                    }
 
-            })
-            .error(R.drawable.place_holder_16_9_ratio)
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-            .into(imageView)
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = GONE
+                        return false
+                    }
+
+                })
+                .error(R.drawable.place_holder_16_9_ratio)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(imageView)
+        }
+
     }
 }
 
@@ -149,35 +161,37 @@ fun setImageFromUrl(imageView: ImageView, url: String?, progressBar: ProgressBar
 fun setImageFromUrlNoProgress(imageView: ImageView, url: String?) {
 
     if (!url.isNullOrEmpty()) {
-        Glide.with(BaseApplication.getAppContext())
-            .load(url)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Log.e("Imageload", "onLoadFailed")
-                    return false
-                }
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(url)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        Log.e("Imageload", "onLoadFailed")
+                        return false
+                    }
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Log.e("Imageload", "onResourceReady")
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        Log.e("Imageload", "onResourceReady")
 
-                    return false
-                }
+                        return false
+                    }
 
-            })
-            .error(R.drawable.place_holder_16_9_ratio)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .into(imageView)
+                })
+                .error(R.drawable.place_holder_16_9_ratio)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(imageView)
+        }
     }
 }
 
@@ -186,34 +200,35 @@ fun setPatchImageFromUrl(imageView: ImageView, url: String?) {
 
     if (!url.isNullOrEmpty()) {
 
-        Glide.with(BaseApplication.getAppContext())
-            .load(url)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(url)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
 
-                    return false
-                }
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
+                        return false
+                    }
 
-                    return false
-                }
-
-            })
-            .error(R.drawable.ic_quran_verse)
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-            .into(imageView)
+                })
+                .error(R.drawable.ic_quran_verse)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(imageView)
+        }
     }
 }
 

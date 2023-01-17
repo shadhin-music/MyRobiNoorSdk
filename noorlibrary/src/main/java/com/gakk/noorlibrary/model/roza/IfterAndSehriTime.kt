@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.model.roza
 
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.extralib.azan.Time
@@ -94,7 +95,7 @@ data class IfterAndSehriTime(
         get() {
             val index = CalenderUtil.getDayOfWeek(dateMs) - 1
             val _daysOfWeek: List<String> =
-                BaseApplication.getAppContext().resources.getStringArray(R.array.week_name).toList()
+                Noor.appContext?.resources?.getStringArray(R.array.week_name)!!.toList()
             return _daysOfWeek.get(index)
         }
         set(value) {

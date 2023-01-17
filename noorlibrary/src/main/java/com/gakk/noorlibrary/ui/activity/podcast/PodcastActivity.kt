@@ -25,13 +25,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.ui.DefaultTimeBar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.audioPlayer.AudioManager
 import com.gakk.noorlibrary.base.BaseActivity
-import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
@@ -46,6 +42,12 @@ import com.gakk.noorlibrary.ui.adapter.podcast.CommentPagingAdapter
 import com.gakk.noorlibrary.ui.adapter.podcast.LiveVideoAdapter
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.PodcastViewModel
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.DefaultTimeBar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
 class PodcastActivity : BaseActivity(), ItemClickListener {
@@ -218,34 +220,37 @@ class PodcastActivity : BaseActivity(), ItemClickListener {
                                 binding.ivOverlay.visibility = View.VISIBLE
 
                                 liveData?.imageUrl.let {
-                                    Glide.with(BaseApplication.getAppContext())
-                                        .load(liveData?.contentBaseUrl + "/" + liveData?.imageUrl)
-                                        .listener(object : RequestListener<Drawable> {
-                                            override fun onLoadFailed(
-                                                e: GlideException?,
-                                                model: Any?,
-                                                target: Target<Drawable>?,
-                                                isFirstResource: Boolean
-                                            ): Boolean {
+                                    Noor.appContext?.let {
+                                        Glide.with(it)
+                                            .load(liveData?.contentBaseUrl + "/" + liveData?.imageUrl)
+                                            .listener(object : RequestListener<Drawable> {
+                                                override fun onLoadFailed(
+                                                    e: GlideException?,
+                                                    model: Any?,
+                                                    target: Target<Drawable>?,
+                                                    isFirstResource: Boolean
+                                                ): Boolean {
 
-                                                return false
-                                            }
+                                                    return false
+                                                }
 
-                                            override fun onResourceReady(
-                                                resource: Drawable?,
-                                                model: Any?,
-                                                target: Target<Drawable>?,
-                                                dataSource: DataSource?,
-                                                isFirstResource: Boolean
-                                            ): Boolean {
+                                                override fun onResourceReady(
+                                                    resource: Drawable?,
+                                                    model: Any?,
+                                                    target: Target<Drawable>?,
+                                                    dataSource: DataSource?,
+                                                    isFirstResource: Boolean
+                                                ): Boolean {
 
-                                                return false
-                                            }
+                                                    return false
+                                                }
 
-                                        })
-                                        .error(R.drawable.place_holder_16_9_ratio)
-                                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                                        .into(binding.ivOverlay)
+                                            })
+                                            .error(R.drawable.place_holder_16_9_ratio)
+                                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                            .into(binding.ivOverlay)
+                                    }
+
                                 }
 
                             } else {
@@ -527,7 +532,6 @@ class PodcastActivity : BaseActivity(), ItemClickListener {
     }
 
 
-
     private fun handleYoutubeAndNormalVideo(url: String, isYoutube: Boolean) {
 
         val exoProgressBar = binding.playerView.findViewById<DefaultTimeBar>(R.id.exo_progress)
@@ -539,7 +543,8 @@ class PodcastActivity : BaseActivity(), ItemClickListener {
             binding.playerView.findViewById<AppCompatTextView>(R.id.exo_duration)
 
         if (isYoutube) {
-            model.fetchYoutubeVideo(url, true)?.observe(this
+            model.fetchYoutubeVideo(url, true)?.observe(
+                this
             ) { details: YoutubeVideoDetails? ->
                 if (details != null && details.getUrl("480p") != null) {
                     Log.e("TAG", "" + details.getUrl("480p"))

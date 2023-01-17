@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.model.subcategory
 
 import android.os.Parcelable
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import kotlinx.parcelize.IgnoredOnParcel
@@ -36,7 +37,7 @@ data class Data(
 
     @IgnoredOnParcel
     var duaCountFormatted:String
-    get()="$totalContent ${BaseApplication.getAppContext().resources.getString(R.string.text_doa_count)}"
+    get()="$totalContent ${Noor.appContext?.resources?.getString(R.string.text_doa_count)}"
     set(value) {
         duaCountFormatted=value
     }
