@@ -334,7 +334,7 @@ class RozaInformationAdapter(
 
                     when (CalenderUtil.isRamadanNow() && !fromMalaysia) {
                         true -> holder.rozaInfoCellBinding?.tvDay?.setText(
-                            BaseApplication.getAppContext().resources.getText(
+                            Noor.appContext?.resources?.getText(
                                 R.string.ramadan
                             )
                         )

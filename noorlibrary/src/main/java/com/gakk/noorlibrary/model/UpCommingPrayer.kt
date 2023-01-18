@@ -1,9 +1,11 @@
 package com.gakk.noorlibrary.model
 
+import androidx.annotation.Keep
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 
+@Keep
 class UpCommingPrayer : BaseObservable() {
     @get: Bindable
     var currentWaqtStartingTime: String = ""

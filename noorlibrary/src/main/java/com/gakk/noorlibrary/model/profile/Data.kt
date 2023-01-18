@@ -1,11 +1,12 @@
 package com.gakk.noorlibrary.model.profile
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
-
+@Keep
 @Parcelize
 data class Data(
     @SerializedName("address")

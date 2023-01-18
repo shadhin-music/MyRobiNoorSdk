@@ -1,7 +1,9 @@
 package com.gakk.noorlibrary.model.literature
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class FavUnFavResponse(
     @SerializedName("data")
     val `data`: Boolean,

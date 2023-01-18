@@ -1,7 +1,9 @@
 package com.gakk.noorlibrary.model.quran.surahDetail
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class SurahDetailsResponse(
 
     @SerializedName("data")

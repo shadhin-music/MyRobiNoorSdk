@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.audioPlayer.AudioManager
 import com.gakk.noorlibrary.callbacks.*
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
@@ -54,7 +53,9 @@ class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
         }
     private var itemClickAction: (Int, String) -> Unit = { index: Int, id: String ->
         SurahListControl.updateSelectedIndex(id)
-        com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.setCurrentIndex(SurahListControl?.curIndex ?: 0)
+        com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.setCurrentIndex(
+            SurahListControl?.curIndex ?: 0
+        )
         hideUI()
         populateUI()
         model.getIsSurahFavourtie(id)
@@ -102,7 +103,7 @@ class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
                         SurahListControl.getSelectedSurah().isSurahFavByThisUser = true
                         binding.progressLayout.root.visibility = View.GONE
                         updateToolbarForThisFragment()
-                        var surah = com.gakk.noorlibrary.model.quran.surah.Data(
+                        var surah = Data(
                             id = SurahListControl.getSelectedSurah()!!.id,
                             order = SurahListControl.getSelectedSurah()!!.order,
                             name = SurahListControl.getSelectedSurah()!!.name
@@ -126,7 +127,7 @@ class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
                         SurahListControl.getSelectedSurah().isSurahFavByThisUser = false
                         binding.progressLayout.root.visibility = View.GONE
                         updateToolbarForThisFragment()
-                        var surah = com.gakk.noorlibrary.model.quran.surah.Data(
+                        var surah = Data(
                             id = SurahListControl.getSelectedSurah()!!.id,
                             order = SurahListControl.getSelectedSurah()!!.order,
                             name = SurahListControl.getSelectedSurah()!!.name
@@ -163,7 +164,8 @@ class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
 
                     override fun onStopTrackingTouch(seekBar: SeekBar?) {
                         var seekPos = seekBar?.progress?.toLong()
-                        com.gakk.noorlibrary.audioPlayer.AudioManager.getAudioPlayer()?.seekTo(seekPos ?: 0)
+                        com.gakk.noorlibrary.audioPlayer.AudioManager.getAudioPlayer()
+                            ?.seekTo(seekPos ?: 0)
 
                     }
 
@@ -193,10 +195,6 @@ class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
                         SurahListControl.getSelectedSurah().isSurahFavByThisUser = it.data!!.data
                         updateToolbarForThisFragment()
                         showUI()
-                        //surahDetails?.isSurahFavByThisUser=it.data?.data!!
-//                        updateToolbarForThisFragment()
-
-
                     }
                     Status.ERROR -> {
                         binding.progressLayout.root.visibility = View.GONE
@@ -269,12 +267,8 @@ class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
     companion object {
 
         @JvmStatic
-        fun newInstance(detailsCallBack: DetailsCallBack) =
-            SurahFullPlayerFragment().apply {
-               /* arguments = Bundle().apply {
-                    putSerializable(ARG_DETAILS_CALL_BACK, detailsCallBack)
-                }*/
-            }
+        fun newInstance() =
+            SurahFullPlayerFragment()
     }
 
     override fun incrementSelectedIndex() {

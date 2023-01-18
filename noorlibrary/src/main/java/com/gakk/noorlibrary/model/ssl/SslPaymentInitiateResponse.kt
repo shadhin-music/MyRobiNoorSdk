@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model.ssl
 
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class SslPaymentInitiateResponse(
     @SerializedName("errorCode")
     val errorCode: String?,

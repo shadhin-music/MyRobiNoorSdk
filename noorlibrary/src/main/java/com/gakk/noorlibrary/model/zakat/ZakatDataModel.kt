@@ -1,9 +1,11 @@
 package com.gakk.noorlibrary.model.zakat
 
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Keep
 @Entity(tableName = "zakat_table")
 data class ZakatDataModel(
 

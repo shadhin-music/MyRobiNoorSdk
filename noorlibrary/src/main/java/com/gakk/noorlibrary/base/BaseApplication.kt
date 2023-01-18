@@ -26,8 +26,6 @@ class BaseApplication : Application() {
 
         private var appContext: Context? = null
 
-        fun getAppContext() = appContext!!
-
 
         /**
          * keeps track of time of last click of all clickable views(buttons,imageButton etc)

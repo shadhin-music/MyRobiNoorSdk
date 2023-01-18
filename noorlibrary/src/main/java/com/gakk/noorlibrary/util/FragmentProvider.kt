@@ -88,7 +88,7 @@ object FragmentProvider {
                 }
             }
 
-            PAGE_FULL_PLAYER -> SurahFullPlayerFragment.newInstance(detailsActivityCallBack!!)
+            PAGE_FULL_PLAYER -> SurahFullPlayerFragment.newInstance()
             PAGE_ROZA -> com.gakk.noorlibrary.ui.fragments.roja.RozaInformationFragment.newInstance()
 
             PAGE_NEAREST_MOSQUE_MAP -> MapFragment.newInstance(
@@ -200,7 +200,7 @@ object FragmentProvider {
             )
 
             PAGE_NAMAZ_VISUAL -> NamazVisualFragment.newInstance(
-                detailsActivityCallBack!!, catName
+                catName
             )
             PAGE_BIOGRAPHY -> BiographyFragment.newInstance()
 

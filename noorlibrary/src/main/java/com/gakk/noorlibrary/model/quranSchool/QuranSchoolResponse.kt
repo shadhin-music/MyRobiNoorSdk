@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model.quranSchool
 
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class QuranSchoolResponse(
     @SerializedName("data")
     val items: List<QuranSchoolModel>?,

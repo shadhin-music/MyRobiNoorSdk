@@ -1,11 +1,13 @@
 package com.gakk.noorlibrary.model.names
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import com.gakk.noorlibrary.util.TimeFormtter
 import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
+@Keep
 @Parcelize
 data class Data(
     @SerializedName("about")

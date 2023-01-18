@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model.literature
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@Keep
 data class Literature(
     @SerializedName("about")
     val about: String? = null,

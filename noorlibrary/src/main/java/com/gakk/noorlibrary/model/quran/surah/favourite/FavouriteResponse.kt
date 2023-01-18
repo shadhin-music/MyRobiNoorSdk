@@ -1,7 +1,9 @@
 package com.gakk.noorlibrary.model.quran.surah.favourite
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class FavouriteResponse(
 
     @SerializedName("data")

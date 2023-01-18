@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.model.quran.surah
 
+import androidx.annotation.Keep
 import com.gakk.noorlibrary.Noor
 import com.google.gson.annotations.SerializedName
 import com.gakk.noorlibrary.R
@@ -8,6 +9,7 @@ import com.gakk.noorlibrary.util.TimeFormtter
 import com.gakk.noorlibrary.util.getLocalisedDuration
 import java.io.Serializable
 
+@Keep
 data class Data(
 
     @SerializedName("about")

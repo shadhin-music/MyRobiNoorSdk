@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model
 
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class CommonApiResponse(
     @SerializedName("data")
     val `data`: Any?,

@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model.podcast
 
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class AddCommentResponse(
     @SerializedName("data")
     val `data`: Any?,

@@ -1,7 +1,5 @@
 package com.gakk.noorlibrary.model.quran.surahDetail
 
-import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.util.TimeFormtter
 import com.gakk.noorlibrary.util.getLocalisedDuration
 import com.google.gson.annotations.SerializedName
@@ -88,19 +86,6 @@ data class Data(
         }
         set(value) {
             surahBasicInfo = value
-        }
-
-
-    var ayahCountWithPrefix: String
-        get() {
-            return "${BaseApplication.getAppContext().resources.getString(R.string.ayah)} ${
-                TimeFormtter.getNumberByLocale(
-                    totalAyat.toString()
-                )
-            }"
-        }
-        set(value) {
-            ayahCountWithPrefix = value
         }
 
     var isSurahFavByThisUser: Boolean

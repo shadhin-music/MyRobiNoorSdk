@@ -1,7 +1,9 @@
 package com.gakk.noorlibrary.model.quran.surah
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class SurahListResponse(
     @SerializedName("data")
     val `data`: MutableList<Data>,

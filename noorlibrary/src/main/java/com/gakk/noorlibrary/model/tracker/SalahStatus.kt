@@ -1,5 +1,8 @@
 package com.gakk.noorlibrary.model.tracker
 
+import androidx.annotation.Keep
+
+@Keep
 data class SalahStatus(
     val fajr: Boolean?=null,
     val zuhr: Boolean?=null,

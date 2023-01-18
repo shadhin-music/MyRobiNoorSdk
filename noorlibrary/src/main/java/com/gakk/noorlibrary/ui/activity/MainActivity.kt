@@ -91,6 +91,8 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
         binding.ivLogoHome.setImageResource(R.drawable.ic_noor_yellow_robi)
 
+
+
         setSlider()
 
         checkGPS()

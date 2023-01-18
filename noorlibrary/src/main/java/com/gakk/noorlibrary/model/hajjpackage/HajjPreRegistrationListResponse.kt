@@ -1,10 +1,11 @@
 package com.gakk.noorlibrary.model.hajjpackage
 
 
-import androidx.annotation.DrawableRes
-import com.google.gson.annotations.SerializedName
+import androidx.annotation.Keep
 import com.gakk.noorlibrary.R
+import com.google.gson.annotations.SerializedName
 
+@Keep
 data class HajjPreRegistrationListResponse(
     @SerializedName("data")
     val `data`: MutableList<Data>,

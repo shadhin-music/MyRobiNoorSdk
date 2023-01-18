@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model.hajjtracker
 
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class HajjShareLocationGetResponse(
     @SerializedName("data")
     val `data`: Data?,

@@ -1,11 +1,9 @@
 package com.gakk.noorlibrary.roza
 
-import android.icu.util.IslamicCalendar.RAMADAN
-import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import com.gakk.noorlibrary.util.HIZRI_YR_OFFSET
 import com.gakk.noorlibrary.util.TWENTY_FOUR_HOURS_IN_MS
 import com.gakk.noorlibrary.util.TimeFormtter
-import java.text.SimpleDateFormat
+import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import java.util.*
 
 

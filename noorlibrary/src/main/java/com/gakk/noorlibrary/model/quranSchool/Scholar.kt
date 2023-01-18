@@ -2,10 +2,12 @@ package com.gakk.noorlibrary.model.quranSchool
 
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
+@Keep
 @Parcelize
 data class Scholar(
     @SerializedName("about")

@@ -1,7 +1,9 @@
 package com.gakk.noorlibrary.model.profile
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class UserInfoResponse(
     @SerializedName("data")
     val `data`: Data,

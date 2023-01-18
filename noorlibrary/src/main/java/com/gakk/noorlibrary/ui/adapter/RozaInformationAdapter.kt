@@ -15,7 +15,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.databinding.*
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
@@ -488,29 +487,29 @@ class RozaInformationAdapter(
 
                     when (CalenderUtil.isRamadanNow() && !fromMalaysia) {
                         true -> holder.rozaInfoCellBinding?.tvDay?.setText(
-                            BaseApplication.getAppContext().resources.getText(
+                            Noor.appContext?.resources?.getText(
                                 R.string.ramadan
                             )
 
                         )
 
                         else -> holder.rozaInfoCellBinding?.tvDay?.setText(
-                            BaseApplication.getAppContext().resources.getText(
+                            Noor.appContext?.resources?.getText(
                                 R.string.date
                             )
                         )
 
                     }
                     holder.rozaInfoCellBinding?.tvDate?.text =
-                        BaseApplication.getAppContext().resources.getText(
+                        Noor.appContext?.resources?.getText(
                             R.string.day
                         )
                     holder.rozaInfoCellBinding?.tvLastTimeOfSehri?.text =
-                        BaseApplication.getAppContext().resources.getText(
+                        Noor.appContext?.resources?.getText(
                             R.string.last_sehri_time_today
                         )
                     holder.rozaInfoCellBinding?.tvTimeOfIftari?.text =
-                        BaseApplication.getAppContext().resources.getText(
+                        Noor.appContext?.resources?.getText(
                             R.string.ifter_time_today
                         )
 

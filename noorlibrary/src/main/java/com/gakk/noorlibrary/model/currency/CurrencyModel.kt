@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.model.currency
 
+import androidx.annotation.Keep
 import com.gakk.noorlibrary.util.FLAG_BASE_URL
 import java.util.*
 
@@ -7,6 +8,8 @@ import java.util.*
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/28/2021, Wed
  */
+
+@Keep
 data class CurrencyModel(
     val alphabeticCode: String,
     val currency: String,

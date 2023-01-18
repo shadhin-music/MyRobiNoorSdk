@@ -1,5 +1,8 @@
 package com.gakk.noorlibrary.model.ssl
 
+import androidx.annotation.Keep
+
+@Keep
 data class SslInitiatePayload(
     val MSISDN: String,
     val serviceid: String,

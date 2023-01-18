@@ -1,5 +1,8 @@
 package com.gakk.noorlibrary.model.tracker.ramadan
 
+import androidx.annotation.Keep
+
+@Keep
 data class Data(
     val about: Any,
     val createdBy: String,

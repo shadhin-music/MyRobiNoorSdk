@@ -1,12 +1,14 @@
 package com.gakk.noorlibrary.model.khatam
 
 
+import androidx.annotation.Keep
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.MediaMetadata
 import com.google.gson.annotations.SerializedName
 import com.gakk.noorlibrary.model.video.category.Data
 import java.io.Serializable
 
+@Keep
 data class KhatamQuranVideosResponse(
     @SerializedName("data")
     val `data`: List<Data>,

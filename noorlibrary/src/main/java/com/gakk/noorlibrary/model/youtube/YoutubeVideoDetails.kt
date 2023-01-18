@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model.youtube
 
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class YoutubeVideoDetails(
 
     @SerializedName("attestation")

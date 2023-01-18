@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.model.roza
 
+import androidx.annotation.Keep
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
@@ -8,7 +9,7 @@ import com.gakk.noorlibrary.roza.CalenderUtil
 import com.gakk.noorlibrary.util.TimeFormtter
 import com.gakk.noorlibrary.util.in12HrFormat
 
-
+@Keep
 data class IfterAndSehriTime(
     val dateMs: Long,
     val sehriTIme: Time,

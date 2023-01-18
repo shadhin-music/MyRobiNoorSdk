@@ -1,10 +1,10 @@
 package com.gakk.noorlibrary.model.video.category
 
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.MediaMetadata
+import androidx.annotation.Keep
 import com.gakk.noorlibrary.util.TimeFormtter
 import java.io.Serializable
 
+@Keep
 data class Data(
     val about: String? = null,
     val age: String? = null,

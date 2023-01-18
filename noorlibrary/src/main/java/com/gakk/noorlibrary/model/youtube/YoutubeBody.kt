@@ -1,5 +1,6 @@
 package com.gm.shadhin.data.rest.youtube.model
 
+import androidx.annotation.Keep
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.gakk.noorlibrary.data.rest.youtube.YoutubeConfig.bodyJson
@@ -7,6 +8,7 @@ import com.gakk.noorlibrary.data.rest.youtube.YoutubeConfig.bodyJsonPodcast
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+@Keep
 data class YoutubeBody(
     @SerializedName("context")
     var context: Context? = null,

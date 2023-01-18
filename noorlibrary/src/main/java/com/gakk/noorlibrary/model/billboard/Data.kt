@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model.billboard
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@Keep
 data class Data(
     @SerializedName("about")
     val about: String,

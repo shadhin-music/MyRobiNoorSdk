@@ -1,7 +1,9 @@
 package com.gakk.noorlibrary.model.home
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class HomeDataResponse(
     @SerializedName("data")
     val `data`: List<Data>,

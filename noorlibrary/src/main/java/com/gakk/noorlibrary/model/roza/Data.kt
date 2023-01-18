@@ -1,11 +1,12 @@
 package com.gakk.noorlibrary.model.roza
 
+import androidx.annotation.Keep
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.roza.CalenderUtil
 import com.gakk.noorlibrary.util.TimeFormtter
-import com.gakk.noorlibrary.util.in12HrFormat
 
+@Keep
 data class Data(
     val about: Any,
     val createdBy: Any,
@@ -21,14 +22,15 @@ data class Data(
     val state: Any,
     val updatedBy: Any,
     val updatedOn: Any
-){
+) {
 
     /**
      * Formatted & Localised Sehri time String
      */
     var sehriTimeStr1: String
         get() = "${
-            TimeFormtter.getNumberByLocale(sehri)!!}"
+            TimeFormtter.getNumberByLocale(sehri)!!
+        }"
         set(value) {
             sehriTimeStr1 = value
         }
@@ -41,6 +43,7 @@ data class Data(
         set(value) {
             ifterTimeStr1 = value
         }
+
     /**
      * returns true when this contents day of month matches todays day of month
      * false otherwise
@@ -58,11 +61,10 @@ data class Data(
 
     var dayOfWeek: String
         get() {
-
-            var date = TimeFormtter.MillisecondFromDateString(ramadaDate)
+            val date = TimeFormtter.MillisecondFromDateString(ramadaDate)
             val index = CalenderUtil.getDayOfWeek(date!!) - 1
             val _daysOfWeek: List<String> =
-                BaseApplication.getAppContext().resources.getStringArray(R.array.week_name).toList()
+                Noor.appContext?.resources!!.getStringArray(R.array.week_name).toList()
             return _daysOfWeek.get(index)
         }
         set(value) {

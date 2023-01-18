@@ -19,14 +19,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.databinding.FragmentNamazVisualBinding
-import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.extralib.StepBarView.stepbarView
+import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
@@ -62,8 +62,7 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
     @Transient
     lateinit var mCatId: String
 
-    private val step_bar_view : stepbarView = stepbarView()
-
+    private val step_bar_view: stepbarView = stepbarView()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,13 +90,37 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
         when (mCatName) {
             CAT_MEN -> {
                 mCatId = R.string.namaz_visual_men_id.getLocalisedTextFromResId()
-                context?.let { step_bar_view.setup_stepbar(it,binding.stepBarView,11,36F,3F,7F , true,null,false) }
+                context?.let {
+                    step_bar_view.setup_stepbar(
+                        it,
+                        binding.stepBarView,
+                        11,
+                        36F,
+                        3F,
+                        7F,
+                        true,
+                        null,
+                        false
+                    )
+                }
 
             }
 
             CAT_WOMEN -> {
                 mCatId = R.string.namaz_visual_women_id.getLocalisedTextFromResId()
-                context?.let { step_bar_view.setup_stepbar(it,binding.stepBarView,10,36F,3F,7F , true,null,false) }
+                context?.let {
+                    step_bar_view.setup_stepbar(
+                        it,
+                        binding.stepBarView,
+                        10,
+                        36F,
+                        3F,
+                        7F,
+                        true,
+                        null,
+                        false
+                    )
+                }
 
             }
         }
@@ -131,14 +154,13 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
                         sortedList =
                             list.sortedByDescending { list.indexOf(it) }.toMutableList()
                         setData(sortedList, 0)
-                        binding.stepBarView.visibility =View.VISIBLE
+                        binding.stepBarView.visibility = View.VISIBLE
                         setUpPrevNextControlState()
                     }
                 }
             })
 
-            step_bar_view.getActiveStep(object: stepbarView.stepListner
-            {
+            step_bar_view.getActiveStep(object : stepbarView.stepListner {
                 override fun setOnActiveStep(step: Int) {
 
                     Log.e("index", "I: " + index)
@@ -151,7 +173,6 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
                 }
 
             })
-
 
 
             /*  binding.stepBarView.stepsTitleSetter = object : StepBarView.StepsTitleSetter {
@@ -180,10 +201,10 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
 
     fun setData(list: MutableList<Literature>, index: Int) {
 
-            binding.tvTitle.setText(TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(index + 1)!!) + ". " + list[index].title)
-            binding.tvDesVisual.setText(list[index].text)
-
-            Glide.with(BaseApplication.getAppContext())
+        binding.tvTitle.setText(TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(index + 1)!!) + ". " + list[index].title)
+        binding.tvDesVisual.setText(list[index].text)
+        Noor.appContext?.let {
+            Glide.with(it)
                 .load(list[index].fullImageUrl?.replace("<size>", "1280"))
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
@@ -192,7 +213,7 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        // progressBar.visibility = View.GONE
+
                         return false
                     }
 
@@ -204,7 +225,6 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
                         isFirstResource: Boolean
                     ): Boolean {
                         step_bar_view.setActiveStep(index)
-                        //  progressBar.visibility = View.GONE
                         return false
                     }
 
@@ -212,17 +232,15 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
                 .error(R.drawable.place_holder_4_3_ratio)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(binding.imgVisual)
-
-
+        }
     }
 
     companion object {
 
         @JvmStatic
-        fun newInstance(detailsCallBack: DetailsCallBack, catName: String?) =
+        fun newInstance(catName: String?) =
             NamazVisualFragment().apply {
                 arguments = Bundle().apply {
-                   // putSerializable(ARG_DETAILS_CALL_BACK, detailsCallBack)
                     putString(ARG_CAT_NAME, catName)
                 }
             }
@@ -312,11 +330,10 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
                     )
                 )
                 index--
-                if(index>=0) {
+                if (index >= 0) {
                     setData(sortedList, index)
                     setUpPrevNextControlState()
-                }
-                else index++
+                } else index++
 
             }
         }
@@ -350,7 +367,7 @@ class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
             }
         }
 
-        if(index>=0)
+        if (index >= 0)
             step_bar_view.setActiveStep(index)
 
     }

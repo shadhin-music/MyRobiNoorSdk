@@ -1,8 +1,10 @@
 package com.gakk.noorlibrary.model.quran.ayah
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import com.gakk.noorlibrary.util.TimeFormtter
 
+@Keep
 data class Data(
     @SerializedName("about")
     val about: String,

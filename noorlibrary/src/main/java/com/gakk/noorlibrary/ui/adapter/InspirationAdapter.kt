@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.databinding.LayoutItemInspirationBinding
@@ -91,7 +92,7 @@ class InspirationAdapter(
         var bmpUri: Uri? = null
         try {
             val file = File(
-                BaseApplication.getAppContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                Noor.appContext?.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                 "share_image_" + System.currentTimeMillis() + ".png"
             )
             val out = FileOutputStream(file)
