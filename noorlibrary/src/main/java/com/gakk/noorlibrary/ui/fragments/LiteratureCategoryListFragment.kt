@@ -32,7 +32,7 @@ private const val ARG_LITERATURE_TYPE = "literatureType"
 private const val ARG_LITERATURE_CAT_ID = "literatureCatId"
 
 
-class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
+internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
 
     private var mDetailsCallback: DetailsCallBack? = null
     private var mLiteratureType: LiteratureType? = null

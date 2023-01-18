@@ -18,7 +18,7 @@ import com.gakk.noorlibrary.util.show
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/29/2021, Thu
  */
-class IslamicCalendarAdapter(arrayList: ArrayList<IslamicCalendarModel>) :
+internal class IslamicCalendarAdapter(arrayList: ArrayList<IslamicCalendarModel>) :
     RecyclerView.Adapter<IslamicCalendarAdapter.ViewHolder>() {
 
     private var listItemClickListener: ListItemClickListener? = null

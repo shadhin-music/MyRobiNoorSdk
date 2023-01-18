@@ -25,8 +25,6 @@ class SurahListAdapter(surahDetailsCallBack: SurahDetailsCallBack) : RecyclerVie
     init {
         msurahDetailsCallBack=surahDetailsCallBack
         viewHolderSelectionControl = SurahListViewHolderSelectionControl(SurahListControl.getSelectedSurahId()!!)
-
-       // msurahDetailsCallBack.updateSelection("${SurahListControl.curIndex}")
     }
 
     inner class SurahListViewHolder : RecyclerView.ViewHolder {

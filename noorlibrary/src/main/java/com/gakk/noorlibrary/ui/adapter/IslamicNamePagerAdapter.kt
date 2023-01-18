@@ -9,7 +9,7 @@ import com.gakk.noorlibrary.ui.fragments.islamicName.IslamicNameListFragment
 import com.gakk.noorlibrary.util.FAVOURITE_NAME
 import com.gakk.noorlibrary.util.NAME_LIST
 
-class IslamicNamePagerAdapter(
+internal class IslamicNamePagerAdapter(
     fragmentManager: FragmentManager,
     pageTitles: Array<String>,
     detailsCallBack: DetailsCallBack?,

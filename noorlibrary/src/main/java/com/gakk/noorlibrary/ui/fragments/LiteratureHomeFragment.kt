@@ -21,7 +21,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
 
 private const val ARG_LITERATURE_TYPE = "literatureType"
 
-class LiteratureHomeFragment : Fragment() {
+internal class LiteratureHomeFragment : Fragment() {
     private var mDetailsCallBack: DetailsCallBack? = null
     private var mLiteratureType: LiteratureType? = null
 

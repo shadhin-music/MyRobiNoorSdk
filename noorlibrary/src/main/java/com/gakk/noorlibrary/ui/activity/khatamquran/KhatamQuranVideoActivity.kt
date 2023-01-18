@@ -44,7 +44,7 @@ import com.google.android.exoplayer2.ui.DefaultTimeBar
 import kotlinx.coroutines.launch
 
 
-class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
+internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
 
     private lateinit var binding: ActivityKhatamQuranVideoBinding
     private var player: ExoPlayer? = null

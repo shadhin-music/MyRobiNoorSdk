@@ -23,7 +23,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
 
 private const val ARG_LITERATURE_DETAILS = "literatureDetails"
 
-class OrganizationDetailsFragment : Fragment() {
+internal class OrganizationDetailsFragment : Fragment() {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentOrganizationDetailsBinding

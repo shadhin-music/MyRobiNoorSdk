@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.model.roza.IftarAndSheriTimeforBD
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
-class RamadanTimingViewModel (private val repository: RestRepository) : ViewModel() {
+internal class RamadanTimingViewModel (private val repository: RestRepository) : ViewModel() {
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::RamadanTimingViewModel)

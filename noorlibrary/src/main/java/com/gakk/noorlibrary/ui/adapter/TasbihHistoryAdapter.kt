@@ -9,7 +9,7 @@ import com.gakk.noorlibrary.databinding.TasbihHistoryItemBinding
 import com.gakk.noorlibrary.model.tasbih.TasbihModel
 import com.gakk.noorlibrary.util.TimeFormtter
 
-class TasbihHistoryAdapter(list: List<TasbihModel>) :
+internal class TasbihHistoryAdapter(list: List<TasbihModel>) :
     RecyclerView.Adapter<TasbihHistoryAdapter.ViewHolder>() {
     var mList: List<TasbihModel>
 

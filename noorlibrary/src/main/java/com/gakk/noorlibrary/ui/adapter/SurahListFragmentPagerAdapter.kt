@@ -9,7 +9,7 @@ import com.gakk.noorlibrary.ui.fragments.SurahListFragment
 import com.gakk.noorlibrary.util.ALL_SURAH
 import com.gakk.noorlibrary.util.FAVOURITE_SURAH
 
-class SurahListFragmentPagerAdapter(
+internal class SurahListFragmentPagerAdapter(
     fragmentManager: FragmentManager,
     pageTitles: Array<String>,
     detailsCallBack: DetailsCallBack,

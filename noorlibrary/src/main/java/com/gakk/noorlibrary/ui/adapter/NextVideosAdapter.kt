@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.ui.activity.VideoDataCallback
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class NextVideosAdapter(
+internal class NextVideosAdapter(
     val videoList: MutableList<Data>,
     val calback: VideoDataCallback
 ) :

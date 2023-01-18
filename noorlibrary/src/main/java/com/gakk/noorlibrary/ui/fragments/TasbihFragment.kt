@@ -31,7 +31,7 @@ private const val ARG_BUTTON_CLICKED_INDEX = "buttonClickedIndex"
 private const val ARG_ITEM_COUNT = "itemCount"
 private const val ARG_TIMES = "items"
 
-class TasbihFragment : Fragment(), CountControl, PressListener {
+internal class TasbihFragment : Fragment(), CountControl, PressListener {
 
     private lateinit var binding: FragmentTasbihBinding
     private var mCallback: DetailsCallBack? = null

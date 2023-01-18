@@ -13,7 +13,7 @@ import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 import kotlin.Exception
 
-class LiteratureViewModel(private val repository: RestRepository) : ViewModel() {
+internal class LiteratureViewModel(private val repository: RestRepository) : ViewModel() {
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::LiteratureViewModel)

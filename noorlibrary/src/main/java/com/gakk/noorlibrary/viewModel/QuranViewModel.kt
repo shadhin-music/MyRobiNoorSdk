@@ -15,7 +15,7 @@ import com.gakk.noorlibrary.model.quran.surahDetail.SurahDetailsResponse
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
-class QuranViewModel(private val repository: RestRepository) : ViewModel()  {
+internal class QuranViewModel(private val repository: RestRepository) : ViewModel()  {
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::QuranViewModel)

@@ -22,7 +22,7 @@ import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
 
-class RefundRequestFragment : Fragment() {
+internal class RefundRequestFragment : Fragment() {
 
     private lateinit var binding: FragmentRefundRequestHomeBinding
     private var mCallback: DetailsCallBack? = null

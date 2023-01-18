@@ -23,7 +23,7 @@ import com.gakk.noorlibrary.util.VIDEO_SUBCAT_ID
 import com.gakk.noorlibrary.util.handleClickEvent
 
 
-class IslamicVideoHomeAdapter(
+internal class IslamicVideoHomeAdapter(
     videoGroups: MutableList<VideoByGroup>,
     favouriteVideoGroup: VideoByGroup?,
     playLists: MutableList<Data>,

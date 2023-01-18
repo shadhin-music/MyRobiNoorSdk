@@ -25,7 +25,7 @@ import com.gakk.noorlibrary.viewModel.HajjViewModel
 import kotlinx.coroutines.launch
 
 
-class TrackerDialogFragment : Fragment(), TrackerListControl,ccp.OnCcpClickListener {
+internal class TrackerDialogFragment : Fragment(), TrackerListControl,ccp.OnCcpClickListener {
     private lateinit var binding: DialogTrackLocationHajjBinding
 
     private lateinit var model: HajjViewModel

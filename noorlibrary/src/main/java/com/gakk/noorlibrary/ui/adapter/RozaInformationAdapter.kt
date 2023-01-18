@@ -1,7 +1,6 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.AlarmClock
@@ -28,14 +27,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RozaInformationAdapter(
+internal class RozaInformationAdapter(
     callBack: DivisionSelectionCallback?,
     ramadanSehriIfterTimes: MutableList<IfterAndSehriTime>,
     nextTenDaysSehriIfterTime: MutableList<IfterAndSehriTime>,
     duaList: MutableList<Literature>?,
     list2: MutableList<Data>,
-    val fromMalaysia: Boolean,
-    context: Context?
+    val fromMalaysia: Boolean
 ) : RecyclerView.Adapter<RozaInformationAdapter.RozaInformationViewHolder>() {
 
     val _HEADER = 0

@@ -25,7 +25,7 @@ import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
-class SubscriptionFragment : Fragment() {
+internal class SubscriptionFragment : Fragment() {
 
     private lateinit var binding: FragmentSubscriptionBinding
     private var mCallback: DetailsCallBack? = null

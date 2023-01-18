@@ -25,7 +25,7 @@ import java.lang.Math.*
 import java.text.DecimalFormat
 
 
-class CompassFragment : Fragment(), SensorEventListener {
+internal class CompassFragment : Fragment(), SensorEventListener {
 
     private var mCallback: DetailsCallBack? = null
     private lateinit var binding: FragmentCompassBinding

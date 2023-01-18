@@ -19,7 +19,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
  * @DATE: 4/15/2021, Thu
  */
 
-class IslamicNameHomeFragment : Fragment() {
+internal class IslamicNameHomeFragment : Fragment() {
 
     private lateinit var binding: FragmentIslamicNameHomeBinding
     private var mCallback: DetailsCallBack? = null

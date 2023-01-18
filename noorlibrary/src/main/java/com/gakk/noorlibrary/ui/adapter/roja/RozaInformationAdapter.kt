@@ -25,7 +25,7 @@ import com.google.android.material.tabs.TabLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RozaInformationAdapter(
+internal class RozaInformationAdapter(
     callBack: DivisionSelectionCallback?,
     ramadanSehriIfterTimes: MutableList<IfterAndSehriTime>,
     nextTenDaysSehriIfterTime: MutableList<IfterAndSehriTime>,

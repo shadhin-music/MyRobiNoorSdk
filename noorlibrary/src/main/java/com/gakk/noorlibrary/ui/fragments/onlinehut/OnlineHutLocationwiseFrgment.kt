@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 
 private const val ARG_CITY_TYPE = "cityName"
 
-class OnlineHutLocationwiseFrgment : Fragment() {
+internal class OnlineHutLocationwiseFrgment : Fragment() {
 
     private lateinit var binding: FragmentHajjPreRegistrationListBinding
     private var mCallback: DetailsCallBack? = null

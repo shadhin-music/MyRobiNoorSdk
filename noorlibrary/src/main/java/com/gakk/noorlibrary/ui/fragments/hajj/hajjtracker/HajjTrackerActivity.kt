@@ -40,7 +40,7 @@ import com.gakk.noorlibrary.viewModel.HajjViewModel
 import kotlinx.coroutines.launch
 
 
-class HajjTrackerActivity : BaseActivity(), OnMapReadyCallback, BottomSheetDisplay, DataUpdate {
+internal class HajjTrackerActivity : BaseActivity(), OnMapReadyCallback, BottomSheetDisplay, DataUpdate {
 
     private lateinit var binding: FragmentHajjTrackerBinding
 

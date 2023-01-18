@@ -27,7 +27,7 @@ import com.gakk.noorlibrary.viewModel.QuranViewModel
 import kotlinx.coroutines.launch
 
 
-class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
+internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentSurahFullPlayerBinding

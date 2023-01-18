@@ -17,7 +17,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
  */
 typealias ClickListener = ((Scholar) -> Unit)?
 
-class ScholarListAdapter() : ListAdapter<Scholar, ScholarListAdapter.ScholarViewHolder>(diffUtil) {
+internal class ScholarListAdapter() : ListAdapter<Scholar, ScholarListAdapter.ScholarViewHolder>(diffUtil) {
 
     private var onItemClick: ClickListener = null
     fun setOnItemClickListener(listener: ClickListener) {

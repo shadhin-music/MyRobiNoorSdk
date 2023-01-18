@@ -11,7 +11,7 @@ import com.gakk.noorlibrary.databinding.LayoutQuranSchoolBinding
 import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class QuranSchoolAdapter(
+internal class QuranSchoolAdapter(
     private val listener: OnItemClickListener
 ) :
     ListAdapter<Data, RecyclerView.ViewHolder>(diffUtil) {

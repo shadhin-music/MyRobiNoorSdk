@@ -18,7 +18,7 @@ import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
-class OnlintHutHomeFragment : Fragment() {
+internal class OnlintHutHomeFragment : Fragment() {
 
     private lateinit var binding: FragmentOnlineHutHomeBinding
     private lateinit var repository: RestRepository

@@ -12,7 +12,7 @@ import com.gakk.noorlibrary.model.subs.CheckSubResponse
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
-class SubscriptionViewModel(private val repository: RestRepository) : ViewModel() {
+internal class SubscriptionViewModel(private val repository: RestRepository) : ViewModel() {
 
     var weeklySubInfo: MutableLiveData<Resource<CheckSubResponse>> = MutableLiveData()
     var monthlySubInfo: MutableLiveData<Resource<CheckSubResponse>> = MutableLiveData()

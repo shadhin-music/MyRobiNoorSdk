@@ -27,7 +27,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
-class AmbulanceTabFragment : Fragment() {
+internal class AmbulanceTabFragment : Fragment() {
 
     private lateinit var binding: FragmentIslamicNameTabBinding
     private lateinit var mPageTitles: Array<String>

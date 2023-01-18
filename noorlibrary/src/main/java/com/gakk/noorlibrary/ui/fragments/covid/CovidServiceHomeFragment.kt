@@ -23,7 +23,7 @@ import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
 
-class CovidServiceHomeFragment : Fragment() {
+internal class CovidServiceHomeFragment : Fragment() {
 
     private lateinit var binding: FragmentCovidServiceHomeBinding
     private var mDetailsCallBack: DetailsCallBack? = null

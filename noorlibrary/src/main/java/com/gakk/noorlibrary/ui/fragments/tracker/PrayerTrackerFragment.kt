@@ -33,7 +33,7 @@ import java.util.*
  * @DATE: 4/1/2021, Thu
  */
 
-class PrayerTrackerFragment : Fragment() {
+internal class PrayerTrackerFragment : Fragment() {
     private lateinit var repository: RestRepository
     private lateinit var model: TrackerViewModel
     private lateinit var binding: FragmentPrayerTrackerBinding

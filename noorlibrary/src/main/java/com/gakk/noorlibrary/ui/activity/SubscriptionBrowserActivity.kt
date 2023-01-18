@@ -16,7 +16,7 @@ import com.gakk.noorlibrary.databinding.ActivitySubscriptionBrowserBinding
 import com.gakk.noorlibrary.util.*
 
 
-class SubscriptionBrowserActivity : AppCompatActivity() {
+internal class SubscriptionBrowserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySubscriptionBrowserBinding
     private var isRobi: Boolean? = null

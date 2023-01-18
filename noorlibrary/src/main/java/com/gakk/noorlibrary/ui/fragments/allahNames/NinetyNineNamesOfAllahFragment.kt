@@ -26,7 +26,7 @@ import com.gakk.noorlibrary.viewModel.NinetyNineNamesOfAllahViewModel
 import kotlinx.coroutines.launch
 
 
-class NinetyNineNamesOfAllahFragment : Fragment() {
+internal class NinetyNineNamesOfAllahFragment : Fragment() {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentNinetyNineNamesOfAllahBinding

@@ -22,7 +22,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
-class IslamicDiscussFragment : Fragment() {
+internal class IslamicDiscussFragment : Fragment() {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentIslamicDiscussBinding

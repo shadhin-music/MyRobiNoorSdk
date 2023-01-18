@@ -30,7 +30,7 @@ import java.util.*
  * @DATE: 4/1/2021, Thu
  */
 
-class ZakatCalculatorFragment : Fragment() {
+internal class ZakatCalculatorFragment : Fragment() {
 
     private lateinit var mCallback: DetailsCallBack
     private lateinit var binding: FragmentJakatCalculatorBinding

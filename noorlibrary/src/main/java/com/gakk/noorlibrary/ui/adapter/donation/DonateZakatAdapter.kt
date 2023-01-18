@@ -13,7 +13,7 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.activity.DetailsActivity
 import com.gakk.noorlibrary.util.*
 
-class DonateZakatAdapter(
+internal class DonateZakatAdapter(
     val organizationList: MutableList<Literature>,
     val literature: Literature,
     detailsCallBack: DetailsCallBack

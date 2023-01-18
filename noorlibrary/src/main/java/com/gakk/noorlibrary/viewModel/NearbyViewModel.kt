@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.model.nearby.NearbyResponse
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
-class NearbyViewModel(private val repository: RestRepository) : ViewModel() {
+internal class NearbyViewModel(private val repository: RestRepository) : ViewModel() {
     var nearbyInfo: MutableLiveData<Resource<NearbyResponse>> = MutableLiveData()
 
     companion object {

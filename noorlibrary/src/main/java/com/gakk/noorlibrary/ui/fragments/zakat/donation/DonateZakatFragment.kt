@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 
 private const val ARG_LITERATURE_DETAILS = "literatureDetails"
 
-class DonateZakatFragment : Fragment() {
+internal class DonateZakatFragment : Fragment() {
 
     private lateinit var binding: FragmentDonateZakatBinding
     private var mDetailsCallBack: DetailsCallBack? = null

@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
-class BaseAdapter<T>: RecyclerView.Adapter<BaseViewHolder<T>>() {
+internal class BaseAdapter<T>: RecyclerView.Adapter<BaseViewHolder<T>>() {
     var listOfItems:MutableList<T>? = mutableListOf()
         set(value) {
             field = value

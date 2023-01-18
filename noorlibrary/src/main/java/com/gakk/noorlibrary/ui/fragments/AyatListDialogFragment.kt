@@ -25,7 +25,7 @@ import com.gakk.noorlibrary.ui.adapter.SurahDetailsAdapter
 private const val ARG_SURAH_ID = "surahId"
 private const val ARG_DETAILS_CALL_BACK = "detailsCallBack"
 
-class AyatListDialogFragment : BottomSheetDialogFragment(), SurahDetailsCallBack {
+internal class AyatListDialogFragment : BottomSheetDialogFragment(), SurahDetailsCallBack {
 
     private lateinit var dialog: BottomSheetDialog
 

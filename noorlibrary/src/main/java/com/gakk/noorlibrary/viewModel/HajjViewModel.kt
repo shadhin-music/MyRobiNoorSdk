@@ -34,7 +34,7 @@ import java.util.*
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/26/2021, Mon
  */
-class HajjViewModel(private val repository: RestRepository) : ViewModel() {
+internal class HajjViewModel(private val repository: RestRepository) : ViewModel() {
     companion object {
         val FACTORY = singleArgViewModelFactory(::HajjViewModel)
     }

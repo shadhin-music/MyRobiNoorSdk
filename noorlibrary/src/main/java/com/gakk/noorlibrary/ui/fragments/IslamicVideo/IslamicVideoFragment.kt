@@ -30,7 +30,7 @@ import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import com.gakk.noorlibrary.viewModel.VideoViewModel
 import kotlinx.coroutines.launch
 
-class IslamicVideoFragment : Fragment(), PagingViewCallBack, PlayerCallback {
+internal class IslamicVideoFragment : Fragment(), PagingViewCallBack, PlayerCallback {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentIslamicVideoBinding

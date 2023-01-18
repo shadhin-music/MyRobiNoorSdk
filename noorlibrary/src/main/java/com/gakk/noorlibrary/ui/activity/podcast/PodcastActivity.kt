@@ -50,7 +50,7 @@ import com.google.android.exoplayer2.ui.DefaultTimeBar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
-class PodcastActivity : BaseActivity(), ItemClickListener {
+internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
     private lateinit var binding: ActivityPodcastBinding
     private lateinit var repository: RestRepository

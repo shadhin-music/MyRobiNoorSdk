@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 private const val ARG_DETAILS_CALL_BACK = "detailsCallBack"
 
 
-class IslamicSongFragment : Fragment(), PagingViewCallBack {
+internal class IslamicSongFragment : Fragment(), PagingViewCallBack {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentIslamicVideoBinding

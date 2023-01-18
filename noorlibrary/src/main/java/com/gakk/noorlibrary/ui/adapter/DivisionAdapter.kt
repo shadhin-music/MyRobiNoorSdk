@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
 
 
 typealias DivisionCallbackFunc = (name:String,index:Int) -> Unit
-class DivisionAdapter(val divisions:List<String>) :
+internal class DivisionAdapter(val divisions:List<String>) :
     RecyclerView.Adapter<DivisionAdapter.DivisionViewHolder>() {
     var divisionCallbackFunc:DivisionCallbackFunc?= null
     var selectionControl:DivisionSelectionControl = DivisionSelectionControl()

@@ -17,7 +17,7 @@ import com.gakk.noorlibrary.util.PAGE_SURAH_DETAILS
 import com.gakk.noorlibrary.util.setApplicationLanguage
 
 
-class QuranHomeFragment : Fragment() {
+internal class QuranHomeFragment : Fragment() {
 
     private lateinit var mDetailsCallBack: DetailsCallBack
     private lateinit var binding: FragmentQuranHomeBinding

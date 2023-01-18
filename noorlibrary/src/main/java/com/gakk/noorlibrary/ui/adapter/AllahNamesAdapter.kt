@@ -17,7 +17,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
 const val HEADER_ALLAH_NAME=0
 const val ALLAH_NAME=1
 
-class AllahNamesAdapter(list:List<Data>,detailsCallBack: DetailsCallBack): RecyclerView.Adapter<AllahNamesAdapter.AllahNamesViewHolder>() {
+internal class AllahNamesAdapter(list:List<Data>,detailsCallBack: DetailsCallBack): RecyclerView.Adapter<AllahNamesAdapter.AllahNamesViewHolder>() {
 
     val mList=list
     val mDetailsCallBack=detailsCallBack

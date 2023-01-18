@@ -17,7 +17,7 @@ import com.gakk.noorlibrary.util.show
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/1/2021, Thu
  */
-class QuranSchoolChildAdapter(
+internal class QuranSchoolChildAdapter(
     private val listener: OnItemClickListener
 ) :
     ListAdapter<QuranSchoolModel, RecyclerView.ViewHolder>(diffUtil) {

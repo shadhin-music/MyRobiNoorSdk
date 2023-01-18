@@ -17,7 +17,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
 
 private const val ARG_FUNERAL_DETAILS = "literatureDetails"
 
-class CovidServiceDetailsFragment : Fragment() {
+internal class CovidServiceDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentCovidServiceDetailsBinding
     private var mDetailsCallBack: DetailsCallBack? = null

@@ -21,7 +21,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
 
 private val ARG_PARAM_NAME_TYPE = "nameType"
 
-class IslamicNameTabFragment : Fragment() {
+internal class IslamicNameTabFragment : Fragment() {
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentIslamicNameTabBinding
     private lateinit var mPageTitles: Array<String>

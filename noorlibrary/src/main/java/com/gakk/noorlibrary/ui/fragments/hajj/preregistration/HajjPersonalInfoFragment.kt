@@ -28,7 +28,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HajjPersonalInfoFragment : Fragment() {
+internal class HajjPersonalInfoFragment : Fragment() {
 
     private var mCallback: DetailsCallBack? = null
     private lateinit var binding: FragmentHajjPersonalInfoBinding

@@ -42,7 +42,7 @@ private var literatureListWrapper: LiteratureListWrapper? = null
 private const val ARG_LITERATURE_LIST_CALL_BACK = "literatureListCallBack"
 
 
-class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFavCallBack,
+internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFavCallBack,
     LiteratureItemClickCallBack {
 
     @Transient

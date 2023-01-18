@@ -38,7 +38,7 @@ import java.util.*
 import kotlin.math.floor
 
 
-class NamazTimingFragment : Fragment() {
+internal class NamazTimingFragment : Fragment() {
 
     private var fromMalaysia: Boolean = false
     private lateinit var binding: FragmentNamazTimingBinding

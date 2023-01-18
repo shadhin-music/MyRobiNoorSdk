@@ -17,7 +17,7 @@ import com.gakk.noorlibrary.extralib.StepBarView.stepbarView
 import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.PreregistrationViewModel
 
-class HajjpreRegistrationDetailsFragment : Fragment() {
+internal class HajjpreRegistrationDetailsFragment : Fragment() {
 
     private var mCallback: DetailsCallBack? = null
     private lateinit var viewModel: PreregistrationViewModel

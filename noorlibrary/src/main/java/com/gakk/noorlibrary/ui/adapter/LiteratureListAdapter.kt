@@ -30,7 +30,7 @@ val DOWNLOADABLE = 3
 const val JAKAT_HEADER = 4
 const val JAKAT_QUERY = 5
 
-class LiteratureListAdapter(
+internal class LiteratureListAdapter(
     list: MutableList<Literature>?,
     isFavList: Boolean,
     detailsCallBack: DetailsCallBack? = null,

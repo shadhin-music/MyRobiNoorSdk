@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/18/2021, Sun
  */
-class IslamicNameViewModel(private val repository: RestRepository) : ViewModel() {
+internal class IslamicNameViewModel(private val repository: RestRepository) : ViewModel() {
 
     var nameResponse: MutableLiveData<Resource<IslamicNameResponse>> = MutableLiveData()
 

@@ -39,7 +39,7 @@ private const val SCHOLAR_ITEM = "scholar_item"
 private const val SCHOLAR_ID = "scholar_id"
 private const val ARG_IS_CAT_QURAN_SCHOOL = "isCatQuranSchool"
 
-class QuranSchoolHomeFragment : Fragment(), QuranSchoolChildAdapter.OnItemClickListener,
+internal class QuranSchoolHomeFragment : Fragment(), QuranSchoolChildAdapter.OnItemClickListener,
     QuranSchoolAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentQuranSchoolBinding

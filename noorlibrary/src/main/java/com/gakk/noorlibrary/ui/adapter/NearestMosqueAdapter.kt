@@ -13,7 +13,7 @@ import com.gakk.noorlibrary.util.PAGE_NEAREST_MOSQUE
 import com.gakk.noorlibrary.util.handleClickEvent
 
 
-class NearestMosqueAdapter(
+internal class NearestMosqueAdapter(
     val callback: DetailsCallBack,
     val categoryType: String,
     placeInfoList: MutableList<PlaceInfo>

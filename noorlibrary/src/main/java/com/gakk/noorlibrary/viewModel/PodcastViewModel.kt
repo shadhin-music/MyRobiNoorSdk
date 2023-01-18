@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.model.podcast.LiveVideosResponse
 import com.gakk.noorlibrary.model.youtube.YoutubeVideoDetails
 import kotlinx.coroutines.launch
 
-class PodcastViewModel(private val repository: RestRepository) : ViewModel() {
+internal class PodcastViewModel(private val repository: RestRepository) : ViewModel() {
 
     private var youtubeRepository: YoutubeRepository = YoutubeRepository(viewModelScope)
     var liveUrlResponse: MutableLiveData<Resource<LiveVideosResponse>> =

@@ -24,7 +24,7 @@ import java.io.Serializable
 
 private val ARG_PARAM_AMBULANCE_LIST = "ambulanceList"
 
-class AmbulanceListFragment : Fragment(), MapOpenController {
+internal class AmbulanceListFragment : Fragment(), MapOpenController {
 
     private lateinit var binding: FragmentAmbulaceListBinding
     private var mCallback: DetailsCallBack? = null

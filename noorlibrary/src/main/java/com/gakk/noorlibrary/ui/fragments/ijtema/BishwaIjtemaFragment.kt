@@ -29,7 +29,7 @@ import com.gakk.noorlibrary.viewModel.VideoViewModel
 import kotlinx.coroutines.launch
 
 
-class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, LiteratureListCallBack,
+internal class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, LiteratureListCallBack,
     IjtemaControl {
 
     private lateinit var binding: FragmentBishwaIjtemaBinding

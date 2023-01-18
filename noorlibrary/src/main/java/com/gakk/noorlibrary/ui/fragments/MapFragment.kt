@@ -24,7 +24,7 @@ private const val ARG_MOSQUE_CALL_BACK = "mosqueCallBack"
 private const val CATEGORY_TYPE = "categoryType"
 private val ARG_PARAM_AMBULANCE_LIST = "ambulanceList"
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+internal class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
     private lateinit var mCallback: DetailsCallBack

@@ -22,7 +22,7 @@ import com.gakk.noorlibrary.viewModel.HajjViewModel
 import com.gakk.noorlibrary.viewModel.PreregistrationViewModel
 import kotlinx.coroutines.launch
 
-class HajjPreRegistrationListFragment : Fragment(), PaymentControl {
+internal class HajjPreRegistrationListFragment : Fragment(), PaymentControl {
 
     private var mCallback: DetailsCallBack? = null
     private lateinit var binding: FragmentHajjPreRegistrationListBinding

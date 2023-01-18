@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 import java.io.Serializable
 import kotlin.properties.Delegates
 
-class BiographyFragment : Fragment(), SliderControl {
+internal class BiographyFragment : Fragment(), SliderControl {
 
     @Transient
     private var literatureList: MutableList<Literature> = mutableListOf()

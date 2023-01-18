@@ -16,10 +16,9 @@ import com.gakk.noorlibrary.ui.activity.khatamquran.KhatamQuranVideoActivity
 import com.gakk.noorlibrary.ui.adapter.FragmentDestinationMap
 import com.gakk.noorlibrary.util.handleClickEvent
 
-private const val ARG_MAIN_BACK = "mainCallBack"
 private const val ARG_BILLBORAD_DATA = "billboradData"
 
-class BillboardQuranFragment : Fragment() {
+internal class BillboardQuranFragment : Fragment() {
     private lateinit var binding: FragmentBillboardQuranBinding
     private lateinit var mCallback: MainCallback
     private lateinit var mData: Data
@@ -27,11 +26,10 @@ class BillboardQuranFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(data: Data, callback: MainCallback) =
+        fun newInstance(data: Data) =
             BillboardQuranFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARG_BILLBORAD_DATA, data)
-                    //putSerializable(ARG_MAIN_BACK, callback)
                 }
             }
     }
@@ -63,16 +61,16 @@ class BillboardQuranFragment : Fragment() {
         binding.item = mData
 
         binding.imgBillboard.handleClickEvent {
-            Log.e("Title","ss${mData.categoryName.trim()}")
-             val title: String? = FragmentDestinationMap.getDestinationFragmentName(
+            Log.e("Title", "ss${mData.categoryName.trim()}")
+            val title: String? = FragmentDestinationMap.getDestinationFragmentName(
                 mData.categoryName.trim(),
                 requireContext()
             )
-            title?.let { text->
+            title?.let { text ->
 
-                if (mData.categoryName.trim().equals(getString(R.string.cat_khatam_quran))){
+                if (mData.categoryName.trim().equals(getString(R.string.cat_khatam_quran))) {
                     startActivity(Intent(requireContext(), KhatamQuranVideoActivity::class.java))
-                }else {
+                } else {
                     mCallback.openDetailsActivityWithPageName(
                         text
                     )

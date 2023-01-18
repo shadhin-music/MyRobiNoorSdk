@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 private val ARG_PARAM_CALLBACK = "paramCallBack"
 
-class HajjGuideDialoFragment : Fragment() {
+internal class HajjGuideDialoFragment : Fragment() {
     private lateinit var binding: FragmentHajjGuideDialogBinding
     private lateinit var repository: RestRepository
     private lateinit var model: LiteratureViewModel

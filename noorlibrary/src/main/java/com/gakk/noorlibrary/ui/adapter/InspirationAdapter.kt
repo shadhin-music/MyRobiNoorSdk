@@ -26,7 +26,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class InspirationAdapter(
+internal class InspirationAdapter(
     val imageList: MutableList<Literature>
 ) :
     RecyclerView.Adapter<InspirationAdapter.ViewHolder>() {

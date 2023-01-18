@@ -26,7 +26,7 @@ private const val ARG_PAGE_TYPE = "pageType"
 private const val SHOW_FEMALE_NAMES_TAG = "nameType"
 private const val TAG = "DebugForIslamicName"
 
-class IslamicNameListFragment : Fragment() {
+internal class IslamicNameListFragment : Fragment() {
 
     private lateinit var gender: String
     private lateinit var binding: FragmentIslamicNamesListBinding

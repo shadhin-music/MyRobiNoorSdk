@@ -34,7 +34,7 @@ private const val ARG_CURRENT_PAGE_NO = "currentPageNo"
 private const val ARG_IS_FAV_LIST = "isFavList"
 
 
-class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallBack, ToolbarControlCallBack {
+internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallBack, ToolbarControlCallBack {
 
     private var mDetailsCallback: DetailsCallBack? = null
     private var literatureListWrapper: LiteratureListWrapper? = null

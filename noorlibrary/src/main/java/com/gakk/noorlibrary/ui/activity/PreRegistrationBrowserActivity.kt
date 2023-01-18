@@ -26,7 +26,7 @@ import com.gakk.noorlibrary.viewModel.HajjViewModel
 import kotlinx.coroutines.launch
 
 
-class PreRegistrationBrowserActivity : AppCompatActivity() {
+internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySubscriptionBrowserBinding
     private lateinit var viewModelHajj: HajjViewModel

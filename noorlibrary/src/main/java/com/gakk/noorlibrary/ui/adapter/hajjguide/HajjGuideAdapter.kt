@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.ImageChangeListener
 import com.gakk.noorlibrary.util.TimeFormtter
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class HajjGuideAdapter(
+internal class HajjGuideAdapter(
     val stepList: List<Literature>,
     val imageChangeListener: ImageChangeListener
 ) :

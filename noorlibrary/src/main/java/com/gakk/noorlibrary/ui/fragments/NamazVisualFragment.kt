@@ -32,12 +32,9 @@ import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
 @Transient
-private const val ARG_DETAILS_CALL_BACK = "detailsCallBack"
-
-@Transient
 private const val ARG_CAT_NAME = "catName"
 
-class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
+internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
     @Transient
     private lateinit var binding: FragmentNamazVisualBinding
 

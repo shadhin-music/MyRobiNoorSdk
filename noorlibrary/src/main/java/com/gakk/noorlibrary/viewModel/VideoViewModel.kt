@@ -12,7 +12,7 @@ import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
-class VideoViewModel(private val repository: RestRepository) : ViewModel() {
+internal class VideoViewModel(private val repository: RestRepository) : ViewModel() {
 
     var videoSubCatOrPlayList: MutableLiveData<Resource<MutableList<VideoByGroup>>> =
         MutableLiveData()

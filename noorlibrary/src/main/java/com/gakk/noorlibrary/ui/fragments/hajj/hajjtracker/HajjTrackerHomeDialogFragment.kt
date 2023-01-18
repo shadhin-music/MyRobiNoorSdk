@@ -12,7 +12,7 @@ import com.gakk.noorlibrary.databinding.DialogHajjTrackerHomeBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class HajjTrackerHomeDialogFragment : Fragment() {
+internal class HajjTrackerHomeDialogFragment : Fragment() {
     private lateinit var binding: DialogHajjTrackerHomeBinding
     private lateinit var bottomSheetDisplayCallback: BottomSheetDisplay
 

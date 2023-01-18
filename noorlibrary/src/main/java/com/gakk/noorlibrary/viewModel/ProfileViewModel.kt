@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
 
-class ProfileViewModel(private val repository: RestRepository) : ViewModel() {
+internal class ProfileViewModel(private val repository: RestRepository) : ViewModel() {
     var profile: MutableLiveData<Resource<UserInfoResponse>> = MutableLiveData()
 
 

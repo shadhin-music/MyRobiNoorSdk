@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.adapter.khatamquran
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -10,13 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.databinding.LayoutItemKhatamQuranBinding
 import com.gakk.noorlibrary.model.khatam.KhatamQuranVideosResponse
-import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.ui.activity.khatamquran.ItemClickControl
 import com.gakk.noorlibrary.util.VideoDiffCallback
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.videoNewList
 
-class KhatamQuranVideoAdapter(
+internal class KhatamQuranVideoAdapter(
     var videoList: MutableList<KhatamQuranVideosResponse.Data>,
     val callBack: ItemClickControl
 ) :

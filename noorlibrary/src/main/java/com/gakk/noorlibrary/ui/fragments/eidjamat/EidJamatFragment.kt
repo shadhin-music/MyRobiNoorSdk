@@ -25,7 +25,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
-class EidJamatFragment : Fragment(), MapOpenControllerJamat {
+internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
 
     private lateinit var binding: FragmentEidJamatBinding
     private var mDetailsCallBack: DetailsCallBack? = null

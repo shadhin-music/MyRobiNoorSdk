@@ -18,7 +18,7 @@ import com.gakk.noorlibrary.util.CITY_NAME_NORTH
 import com.gakk.noorlibrary.util.CITY_NAME_SOUTH
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class OnlineHutHomeAdapter(
+internal class OnlineHutHomeAdapter(
     val literatureList: MutableList<Literature>,
     val detailsCallBack: DetailsCallBack
 ) :

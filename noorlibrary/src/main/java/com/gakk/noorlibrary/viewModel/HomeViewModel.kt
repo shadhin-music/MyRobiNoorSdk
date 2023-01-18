@@ -11,7 +11,7 @@ import com.gakk.noorlibrary.model.home.HomeDataResponse
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: RestRepository) : ViewModel() {
+internal class HomeViewModel(private val repository: RestRepository) : ViewModel() {
     var billboardResponse: MutableLiveData<Resource<BillboardResponse>> = MutableLiveData()
     var homeResponse: MutableLiveData<Resource<HomeDataResponse>> = MutableLiveData()
     var addDeviceInfo: MutableLiveData<Resource<HajjLocationShareRequestResponse>> =

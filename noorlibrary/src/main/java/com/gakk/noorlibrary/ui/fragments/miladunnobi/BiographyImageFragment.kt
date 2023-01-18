@@ -12,7 +12,7 @@ import com.gakk.noorlibrary.model.literature.Literature
 
 private const val ARG_PAGER_DATA = "pagerData"
 
-class BiographyImageFragment : Fragment() {
+internal class BiographyImageFragment : Fragment() {
     private lateinit var binding: FragmentBiographySliderBinding
     private lateinit var mData: Literature
 

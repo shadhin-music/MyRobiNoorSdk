@@ -40,7 +40,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl, CardStackListener,
+internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl, CardStackListener,
     CountControl {
 
     private lateinit var binding: FragmentHomeBinding

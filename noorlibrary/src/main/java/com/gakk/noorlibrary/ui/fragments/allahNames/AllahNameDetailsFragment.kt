@@ -31,7 +31,7 @@ private const val ARG_ALLAH_NAME_LIST = "allahNameList"
 private const val ARG_SELECTED_INDEX = "selectedIndex"
 
 
-class AllahNameDetailsFragment : Fragment(), CardStackListener {
+internal class AllahNameDetailsFragment : Fragment(), CardStackListener {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private var mSelectedIndex: Int = 0

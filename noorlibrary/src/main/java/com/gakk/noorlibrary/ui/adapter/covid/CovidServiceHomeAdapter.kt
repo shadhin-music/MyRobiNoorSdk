@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.databinding.LayoutItemCovidFuneralBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.*
 
-class CovidServiceHomeAdapter(
+internal class CovidServiceHomeAdapter(
     val literatureList: MutableList<Literature>,
     val detailsCallBack: DetailsCallBack
 ) :

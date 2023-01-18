@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 private const val ARG_REFUND_FEE = "refundFee"
 private const val ARG_TOTAL_AMOUNT = "totalAmount"
 
-class RefundRequestSubmitFragment : Fragment() {
+internal class RefundRequestSubmitFragment : Fragment() {
 
     private lateinit var binding: FragmentRefundRequestSubmitBinding
     private var mCallback: DetailsCallBack? = null

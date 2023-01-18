@@ -34,7 +34,7 @@ import java.util.regex.Pattern
 
 private const val ARG_LITERATURE_DETAILS = "literatureDetails"
 
-class DonationFormFragment : Fragment() {
+internal class DonationFormFragment : Fragment() {
 
     private lateinit var binding: FragmentDonationFormBinding
     private var mDetailsCallBack: DetailsCallBack? = null

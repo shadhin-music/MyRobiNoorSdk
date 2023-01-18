@@ -33,8 +33,6 @@ class SalaatAlarmReceiver : BroadcastReceiver() {
 
     var ALARM_ID = 1010
     var PASSIVE_LOCATION_ID = 1011
-    var PRE_SUHOOR_ALARM_ID = 1012
-    var PRE_IFTAR_ALARM_ID = 1013
 
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -105,7 +103,7 @@ class SalaatAlarmReceiver : BroadcastReceiver() {
         return namazTimesMalay
     }
 
-    public fun setAlarm(context: Context) {
+    fun setAlarm(context: Context) {
         alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, SalaatAlarmReceiver::class.java)
 

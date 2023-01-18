@@ -11,7 +11,7 @@ import com.gakk.noorlibrary.model.home.Item
 import com.gakk.noorlibrary.ui.fragments.tabs.HomeCellItemControl
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class HomePrayerAdapter(
+internal class HomePrayerAdapter(
     val contentBaseUrl: String,
     val duaList: List<Item>,
     callback: MainCallback,

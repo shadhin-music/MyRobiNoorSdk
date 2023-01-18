@@ -11,7 +11,7 @@ import com.gakk.noorlibrary.ui.fragments.MapFragment
 import com.gakk.noorlibrary.ui.fragments.covid.AmbulanceListFragment
 import com.gakk.noorlibrary.util.PAGE_AMBULANCE
 
-class AmbulancePagerAdapter(
+internal class AmbulancePagerAdapter(
     fragmentManager: FragmentManager,
     pageTitles: Array<String>,
     detailsCallBack: DetailsCallBack?,

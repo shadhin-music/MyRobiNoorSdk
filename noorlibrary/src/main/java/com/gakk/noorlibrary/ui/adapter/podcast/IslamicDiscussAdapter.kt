@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.ui.activity.podcast.PodcastActivity
 import com.gakk.noorlibrary.util.LIVE_PODCAST_TAG
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class IslamicDiscussAdapter(
+internal class IslamicDiscussAdapter(
     val imageList: MutableList<Literature>
 ) :
     RecyclerView.Adapter<IslamicDiscussAdapter.ViewHolder>() {

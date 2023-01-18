@@ -35,7 +35,7 @@ import com.gakk.noorlibrary.viewModel.RamadanTimingViewModel
 import kotlinx.coroutines.launch
 
 
-class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
+internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentRozaInformationBinding
@@ -134,7 +134,7 @@ class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                                 nextTenDaysIfterSehriTimes,
                                 list,
                                 list2,
-                                fromMalaysia, context
+                                fromMalaysia
                             )
                             Log.e("TAG", "Message: " + list)
                             binding.rvRozaInfo.adapter = adapter
@@ -170,8 +170,7 @@ class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                                 nextTenDaysIfterSehriTimes,
                                 null,
                                 list2!!,
-                                fromMalaysia,
-                                context
+                                fromMalaysia
 
                             )
                             Log.e("TAG", "Message: " + list2)

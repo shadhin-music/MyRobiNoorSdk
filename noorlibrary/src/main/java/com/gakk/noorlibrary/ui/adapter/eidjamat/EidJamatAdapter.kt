@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.fragments.eidjamat.MapOpenControllerJamat
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class EidJamatAdapter(
+internal class EidJamatAdapter(
     val jamatList: MutableList<Literature>,
     detailsCallBack: DetailsCallBack,
     val mapOpenController: MapOpenControllerJamat

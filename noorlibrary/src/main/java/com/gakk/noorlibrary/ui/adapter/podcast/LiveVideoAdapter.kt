@@ -12,7 +12,7 @@ import com.gakk.noorlibrary.ui.activity.DetailsActivity
 import com.gakk.noorlibrary.ui.activity.podcast.ItemClickListener
 import com.gakk.noorlibrary.util.*
 
-class LiveVideoAdapter(
+internal class LiveVideoAdapter(
     val videoList: List<LiveVideosResponse.Data?>?,
     val callBack: ItemClickListener
 ) :

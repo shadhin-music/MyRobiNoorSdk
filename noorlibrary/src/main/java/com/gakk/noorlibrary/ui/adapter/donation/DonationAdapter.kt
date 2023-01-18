@@ -12,7 +12,7 @@ import com.gakk.noorlibrary.util.FragmentProvider
 import com.gakk.noorlibrary.util.PAGE_DONATE_ZAKAT
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class DonationAdapter(
+internal class DonationAdapter(
     val literatureList: MutableList<Literature>,
     val detailsCallBack: DetailsCallBack
 ) :

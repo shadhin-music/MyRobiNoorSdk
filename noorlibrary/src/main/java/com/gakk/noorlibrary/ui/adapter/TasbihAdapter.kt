@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.databinding.LayoutTasbihCountItemBinding
 import com.gakk.noorlibrary.ui.fragments.CountControl
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class TasbihAdapter(
+internal class TasbihAdapter(
     val duas: Array<String>,
     countControl: CountControl,
     viewClickedIndex: Int,

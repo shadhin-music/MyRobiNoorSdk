@@ -19,7 +19,7 @@ import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
-class DonationHomeFragment : Fragment() {
+internal class DonationHomeFragment : Fragment() {
 
     private lateinit var binding: FragmentDonationHomeBinding
     private var mDetailsCallBack: DetailsCallBack? = null

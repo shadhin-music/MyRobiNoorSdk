@@ -16,7 +16,7 @@ import com.gakk.noorlibrary.ui.fragments.hajj.hajjtracker.HajjTrackerActivity
 import com.gakk.noorlibrary.ui.fragments.tabs.MoreFragmentCallBack
 import com.gakk.noorlibrary.util.*
 
-class BottomSheetAdapter(
+internal class BottomSheetAdapter(
     bottomSheetItemList: List<BottomSheetItem>,
     callback: MainCallback,
     moreFragmentCallBack: MoreFragmentCallBack

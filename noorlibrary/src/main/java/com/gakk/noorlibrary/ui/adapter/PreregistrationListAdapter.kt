@@ -16,7 +16,7 @@ import com.gakk.noorlibrary.util.TimeFormtter
 import com.gakk.noorlibrary.util.copyToClipboard
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class PreregistrationListAdapter(
+internal class PreregistrationListAdapter(
     val preRegList: MutableList<HajjPreRegistrationListResponse.Data>,
     val detailsCallBack: DetailsCallBack?,
     var paymentControl: PaymentControl

@@ -39,7 +39,7 @@ import java.io.Serializable
 
 private const val CATEGORY_TYPE = "categoryType"
 
-class NearestMosqueFragment : Fragment(), DistanceControl {
+internal class NearestMosqueFragment : Fragment(), DistanceControl {
 
     @Transient
     private lateinit var binding: FragmentNearestMosqueBinding

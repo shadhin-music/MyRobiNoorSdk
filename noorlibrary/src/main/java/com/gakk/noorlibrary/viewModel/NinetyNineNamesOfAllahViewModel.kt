@@ -11,7 +11,7 @@ import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class NinetyNineNamesOfAllahViewModel(private val repository: RestRepository): ViewModel() {
+internal class NinetyNineNamesOfAllahViewModel(private val repository: RestRepository): ViewModel() {
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::NinetyNineNamesOfAllahViewModel)

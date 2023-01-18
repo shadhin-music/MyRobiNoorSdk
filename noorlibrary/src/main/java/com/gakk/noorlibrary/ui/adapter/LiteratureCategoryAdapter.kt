@@ -18,7 +18,7 @@ import com.gakk.noorlibrary.model.subcategory.Data
 import com.gakk.noorlibrary.util.*
 
 
-class LiteratureCategoryAdapter(
+internal class LiteratureCategoryAdapter(
     detailsCallBack: DetailsCallBack,
     categoryList: MutableList<Data>,
     pagingViewCallBack: PagingViewCallBack,

@@ -13,7 +13,7 @@ import com.gakk.noorlibrary.model.literature.Literature
 
 private const val ARG_LITERATURE_DETAILS = "literatureDetails"
 
-class HajjPackageDetailsFragment : Fragment() {
+internal class HajjPackageDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentHajjPackageDetailsBinding
     private var mDetailsCallBack: DetailsCallBack? = null

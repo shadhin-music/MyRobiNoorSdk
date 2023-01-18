@@ -27,7 +27,7 @@ import com.gakk.noorlibrary.viewModel.HajjViewModel
 import kotlinx.coroutines.launch
 
 
-class HajjHomeFragment : Fragment() {
+internal class HajjHomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHajjHomeBinding
     private var mCallback: DetailsCallBack? = null

@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 private const val ARG_CATEGORY_TYPE = "categoryType"
 
 
-class InstructiveVideoFragment : Fragment(), InstructiveVideoAdapter.OnItemClickListener {
+internal class InstructiveVideoFragment : Fragment(), InstructiveVideoAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentInstructiveVideoBinding
     private lateinit var mCallback: DetailsCallBack

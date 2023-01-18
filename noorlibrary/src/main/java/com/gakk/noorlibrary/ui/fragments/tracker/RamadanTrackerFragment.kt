@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RamadanTrackerFragment : Fragment() {
+internal class RamadanTrackerFragment : Fragment() {
     private lateinit var binding: FragmentRamadanTrackerBinding
     private var mCallback: DetailsCallBack? = null
     private lateinit var repository: RestRepository

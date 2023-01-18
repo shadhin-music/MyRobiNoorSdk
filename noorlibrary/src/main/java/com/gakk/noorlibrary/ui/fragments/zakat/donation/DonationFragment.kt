@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 
 private const val ARG_CAT_NAME = "CatName"
 
-class DonationFragment : Fragment() {
+internal class DonationFragment : Fragment() {
 
     private lateinit var binding: FragmentDonationBinding
     private var mDetailsCallBack: DetailsCallBack? = null

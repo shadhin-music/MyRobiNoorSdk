@@ -36,7 +36,7 @@ const val CELL_HEADER = 0
 const val CELL_AYAH = 1
 const val CELL_AYAH_FOOTER = 2
 
-class SurahDetailsAdapter(
+internal class SurahDetailsAdapter(
     detailsCallBack: DetailsCallBack?,
     surahDetailsCallBack: SurahDetailsCallBack,
     hideShowSurahListBtn: Boolean = false,

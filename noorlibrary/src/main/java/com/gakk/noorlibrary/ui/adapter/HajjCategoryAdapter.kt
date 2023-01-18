@@ -18,7 +18,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
 
 typealias SubCategoryListener = ((Data) -> Unit)?
 
-class HajjCategoryAdapter : ListAdapter<Data, HajjCategoryAdapter.HajjCatViewHolder>(diffUtil) {
+internal class HajjCategoryAdapter : ListAdapter<Data, HajjCategoryAdapter.HajjCatViewHolder>(diffUtil) {
 
     private var onItemClick: SubCategoryListener = null
     fun setOnItemClickListener(listener: SubCategoryListener) {

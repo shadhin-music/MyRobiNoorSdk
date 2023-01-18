@@ -23,7 +23,7 @@ import com.gakk.noorlibrary.util.IS_IJTEMA_LIVE_VIDEO
 import com.gakk.noorlibrary.util.TimeFormtter
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class IjtemaAdapter(
+internal class IjtemaAdapter(
     val literatureList: MutableList<Literature>,
     detailsCallBack: DetailsCallBack,
     itemClickCallBack: LiteratureItemClickCallBack?,

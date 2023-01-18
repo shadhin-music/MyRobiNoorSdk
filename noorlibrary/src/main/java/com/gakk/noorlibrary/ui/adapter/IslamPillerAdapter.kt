@@ -17,19 +17,10 @@ class IslamPillerAdapter(
 ) :
     RecyclerView.Adapter<IslamPillerAdapter.ViewHolder>() {
 
-    /*private val mCallBack: MainCallback
-
-
-    init {
-        mCallBack = callback
-    }*/
-
     inner class ViewHolder(binding: RowListItemIslamPillerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var islamPillerBinding: RowListItemIslamPillerBinding? = binding
-
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: RowListItemIslamPillerBinding = DataBindingUtil.inflate(
@@ -48,38 +39,31 @@ class IslamPillerAdapter(
         holder.itemView.handleClickEvent {
             when (position) {
                 0 -> {
-                    // adViewModel.adClickCount()
                     mCallBack.openDetailsActivityWithPageName(
-                        PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY,
-                        // literatures = literatureListAdapter?.getLiteratureList()
+                        PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY
                     )
                 }
                 1 -> {
-                    //adViewModel.adClickCount()
+
                     mCallBack.openDetailsActivityWithPageName(
-                        PAGE_NAMAZ_RULES,
-                        // literatures = literatureListAdapter?.getLiteratureList()
+                        PAGE_NAMAZ_RULES
                     )
                 }
                 2 -> {
-                    // adViewModel.adClickCount()
+
                     mCallBack.openDetailsActivityWithPageName(
-                        PAGE_JAKAT,
-                        // literatures = literatureListAdapter?.getLiteratureList()
+                        PAGE_JAKAT
                     )
                 }
                 3 -> {
-                    // adViewModel.adClickCount()
                     mCallBack.openDetailsActivityWithPageName(
-                        PAGE_ROZA,
-                        // literatures = literatureListAdapter?.getLiteratureList()
+                        PAGE_ROZA
                     )
                 }
                 4 -> {
-                    // adViewModel.adClickCount()
+
                     mCallBack.openDetailsActivityWithPageName(
-                        PAGE_HAJJ_HOME,
-                        //literatures = literatureListAdapter?.getLiteratureList()
+                        PAGE_HAJJ_HOME
                     )
                 }
             }

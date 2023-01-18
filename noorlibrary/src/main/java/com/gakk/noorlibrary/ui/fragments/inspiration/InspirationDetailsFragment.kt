@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 private const val ARG_CAT_ID = "catId"
 
-class InspirationDetailsFragment : Fragment() {
+internal class InspirationDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentInspirationDetailsBinding
     private lateinit var mCallback: DetailsCallBack

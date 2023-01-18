@@ -28,7 +28,7 @@ import com.gakk.noorlibrary.viewModel.PodcastViewModel
 import kotlinx.coroutines.launch
 
 
-class KafelaPlayerActivity : BaseActivity() {
+internal class KafelaPlayerActivity : BaseActivity() {
 
     private lateinit var binding: ActivityKafelaPlayerBinding
     private var player: ExoPlayer? = null

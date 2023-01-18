@@ -35,7 +35,7 @@ import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
 
-class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
+internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentRozaInformationBinding

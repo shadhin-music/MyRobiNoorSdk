@@ -25,7 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.io.Serializable
 
 
-class HajjGuideFragment : Fragment(), OnMapReadyCallback, ImageChangeListener {
+internal class HajjGuideFragment : Fragment(), OnMapReadyCallback, ImageChangeListener {
 
     @Transient
     private lateinit var binding: FragmentHajjTrackerBinding

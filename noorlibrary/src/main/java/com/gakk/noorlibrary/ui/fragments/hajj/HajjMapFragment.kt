@@ -30,7 +30,7 @@ import com.gakk.noorlibrary.util.exH
 import com.gakk.noorlibrary.util.setApplicationLanguage
 
 
-class HajjMapFragment : Fragment(), OnMapReadyCallback {
+internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentHajjMapBinding
     private var mCallback: DetailsCallBack? = null

@@ -8,7 +8,7 @@ import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjAddressFragmen
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPaymentFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPersonalInfoFragment
 
-class HajjPreRegistrationAdapter(
+internal class HajjPreRegistrationAdapter(
     fm: FragmentManager,
     behaviour: Int,
     val callback: DetailsCallBack? = null

@@ -18,7 +18,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
  */
 typealias IslamicNameListener = ((IslamicName) -> Unit)?
 
-class IslamicNameAdapter : ListAdapter<IslamicName, IslamicNameAdapter.ViewHolder>(diffUtil) {
+internal class IslamicNameAdapter : ListAdapter<IslamicName, IslamicNameAdapter.ViewHolder>(diffUtil) {
 
     private var onItemClick: IslamicNameListener = null
     fun setOnItemClickListener(listener: IslamicNameListener) {

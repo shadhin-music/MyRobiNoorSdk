@@ -20,7 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack {
+internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack {
     private lateinit var binding: FragmentMoreBinding
     private lateinit var dialog: BottomSheetDialog
     private lateinit var mCallback: MainCallback

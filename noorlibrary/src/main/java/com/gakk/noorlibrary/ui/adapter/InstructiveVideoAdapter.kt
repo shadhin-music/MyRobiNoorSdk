@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.util.ViewDimension
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.resizeView
 
-class InstructiveVideoAdapter(
+internal class InstructiveVideoAdapter(
     private val listener: OnItemClickListener,
     detailsCallBack: DetailsCallBack,
 ) :

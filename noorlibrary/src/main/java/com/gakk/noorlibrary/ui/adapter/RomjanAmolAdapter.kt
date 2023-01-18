@@ -12,7 +12,7 @@ import com.gakk.noorlibrary.databinding.RowListItemRomjanAmolBinding
 import com.gakk.noorlibrary.model.home.Item
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class RomjanAmolAdapter(
+internal class RomjanAmolAdapter(
     private val contentBaseUrl: String,
     private val callback: MainCallback
 ) :

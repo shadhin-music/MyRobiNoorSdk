@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.model.literature.Literature
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/29/2021, Thu
  */
-class IslamicChhutiAdapter(val mDataList: MutableList<Literature>) :
+internal class IslamicChhutiAdapter(val mDataList: MutableList<Literature>) :
     RecyclerView.Adapter<IslamicChhutiAdapter.ViewHolder>() {
 
     private var listItemClickListener: ListItemClickListener? = null

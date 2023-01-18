@@ -22,7 +22,7 @@ import com.gakk.noorlibrary.viewModel.HajjViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
-class HajjpackageFragment : Fragment() {
+internal class HajjpackageFragment : Fragment() {
 
     private lateinit var binding: PackageFragmentHBinding
     private var mDetailsCallBack: DetailsCallBack? = null

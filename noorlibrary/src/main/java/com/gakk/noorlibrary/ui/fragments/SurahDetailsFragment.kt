@@ -36,7 +36,7 @@ private const val ARG_SURAH_ID = "surahId"
 private const val MAX_ZOOM_LEVEL = 10
 private const val ARG_SURAH_LIST = "surahList"
 
-class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingViewCallBack,
+internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingViewCallBack,
     PageReloadCallBack, SurahDetailsAudioPlayerCallBack, PlayPauseFavControl {
 
     private var mSurahId: String? = null

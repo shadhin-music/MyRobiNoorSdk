@@ -12,7 +12,7 @@ import com.gakk.noorlibrary.util.FragmentProvider
 import com.gakk.noorlibrary.util.ORGANIZATION_DETAILS
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class CharityAdapter(
+internal class CharityAdapter(
     val literatureList: MutableList<Literature>,
                      val detailsCallBack: DetailsCallBack
 ) :

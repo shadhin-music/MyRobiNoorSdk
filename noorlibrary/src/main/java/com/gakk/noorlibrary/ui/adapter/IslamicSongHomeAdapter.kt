@@ -16,7 +16,7 @@ import com.gakk.noorlibrary.model.subcategory.Data
 import com.gakk.noorlibrary.model.video.category.VideoByGroup
 
 
-class IslamicSongHomeAdapter(
+internal class IslamicSongHomeAdapter(
     videoGroups: MutableList<VideoByGroup>,
     pagingViewCallBack: PagingViewCallBack,
     detailsCallBack: DetailsCallBack

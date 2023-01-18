@@ -19,7 +19,7 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
  * @DATE: 4/1/2021, Thu
  */
 
-class TrackerTabFragment : Fragment() {
+internal class TrackerTabFragment : Fragment() {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var binding: FragmentIslamicNameTabBinding

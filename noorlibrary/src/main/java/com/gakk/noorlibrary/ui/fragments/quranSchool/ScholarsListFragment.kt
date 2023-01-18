@@ -26,10 +26,8 @@ import kotlinx.coroutines.launch
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/4/2021, Sun
  */
-private const val ARG_DETAILS_CALL_BACK = "detailsCallBack"
-private const val ARG_MAIN_CALL_BACK = "mainCallBack"
 
-class ScholarsListFragment : Fragment() {
+internal class ScholarsListFragment : Fragment() {
     private var mCallback: DetailsCallBack? = null
     private var mainCallback: MainCallback? = null
     private lateinit var binding: FragmentScholarsListBinding

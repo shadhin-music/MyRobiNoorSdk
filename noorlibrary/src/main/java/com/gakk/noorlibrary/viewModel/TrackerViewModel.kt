@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.model.tracker.ramadan.add.PostRamadanDataResponse
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
-class TrackerViewModel(private val repository: RestRepository) : ViewModel() {
+internal class TrackerViewModel(private val repository: RestRepository) : ViewModel() {
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::TrackerViewModel)

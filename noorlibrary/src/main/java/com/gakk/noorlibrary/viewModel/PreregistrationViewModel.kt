@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.gakk.noorlibrary.model.hajjpackage.PersonalInfoItem
 import com.gakk.noorlibrary.model.hajjpackage.PreRegisteredUserInfo
 
-class PreregistrationViewModel : ViewModel() {
+internal class PreregistrationViewModel : ViewModel() {
 
     private val mutableSelectedItem = MutableLiveData<PersonalInfoItem>()
     val selectedItem: LiveData<PersonalInfoItem> get() = mutableSelectedItem

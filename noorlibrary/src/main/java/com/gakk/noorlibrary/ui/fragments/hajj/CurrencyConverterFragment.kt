@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import kotlin.properties.Delegates
 
-class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItemClickListener {
+internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItemClickListener {
 
     private var alertDialog: AlertDialog? = null
     private lateinit var binding: FragmentCurrencyconverterBinding

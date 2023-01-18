@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.ui.fragments.zakat.ZakatListFragment
 import com.gakk.noorlibrary.util.LiteratureType
 
 
-class LiteratureListFragmentPagerAdapter(
+internal class LiteratureListFragmentPagerAdapter(
     fragmentManager: FragmentManager,
     pageTitles: Array<String>,
     detailsCallBack: DetailsCallBack? = null,

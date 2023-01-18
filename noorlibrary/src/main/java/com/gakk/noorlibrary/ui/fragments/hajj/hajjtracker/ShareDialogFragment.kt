@@ -26,7 +26,7 @@ import com.gakk.noorlibrary.viewModel.HajjViewModel
 import kotlinx.coroutines.launch
 
 
-class ShareDialogFragment : Fragment(),ccp.OnCcpClickListener {
+internal class ShareDialogFragment : Fragment(),ccp.OnCcpClickListener {
     private lateinit var binding: DialogShareLocationHajjBinding
 
     private lateinit var bottomSheetDisplayCallback: BottomSheetDisplay

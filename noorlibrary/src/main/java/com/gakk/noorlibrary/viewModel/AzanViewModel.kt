@@ -10,7 +10,7 @@ import kotlinx.coroutines.*
  * @AUTHOR: Mehedi Hasan
  * @DATE: 5/3/2021, Mon
  */
-class AzanViewModel(private val repository: RestRepository) : ViewModel() {
+internal class AzanViewModel(private val repository: RestRepository) : ViewModel() {
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::AzanViewModel)

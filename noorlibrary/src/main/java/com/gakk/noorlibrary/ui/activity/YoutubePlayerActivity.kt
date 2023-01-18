@@ -17,7 +17,7 @@ import com.gakk.noorlibrary.databinding.ActivityCommonYoutubePlayerBinding
 import com.gakk.noorlibrary.util.IS_IJTEMA_LIVE_VIDEO
 import com.gakk.noorlibrary.util.Util.parseAndGetKey
 
-class YoutubePlayerActivity : YouTubeBaseActivity() {
+internal class YoutubePlayerActivity : YouTubeBaseActivity() {
 
     private lateinit var binding: ActivityCommonYoutubePlayerBinding
 

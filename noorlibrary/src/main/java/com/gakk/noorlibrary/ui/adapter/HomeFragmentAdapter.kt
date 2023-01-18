@@ -107,8 +107,7 @@ class HomeFragmentAdapter(
 
                 fragmentList.add(
                     BillboardQuranFragment.newInstance(
-                        mBillBoardCallback.getitem(i),
-                        mCallBack
+                        mBillBoardCallback.getitem(i)
                     )
                 )
             }

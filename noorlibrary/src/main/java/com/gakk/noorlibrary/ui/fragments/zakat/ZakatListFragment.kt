@@ -22,7 +22,7 @@ import com.gakk.noorlibrary.viewModel.ZakatViewModel
 import kotlinx.coroutines.launch
 import java.io.Serializable
 
-class ZakatListFragment : Fragment(), DeleteOperation {
+internal class ZakatListFragment : Fragment(), DeleteOperation {
 
     private lateinit var binding: FragmentZakatListBinding
     private var mDetailsCallBack: DetailsCallBack? = null

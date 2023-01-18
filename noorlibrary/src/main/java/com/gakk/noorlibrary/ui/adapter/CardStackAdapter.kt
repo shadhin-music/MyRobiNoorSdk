@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.databinding.ItemAllahNamesBinding
 
 import com.gakk.noorlibrary.model.names.Data
 
-class CardStackAdapter(
+internal class CardStackAdapter(
     private var items: List<Data> = emptyList()
 ) : RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
 

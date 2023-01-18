@@ -26,7 +26,7 @@ import com.gakk.noorlibrary.viewModel.PreregistrationViewModel
 import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
 import kotlinx.coroutines.launch
 
-class HajjPaymentFragment : Fragment() {
+internal class HajjPaymentFragment : Fragment() {
 
     private var mCallback: DetailsCallBack? = null
     private lateinit var binding: FragmentHajjPaymentBinding

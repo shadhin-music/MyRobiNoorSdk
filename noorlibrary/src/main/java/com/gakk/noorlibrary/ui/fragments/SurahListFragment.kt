@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import java.io.Serializable
 
 
-class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActionCallBack {
+internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActionCallBack {
 
     private val ARG_PAGE_TYPE = "pageType"
     private val ARG_CALL_BACK = "detailsCallBack"

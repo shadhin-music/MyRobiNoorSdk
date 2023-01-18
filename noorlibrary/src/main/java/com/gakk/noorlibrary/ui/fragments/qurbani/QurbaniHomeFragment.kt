@@ -29,7 +29,7 @@ import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import com.gakk.noorlibrary.viewModel.VideoViewModel
 import kotlinx.coroutines.launch
 
-class QurbaniHomeFragment : Fragment() {
+internal class QurbaniHomeFragment : Fragment() {
 
     private lateinit var binding: FragmentQurbaniHomeBinding
     private var mCallback: DetailsCallBack? = null

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/5/2021, Mon
  */
-class QuranSchoolViewModel(private val repository: RestRepository) : ViewModel() {
+internal class QuranSchoolViewModel(private val repository: RestRepository) : ViewModel() {
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::QuranSchoolViewModel)

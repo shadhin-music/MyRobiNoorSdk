@@ -37,7 +37,7 @@ import kotlin.math.floor
 
 private const val TAG = "AzanFragment_Debug"
 
-class AzanFragment : Fragment(), View.OnClickListener {
+internal class AzanFragment : Fragment(), View.OnClickListener {
 
     private lateinit var todayDate: Date
     private lateinit var binding: FragmentAzanBinding

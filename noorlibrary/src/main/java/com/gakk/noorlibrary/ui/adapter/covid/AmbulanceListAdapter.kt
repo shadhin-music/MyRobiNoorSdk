@@ -1,21 +1,17 @@
 package com.gakk.noorlibrary.ui.adapter.covid
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.LayoutItemAmbulanceBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.fragments.covid.MapOpenController
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class AmbulanceListAdapter(
+internal class AmbulanceListAdapter(
     val literatureList: MutableList<Literature>,
     val detailsCallBack: DetailsCallBack,
     val mapOpenController: MapOpenController

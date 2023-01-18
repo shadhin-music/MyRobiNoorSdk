@@ -37,7 +37,7 @@ import com.gakk.noorlibrary.viewModel.VideoViewModel
 import kotlinx.coroutines.launch
 
 
-class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
+internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
 
     private lateinit var binding: ActivityVideoPlayerHomeBinding
     private var player: ExoPlayer? = null

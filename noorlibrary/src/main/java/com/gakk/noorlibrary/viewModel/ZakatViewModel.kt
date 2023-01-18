@@ -9,7 +9,7 @@ import com.gakk.noorlibrary.model.zakat.ZakatDataModel
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
-class ZakatViewModel(private val repository: RoomRepository) : ViewModel() {
+internal class ZakatViewModel(private val repository: RoomRepository) : ViewModel() {
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::ZakatViewModel)

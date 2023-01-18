@@ -35,7 +35,7 @@ import com.gakk.noorlibrary.util.*
  * @DATE: 4/4/2021, Sun
  */
 
-class QuranSchoolPlayerActivity : BaseActivity(),
+internal class QuranSchoolPlayerActivity : BaseActivity(),
     QuranSchoolChildAdapter.OnItemClickListener,
     QuranSchoolAdapter.OnItemClickListener {
 
@@ -266,7 +266,6 @@ class QuranSchoolPlayerActivity : BaseActivity(),
                     }
                 })
                 exoPlayer.prepare()
-                // exoPlayer.setVideoSurface(null); shumi if you want to remove video
             }
     }
 

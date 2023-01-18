@@ -10,7 +10,7 @@ import com.gakk.noorlibrary.model.hajjtracker.HajjSharingListResponse
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjtracker.BottomSheetDisplay
 import com.gakk.noorlibrary.util.handleClickEvent
 
-class HajjSharingListAdapter(
+internal class HajjSharingListAdapter(
     val sharingList: List<HajjSharingListResponse.Data>?,
     val bottomSheetDisplay: BottomSheetDisplay
 ) :

@@ -19,7 +19,7 @@ import com.gakk.noorlibrary.util.show
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/28/2021, Wed
  */
-class CountryListAdapter(
+internal class CountryListAdapter(
     private val selected: Int,
     private val onItemClickListener: OnItemClickListener,
     private val selection: CurrencyConverterFragment.SELECTION

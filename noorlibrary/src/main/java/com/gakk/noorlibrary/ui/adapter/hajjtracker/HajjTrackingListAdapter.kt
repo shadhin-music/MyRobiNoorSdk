@@ -14,7 +14,7 @@ import com.gakk.noorlibrary.util.VideoDiffCallback
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.videoNewList
 
-class HajjTrackingListAdapter(
+internal class HajjTrackingListAdapter(
     val sharingList: List<HajjTrackingListResponse.Data>?,
     val bottomSheetDisplay: BottomSheetDisplay,
     val trackerListControl: TrackerListControl

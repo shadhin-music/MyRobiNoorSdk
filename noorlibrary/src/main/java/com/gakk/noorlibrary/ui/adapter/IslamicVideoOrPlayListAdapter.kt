@@ -20,7 +20,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
 val VIDEO = 0
 val PLAY_LIST = 1
 
-class IslamicVideoOrPlayListAdapter(
+internal class IslamicVideoOrPlayListAdapter(
     videoList: MutableList<com.gakk.noorlibrary.model.video.category.Data>? = null,
     playList: MutableList<com.gakk.noorlibrary.model.subcategory.Data>? = null,
     detailsCallBack: DetailsCallBack,

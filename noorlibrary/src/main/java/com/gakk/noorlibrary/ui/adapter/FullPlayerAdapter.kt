@@ -18,7 +18,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
 const val HEADER = 0
 const val CONTENT = 1
 
-class FullPlayerAdapter(surahList: MutableList<Data>, clickAction: (Int, String) -> Unit) :
+internal class FullPlayerAdapter(surahList: MutableList<Data>, clickAction: (Int, String) -> Unit) :
     RecyclerView.Adapter<FullPlayerAdapter.FullPlayerViewHolder>() {
 
 

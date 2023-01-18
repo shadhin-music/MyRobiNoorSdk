@@ -35,7 +35,7 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 
 
-class IslamicCalenderFragmentBd : Fragment() {
+internal class IslamicCalenderFragmentBd : Fragment() {
 
     private lateinit var binding: FragmentIslamicCalenderBdBinding
 

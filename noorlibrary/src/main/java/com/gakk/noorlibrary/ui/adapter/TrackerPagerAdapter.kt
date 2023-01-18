@@ -8,7 +8,7 @@ import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.ui.fragments.tracker.PrayerTrackerFragment
 import com.gakk.noorlibrary.ui.fragments.tracker.RamadanTrackerFragment
 
-class TrackerPagerAdapter(
+internal class TrackerPagerAdapter(
     fragmentManager: FragmentManager,
     pageTitles: Array<String>,
     detailsCallBack: DetailsCallBack?
