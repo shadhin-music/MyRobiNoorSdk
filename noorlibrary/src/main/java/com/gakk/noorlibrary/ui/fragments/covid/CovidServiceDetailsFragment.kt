@@ -8,12 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.FragmentCovidServiceDetailsBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setApplicationLanguage
 
 private const val ARG_FUNERAL_DETAILS = "literatureDetails"
 
@@ -47,7 +45,7 @@ internal class CovidServiceDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
+
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_covid_service_details,

@@ -1,7 +1,13 @@
 package com.gakk.noorlibrary.ui.fragments.zakat.donation
 
+/*import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCCustomerInfoInitializer
+import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization
+import com.sslwireless.sslcommerzlibrary.model.response.SSLCTransactionInfoModel
+import com.sslwireless.sslcommerzlibrary.model.util.SSLCCurrencyType
+import com.sslwireless.sslcommerzlibrary.model.util.SSLCSdkType
+import com.sslwireless.sslcommerzlibrary.view.singleton.IntegrateSSLCommerz
+import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener*/
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,17 +19,11 @@ import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.FragmentDonationFormBinding
 import com.gakk.noorlibrary.model.literature.Literature
-import com.gakk.noorlibrary.model.zakat.SslStoreModel
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.DONATION_SERVICE_ID
+import com.gakk.noorlibrary.util.DONATION_TERM
+import com.gakk.noorlibrary.util.SSL_CUSTOMER_EMAIL
+import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
-/*import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCCustomerInfoInitializer
-import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization
-import com.sslwireless.sslcommerzlibrary.model.response.SSLCTransactionInfoModel
-import com.sslwireless.sslcommerzlibrary.model.util.SSLCCurrencyType
-import com.sslwireless.sslcommerzlibrary.model.util.SSLCSdkType
-import com.sslwireless.sslcommerzlibrary.view.singleton.IntegrateSSLCommerz
-import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener*/
-import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -74,7 +74,6 @@ internal class DonationFormFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_donation_form,
@@ -219,7 +218,7 @@ internal class DonationFormFragment : Fragment() {
                 .show()
             return
         }
-       // TODO("mobile number configure from sdk")
+        // TODO("mobile number configure from sdk")
 
         viewModelSub.initiatePaymentSslRange(
             "8801917589656",

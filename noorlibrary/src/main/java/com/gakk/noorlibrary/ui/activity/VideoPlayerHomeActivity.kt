@@ -61,8 +61,6 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppPreference.language?.let { setApplicationLanguage(it) }
-
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_video_player_home)
 

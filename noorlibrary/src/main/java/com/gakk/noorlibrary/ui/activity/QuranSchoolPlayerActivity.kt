@@ -55,7 +55,7 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppPreference.language?.let { setApplicationLanguage(it) }
+
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_youtube_player)
 

@@ -16,13 +16,11 @@ import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.SHARE
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.FragmentAllahNameDetailsBinding
 import com.gakk.noorlibrary.extralib.cardstackview.*
 import com.gakk.noorlibrary.model.names.Data
 import com.gakk.noorlibrary.ui.adapter.CardStackAdapter
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.util.toArrayList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -57,7 +55,6 @@ internal class AllahNameDetailsFragment : Fragment(), CardStackListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         binding = DataBindingUtil.inflate(
             inflater,

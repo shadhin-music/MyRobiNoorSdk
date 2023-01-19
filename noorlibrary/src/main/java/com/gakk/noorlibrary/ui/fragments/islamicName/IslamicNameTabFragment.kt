@@ -9,10 +9,8 @@ import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.FragmentIslamicNameTabBinding
 import com.gakk.noorlibrary.ui.adapter.IslamicNamePagerAdapter
-import com.gakk.noorlibrary.util.setApplicationLanguage
 
 /**
  * @AUTHOR: Mehedi Hasan
@@ -39,7 +37,7 @@ internal class IslamicNameTabFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
+
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_islamic_name_tab, container, false)
         mPageTitles = arrayOf(

@@ -66,7 +66,7 @@ internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActio
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
+
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_surah_list, container, false)
 

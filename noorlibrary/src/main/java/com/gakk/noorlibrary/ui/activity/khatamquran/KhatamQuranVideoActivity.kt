@@ -61,7 +61,6 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AppPreference.language?.let { setApplicationLanguage(it) }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_khatam_quran_video)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

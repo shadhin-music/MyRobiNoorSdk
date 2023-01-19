@@ -72,7 +72,6 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_surah_full_player, container, false)
 

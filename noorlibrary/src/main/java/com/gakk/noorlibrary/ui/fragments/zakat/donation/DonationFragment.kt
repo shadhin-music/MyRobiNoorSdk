@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.databinding.FragmentDonationBinding
@@ -22,7 +21,6 @@ import com.gakk.noorlibrary.ui.adapter.donation.CharityAdapter
 import com.gakk.noorlibrary.ui.adapter.donation.DonationAdapter
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -62,7 +60,6 @@ internal class DonationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_donation,

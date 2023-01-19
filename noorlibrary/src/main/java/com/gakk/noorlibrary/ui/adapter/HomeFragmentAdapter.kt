@@ -687,10 +687,6 @@ class HomeFragmentAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFragmentViewHolder {
         val binding: ViewDataBinding
 
-        AppPreference.language?.let {
-            parent.context?.setApplicationLanguage(it)
-        }
-
         when (viewType) {
 
             CELL_PRAYER_TIMING -> {

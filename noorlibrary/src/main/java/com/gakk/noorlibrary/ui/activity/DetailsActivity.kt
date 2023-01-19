@@ -50,7 +50,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppPreference.language?.let { setApplicationLanguage(it) }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details)
 
         setStatusColor(R.color.bg)

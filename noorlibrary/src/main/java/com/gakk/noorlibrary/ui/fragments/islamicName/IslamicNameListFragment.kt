@@ -54,7 +54,6 @@ internal class IslamicNameListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         lifecycleScope.launch {
             binding =

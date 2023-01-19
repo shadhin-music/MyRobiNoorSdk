@@ -64,12 +64,12 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
-            //mDetailsCallBack = it.getSerializable(ARG_DETAILS_CALL_BACK) as DetailsCallBack
             mCatName = it.getString(ARG_CAT_NAME)
         }
-        mDetailsCallBack = requireActivity() as DetailsCallBack
 
+        mDetailsCallBack = requireActivity() as DetailsCallBack
     }
 
     override fun onCreateView(
@@ -160,36 +160,12 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
             step_bar_view.getActiveStep(object : stepbarView.stepListner {
                 override fun setOnActiveStep(step: Int) {
 
-                    Log.e("index", "I: " + index)
-                    Log.e("index", "C : " + step)
-
                     index = step
                     setData(sortedList, index)
                     setUpPrevNextControlState()
 
                 }
-
             })
-
-
-            /*  binding.stepBarView.stepsTitleSetter = object : StepBarView.StepsTitleSetter {
-                  override fun getStepTitle(step: Int): String {
-                      return when (step) {
-                          1 -> "Fist"
-                          2 -> "2nd"
-                          3 -> "Third"
-                          4 -> "4th"
-                          5 -> "Fifth"
-                          6 -> "6th"
-                          7 -> "Seventh"
-                          8 -> "8th"
-                          9 -> "Ninth"
-                          10 -> "10th"
-                          else -> "Non"
-                      }
-                  }
-              }*/
-
         }
 
         updateToolbarForThisFragment()
@@ -315,9 +291,6 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
 
     override fun setPrevControlClickEvent() {
 
-        /* if (index > 0) {
-             binding.stepBarView.reachedStep = index
-         }*/
         binding.prevNextPanel.layoutPrevActionContent.handleClickEvent {
             if (index > 0) {
                 binding.prevNextPanel.btnPrevContent.isEnabled = true

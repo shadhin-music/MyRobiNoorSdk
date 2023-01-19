@@ -8,17 +8,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.FragmentMapBinding
 import com.gakk.noorlibrary.util.PAGE_AMBULANCE
 import com.gakk.noorlibrary.util.PAGE_NEAREST_MOSQUE
-import com.gakk.noorlibrary.util.setApplicationLanguage
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+
 
 private const val ARG_MOSQUE_CALL_BACK = "mosqueCallBack"
 private const val CATEGORY_TYPE = "categoryType"
@@ -68,7 +68,6 @@ internal class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
 
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
 
@@ -93,7 +92,8 @@ internal class MapFragment : Fragment(), OnMapReadyCallback {
         var transaction: FragmentTransaction? = null
 
         if (activity?.supportFragmentManager != null) {
-            transaction = activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.flMap, fragment)
+            transaction =
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.flMap, fragment)
         }
 
         transaction?.commit()

@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.*
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
@@ -24,7 +23,10 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.service.DOWNLOAD_ID
 import com.gakk.noorlibrary.service.DOWNLOAD_URL
 import com.gakk.noorlibrary.service.DownloadService
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.DownloadProgressControl
+import com.gakk.noorlibrary.util.RepositoryProvider
+import com.gakk.noorlibrary.util.getLocalisedTextFromResId
+import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -83,8 +85,6 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         binding = DataBindingUtil.inflate(
             inflater,

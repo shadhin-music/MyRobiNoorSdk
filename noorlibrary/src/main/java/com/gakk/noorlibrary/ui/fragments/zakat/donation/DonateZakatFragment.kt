@@ -62,7 +62,6 @@ internal class DonateZakatFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_donate_zakat,
