@@ -1,17 +1,16 @@
 package com.gakk.noorlibrary.data.prefs
 
+//have to change with user data class
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.annotation.Keep
 import com.gakk.noorlibrary.model.UserLocation
-
-//have to change with user data class
 import com.gakk.noorlibrary.model.billboard.Data
-
 import com.gakk.noorlibrary.model.roza.IftarAndSheriTimeforBD
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.LAN_BANGLA
+import com.gakk.noorlibrary.util.NUMBER
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
@@ -28,7 +27,6 @@ object AppPreference {
     private const val LANGUAGE = "Language"
     private const val USER_CURRENT_LOCATION = "userCurrentLocation"
     private const val USER_NUMBER = "userNumber"
-    private const val FIREBASE_TOKEN = "firebaseToken"
     private const val PREF_USER = "user"
     private const val PREF_USER_INFO = "userInfo"
 
@@ -57,6 +55,10 @@ object AppPreference {
     private const val ISSUBWEEKLY = "is_sub_daily"
     private const val ISSUBMONTHLY = "is_sub_monthly"
     private const val ISSUBYEARLY = "is_sub_yearly"
+    private const val ISSUBWEEKLYROBI = "is_sub_weekly_robi"
+    private const val ISSUBMONTHLYROBI = "is_sub_monthly_robi"
+    private val IS_SUB_WEEKLY_ROBI = Pair(ISSUBWEEKLYROBI, false)
+    private val IS_SUB_MONTHLY_ROBI = Pair(ISSUBMONTHLYROBI, false)
     private const val ISSUBMONTHLYGPAY = "is_sub_monthly_gpay"
     private const val ISSUBWEEKLYSOFTBUNDLE = "is_sub_weekly_soft"
     private const val ISSUBMONTHLYSOFTBUNDLE = "is_sub_monthly_soft"
@@ -91,24 +93,9 @@ object AppPreference {
     private val IS_SUB_MONTHLY = Pair(ISSUBMONTHLY, false)
     private val IS_SUB_YEARLY = Pair(ISSUBYEARLY, false)
     private val IS_SUB_MONTHLY_GPAY = Pair(ISSUBMONTHLYGPAY, false)
-    private val IS_SUB_WEEKLY_SOFT_BUNDLE = Pair(ISSUBWEEKLYSOFTBUNDLE, false)
-    private val IS_SUB_MONTHLY_SOFT_BUNDLE = Pair(ISSUBMONTHLYSOFTBUNDLE, false)
-    private val IS_SUB_MONTHLY_SOFT_BUNDLE_ROBI = Pair(ISSUBMONTHLYSOFTBUNDLEROBI, false)
-    private val IS_SUB_WEEKLY_SOFT_BUNDLE_ROBI = Pair(ISSUBWEEKLYSOFTBUNDLEROBI, false)
-    private val IS_SUB_SOFT_BUNDLE_ROBI = Pair(ISSUBSOFTBUNDLEROBI, false)
-    private val IS_SUB_SOFT_BUNDLE_RAMADAN_ROBI = Pair(ISSUBSOFTBUNDLERAMADANROBI, false)
-    private val IS_SUB_SOFT_BUNDLE_SEVEN_DAYS_ROBI = Pair(ISSUBSOFTBUNDLESEVENDAYSROBI, false)
-    private val IS_SUB_SOFT_BUNDLE_FIFTEEN_DAYS_ROBI = Pair(ISSUBSOFTBUNDLEFIFTEENDAYSROBI, false)
-    private val SET_FIREBASE_TOKEN = Pair(FIREBASE_TOKEN, TOKEN_TAG)
-    private val IS_SUB_IQRA = Pair(ISSUBIQRA, false)
-    private val IS_SUB_QURAN = Pair(ISSUBQURAN, false)
     private val IS_SUB_MONTHLY_NAGAD = Pair(ISSUBMONTHLYNAGAD, false)
     private val IS_SUB_HALF_YEARLY_NAGAD = Pair(ISSUBHALFYEARLYNAGAD, false)
     private val IS_SUB_YEARLY_NAGAD = Pair(ISSUBYEARLYNAGAD, false)
-
-    private val IS_SUB_MONTHLY_SSL = Pair(ISSUBMONTHLYSSL, false)
-    private val IS_SUB_HALF_YEARLY_SSL = Pair(ISSUBHALFYEARLYSSL, false)
-    private val IS_SUB_YEARLY_SSL = Pair(ISSUBYEARLYSSL, false)
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREF_FILE_NAME, MODE)
@@ -190,17 +177,7 @@ object AppPreference {
             it.putBoolean(PREF_RAMADAN_NOTIFICATION_VIBRATION_ON, value)
         }
 
-    var lastSavedSehriTimeMs: String?
-        get() = preferences.getString(PREF_LAST_SET_SEHRI_ALARM_TIME, "")
-        set(value) = preferences.edit {
-            it.putString(PREF_LAST_SET_SEHRI_ALARM_TIME, value)
-        }
 
-    var lastSavedIfterTimeMs: String?
-        get() = preferences.getString(PREF_LAST_SET_IFTER_ALARM_TIME, "")
-        set(value) = preferences.edit {
-            it.putString(PREF_LAST_SET_IFTER_ALARM_TIME, value)
-        }
     var _ramadanSehriIfterTimes: MutableList<IfterAndSehriTime>? = mutableListOf()
 
     var ramadanSehriIfterTimes: MutableList<IfterAndSehriTime>?
@@ -345,7 +322,7 @@ object AppPreference {
 
     fun getUserCurrentLocation(): UserLocation {
         val userCurLocString = preferences.getString(USER_CURRENT_LOCATION, "")
-        Log.e("Error", ""+userCurLocString)
+        Log.e("Error", "" + userCurLocString)
         if (userCurLocString == null || userCurLocString.length < 1) {
             val mLocation = UserLocation(
                 23.8103,
@@ -355,38 +332,6 @@ object AppPreference {
         }
         val type: Type = genericType<UserLocation>()
         return mGSonInstance.fromJson(userCurLocString, type)
-    }
-
-    fun saveAllMalayNamazTime(callLog: List<List<Long>>, requestType: String) {
-        val json = mGSonInstance.toJson(callLog)
-        preferences.edit {
-            it.putString(requestType, json)
-        }
-    }
-
-    @Keep
-    fun loadAllMalayNamazTime(requestType: String): List<List<Long>>? {
-        var callLog: List<List<Long>>? = null
-        try {
-            val json = preferences.getString(requestType, "")
-            if (json != null /*&& check month*/) {
-                callLog = if (json.isEmpty()) {
-                    ArrayList()
-                } else {
-                    val type = object : TypeToken<List<List<Long?>?>?>() {}.type
-                    mGSonInstance.fromJson<List<List<Long>>>(json, type)
-                }
-            }
-        } catch (e: JsonSyntaxException) {
-
-        }
-        return callLog
-    }
-
-    fun clearNamazTime(requestType: String) {
-        preferences.edit {
-            it.remove(requestType)
-        }
     }
 
     var nitificationflag: Boolean
@@ -485,91 +430,6 @@ object AppPreference {
             it.putBoolean(IS_SUB_MONTHLY_GPAY.first, value)
         }
 
-    var subWeeklySoftBundle: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_WEEKLY_SOFT_BUNDLE.first,
-            IS_SUB_WEEKLY_SOFT_BUNDLE.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_WEEKLY_SOFT_BUNDLE.first, value)
-        }
-
-    var subMonthlySoftBundle: Boolean
-        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
-            IS_SUB_MONTHLY_SOFT_BUNDLE.first,
-            IS_SUB_MONTHLY_SOFT_BUNDLE.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_MONTHLY_SOFT_BUNDLE.first, value)
-        }
-    var subMonthlySoftBundleRobi: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_MONTHLY_SOFT_BUNDLE_ROBI.first,
-            IS_SUB_MONTHLY_SOFT_BUNDLE_ROBI.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_MONTHLY_SOFT_BUNDLE_ROBI.first, value)
-        }
-    var subWeeklySoftBundleRobi: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_WEEKLY_SOFT_BUNDLE_ROBI.first,
-            IS_SUB_WEEKLY_SOFT_BUNDLE_ROBI.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_WEEKLY_SOFT_BUNDLE_ROBI.first, value)
-        }
-    var subSoftBundleRobi: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_SOFT_BUNDLE_ROBI.first,
-            IS_SUB_SOFT_BUNDLE_ROBI.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_SOFT_BUNDLE_ROBI.first, value)
-        }
-    var subSoftBundleRamadanRobi: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_SOFT_BUNDLE_RAMADAN_ROBI.first,
-            IS_SUB_SOFT_BUNDLE_RAMADAN_ROBI.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_SOFT_BUNDLE_RAMADAN_ROBI.first, value)
-        }
-    var subSoftBundleSevenDaysRobi: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_SOFT_BUNDLE_SEVEN_DAYS_ROBI.first,
-            IS_SUB_SOFT_BUNDLE_SEVEN_DAYS_ROBI.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_SOFT_BUNDLE_SEVEN_DAYS_ROBI.first, value)
-        }
-
-    var subSoftBundleFifteenDaysRobi: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_SOFT_BUNDLE_FIFTEEN_DAYS_ROBI.first,
-            IS_SUB_SOFT_BUNDLE_FIFTEEN_DAYS_ROBI.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_SOFT_BUNDLE_FIFTEEN_DAYS_ROBI.first, value)
-        }
-
-    var subIqra: Boolean
-        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
-            IS_SUB_IQRA.first,
-            IS_SUB_IQRA.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_IQRA.first, value)
-        }
-
-    var subQuran: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_QURAN.first,
-            IS_SUB_QURAN.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_QURAN.first, value)
-        }
-
     var subMonthlyNagad: Boolean
         get() = preferences.getBoolean(
             IS_SUB_MONTHLY_NAGAD.first,
@@ -597,31 +457,40 @@ object AppPreference {
             it.putBoolean(IS_SUB_YEARLY_NAGAD.first, value)
         }
 
-    var subMonthlySsl: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_MONTHLY_SSL.first,
-            IS_SUB_MONTHLY_SSL.second
+    var subWeeklyRobi: Boolean
+        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
+            IS_SUB_WEEKLY_ROBI.first,
+            IS_SUB_WEEKLY_ROBI.second
         )
         set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_MONTHLY_SSL.first, value)
+            it.putBoolean(IS_SUB_WEEKLY_ROBI.first, value)
         }
 
-    var subHalfYearlySsl: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_HALF_YEARLY_SSL.first,
-            IS_SUB_HALF_YEARLY_SSL.second
+    var subMonthlyRobi: Boolean
+        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
+            IS_SUB_MONTHLY_ROBI.first,
+            IS_SUB_MONTHLY_ROBI.second
         )
         set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_HALF_YEARLY_SSL.first, value)
+            it.putBoolean(IS_SUB_MONTHLY_ROBI.first, value)
         }
 
-    var subYearlySsl: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_YEARLY_SSL.first,
-            IS_SUB_YEARLY_SSL.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_YEARLY_SSL.first, value)
-        }
 
+    fun loadAllMalayNamazTime(requestType: String): List<List<Long>>? {
+        var callLog: List<List<Long>>? = null
+        try {
+            val json = preferences.getString(requestType, "")
+            if (json != null /*&& check month*/) {
+                callLog = if (json.isEmpty()) {
+                    ArrayList()
+                } else {
+                    val type = object : TypeToken<List<List<Long?>?>?>() {}.type
+                    mGSonInstance.fromJson<List<List<Long>>>(json, type)
+                }
+            }
+        } catch (e: JsonSyntaxException) {
+
+        }
+        return callLog
+    }
 }

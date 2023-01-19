@@ -35,7 +35,6 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setApplicationLanguage(AppPreference.language!!)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_subscription_browser)
 

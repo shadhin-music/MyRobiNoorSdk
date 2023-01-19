@@ -8,13 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.FragmentOrganizationDetailsBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.FragmentProvider
 import com.gakk.noorlibrary.util.PAGE_DONATION
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setApplicationLanguage
 
 /**
  * @AUTHOR: Taslima Sumi
@@ -56,7 +54,6 @@ internal class OrganizationDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_organization_details,

@@ -231,14 +231,23 @@ const val SUBSCRIPTION_ID_MONTHLY = "2243"
 const val SUBSCRIPTION_ID_DAILY = "244"
 const val SUBSCRIPTION_ID_FIFTEENDAYS = "245"
 
+const val SUBSCRIPTION_ID_WEEKLY_ROBI = "291"
+const val SUBSCRIPTION_ID_MONTHLY_ROBI = "292"
+
 const val HAJJ_PREREG_SERVICE_ID = "2283"
+const val DONATION_SERVICE_ID = "2279"
 
 const val PRODUCT_ID_DAILY = "0300410704"
 const val PRODUCT_ID_FIFTEEN_DAYS = "0300410706"
+const val PRODUCT_ID_SEVEN_DAYS_ROBI = "0300418810"
+const val PRODUCT_ID_THIRTY_DAYS_ROBI = "0300418812"
+
 
 const val SUB_END_PART_ROBI = "&backurl=http://noorsawab.com/"
 const val PLAN_NAME_WEEKLY = "Weekly"
 const val PLAN_NAME_MONTHLY = "Monthly"
+const val PLAN_NAME_WEEKLY_ROBI = "WeeklyRobi"
+const val PLAN_NAME_MONTHLY_ROBI = "MonthlyRobi"
 const val EXTRA_PRAYER_NAME = "prayer_name"
 const val EXTRA_PRAYER_TIME = "prayer_time"
 const val CHANNEL_ID = "12345"

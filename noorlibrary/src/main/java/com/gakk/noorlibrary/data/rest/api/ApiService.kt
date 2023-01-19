@@ -352,6 +352,12 @@ interface ApiService {
         @Body param: RequestBody
     ): SslPaymentInitiateResponse
 
+    @POST("SSLPayInitiateDPNoorRng")
+    suspend fun initiateSslPaymentRange(
+        @Header("Content-Type") content_type: String,
+        @Body param: RequestBody
+    ): SslPaymentInitiateResponse
+
     @POST("subsstatus")
     suspend fun checkSslSubStatus(
         @Header("Content-Type") content_type: String,

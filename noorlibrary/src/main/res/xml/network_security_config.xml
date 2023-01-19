@@ -34,6 +34,9 @@
         <domain includeSubdomains="true">nagadpay.techapi24.com</domain>
         <domain includeSubdomains="true">flags.fmcdn.net</domain>
         <domain includeSubdomains="true">ibadat.co</domain>
+        <domain includeSubdomains="true">d2-consent.robi.com.bd</domain>
+        <domain includeSubdomains="true">noorsawab.com</domain>
+        <domain includeSubdomains="true">wdp.joycalls.com</domain>
 
     </domain-config>
 </network-security-config>

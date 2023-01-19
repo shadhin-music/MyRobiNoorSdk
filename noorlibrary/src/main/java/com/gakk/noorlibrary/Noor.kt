@@ -21,10 +21,10 @@ object Noor {
     fun openNoor(context: Context, msisdn: String) {
 
         appContext = context.applicationContext
-        appContext?.let {
-            AppPreference.init(it)
+      //  appContext?.let {
+            AppPreference.init(appContext!!)
             createNotificationChannel()
-        }
+     //   }
 
         val intent = Intent(context, MainActivity::class.java)
         context.startActivity(intent)

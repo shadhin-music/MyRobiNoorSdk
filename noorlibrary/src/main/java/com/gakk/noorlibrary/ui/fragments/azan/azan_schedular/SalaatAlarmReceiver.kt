@@ -59,7 +59,6 @@ class SalaatAlarmReceiver : BroadcastReceiver() {
 
     }
 
-
     fun getMalayNamazTimes(): ArrayList<String> {
         val prayerTimes: List<List<Long>>? = AppPreference.loadAllMalayNamazTime("All")
         val namazTimesMalay = ArrayList<String>()
@@ -123,12 +122,7 @@ class SalaatAlarmReceiver : BroadcastReceiver() {
         if (namazTime.isNullOrEmpty()) {
             val prayerTimeCalculator = PrayerTimeCalculator(context)
             prayerTime = prayerTimeCalculator.getPrayerTime24ByDate(date)
-        }/*else{
-            for (i in namazTime){
-                Log.d(TAG_ALARM, "setAlarm: $i")
-            }
-        }*/
-
+        }
 
         val array = arrayOf(
             AppPreference.IS_FAJR_ALARM_SET,

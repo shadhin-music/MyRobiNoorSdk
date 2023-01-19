@@ -15,6 +15,7 @@ import com.gakk.noorlibrary.databinding.FragmentDonationFormBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.zakat.SslStoreModel
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
 /*import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCCustomerInfoInitializer
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization
 import com.sslwireless.sslcommerzlibrary.model.response.SSLCTransactionInfoModel
@@ -45,8 +46,7 @@ internal class DonationFormFragment : Fragment() {
     private var email: String? = null
     private var phoneNumber: String? = null
     private var name: String? = null
-    private var mStoreID: String? = null
-    private var mStorePassword: String? = null
+    private lateinit var viewModelSub: SubscriptionViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -191,11 +191,11 @@ internal class DonationFormFragment : Fragment() {
 
     private fun validateAndCallPayment() {
         if (checkPersonAddress()) {
-            //payZakat()
+            payZakat()
         }
     }
 
-    /*private fun payZakat() {
+    private fun payZakat() {
         val customerName = "" + name
         val customerPhone = "" + phoneNumber
         val customerEmail = "" + email
@@ -219,99 +219,15 @@ internal class DonationFormFragment : Fragment() {
                 .show()
             return
         }
+       // TODO("mobile number configure from sdk")
 
-        val environment = SSLCSdkType.LIVE
-
-        val uniqueID = UUID.randomUUID().toString()
-        val storeObject = generateOrganisationData()
-        mStoreID = storeObject.storeId
-        mStorePassword = storeObject.storePassword
-
-        val sslCommerzInitialization: SSLCommerzInitialization = SSLCommerzInitialization(
-            mStoreID,
-            mStorePassword,
-            donationAmount.toDouble(),
-            SSLCCurrencyType.BDT,
-            uniqueID,
-            PRODUCT_CATEGORY,
-            environment
-        )
-
-        val customerInfoInitializer: SSLCCustomerInfoInitializer = SSLCCustomerInfoInitializer(
+        viewModelSub.initiatePaymentSslRange(
+            "8801917589656",
+            DONATION_SERVICE_ID,
             customerName,
-            customerEmail,
-            address,
-            "",
-            "",
-            SSL_COUNTRY_NAME,
-            customerPhone
+            SSL_CUSTOMER_EMAIL
         )
 
-        IntegrateSSLCommerz.getInstance(requireContext())
-            .addSSLCommerzInitialization(sslCommerzInitialization)
-            .addCustomerInfoInitializer(customerInfoInitializer)
-            .buildApiCall(object : SSLCTransactionResponseListener {
-                override fun transactionSuccess(p0: SSLCTransactionInfoModel?) {
-                    if (p0?.riskLevel.equals("0")) {
-                        Log.e("DonationFormFragment", ": Payment Successful")
-                        mDetailsCallBack?.showToastMessage("আপনার পেমেন্টটি সফল হয়েছে। আপনি শীঘ্রই নিশ্চিতকরণ ই-মেইল পাবেন।")
-                    }
-                }
-
-                override fun transactionFail(p0: String?) {
-                    mDetailsCallBack?.showToastMessage("Transaction Failed")
-                    Log.e("DonationFormFragment", "Failed" + p0)
-                }
-
-                override fun merchantValidationError(p0: String?) {
-                    mDetailsCallBack?.showToastMessage("merchantValidationError")
-                    Log.e("DonationFormFragment", "Failed" + p0)
-                }
-
-            })
-
-    }*/
-
-    private fun generateOrganisationData(): SslStoreModel {
-        val itemTitle = mLiterature?.title
-
-        when (itemTitle?.replace(" ", "")) {
-            "আহসানিয়ামিশনক্যান্সারহাসপাতাল", "AhsaniaMissionCancer&GeneralHospital" -> {
-                return SslStoreModel(
-                    storeId = "ahsaniamissionlive",
-                    storePassword = "5CCAD1ECCE08E81265"
-                )
-            }
-
-            "বিদ্যানন্দ", "Bidyanondo" -> {
-                return SslStoreModel(
-                    storeId = "bidyanondolivelive",
-                    storePassword = "5CCC0F0F740A247027"
-                )
-            }
-            "চাইল্ডঅ্যান্ডওল্ডএইজকেয়ার", "Child&OldAgeCare" -> {
-                return SslStoreModel(
-                    storeId = "childoldcarelive",
-                    storePassword = "5CCC0E8634E9518534"
-                )
-            }
-            "রহমত-ই-আলমইসলামমিশনঅ্যান্ডইসলামমিশন", "RahmatEAlamIslamMissionandIslamMission" -> {
-                return SslStoreModel(
-                    storeId = "rahmatmissionlive",
-                    storePassword = "5CCC10CDE5ED678288"
-                )
-            }
-            "স্কলারস্পেশালস্কুল", "ScholarsSpecialSchool" -> {
-                return SslStoreModel(
-                    storeId = "scholarsspeciallive",
-                    storePassword = "5CCC118C5284D61755"
-                )
-            }
-            else -> {
-                return SslStoreModel("", "")
-            }
-
-        }
     }
 
     private fun checkPersonAddress(): Boolean {

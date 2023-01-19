@@ -167,9 +167,6 @@
     <string name="ayah">আয়াত</string>
 
 
-    <!--Settings page strings-->
-
-
     <!--Profile page strings-->
     <string name="txt_mobile_number">মোবাইল নাম্বার</string>
     <string name="txt_save">সেভ করুন</string>
@@ -457,7 +454,14 @@
     <string name="txt_amount_robi">২.৬৭ টাকা</string>
     <string name="txt_fifteen_day_service">নূর ১৫ দিন সার্ভিস</string>
     <string name="txt_amount_fifteen_robi">৯.৩৩ টাকা</string>
+    <string name="txt_seven_day_service">নূর ৭ দিন সার্ভিস</string>
+    <string name="txt_thirty_day_service">নূর ৩০ দিন সার্ভিস</string>
+    <string name="txt_amount_seven_robi">৯.৩৩ টাকা</string>
+    <string name="txt_amount_thirty_robi">৩৭.৩১ টাকা</string>
 
+
+    <string name="txt_dialog_sub_des_weekly_robi">আপনি কি নূর সাপ্তাহিক সার্ভিস টি এক্টিভেট করতে চান? চার্জ ৯.৩৩ টাকা প্রতি সপ্তাহের জন্য (অটো রিনিউয়াল)</string>
+    <string name="txt_dialog_sub_des_monthly_robi">আপনি কি নূর মাসিক সার্ভিস টি এক্টিভেট করতে চান? চার্জ ৩৭.৩১ টাকা প্রতি মাসের জন্য (অটো রিনিউয়াল)</string>
 
     <!--Subscription Page Nagad !-->
 
@@ -628,7 +632,6 @@
     <string name="title_notification">নোটিফিকেশন</string>
     <string name="select_a_country_cpp">Select a country</string>
     <string name="search_ccp">Search...</string>
-
 
 
     <array name="material_calendar_day_abbreviations_array">

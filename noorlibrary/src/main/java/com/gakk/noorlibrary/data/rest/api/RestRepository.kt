@@ -542,18 +542,30 @@ class RestRepository(
         return subApiServiceSsl.initiateSslPayment("application/json", body)
     }
 
-    suspend fun checkSubStatusSsl(
+
+    suspend fun initiatePaymentSslRange(
         msisdn: String,
-        serviceId: String
-    ): NagadSubStatusResponse {
-        val jsonParams: MutableMap<String?, Any?> = ArrayMap()
-        jsonParams["MSISDN"] = msisdn
-        jsonParams["serviceid"] = serviceId
+        serviceId: String,
+        customerName: String,
+        customerEmail: String
+    ): SslPaymentInitiateResponse {
+
+        val paymentModel =
+            SslInitiatePayload(
+                msisdn,
+                serviceId,
+                SSL_PUSER,
+                customerName,
+                customerEmail,
+                DONATION_CHANNEL
+            )
+        val gson = Gson()
+        val params = gson.toJson(paymentModel)
 
         val JSON = "application/json; charset=utf-8".toMediaType()
-        val body = JSONObject(jsonParams).toString().toRequestBody(JSON)
+        val body = JSONObject(params).toString().toRequestBody(JSON)
 
-        return subApiServiceSsl.checkSslSubStatus("application/json", body)
+        return subApiServiceSsl.initiateSslPaymentRange("application/json", body)
     }
 
     suspend fun hajjPreregistration(
