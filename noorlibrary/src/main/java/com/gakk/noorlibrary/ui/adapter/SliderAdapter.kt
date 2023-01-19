@@ -1,11 +1,13 @@
 package com.gakk.noorlibrary.ui.adapter
 
+import androidx.annotation.Keep
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.gakk.noorlibrary.ui.fragments.SliderControl
 import com.gakk.noorlibrary.ui.fragments.tabs.BillboardItemControl
 
+@Keep
 internal class SliderAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 
     private val fragmentList = ArrayList<Fragment>()

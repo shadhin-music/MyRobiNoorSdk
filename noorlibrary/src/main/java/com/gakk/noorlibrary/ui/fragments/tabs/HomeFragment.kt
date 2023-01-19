@@ -59,7 +59,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     private lateinit var adapter: HomeFragmentAdapter
     var prayerDataList: List<com.gakk.noorlibrary.model.tracker.Data>? = null
     private lateinit var upCommingPrayer: UpCommingPrayer
-    private var fromMalaysia = false
     private var mAllahNamesList: List<com.gakk.noorlibrary.model.names.Data> = mutableListOf()
     private lateinit var playerControl: MediaPlayerControl
     private var mSelectedIndex: Int = 0
@@ -92,8 +91,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
 
@@ -161,6 +158,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                     binding.noInternetLayout.root.visibility = View.GONE
                 }
                 Status.SUCCESS -> {
+                    Log.e("homeerror","${it}")
                     when (it.data?.status) {
                         200 -> {
                             biilboradList = it.data.data
@@ -177,6 +175,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
                 }
                 Status.ERROR -> {
+                    Log.e("homeerror","${it.message}")
                     binding.progressLayout.root.visibility = View.GONE
                     binding.noInternetLayout.root.visibility = View.VISIBLE
                 }

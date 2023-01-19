@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.annotation.Keep
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -31,6 +32,7 @@ import com.gakk.noorlibrary.ui.fragments.tabs.HomeCellItemControl
 import com.gakk.noorlibrary.util.*
 
 
+@Keep
 class HomeFragmentAdapter(
     homeList: MutableList<Data>,
     allahNameslist: List<com.gakk.noorlibrary.model.names.Data>,

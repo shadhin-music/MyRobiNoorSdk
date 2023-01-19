@@ -24,7 +24,6 @@ internal class HomeViewModel(private val repository: RestRepository) : ViewModel
     fun getBillboradData() {
         viewModelScope.launch {
             billboardResponse.postValue(Resource.loading(data = null))
-
             try {
                 billboardResponse.postValue(Resource.success(data = repository.getBillboradList()))
             } catch (e: Exception) {

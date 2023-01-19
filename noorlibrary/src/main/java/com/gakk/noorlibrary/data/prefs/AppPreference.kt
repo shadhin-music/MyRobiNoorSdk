@@ -3,6 +3,7 @@ package com.gakk.noorlibrary.data.prefs
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.annotation.Keep
 import com.gakk.noorlibrary.model.UserLocation
 
 //have to change with user data class
@@ -24,7 +25,6 @@ object AppPreference {
         arrayListOf("8801537673977", "8801917589656")
 
     private const val PREF_FILE_NAME = "NoorPreference"
-    private const val ISFIRST = "is_first_run"
     private const val LANGUAGE = "Language"
     private const val USER_CURRENT_LOCATION = "userCurrentLocation"
     private const val USER_NUMBER = "userNumber"
@@ -135,10 +135,6 @@ object AppPreference {
         get() = preferences.getString(SET_NUMBER.first, SET_NUMBER.second)
         set(value) = preferences.edit { it.putString(SET_NUMBER.first, value) }
 
-
-    var firebaseToken: String?
-        get() = preferences.getString(SET_FIREBASE_TOKEN.first, SET_FIREBASE_TOKEN.second)
-        set(value) = preferences.edit { it.putString(SET_FIREBASE_TOKEN.first, value) }
 
     var cachedUser: Data?
         set(value) {
@@ -349,7 +345,7 @@ object AppPreference {
 
     fun getUserCurrentLocation(): UserLocation {
         val userCurLocString = preferences.getString(USER_CURRENT_LOCATION, "")
-
+        Log.e("Error", ""+userCurLocString)
         if (userCurLocString == null || userCurLocString.length < 1) {
             val mLocation = UserLocation(
                 23.8103,
@@ -368,6 +364,7 @@ object AppPreference {
         }
     }
 
+    @Keep
     fun loadAllMalayNamazTime(requestType: String): List<List<Long>>? {
         var callLog: List<List<Long>>? = null
         try {

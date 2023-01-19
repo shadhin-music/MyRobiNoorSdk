@@ -1,9 +1,11 @@
 package com.gakk.noorlibrary.util
 
+import androidx.annotation.Keep
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.rest.api.RetrofitBuilder
 import kotlinx.coroutines.runBlocking
 
+@Keep
 class RepositoryProvider {
     companion object {
         suspend fun getRepository(): RestRepository {

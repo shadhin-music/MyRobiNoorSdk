@@ -2,6 +2,7 @@ package com.gakk.noorlibrary.data.rest.api
 
 import android.util.ArrayMap
 import android.util.Log
+import androidx.annotation.Keep
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.model.CommonApiResponse
 import com.gakk.noorlibrary.model.UserLocation

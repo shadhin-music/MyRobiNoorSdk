@@ -329,7 +329,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 "undefined",
                 "1"
             )
-
+/*
             if (isNetworkConnected(this@MainActivity)) {
                 AppPreference.userNumber.let {
                     modelSubscription.checkSubscriptionRobi(
@@ -341,7 +341,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         SUBSCRIPTION_ID_FIFTEENDAYS
                     )
                 }
-            }
+            }*/
         }
 
 

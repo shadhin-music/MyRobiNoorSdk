@@ -26,14 +26,10 @@
 -keep,allowobfuscation interface com.google.gson.annotations.SerializedName
 
 -keep class org.xmlpull.v1.* {*;}
--keep class com.mcc.noor.model.** { *; }
+
 -keep public class * extends java.lang.Exception
 # keep everything in this package from being renamed only
--keepnames class com.mcc.noor.model.** { *; }
--keep class com.mcc.noor.ui.adapter.** { *; }
--keep class com.mcc.noor.data.roomdb.** { *; }
-# keep everything in this package from being renamed only
--keepnames class com.mcc.noor.ui.adapter.** { *; }
+
 -dontwarn retrofit.**
 -keep class retrofit.* { *; }
 -keep class com.google.android.* {*;}
@@ -68,17 +64,7 @@
 # Preserve all Dexter classes and method names
 
 -keepattributes InnerClasses, Signature, *Annotation*
-
--keep class com.karumi.dexter.** { *; }
--keep interface com.karumi.dexter.** { *; }
--keepclasseswithmembernames class com.karumi.dexter.** { *; }
--keepclasseswithmembernames interface com.karumi.dexter.** { *; }
-
-
--keep class  us.zoom.**{*;}
--keep class  com.zipow.**{*;}
--keep class  us.zipow.**{*;}
--keep class  org.webrtc.**{*;}
--keep class  us.google.protobuf.**{*;}
--keep class  com.google.crypto.tink.**{*;}
--keep class  androidx.security.crypto.**{*;}
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+-keep class com.google.gson.reflect.TypeToken
+-keep class * extends com.google.gson.reflect.TypeToken
+-keep public class * implements java.lang.reflect.Type
