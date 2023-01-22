@@ -62,9 +62,6 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
         locationHelper = LocationHelper(requireContext())
 
         mDetailsCallBack?.setToolBarTitle(context?.resources!!.getString(R.string.cat_roja))
-        mDetailsCallBack?.toggleToolBarActionIconsVisibility(true, ActionButtonType.TypeTwo)
-        mDetailsCallBack?.setOrUpdateActionButtonTag(NOTFICATION, ActionButtonType.TypeTwo)
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_roza_information, container, false)

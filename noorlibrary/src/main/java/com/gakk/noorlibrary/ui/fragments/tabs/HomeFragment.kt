@@ -489,7 +489,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
     override fun reloadBtnClick() {
         mSelectedIndex = 0
-        adapter.reload()
+       // adapter.reload()
         adapter.invalidateNamesCell()
     }
 
@@ -623,9 +623,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         playerControl.pause()
         //playerControl.killMediaPlayer()
         loadData()
-        if (adapter.mcardStackLayoutManager?.topPosition == adapter.getItemCountCard() - 40) {
-            adapter.paginate()
-        }
     }
 
     override fun onCardRewound() {

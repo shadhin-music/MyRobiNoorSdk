@@ -24,10 +24,10 @@
     </queries>
 
     <application
-        android:installLocation="preferExternal"
         android:allowBackup="false"
         android:extractNativeLibs="false"
         android:hardwareAccelerated="true"
+        android:installLocation="preferExternal"
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
@@ -81,20 +81,10 @@
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
         </service>
-        <service
-            android:name=".service.RozaAlarmService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <receiver
-            android:name=".receiver.RozaAlarmReceiver"
-            android:enabled="true"
-            android:exported="true" />
 
         <service
             android:name=".jobService.RozaAlarmJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name=".ui.fragments.azan.azan_schedular.SalaatSchedulingService" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -144,35 +134,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
-        <receiver android:name=".ui.fragments.azan.azan_schedular.NotificationClickReceiver" />
+        <receiver android:name=".ui.fragments.NotificationClickReceiver" />
 
         <receiver
-            android:name=".ui.fragments.azan.azan_schedular.NotificaitonDissmissedReceiver"
+            android:name=".ui.fragments.NotificaitonDissmissedReceiver"
             android:enabled="true"
             android:exported="true" />
-        <receiver
-            android:name=".ui.fragments.azan.azan_schedular.SalaatAlarmReceiver"
-            android:exported="true"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="android.intent.action.NOTIFY" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".ui.fragments.azan.azan_schedular.PassiveLocationChangedReceiver" />
-        <receiver
-            android:name=".ui.fragments.azan.azan_schedular.SalaatBootReceiver"
-            android:enabled="false"
-            android:exported="true"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="android.intent.action.NOTIFY" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.com.kchannels.islamicapp.fazilat.azan_scheduler" />
-            </intent-filter>
-        </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"

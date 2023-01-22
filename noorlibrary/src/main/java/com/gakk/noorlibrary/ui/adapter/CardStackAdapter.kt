@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.databinding.ItemAllahNamesBinding
 
+
 import com.gakk.noorlibrary.model.names.Data
 
 internal class CardStackAdapter(
@@ -15,7 +16,7 @@ internal class CardStackAdapter(
 ) : RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemAllahNamesBinding= DataBindingUtil.inflate(
+        val binding: ItemAllahNamesBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_allah_names,
             parent,

@@ -13,12 +13,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.*
 import com.gakk.noorlibrary.extralib.cardstackview.*
 import com.gakk.noorlibrary.model.ImageFromOnline
@@ -546,12 +544,12 @@ class HomeFragmentAdapter(
             it.cardStackView.adapter = cardAdapter
 
             holder.bindingAllahNameBinding?.ivPlay?.handleClickEvent {
-                // adViewModel.adClickCount()
+
                 mHomeCellItemControl.playPauseBtnClick()
             }
 
             holder.bindingAllahNameBinding?.ivReload?.handleClickEvent {
-                // adViewModel.adClickCount()
+
                 mHomeCellItemControl.reloadBtnClick()
             }
 
@@ -568,7 +566,6 @@ class HomeFragmentAdapter(
             }
 
             holder.bindingAllahNameBinding?.rlLearnMore?.handleClickEvent {
-                // adViewModel.adClickCount()
                 mCallBack.openDetailsActivityWithPageName(
                     PAGE_99_NAMES_ALLAH
                 )
@@ -846,28 +843,28 @@ class HomeFragmentAdapter(
 
     }
 
-    fun getItemCountCard(): Int {
-        return cardAdapter.itemCount
-    }
+    /* fun getItemCountCard(): Int {
+         return cardAdapter.itemCount
+     }
 
-    fun paginate() {
-        val old = cardAdapter.getItems()
-        val new = old.plus(allahNameslist)
-        val callback = SpotDiffCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        cardAdapter.setItems(new)
-        result.dispatchUpdatesTo(cardAdapter)
-    }
+     fun paginate() {
+         val old = cardAdapter.getItems()
+         val new = old.plus(allahNameslist)
+         val callback = SpotDiffCallback(old, new)
+         val result = DiffUtil.calculateDiff(callback)
+         cardAdapter.setItems(new)
+         result.dispatchUpdatesTo(cardAdapter)
+     }
 
-    fun reload() {
-        val old = cardAdapter.getItems()
-        val new = allahNameslist
-        val callback = SpotDiffCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        cardAdapter.setItems(new)
-        result.dispatchUpdatesTo(cardAdapter)
-        cardAdapter.notifyDataSetChanged()
-    }
+     fun reload() {
+         val old = cardAdapter.getItems()
+         val new = allahNameslist
+         val callback = SpotDiffCallback(old, new)
+         val result = DiffUtil.calculateDiff(callback)
+         cardAdapter.setItems(new)
+         result.dispatchUpdatesTo(cardAdapter)
+         cardAdapter.notifyDataSetChanged()
+     }*/
 
     fun updateAllNameLayoutPlayPauseButton(isPlaying: Boolean) {
         when (isPlaying) {

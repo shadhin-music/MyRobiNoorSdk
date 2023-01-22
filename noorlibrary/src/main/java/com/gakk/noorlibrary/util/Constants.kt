@@ -1,15 +1,8 @@
 package com.gakk.noorlibrary.util
 
-
-const val PACKAGE_NAME_ROBI = "com.mcc.noor"
 const val LAN_BANGLA = "bn"
 const val LAN_ENGLISH = "en"
-const val LAN_MALAY = "ms"
 const val NUMBER = "number"
-const val TOKEN_TAG = "token"
-
-const val DEFAULT_LATITUDE = 23.810331
-const val DEFAULT_LONGITUDE = 90.412521
 
 
 const val MAKKAH_LATITUDE = 21.4204009
@@ -54,7 +47,6 @@ const val PAGE_NAMAZ_RULES = "Prayer Learning"
 const val PAGE_NAMAZ_VISUAL = "Prayers Visual"
 const val PAGE_BIOGRAPHY = "Biography"
 const val PAGE_QURAN_LEARNING = "Quran Learning"
-const val PAGE_COURSE_COMPLETE = "Course Complete"
 const val PAGE_JAKAT = "Zakat Calculator"
 const val PAGE_DONATION_FORM = "Donation Form"
 const val PAGE_DONATION_IMPORTANCE = "Donation Importance"
@@ -67,9 +59,6 @@ const val PAGE_WALL_PAPER = "Wallpaper"
 const val PAGE_ANIMATION = "Animation"
 const val PAGE_99_NAMES_ALLAH = "99 Names of Allah"
 const val PAGE_ALLAH_NAME_DETAILS = "allahNameDetails"
-const val PAGE_ISLAMIC_VIDEOS = "Islamic Video"
-const val PAGE_ISLAMIC_SONGS = "Islamic Song"
-const val PAGE_ISLAMIC_NAME = "Islamic Name"
 const val PAGE_QURAN_SCHOOL = "QuranSchool"
 const val PAGE_CAT_QURAN_SCHOOL = "Quran School"
 const val PAGE_CAT_INSTRUCTIVE_VIDEO = "CatInstructiveVideo"
@@ -80,7 +69,6 @@ const val PAGE_HAJJ_HOME = "Hajj"
 const val PAGE_TASBIH = "Tasbih"
 const val PAGE_SUBSCRIPTION = "subscription"
 const val PAGE_SUBSCRIPTION_NAGAD = "subscriptionNagad"
-const val PAGE_SUBSCRIPTION_FOR_G_PAY = "subscription for g pay"
 const val PAGE_SUBSCRIPTION_WITH_G_PAY = "subscription with g pay"
 const val PAGE_AZAN = "Azan"
 const val PAGE_ISLAMIC_CALENDER = "Islamic Calendar"
@@ -96,18 +84,12 @@ const val PAGE_DONATE_ZAKAT = "Donate Zakat"
 const val ORGANIZATION_DETAILS = "Organization Details"
 const val PAGE_IJTEMA = "BishwaIjtema"
 const val PAGE_QUIZ_LEADERBOARD = "Quiz Leaderboard"
-const val PAGE_CORONA_FUNERAL_SERVICE = "Corona Funeral"
-const val PAGE_FUNERAL_DETAILS = "Corona Funeral Details"
 const val PAGE_AMBULANCE = "Ambulance"
 const val ONLINE_HUT_HOME = "online hut"
 const val PAGE_VIRTUAL_KAFELA = "Virtual Kafela"
 const val PAGE_HAJJ_GUIDE = "Hajj Guide"
 const val HAJJ_PACKAGE_DETAILS = "Hajj Package Details"
 const val PAGE_HAJJ_PREREGISTRATION = "Hajj Pre Registration"
-
-
-const val NAME_LIST = "names list"
-const val FAVOURITE_NAME = "favourite names"
 
 const val ALL_SURAH = "all surah"
 const val FAVOURITE_SURAH = "favourite surah"
@@ -123,16 +105,6 @@ const val PLACE_HOLDER_16_9 = "16_9"
 const val PLACE_HOLDER_1_1 = "1_1"
 const val PLACE_HOLDER_2_3 = "2_3"
 const val PLACE_HOLDER_4_3 = "4_3"
-
-//Category Ids
-const val ISLAMIC_VIDEO_CAT_ID = "60373e395d7a4acd37d5b4e0"
-const val ISLAMIC_PLATLIST_CAT_ID = "603dc6ec28547ae2a43b0140"
-
-const val ISLAMIC_SONG_CAT_ID = "603744ed5d7a4acd37d5b4e1"
-
-//subcategory Ids
-const val FAV_ISLAMIC_VIDEO_SUB_CAT_ID = "603dc4cf28547ae2a43b013f"
-
 
 const val PATCH_TYPE_AYAT = "AyatToday"
 const val PATCH_TYPE_PRAYER_FOR_DUA = "PrayerForDua"
@@ -150,15 +122,7 @@ const val PATCH_TYPE_AD = "AdView"
 
 const val HIZRI_YR_OFFSET = 579
 
-//Notification ids
-const val ROZA_NOTIFICATION_ID = 500
-
 const val AUDIO_PLAYER_NOTIFICATION_ID = 700
-
-//Notification channel info
-const val ROZA_NOTIFICATION_CHANNEL_NAME = "NOOR_ROZA_NOTIFICATION_CHANNEL"
-const val ROZA_NOTIFICATION_CHANNEL_DESC = "NOOR_ROZA_NOTIFICATION_CHANNEL_DESC"
-const val ROZA_NOTIFICATION_CHANNEL_ID = "NOOR_ROZA_NOTIFICATION_CHANNEL_ID"
 
 const val AUDIO_PLAYER_NOTIFICATION_CHANNEL_NAME = "AUDIO_PLAYER_NOTIFICATION_CHANNEL"
 const val AUDIO_PLAYER_NOTIFICATION_CHANNEL_DESC = "AUDIO_PLAYER_NOTIFICATION_CHANNEL_DESC"
@@ -167,18 +131,12 @@ const val AUDIO_PLAYER_NOTIFICATION_CHANNEL_ID = "AUDIO_PLAYER_NOTIFICATION_CHAN
 //Notification Action code
 const val ACTION_TYPE = "actionType"
 
-const val SHOW_SEHRI_NOTIFICATION = "showSehriNotification"
-const val SHOW_IFTER_NOTIFICATION = "showIfterNotification"
-const val DISMISS_ROZA_NOTIFICATION_SERVICE = "dismissRozaNotification"
-
 const val RESUME_AUDIO = "resume"
 const val PAUSE_AUDIO = "pause"
 const val NEXT_AUDIO = "next"
 const val PREV_AUDIO = "prev"
 const val DISMISS_AUDIO_PLAYER_NOTIFICATION_SERVICE = "dismissAudioPlayerNotification"
 
-//Notification Action code
-const val DISMISS_ROZA_NOTIFICATION_SERVICE_CODE = 400
 const val DISMISS_AUDIO_PLAYER_NOTIFICATION_SERVICE_CODE = 600
 const val RESUME_AUDIO_CODE = 1122
 const val PAUSE_AUDIO_CODE = 1222
@@ -215,10 +173,6 @@ const val IS_IJTEMA_LIVE_VIDEO = "ijtema_live_video"
 const val CAT_ID = "CatId"
 const val SUB_CAT_ID = "SubCatId"
 const val PAGE_TITLE = "pageTitle"
-
-
-const val MALE = "male"
-const val FEMALE = "female"
 const val CAT_MEN = "Men"
 const val CAT_WOMEN = "Women"
 
@@ -248,12 +202,8 @@ const val PLAN_NAME_WEEKLY = "Weekly"
 const val PLAN_NAME_MONTHLY = "Monthly"
 const val PLAN_NAME_WEEKLY_ROBI = "WeeklyRobi"
 const val PLAN_NAME_MONTHLY_ROBI = "MonthlyRobi"
-const val EXTRA_PRAYER_NAME = "prayer_name"
-const val EXTRA_PRAYER_TIME = "prayer_time"
 const val CHANNEL_ID = "12345"
-const val NOTIFICATION_ID = 122
 const val ACTION_SHARE = "com.mcc.noor.ACTION_SHARE"
-const val TAG_ALARM = "alarm_debug"
 
 const val COUNTRY_NAME = "MALAYSIA"
 const val COUNTRY_NAME_BN = "মালয়েশিয়া"
@@ -300,9 +250,4 @@ const val CITY_NAME_NORTH = "North"
 const val CITY_NAME_SOUTH = "South"
 const val SUB_CAT_ID_UNDEFINED = "undefined"
 const val USER_NAME_TAG = "UserName"
-
-const val AZAN_FAJR_URL =
-    "https://shadhinmusiccontent.sgp1.digitaloceanspaces.com/NoorAudio/azan_fajr.mp3"
-const val AZAN_COMMON_URL =
-    "https://shadhinmusiccontent.sgp1.digitaloceanspaces.com/NoorAudio/azan_common.mp3"
 

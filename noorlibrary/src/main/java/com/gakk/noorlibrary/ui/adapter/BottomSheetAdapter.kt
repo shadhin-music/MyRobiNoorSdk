@@ -111,17 +111,12 @@ class FragmentDestinationMap {
                 context.resources.getString(R.string.cat_dua) -> PAGE_DUA
                 context.resources.getString(R.string.cat_hadith) -> PAGE_HADIS
                 context.resources.getString(R.string.cat_namaz_sikhha) -> PAGE_NAMAZ_RULES
-                context.resources.getString(R.string.cat_wallpaper) -> PAGE_WALL_PAPER
-                context.resources.getString(R.string.cat_animation) -> PAGE_ANIMATION
                 context.resources.getString(R.string.cat_ninety_nine_names_allah) -> PAGE_99_NAMES_ALLAH
                 context.resources.getString(R.string.namaz_visual) -> PAGE_NAMAZ_VISUAL
-                context.resources.getString(R.string.cat_islamic_video) -> PAGE_ISLAMIC_VIDEOS
                 context.resources.getString(R.string.cat_compass) -> PAGE_COMPASS
                 context.resources.getString(R.string.cat_nearest_mosque) -> PAGE_NEAREST_MOSQUE
-                context.resources.getString(R.string.cat_nearest_retuarant) -> PAGE_NEAREST_RESTAURANT
                 context.resources.getString(R.string.txt_jakat_calculator) -> PAGE_JAKAT
                 context.resources.getString(R.string.cat_live_video) -> PAGE_LIVE_VIDEO
-                context.resources.getString(R.string.cat_islamic_name) -> PAGE_ISLAMIC_NAME
                 context.resources.getString(R.string.cat_quran_school) -> PAGE_CAT_QURAN_SCHOOL
                 context.resources.getString(R.string.cat_scholar_video) -> PAGE_SCHOLARS_LIST
                 context.resources.getString(R.string.cat_tasbih) -> PAGE_TASBIH
@@ -132,17 +127,14 @@ class FragmentDestinationMap {
                 context.resources.getString(R.string.cat_qurbani) -> PAGE_QURBANI_HOME
                 context.resources.getString(R.string.cat_instructive_video) -> PAGE_CAT_INSTRUCTIVE_VIDEO
                 context.resources.getString(R.string.txt_title_inspiration) -> PAGE_CAT_INSLAMIC_INSPIRATION
-                context.resources.getString(R.string.cat_islamic_song) -> PAGE_ISLAMIC_SONGS
                 context.resources.getString(R.string.cat_eid_e_miladunnobi),
                 context.resources.getString(R.string.cat_eid_e_miladunnobi_robi) -> PAGE_EID_E_MILADUNNOBI
                 "Biography" -> PAGE_BIOGRAPHY
                 context.resources.getString(R.string.cat_quran_learning) -> PAGE_QURAN_LEARNING
-                "Course Complete" -> PAGE_COURSE_COMPLETE
                 context.resources.getString(R.string.cat_donation) -> PAGE_DONATION_HOME
                 context.resources.getString(R.string.cat_ijtema) -> PAGE_IJTEMA
                 context.resources.getString(R.string.cat_quiz) -> PAGE_QUIZ_LEADERBOARD
                 context.resources.getString(R.string.cat_hajj_tracker) -> PAGE_HAJJ_SHARE_LOCATION
-                context.resources.getString(R.string.cat_corona_funeral_service) -> PAGE_CORONA_FUNERAL_SERVICE
                 context.resources.getString(R.string.cat_islamic_event) -> PAGE_ISLAMIC_EVENT
                 context.resources.getString(R.string.cat_islamic_podcast) -> PAGE_ISLAMIC_PODCAST
                 context.resources.getString(R.string.cat_khatam_quran) -> PAGE_KHATAM_QURAN

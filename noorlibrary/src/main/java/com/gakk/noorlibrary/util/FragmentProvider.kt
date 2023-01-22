@@ -8,9 +8,6 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.model.quranSchool.Scholar
 import com.gakk.noorlibrary.ui.fragments.*
-import com.gakk.noorlibrary.ui.fragments.allahNames.AllahNameDetailsFragment
-import com.gakk.noorlibrary.ui.fragments.allahNames.NinetyNineNamesOfAllahFragment
-import com.gakk.noorlibrary.ui.fragments.azan.AzanFragment
 import com.gakk.noorlibrary.ui.fragments.calender.IslamicCalenderFragmentBd
 import com.gakk.noorlibrary.ui.fragments.eidjamat.EidJamatFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
@@ -21,7 +18,6 @@ import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjpreRegistratio
 import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
 import com.gakk.noorlibrary.ui.fragments.inspiration.InspirationDetailsFragment
 import com.gakk.noorlibrary.ui.fragments.instructiveVideo.InstructiveVideoFragment
-import com.gakk.noorlibrary.ui.fragments.islamicName.IslamicNameHomeFragment
 import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
 import com.gakk.noorlibrary.ui.fragments.onlinehut.OnlintHutHomeFragment
 import com.gakk.noorlibrary.ui.fragments.quranSchool.QuranSchoolHomeFragment
@@ -179,21 +175,6 @@ object FragmentProvider {
                     isFavList = isFav
                 )
 
-
-            PAGE_99_NAMES_ALLAH -> when (Util.checkSub()) {
-                true -> {
-                    NinetyNineNamesOfAllahFragment.newInstance()
-                }
-                else -> {
-                    SubscriptionFragment.newInstance()
-
-                }
-            }
-
-            PAGE_ALLAH_NAME_DETAILS -> AllahNameDetailsFragment.newInstance(
-                listNamesOfAllah!!, selectedLiteratureIndex!!
-            )
-
             PAGE_NAMAZ_VISUAL -> NamazVisualFragment.newInstance(
                 catName
             )
@@ -258,15 +239,6 @@ object FragmentProvider {
 
             PAGE_HAJJ_HOME ->
                 HajjHomeFragment.newInstance()
-            PAGE_ISLAMIC_NAME -> when (Util.checkSub()) {
-                true -> {
-                    IslamicNameHomeFragment.newInstance()
-                }
-
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-            }
 
             PAGE_TASBIH ->
                 when (Util.checkSub()) {
@@ -291,18 +263,6 @@ object FragmentProvider {
             }
 
             PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
-
-
-            PAGE_AZAN -> when (Util.checkSub()) {
-                true -> {
-                    AzanFragment.newInstance()
-                }
-
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-            }
-
 
             PAGE_TRACKER -> when (Util.checkSub()) {
                 true -> {

@@ -139,13 +139,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         bottomSheetItems.add(
             BottomSheetItem(
-                R.drawable.ic_allah_names,
-                getString(R.string.cat_ninety_nine_names_allah)
-            )
-        )
-
-        bottomSheetItems.add(
-            BottomSheetItem(
                 R.drawable.ic_cat_jakat,
                 getString(R.string.txt_jakat_calculator)
             )
@@ -190,12 +183,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                 getString(R.string.cat_namaz_sikhha)
             )
         )
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_azan,
-                getString(R.string.cat_azan)
-            )
-        )
 
         bottomSheetItems.add(
             BottomSheetItem(
@@ -214,24 +201,11 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         bottomSheetItems.add(
             BottomSheetItem(
-                R.drawable.ic_cat_islamic_name,
-                getString(R.string.cat_islamic_name)
-            )
-        )
-        bottomSheetItems.add(
-            BottomSheetItem(
                 R.drawable.ic_cat_compass,
                 getString(R.string.cat_compass)
             )
         )
 
-
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_restaurant,
-                getString(R.string.cat_nearest_retuarant)
-            )
-        )
         bottomSheetItems.add(
             BottomSheetItem(
                 R.drawable.ic_cat_hajj_live,
@@ -261,18 +235,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                 getString(R.string.cat_tracker)
             )
         )
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_wallpaper,
-                getString(R.string.cat_wallpaper)
-            )
-        )
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_animation,
-                getString(R.string.cat_animation)
-            )
-        )
+
         val txtMiladunnobi: String
         txtMiladunnobi = getString(R.string.cat_eid_e_miladunnobi_robi)
 

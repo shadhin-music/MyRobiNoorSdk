@@ -20,7 +20,7 @@ object Noor {
     @JvmStatic
     fun openNoor(context: Context, msisdn: String) {
 
-        appContext = context.applicationContext
+        this.appContext = context.applicationContext
       //  appContext?.let {
             AppPreference.init(appContext!!)
             createNotificationChannel()

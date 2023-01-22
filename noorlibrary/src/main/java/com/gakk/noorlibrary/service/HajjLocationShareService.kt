@@ -14,8 +14,8 @@ import com.gakk.noorlibrary.data.LocationHelper
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.hajjtracker.HajjSharingListResponse
-import com.gakk.noorlibrary.ui.fragments.azan.azan_schedular.NotificaitonDissmissedReceiver
-import com.gakk.noorlibrary.ui.fragments.azan.azan_schedular.NotificationClickReceiver
+import com.gakk.noorlibrary.ui.fragments.NotificaitonDissmissedReceiver
+import com.gakk.noorlibrary.ui.fragments.NotificationClickReceiver
 import com.gakk.noorlibrary.util.ACTION_SHARE
 import com.gakk.noorlibrary.util.CHANNEL_ID
 import com.gakk.noorlibrary.util.RepositoryProvider

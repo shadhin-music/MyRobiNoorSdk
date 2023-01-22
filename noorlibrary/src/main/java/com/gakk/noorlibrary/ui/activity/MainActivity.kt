@@ -42,7 +42,6 @@ import com.gakk.noorlibrary.job.RozaAlarmControlJob
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.model.quranSchool.Scholar
-import com.gakk.noorlibrary.service.RozaAlarmService
 import com.gakk.noorlibrary.service.VideoPlayerService
 import com.gakk.noorlibrary.ui.activity.khatamquran.KhatamQuranVideoActivity
 import com.gakk.noorlibrary.ui.adapter.SliderAdapter
@@ -578,9 +577,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         openDetailsActivityWithPageName(
                             it,
                         )
-                        Intent(this, RozaAlarmService::class.java).also {
-                            stopService(it)
-                        }
                     }
                     PAGE_SURAH_DETAILS -> {
                         val surahId =

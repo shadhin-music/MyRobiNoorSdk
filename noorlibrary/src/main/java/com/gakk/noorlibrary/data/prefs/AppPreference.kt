@@ -321,17 +321,28 @@ object AppPreference {
     }
 
     fun getUserCurrentLocation(): UserLocation {
-        val userCurLocString = preferences.getString(USER_CURRENT_LOCATION, "")
-        Log.e("Error", "" + userCurLocString)
-        if (userCurLocString == null || userCurLocString.length < 1) {
+        if (this::preferences.isInitialized) {
+            val userCurLocString = preferences.getString(USER_CURRENT_LOCATION, "")
+            Log.e("Error", "" + userCurLocString)
+            if (userCurLocString == null || userCurLocString.length < 1) {
+                val mLocation = UserLocation(
+                    23.8103,
+                    90.4125
+                )
+                return mLocation
+            }
+            val type: Type = genericType<UserLocation>()
+            return mGSonInstance.fromJson(userCurLocString, type)
+        } else {
             val mLocation = UserLocation(
                 23.8103,
                 90.4125
             )
             return mLocation
+
+            val type: Type = genericType<UserLocation>()
+            return mGSonInstance.fromJson("userCurrentLocation", type)
         }
-        val type: Type = genericType<UserLocation>()
-        return mGSonInstance.fromJson(userCurLocString, type)
     }
 
     var nitificationflag: Boolean

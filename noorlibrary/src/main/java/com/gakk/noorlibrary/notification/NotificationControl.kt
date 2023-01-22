@@ -17,7 +17,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.receiver.AudioPlayerActionReceiver
-import com.gakk.noorlibrary.receiver.RozaAlarmReceiver
 import com.gakk.noorlibrary.service.AudioPlayerService.Companion.mediaSession
 import com.gakk.noorlibrary.ui.activity.MainActivity
 import com.gakk.noorlibrary.util.*
@@ -57,67 +56,6 @@ object NotificationControl {
             notificationManager.createNotificationChannel(channel)
         }
     }
-
-    fun showNotification(
-        context: Context,
-        notificationId: Int,
-        builder: NotificationCompat.Builder
-    ) {
-
-        with(NotificationManagerCompat.from(context)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(notificationId, builder.build())
-
-        }
-    }
-
-    fun getRozaNotification(
-        context: Context,
-        channelID: String,
-        message: String,
-        isVibrating: Boolean
-    ): NotificationCompat.Builder? {
-        // Create an explicit intent for an Activity in your app
-        val intent = Intent(context, MainActivity::class.java).apply {
-            //flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra(DESTINATION_FRAGMENT, PAGE_ROZA)
-        }
-        val pendingIntent: PendingIntent =
-            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
-        val builder = NotificationCompat.Builder(context, channelID)
-            .setSmallIcon(R.drawable.ic_notification_icon_noor)
-            .setContentTitle(context.resources.getString(R.string.app_name))
-            .setContentText(message)
-            .setDeleteIntent(getRozaNotificationDeleteIntent(context))
-            .setOngoing(false)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            // Set the intent that will fire when the user taps the notification
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        if (isVibrating) {
-            builder.setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
-        }
-
-
-        return builder
-    }
-
-    fun getRozaNotificationDeleteIntent(context: Context): PendingIntent? {
-        val dismissAction = PendingIntent.getBroadcast(
-            context,
-            DISMISS_ROZA_NOTIFICATION_SERVICE_CODE,
-            Intent(
-                context,
-                RozaAlarmReceiver::class.java
-            ).putExtra(ACTION_TYPE, DISMISS_ROZA_NOTIFICATION_SERVICE),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        return dismissAction
-    }
-
 
     fun getAudioPlayerNotification(
         context: Context,

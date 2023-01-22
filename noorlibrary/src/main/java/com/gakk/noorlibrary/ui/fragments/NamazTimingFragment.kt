@@ -23,7 +23,6 @@ import com.gakk.noorlibrary.databinding.FragmentNamazTimingBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.UpCommingPrayer
 import com.gakk.noorlibrary.model.literature.Literature
-import com.gakk.noorlibrary.ui.fragments.azan.azan_schedular.SalaatAlarmReceiver
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.util.TimeFormtter.getBanglaMonthName
 import com.gakk.noorlibrary.util.TimeFormtter.getNumberByLocale
@@ -115,8 +114,6 @@ internal class NamazTimingFragment : Fragment() {
 
             setNamazTime()
 
-            updateAlarmStatus()
-
         }
         initPrayerTimeHandler()
     }
@@ -141,13 +138,6 @@ internal class NamazTimingFragment : Fragment() {
             }
         }
 
-    }
-
-
-    private fun updateAlarmStatus() {
-        val sar = SalaatAlarmReceiver()
-        sar.cancelAlarm(requireContext())
-        sar.setAlarm(requireContext())
     }
 
     override fun onResume() {
