@@ -25,7 +25,6 @@ import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.ui.adapter.DivisionCallbackFunc
 import com.gakk.noorlibrary.ui.adapter.SurahListAdapter
 import com.gakk.noorlibrary.ui.fragments.*
-import com.gakk.noorlibrary.ui.fragments.IslamicVideo.IslamicVideoFragment
 import com.gakk.noorlibrary.ui.fragments.allahNames.NinetyNineNamesOfAllahFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjpackage.HajjpackageFragment
@@ -349,7 +348,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             LiteratureCategoryListFragment::class.java -> (fragment as LiteratureCategoryListFragment).updateToolbarForThisFragment()
             LiteratureListFragment::class.java -> (fragment as LiteratureListFragment).updateToolbarForThisFragment()
             NinetyNineNamesOfAllahFragment::class.java -> (fragment as NinetyNineNamesOfAllahFragment).updateToolbarForThisFragment()
-            IslamicVideoFragment::class.java -> (fragment as IslamicVideoFragment).updateToolbarForThisFragment()
             QuranHomeFragment::class.java -> (fragment as QuranHomeFragment).updateToolbarForThisFragment()
             SurahDetailsFragment::class.java -> {
                 (fragment as SurahDetailsFragment).hideExistingUI()

@@ -8,14 +8,10 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.model.quranSchool.Scholar
 import com.gakk.noorlibrary.ui.fragments.*
-import com.gakk.noorlibrary.ui.fragments.IslamicVideo.IslamicVideoFragment
 import com.gakk.noorlibrary.ui.fragments.allahNames.AllahNameDetailsFragment
 import com.gakk.noorlibrary.ui.fragments.allahNames.NinetyNineNamesOfAllahFragment
 import com.gakk.noorlibrary.ui.fragments.azan.AzanFragment
 import com.gakk.noorlibrary.ui.fragments.calender.IslamicCalenderFragmentBd
-import com.gakk.noorlibrary.ui.fragments.covid.AmbulanceTabFragment
-import com.gakk.noorlibrary.ui.fragments.covid.CovidServiceDetailsFragment
-import com.gakk.noorlibrary.ui.fragments.covid.CovidServiceHomeFragment
 import com.gakk.noorlibrary.ui.fragments.eidjamat.EidJamatFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.HajjGuideFragment
@@ -26,7 +22,6 @@ import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
 import com.gakk.noorlibrary.ui.fragments.inspiration.InspirationDetailsFragment
 import com.gakk.noorlibrary.ui.fragments.instructiveVideo.InstructiveVideoFragment
 import com.gakk.noorlibrary.ui.fragments.islamicName.IslamicNameHomeFragment
-import com.gakk.noorlibrary.ui.fragments.islamicSong.IslamicSongFragment
 import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
 import com.gakk.noorlibrary.ui.fragments.onlinehut.OnlintHutHomeFragment
 import com.gakk.noorlibrary.ui.fragments.quranSchool.QuranSchoolHomeFragment
@@ -205,16 +200,6 @@ object FragmentProvider {
             PAGE_BIOGRAPHY -> BiographyFragment.newInstance()
 
             PAGE_COMPASS -> CompassFragment.newInstance()
-            PAGE_ISLAMIC_VIDEOS -> when (Util.checkSub()) {
-                true -> {
-                    IslamicVideoFragment.newInstance()
-                }
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-            }
-
-            PAGE_ISLAMIC_SONGS -> IslamicSongFragment.newInstance(detailsActivityCallBack!!)
 
             PAGE_JAKAT -> when (Util.checkSub()) {
                 true -> {
@@ -381,14 +366,6 @@ object FragmentProvider {
             )
 
             PAGE_IJTEMA -> BishwaIjtemaFragment.newInstance()
-
-            PAGE_CORONA_FUNERAL_SERVICE -> CovidServiceHomeFragment.newInstance()
-
-            PAGE_FUNERAL_DETAILS -> CovidServiceDetailsFragment.newInstance(
-                itemLiterature = literature!!
-            )
-
-            PAGE_AMBULANCE -> AmbulanceTabFragment.newInstance()
 
             ONLINE_HUT_HOME -> OnlintHutHomeFragment.newInstance()
 

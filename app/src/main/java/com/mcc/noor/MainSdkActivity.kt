@@ -21,4 +21,9 @@ class MainSdkActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onDestroy() {
+        Noor.destroySDK()
+        super.onDestroy()
+    }
 }

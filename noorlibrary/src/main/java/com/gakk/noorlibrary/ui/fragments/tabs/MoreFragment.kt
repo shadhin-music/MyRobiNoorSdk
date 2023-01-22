@@ -310,13 +310,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
             bottomSheetItems.add(
                 BottomSheetItem(
-                    R.drawable.ic_cat_islamic_video,
-                    getString(R.string.cat_islamic_video)
-                )
-            )
-
-            bottomSheetItems.add(
-                BottomSheetItem(
                     R.drawable.ic_cat_ijtema,
                     getString(R.string.cat_ijtema)
                 )
@@ -336,39 +329,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                 )
             )
 
-            /*bottomSheetItems.add(
-                BottomSheetItem(
-                    R.drawable.ic_hajj_package,
-                    getString(R.string.cat_hajj_package)
-                )
-            )*/
-
-
-            /* bottomSheetItems.add(
-                 BottomSheetItem(
-                     R.drawable.ic_cat_quiz,
-                     getString(R.string.cat_quiz)
-                 )
-             )*/
-
         }
-
-
-        /*  bottomSheetItems.add(
-              BottomSheetItem(
-                  R.drawable.ic_cat_islamic_song,
-                  getString(R.string.cat_islamic_song)
-              )
-          )*/
-
-
-
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_covid_funeral,
-                getString(R.string.cat_corona_funeral_service)
-            )
-        )
 
         bottomSheetItems.add(
             BottomSheetItem(

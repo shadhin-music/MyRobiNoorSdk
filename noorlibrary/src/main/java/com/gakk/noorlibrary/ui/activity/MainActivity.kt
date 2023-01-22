@@ -36,7 +36,7 @@ import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
-import com.gakk.noorlibrary.databinding.ActivityMainBinding
+import com.gakk.noorlibrary.databinding.ActivityMainNoorSdkBinding
 import com.gakk.noorlibrary.databinding.DialogAlreadyAttemptBinding
 import com.gakk.noorlibrary.job.RozaAlarmControlJob
 import com.gakk.noorlibrary.model.literature.Literature
@@ -57,7 +57,7 @@ import kotlinx.coroutines.launch
 import java.io.Serializable
 
 internal class MainActivity : BaseActivity(), MainCallback {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainNoorSdkBinding
     private val fragmentList = ArrayList<Fragment>()
     private lateinit var model: QuranViewModel
     private lateinit var modelSubscription: SubscriptionViewModel
@@ -84,7 +84,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
         mainCallback = this
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_noor_sdk)
 
 
         setStatusColor(R.color.colorPrimaryDark)

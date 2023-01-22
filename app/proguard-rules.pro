@@ -12,13 +12,6 @@
    public *;
 }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
 -keep class androidx.* {*;}
 -keepclassmembers,allowobfuscation class * {
     @com.google.gson.annotations.SerializedName <fields>;
@@ -61,10 +54,4 @@
 -verbose
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 
-# Preserve all Dexter classes and method names
-
 -keepattributes InnerClasses, Signature, *Annotation*
--keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
--keep class com.google.gson.reflect.TypeToken
--keep class * extends com.google.gson.reflect.TypeToken
--keep public class * implements java.lang.reflect.Type

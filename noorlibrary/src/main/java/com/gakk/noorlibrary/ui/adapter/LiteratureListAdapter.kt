@@ -16,9 +16,7 @@ import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.*
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
-import com.gakk.noorlibrary.service.DOWNLOAD_ID
-import com.gakk.noorlibrary.service.DOWNLOAD_URL
-import com.gakk.noorlibrary.service.DownloadService
+
 import com.gakk.noorlibrary.ui.fragments.LiteratureItemClickCallBack
 import com.gakk.noorlibrary.util.*
 
@@ -116,53 +114,6 @@ internal class LiteratureListAdapter(
 
             categoryDownloadableBinding?.root?.handleClickEvent {
                 mItemClickCallBack?.goToListeratureDetailsFragment(adapterPosition, false)
-            }
-
-            categoryDownloadableBinding?.btnDownload?.handleClickEvent {
-
-
-                val id = mList!!.get(adapterPosition).id
-                val path = AppPreference.getDownloadPath(id!!)
-                if (path == null) {
-                    mDetailsCallBack?.startDownloadIfPermissionGiven {
-                        Intent(
-                            categoryDownloadableBinding?.btnDownload?.context,
-                            DownloadService::class.java
-                        ).also {
-                            val id = mList?.get(adapterPosition)?.id!!
-                            val url = mList?.get(adapterPosition)?.fullImageUrl
-                            it.putExtra(DOWNLOAD_ID, id)
-                            it.putExtra(DOWNLOAD_URL, url)
-                            categoryDownloadableBinding?.btnDownload?.context?.startService(it)
-                        }
-
-                    }
-                } else {
-                    mDetailsCallBack?.openFileInGalary(path)
-                }
-
-            }
-
-            categoryDownloadableBinding?.tvDownload?.handleClickEvent {
-                val id = mList!!.get(adapterPosition).id
-                val path = AppPreference.getDownloadPath(id!!)
-                if (path == null) {
-                    mDetailsCallBack?.startDownloadIfPermissionGiven {
-                        Intent(
-                            categoryDownloadableBinding?.btnDownload?.context,
-                            DownloadService::class.java
-                        ).also {
-                            val id = mList?.get(adapterPosition)?.id!!
-                            val url = mList?.get(adapterPosition)?.fullImageUrl
-                            it.putExtra(DOWNLOAD_ID, id)
-                            it.putExtra(DOWNLOAD_URL, url)
-                            categoryDownloadableBinding?.btnDownload?.context?.startService(it)
-                        }
-
-                    }
-                } else {
-                    mDetailsCallBack?.openFileInGalary(path)
-                }
             }
 
             categoryDownloadableBinding?.root?.let {
@@ -477,8 +428,6 @@ private class LiteratureItemCountControl() {
                     R.string.jakat_cat_id.getLocalisedTextFromResId() -> return size + 2
                     else -> return size + 1
                 }
-
-
             }
         }
     }

@@ -10,7 +10,6 @@ import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.databinding.LayoutVideoBinding
 import com.gakk.noorlibrary.databinding.LayoutVideoPlaylistBinding
 import com.gakk.noorlibrary.ui.activity.VideoPlayerHomeActivity
-import com.gakk.noorlibrary.ui.fragments.IslamicVideo.PlayerCallback
 import com.gakk.noorlibrary.util.VIDEO_CAT_ID
 import com.gakk.noorlibrary.util.VIDEO_DATA
 import com.gakk.noorlibrary.util.VIDEO_SUBCAT_ID
@@ -20,11 +19,10 @@ import com.gakk.noorlibrary.util.handleClickEvent
 val VIDEO = 0
 val PLAY_LIST = 1
 
-internal class IslamicVideoOrPlayListAdapter(
+class IslamicVideoOrPlayListAdapter(
     videoList: MutableList<com.gakk.noorlibrary.model.video.category.Data>? = null,
     playList: MutableList<com.gakk.noorlibrary.model.subcategory.Data>? = null,
     detailsCallBack: DetailsCallBack,
-    val playerCallback: PlayerCallback? = null,
     videoCatId: String? = null,
     videoSubCatId: String? = null
 ) : RecyclerView.Adapter<IslamicVideoOrPlayListAdapter.VideoOrPlayListViewHolder>() {
@@ -108,10 +106,6 @@ internal class IslamicVideoOrPlayListAdapter(
                 root.playList = it.get(position)
                 playListData = it.get(position)
             }
-            holder.playListBinding?.root?.handleClickEvent {
-                playerCallback?.gotoVideoPlayerPage(mCatId, playListData?.id)
-            }
-
         }
     }
 

@@ -20,9 +20,6 @@ import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
 import com.gakk.noorlibrary.databinding.FragmentLiteratureDetailsBinding
 import com.gakk.noorlibrary.model.literature.Literature
-import com.gakk.noorlibrary.service.DOWNLOAD_ID
-import com.gakk.noorlibrary.service.DOWNLOAD_URL
-import com.gakk.noorlibrary.service.DownloadService
 import com.gakk.noorlibrary.util.DownloadProgressControl
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
@@ -210,19 +207,6 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
             loadInitialLiteratureList()
             loadUIWithSelectedDataAndPrevNextControlState()
         }
-
-        binding?.layoutDownload?.handleClickEvent {
-            mDetailsCallback?.startDownloadIfPermissionGiven {
-                Intent(binding?.btnDownload?.context, DownloadService::class.java).also {
-                    val id = literature?.id!!
-                    val url = literature?.fullImageUrl
-                    it.putExtra(DOWNLOAD_ID, id)
-                    it.putExtra(DOWNLOAD_URL, url)
-                    binding?.layoutDownload?.context?.startService(it)
-                }
-
-            }
-        }
     }
 
     override fun onStart() {
@@ -237,16 +221,8 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
 
     fun loadInitialLiteratureList() {
 
-        /**
-         * For some reason when coming from home tab ,mLiteratureListCallback?.getLiteratureList() is null
-         * to cover up that case we have hold LiteratureListCallBack in a singleton class Search with "LiteratureListCallBackContailer"
-         * and get all its reference
-         */
-        //literatureListWrapper = LiteratureListCallBackContailer.callBack
-        // mLiteratureListCallback=LiteratureListCallBackContailer.callBack
-        // Log.e("ISNull","${mLiteratureListCallback==null}")
         mLiteratureList =
-            literatureListWrapper?.literatures //literatureListWrapper?.getLiteratureList()
+            literatureListWrapper?.literatures
     }
 
     fun loadUIWithSelectedDataAndPrevNextControlState() {
@@ -270,11 +246,9 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
         when (mIsSelectedLiteratureFav ?: false) {
             false -> {
                 mDetailsCallback?.setOrUpdateActionButtonTag(FAV, ActionButtonType.TypeOne)
-                //mDetailsCallback?.setActionOfActionButton(unFavAction,ActionButtonType.TypeOne)
             }
             true -> {
                 mDetailsCallback?.setOrUpdateActionButtonTag(FAV_FILLED, ActionButtonType.TypeOne)
-                // mDetailsCallback?.setActionOfActionButton(favOrUnFavAction,ActionButtonType.TypeOne)
             }
         }
 
