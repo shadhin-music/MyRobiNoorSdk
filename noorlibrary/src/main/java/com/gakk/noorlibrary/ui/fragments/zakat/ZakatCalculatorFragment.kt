@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -31,33 +34,74 @@ import java.util.*
 internal class ZakatCalculatorFragment : Fragment() {
 
     private lateinit var mCallback: DetailsCallBack
-    private lateinit var binding: FragmentJakatCalculatorBinding
     private lateinit var viewModel: ZakatViewModel
     private lateinit var repository: RoomRepository
     private lateinit var layoutNagadTakaHeader: ConstraintLayout
     private lateinit var tvTitleHeaderNagadTaka: AppCompatTextView
+    private lateinit var ivInfoHeaderNagadTaka: AppCompatImageView
     private lateinit var layoutNagadTakacontent: ConstraintLayout
     private lateinit var contentTitleNagadTaka: AppCompatTextView
     private lateinit var layoutBankNagadTakacontent: ConstraintLayout
     private lateinit var contentTitleBankNagadTaka: AppCompatTextView
     private lateinit var layoutOrnamentAmtHeader: ConstraintLayout
+    private lateinit var ivInfoHeaderOrnamentAmt: AppCompatImageView
     private lateinit var tvTitleHeaderOrnamentAmt: AppCompatTextView
     private lateinit var layoutGoldAmtcontent: ConstraintLayout
     private lateinit var contentTitleGoldAmt: AppCompatTextView
     private lateinit var layoutSilverAmtcontent: ConstraintLayout
     private lateinit var contentTitleSilverAmt: AppCompatTextView
     private lateinit var layoutInvestmentAmtHeader: ConstraintLayout
+    private lateinit var ivInfoHeaderInvestmentAmt: AppCompatImageView
     private lateinit var tvTitleHeaderInvestmentAmt: AppCompatTextView
     private lateinit var layoutShareMarketcontent: ConstraintLayout
     private lateinit var contentTitleShareMarket: AppCompatTextView
     private lateinit var layoutOtherInvestcontent: ConstraintLayout
     private lateinit var contentTitleOtherInvest: AppCompatTextView
     private lateinit var layoutAssetHeader: ConstraintLayout
+    private lateinit var ivInfoHeaderAsset: AppCompatImageView
     private lateinit var tvTitleHeaderAsset: AppCompatTextView
     private lateinit var layoutHouseRentcontent: ConstraintLayout
     private lateinit var contentTitleHouseRent: AppCompatTextView
     private lateinit var layoutAssetcontent: ConstraintLayout
     private lateinit var contentTitleAsset: AppCompatTextView
+    private lateinit var layoutBusinessHeader: ConstraintLayout
+    private lateinit var ivInfoHeaderBusiness: AppCompatImageView
+    private lateinit var tvTitleHeaderBusiness: AppCompatTextView
+    private lateinit var layoutNogodBusinescontent: ConstraintLayout
+    private lateinit var contentTitleNogodBusines: AppCompatTextView
+    private lateinit var layoutProductcontent: ConstraintLayout
+    private lateinit var contentTitleProduct: AppCompatTextView
+    private lateinit var layoutOtherHeader: ConstraintLayout
+    private lateinit var ivInfoHeaderOther: AppCompatImageView
+    private lateinit var tvTitleHeaderOther: AppCompatTextView
+    private lateinit var layoutPensioncontent: ConstraintLayout
+    private lateinit var contentTitlePension: AppCompatTextView
+    private lateinit var layoutLoancontent: ConstraintLayout
+    private lateinit var contentTitleLoan: AppCompatTextView
+    private lateinit var layoutCapitalcontent: ConstraintLayout
+    private lateinit var contentTitleCapital: AppCompatTextView
+    private lateinit var layoutFarmingHeader: ConstraintLayout
+    private lateinit var ivInfoHeaderFarming: AppCompatImageView
+    private lateinit var tvTitleHeaderFarming: AppCompatTextView
+    private lateinit var layoutFarmingcontent: ConstraintLayout
+    private lateinit var contentTitleFarming: AppCompatTextView
+    private lateinit var layoutLiabilityHeader: ConstraintLayout
+    private lateinit var ivInfoHeaderLiability: AppCompatImageView
+
+    private lateinit var tvTitleHeaderLiability: AppCompatTextView
+    private lateinit var layoutCreditCardcontent: ConstraintLayout
+    private lateinit var contentTitleCreditCard: AppCompatTextView
+    private lateinit var layoutCarcontent: ConstraintLayout
+    private lateinit var contentTitleCar: AppCompatTextView
+    private lateinit var layoutBusinessPaymentcontent: ConstraintLayout
+    private lateinit var contentTitleBusinessPayment: AppCompatTextView
+    private lateinit var layoutFamilyLoancontent: ConstraintLayout
+    private lateinit var contentTitleFamilyLoan: AppCompatTextView
+    private lateinit var layoutOtherLoancontent: ConstraintLayout
+    private lateinit var contentTitleOtherLoan: AppCompatTextView
+    private lateinit var btnSave: AppCompatButton
+    private lateinit var textTotalAsset: AppCompatTextView
+    private lateinit var textTotalJakat: AppCompatTextView
 
 
     val database by lazy { ZakatRoomDatabase.getDatabase(requireContext()) }
@@ -89,29 +133,70 @@ internal class ZakatCalculatorFragment : Fragment() {
 
     private fun initUi(view: View) {
         layoutNagadTakaHeader = view.findViewById(R.id.layoutNagadTakaHeader)
+        ivInfoHeaderNagadTaka = layoutNagadTakaHeader.findViewById(R.id.ivInfoHeader)
         tvTitleHeaderNagadTaka = layoutNagadTakaHeader.findViewById(R.id.tvTitleHeader)
         layoutNagadTakacontent = view.findViewById(R.id.layoutNagadTakacontent)
         contentTitleNagadTaka = layoutNagadTakacontent.findViewById(R.id.contentTitle)
         layoutBankNagadTakacontent = view.findViewById(R.id.layoutBankNagadTakacontent)
         contentTitleBankNagadTaka = layoutBankNagadTakacontent.findViewById(R.id.contentTitle)
         layoutOrnamentAmtHeader = view.findViewById(R.id.layoutOrnamentAmtHeader)
+        ivInfoHeaderOrnamentAmt = layoutOrnamentAmtHeader.findViewById(R.id.ivInfoHeader)
         tvTitleHeaderOrnamentAmt = layoutOrnamentAmtHeader.findViewById(R.id.tvTitleHeader)
         layoutGoldAmtcontent = view.findViewById(R.id.layoutGoldAmtcontent)
         contentTitleGoldAmt = layoutGoldAmtcontent.findViewById(R.id.contentTitle)
         layoutSilverAmtcontent = view.findViewById(R.id.layoutSilverAmtcontent)
         contentTitleSilverAmt = layoutSilverAmtcontent.findViewById(R.id.contentTitle)
         layoutInvestmentAmtHeader = view.findViewById(R.id.layoutInvestmentAmtHeader)
+        ivInfoHeaderInvestmentAmt = layoutInvestmentAmtHeader.findViewById(R.id.ivInfoHeader)
         tvTitleHeaderInvestmentAmt = layoutInvestmentAmtHeader.findViewById(R.id.tvTitleHeader)
         layoutShareMarketcontent = view.findViewById(R.id.layoutShareMarketcontent)
         contentTitleShareMarket = layoutShareMarketcontent.findViewById(R.id.contentTitle)
         layoutOtherInvestcontent = view.findViewById(R.id.layoutOtherInvestcontent)
         contentTitleOtherInvest = layoutOtherInvestcontent.findViewById(R.id.contentTitle)
         layoutAssetHeader = view.findViewById(R.id.layoutAssetHeader)
+        ivInfoHeaderAsset = layoutAssetHeader.findViewById(R.id.ivInfoHeader)
         tvTitleHeaderAsset = layoutAssetHeader.findViewById(R.id.tvTitleHeader)
         layoutHouseRentcontent = view.findViewById(R.id.layoutHouseRentcontent)
-        contentTitleHouseRent = layoutHouseRentcontent.findViewById(R.id.tvTitleHeader)
+        contentTitleHouseRent = layoutHouseRentcontent.findViewById(R.id.contentTitle)
         layoutAssetcontent = view.findViewById(R.id.layoutAssetcontent)
         contentTitleAsset = layoutAssetcontent.findViewById(R.id.contentTitle)
+        layoutBusinessHeader = view.findViewById(R.id.layoutBusinessHeader)
+        ivInfoHeaderBusiness = layoutBusinessHeader.findViewById(R.id.ivInfoHeader)
+        tvTitleHeaderBusiness = layoutBusinessHeader.findViewById(R.id.tvTitleHeader)
+        layoutNogodBusinescontent = view.findViewById(R.id.layoutNogodBusinescontent)
+        contentTitleNogodBusines = layoutNogodBusinescontent.findViewById(R.id.contentTitle)
+        layoutProductcontent = view.findViewById(R.id.layoutProductcontent)
+        contentTitleProduct = layoutProductcontent.findViewById(R.id.contentTitle)
+        layoutOtherHeader = view.findViewById(R.id.layoutOtherHeader)
+        ivInfoHeaderOther = layoutOtherHeader.findViewById(R.id.ivInfoHeader)
+        tvTitleHeaderOther = layoutOtherHeader.findViewById(R.id.tvTitleHeader)
+        layoutPensioncontent = view.findViewById(R.id.layoutPensioncontent)
+        contentTitlePension = layoutPensioncontent.findViewById(R.id.contentTitle)
+        layoutLoancontent = view.findViewById(R.id.layoutLoancontent)
+        contentTitleLoan = layoutLoancontent.findViewById(R.id.contentTitle)
+        layoutCapitalcontent = view.findViewById(R.id.layoutCapitalcontent)
+        contentTitleCapital = layoutCapitalcontent.findViewById(R.id.contentTitle)
+        layoutFarmingHeader = view.findViewById(R.id.layoutFarmingHeader)
+        ivInfoHeaderFarming = layoutFarmingHeader.findViewById(R.id.ivInfoHeader)
+        tvTitleHeaderFarming = layoutFarmingHeader.findViewById(R.id.tvTitleHeader)
+        layoutFarmingcontent = view.findViewById(R.id.layoutFarmingcontent)
+        contentTitleFarming = layoutFarmingcontent.findViewById(R.id.contentTitle)
+        layoutLiabilityHeader = view.findViewById(R.id.layoutLiabilityHeader)
+        ivInfoHeaderLiability = layoutLiabilityHeader.findViewById(R.id.ivInfoHeader)
+        tvTitleHeaderLiability = layoutLiabilityHeader.findViewById(R.id.tvTitleHeader)
+        layoutCreditCardcontent = view.findViewById(R.id.layoutCreditCardcontent)
+        contentTitleCreditCard = layoutCreditCardcontent.findViewById(R.id.contentTitle)
+        layoutCarcontent = view.findViewById(R.id.layoutCarcontent)
+        contentTitleCar = layoutCarcontent.findViewById(R.id.contentTitle)
+        layoutBusinessPaymentcontent = view.findViewById(R.id.layoutBusinessPaymentcontent)
+        contentTitleBusinessPayment = layoutBusinessPaymentcontent.findViewById(R.id.contentTitle)
+        layoutFamilyLoancontent = view.findViewById(R.id.layoutFamilyLoancontent)
+        contentTitleFamilyLoan = layoutFamilyLoancontent.findViewById(R.id.contentTitle)
+        layoutOtherLoancontent = view.findViewById(R.id.layoutOtherLoancontent)
+        contentTitleOtherLoan = layoutOtherLoancontent.findViewById(R.id.contentTitle)
+        btnSave = view.findViewById(R.id.btnSave)
+        textTotalAsset = view.findViewById(R.id.textTotalAsset)
+        textTotalJakat = view.findViewById(R.id.textTotalJakat)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -126,9 +211,6 @@ internal class ZakatCalculatorFragment : Fragment() {
 
         mCallback.setToolBarTitle(getString(R.string.txt_new_calculation))
 
-        val symbol: String
-
-        symbol = getString(R.string.text_symbol_tk)
 
         tvTitleHeaderNagadTaka.text = getText(R.string.title_nogod_taka)
         contentTitleNagadTaka.text = getText(R.string.title_nogod_taka)
@@ -150,53 +232,41 @@ internal class ZakatCalculatorFragment : Fragment() {
 
         contentTitleAsset.text = getText(R.string.title_asset)
 
-        binding.layoutBusinessHeader.tvTitleHeader.text = getText(R.string.title_business)
-        binding.layoutNogodBusinescontent.contentTitle.text = getText(R.string.text_nogod_business)
-        binding.layoutNogodBusinescontent.tvSymbol.text = symbol
+        tvTitleHeaderBusiness.text = getText(R.string.title_business)
+        contentTitleNogodBusines.text = getText(R.string.text_nogod_business)
 
-        binding.layoutProductcontent.contentTitle.text = getText(R.string.text_product)
-        binding.layoutProductcontent.tvSymbol.text = symbol
+        contentTitleProduct.text = getText(R.string.text_product)
 
-        binding.layoutOtherHeader.tvTitleHeader.text = getText(R.string.title_other)
-        binding.layoutPensioncontent.contentTitle.text = getText(R.string.text_pension)
-        binding.layoutPensioncontent.tvSymbol.text = symbol
+        tvTitleHeaderOther.text = getText(R.string.title_other)
+        contentTitlePension.text = getText(R.string.text_pension)
 
-        binding.layoutLoancontent.contentTitle.text = getText(R.string.text_family_loan)
-        binding.layoutLoancontent.tvSymbol.text = symbol
+        contentTitleLoan.text = getText(R.string.text_family_loan)
 
-        binding.layoutCapitalcontent.contentTitle.text = getText(R.string.text_other_capital)
-        binding.layoutCapitalcontent.tvSymbol.text = symbol
+        contentTitleCapital.text = getText(R.string.text_other_capital)
 
-        binding.layoutFarmingHeader.tvTitleHeader.text = getText(R.string.title_farming)
-        binding.layoutFarmingcontent.contentTitle.text = getText(R.string.text_taka_amount)
-        binding.layoutFarmingcontent.tvSymbol.text = symbol
+        tvTitleHeaderFarming.text = getText(R.string.title_farming)
+        contentTitleFarming.text = getText(R.string.text_taka_amount)
 
-        binding.layoutLiabilityHeader.tvTitleHeader.text = getText(R.string.title_lialibility)
-        binding.layoutLiabilityHeader.tvTitleHeader.setTextColor(
+        tvTitleHeaderLiability.text = getText(R.string.title_lialibility)
+        tvTitleHeaderLiability.setTextColor(
             ContextCompat.getColor(
                 requireContext(), R.color.deep_red
             )
         )
 
-        binding.layoutCreditCardcontent.contentTitle.text = getText(R.string.text_credit_card)
-        binding.layoutCreditCardcontent.tvSymbol.text = symbol
+        contentTitleCreditCard.text = getText(R.string.text_credit_card)
+        contentTitleCar.text = getText(R.string.text_car_payment)
 
-        binding.layoutCarcontent.contentTitle.text = getText(R.string.text_car_payment)
-        binding.layoutCarcontent.tvSymbol.text = symbol
-
-        binding.layoutBusinessPaymentcontent.contentTitle.text =
+        contentTitleBusinessPayment.text =
             getText(R.string.text_business_payment)
-        binding.layoutBusinessPaymentcontent.tvSymbol.text = symbol
 
-        binding.layoutFamilyLoancontent.contentTitle.text =
+        contentTitleFamilyLoan.text =
             getText(R.string.text_family_loan_liability)
-        binding.layoutFamilyLoancontent.tvSymbol.text = symbol
 
-        binding.layoutOtherLoancontent.contentTitle.text =
+        contentTitleOtherLoan.text =
             requireContext().getText(R.string.text_other_loan)
-        binding.layoutOtherLoancontent.tvSymbol.text = symbol
 
-        binding.layoutNagadTakaHeader.ivInfoHeader.handleClickEvent {
+        ivInfoHeaderNagadTaka.handleClickEvent {
             mCallback.showDialogWithActionAndParam(
                 DialogType.ZakatInfoShow,
                 title = getText(R.string.title_nogod_taka).toString(),
@@ -204,7 +274,7 @@ internal class ZakatCalculatorFragment : Fragment() {
             )
         }
 
-        binding.layoutOrnamentAmtHeader.ivInfoHeader.handleClickEvent {
+        ivInfoHeaderOrnamentAmt.handleClickEvent {
             mCallback.showDialogWithActionAndParam(
                 DialogType.ZakatInfoShow,
                 title = getText(R.string.title_ornament_header).toString(),
@@ -212,14 +282,14 @@ internal class ZakatCalculatorFragment : Fragment() {
             )
         }
 
-        binding.layoutInvestmentAmtHeader.ivInfoHeader.handleClickEvent {
+        ivInfoHeaderInvestmentAmt.handleClickEvent {
             mCallback.showDialogWithActionAndParam(
                 DialogType.ZakatInfoShow,
                 title = getText(R.string.title_investment).toString(),
                 description = getText(R.string.description_investment).toString()
             )
         }
-        binding.layoutAssetHeader.ivInfoHeader.handleClickEvent {
+        ivInfoHeaderAsset.handleClickEvent {
             mCallback.showDialogWithActionAndParam(
                 DialogType.ZakatInfoShow,
                 title = getText(R.string.title_asset).toString(),
@@ -227,7 +297,7 @@ internal class ZakatCalculatorFragment : Fragment() {
             )
         }
 
-        binding.layoutBusinessHeader.ivInfoHeader.handleClickEvent {
+        ivInfoHeaderBusiness.handleClickEvent {
             mCallback.showDialogWithActionAndParam(
                 DialogType.ZakatInfoShow,
                 title = getText(R.string.title_business).toString(),
@@ -235,7 +305,7 @@ internal class ZakatCalculatorFragment : Fragment() {
             )
         }
 
-        binding.layoutOtherHeader.ivInfoHeader.handleClickEvent {
+        ivInfoHeaderOther.handleClickEvent {
             mCallback.showDialogWithActionAndParam(
                 DialogType.ZakatInfoShow,
                 title = getText(R.string.title_other).toString(),
@@ -243,7 +313,7 @@ internal class ZakatCalculatorFragment : Fragment() {
             )
         }
 
-        binding.layoutFarmingHeader.ivInfoHeader.handleClickEvent {
+        ivInfoHeaderFarming.handleClickEvent {
             mCallback.showDialogWithActionAndParam(
                 DialogType.ZakatInfoShow,
                 title = getText(R.string.title_farming).toString(),
@@ -251,7 +321,7 @@ internal class ZakatCalculatorFragment : Fragment() {
             )
         }
 
-        binding.layoutLiabilityHeader.ivInfoHeader.handleClickEvent {
+        ivInfoHeaderLiability.handleClickEvent {
             mCallback.showDialogWithActionAndParam(
                 DialogType.ZakatInfoShow,
                 title = getText(R.string.title_lialibility).toString(),
@@ -259,28 +329,64 @@ internal class ZakatCalculatorFragment : Fragment() {
             )
         }
 
-        binding.btnSave.handleClickEvent {
 
-            val nogodtakaText = binding.layoutNagadTakacontent.etAmount.text
-            val nogodtakaBankText = binding.layoutBankNagadTakacontent.etAmount.text
-            val goldText = binding.layoutGoldAmtcontent.etAmount.text
-            val silverText = binding.layoutSilverAmtcontent.etAmount.text
-            val shareMarketText = binding.layoutShareMarketcontent.etAmount.text
-            val otherInvestmentText = binding.layoutOtherInvestcontent.etAmount.text
-            val houseRentText = binding.layoutHouseRentcontent.etAmount.text
-            val assetText = binding.layoutAssetcontent.etAmount.text
-            val nogodbusinessText = binding.layoutNogodBusinescontent.etAmount.text
-            val productText = binding.layoutProductcontent.etAmount.text
-            val pensionText = binding.layoutPensioncontent.etAmount.text
-            val loanText = binding.layoutLoancontent.etAmount.text
-            val otherCapitalText = binding.layoutOtherLoancontent.etAmount.text
-            val farmingText = binding.layoutFarmingcontent.etAmount.text
-            val creditCardText = binding.layoutCreditCardcontent.etAmount.text
-            val carPaymentText = binding.layoutCarcontent.etAmount.text
-            val businessPaymentText = binding.layoutBusinessPaymentcontent.etAmount.text
-            val familyLoanText = binding.layoutFamilyLoancontent.etAmount.text
-            val otherLoanText = binding.layoutOtherLoancontent.etAmount.text
+        btnSave.handleClickEvent {
 
+            val etAmountNagadTaka: AppCompatEditText =
+                layoutNagadTakacontent.findViewById(R.id.etAmount)
+            val etAmountBankNagadTaka: AppCompatEditText =
+                layoutBankNagadTakacontent.findViewById(R.id.etAmount)
+            val etAmountGoldAmt: AppCompatEditText =
+                layoutGoldAmtcontent.findViewById(R.id.etAmount)
+            val etAmountSilverAmt: AppCompatEditText =
+                layoutSilverAmtcontent.findViewById(R.id.etAmount)
+            val etAmountShareMarket: AppCompatEditText =
+                layoutShareMarketcontent.findViewById(R.id.etAmount)
+            val etAmountOtherInvest: AppCompatEditText =
+                layoutOtherInvestcontent.findViewById(R.id.etAmount)
+            val etAmountHouseRent: AppCompatEditText =
+                layoutHouseRentcontent.findViewById(R.id.etAmount)
+            val etAmountAsset: AppCompatEditText = layoutAssetcontent.findViewById(R.id.etAmount)
+            val etAmountNogodBusines: AppCompatEditText =
+                layoutNogodBusinescontent.findViewById(R.id.etAmount)
+            val etAmountProduct: AppCompatEditText =
+                layoutProductcontent.findViewById(R.id.etAmount)
+            val etAmountPension: AppCompatEditText =
+                layoutPensioncontent.findViewById(R.id.etAmount)
+            val etAmountLoan: AppCompatEditText = layoutLoancontent.findViewById(R.id.etAmount)
+            val etAmountCapital: AppCompatEditText =
+                layoutCapitalcontent.findViewById(R.id.etAmount)
+            val etAmountFarming: AppCompatEditText =
+                layoutFarmingcontent.findViewById(R.id.etAmount)
+            val etAmountCreditCard: AppCompatEditText =
+                layoutCreditCardcontent.findViewById(R.id.etAmount)
+            val etAmountCar: AppCompatEditText = layoutCarcontent.findViewById(R.id.etAmount)
+            val etAmountBusinessPayment: AppCompatEditText =
+                layoutBusinessPaymentcontent.findViewById(R.id.etAmount)
+            val etAmountFamilyLoan: AppCompatEditText =
+                layoutFamilyLoancontent.findViewById(R.id.etAmount)
+            val etAmountOtherLoan: AppCompatEditText =
+                layoutOtherLoancontent.findViewById(R.id.etAmount)
+
+            val nogodtakaText = etAmountNagadTaka.text
+            val nogodtakaBankText = etAmountBankNagadTaka.text
+            val goldText = etAmountGoldAmt.text
+            val silverText = etAmountSilverAmt.text
+            val shareMarketText = etAmountShareMarket.text
+            val otherInvestmentText = etAmountOtherInvest.text
+            val houseRentText = etAmountHouseRent.text
+            val assetText = etAmountAsset.text
+            val nogodbusinessText = etAmountNogodBusines.text
+            val productText = etAmountProduct.text
+            val pensionText = etAmountPension.text
+            val loanText = etAmountLoan.text
+            val otherCapitalText = etAmountCapital.text
+            val farmingText = etAmountFarming.text
+            val creditCardText = etAmountCreditCard.text
+            val carPaymentText = etAmountCar.text
+            val businessPaymentText = etAmountBusinessPayment.text
+            val familyLoanText = etAmountFamilyLoan.text
+            val otherLoanText = etAmountOtherLoan.text
 
             var nogodtakaAmount = 0.0
             var nogodtakaBankAmount = 0.0
@@ -308,7 +414,7 @@ internal class ZakatCalculatorFragment : Fragment() {
                 nogodtakaAmount = nogodtakaText.toString().toDouble()
             }
             if (nogodtakaBankText.isNullOrEmpty()) {
-                //  mCallback.showToastMessage("Please enter amount")
+
             } else {
                 nogodtakaBankAmount = nogodtakaBankText.toString().toDouble()
             }
@@ -407,7 +513,6 @@ internal class ZakatCalculatorFragment : Fragment() {
                 e.printStackTrace()
             }
 
-
             val dateTxt: String =
                 (TimeFormtter.getNumberByLocale(day.toString()) + " " + context?.let {
                     TimeFormtter.getBanglaMonthName(month, it)
@@ -420,8 +525,8 @@ internal class ZakatCalculatorFragment : Fragment() {
                 DecimalFormat("##.##").format(totalZakat)
             )
             viewModel.insert(data)
-            binding.textTotalAsset.text = DecimalFormat("##.##").format(totalNetAsset)
-            binding.textTotalJakat.text = DecimalFormat("##.##").format(totalZakat)
+            textTotalAsset.text = DecimalFormat("##.##").format(totalNetAsset)
+            textTotalJakat.text = DecimalFormat("##.##").format(totalZakat)
 
             ZakatCalculationObserver.switchTabAtIndex(1)
 
