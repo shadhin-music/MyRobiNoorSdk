@@ -42,6 +42,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/colorPrimary"
                 android:layout_marginEnd="@dimen/small_spacing"
+                android:text="@string/text_symbol_tk"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/etAmount"
                 app:layout_constraintBottom_toBottomOf="@id/etAmount"

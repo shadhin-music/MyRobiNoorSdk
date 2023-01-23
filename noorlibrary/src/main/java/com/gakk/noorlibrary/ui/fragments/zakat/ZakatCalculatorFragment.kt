@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.roomdb.RoomRepository
 import com.gakk.noorlibrary.data.roomdb.ZakatRoomDatabase
 import com.gakk.noorlibrary.databinding.FragmentJakatCalculatorBinding
@@ -20,7 +19,6 @@ import com.gakk.noorlibrary.model.zakat.ZakatDataModel
 import com.gakk.noorlibrary.ui.fragments.ZakatCalculationObserver
 import com.gakk.noorlibrary.util.TimeFormtter
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.ZakatViewModel
 import java.text.DecimalFormat
 import java.util.*
@@ -36,12 +34,36 @@ internal class ZakatCalculatorFragment : Fragment() {
     private lateinit var binding: FragmentJakatCalculatorBinding
     private lateinit var viewModel: ZakatViewModel
     private lateinit var repository: RoomRepository
+    private lateinit var layoutNagadTakaHeader: ConstraintLayout
+    private lateinit var tvTitleHeaderNagadTaka: AppCompatTextView
+    private lateinit var layoutNagadTakacontent: ConstraintLayout
+    private lateinit var contentTitleNagadTaka: AppCompatTextView
+    private lateinit var layoutBankNagadTakacontent: ConstraintLayout
+    private lateinit var contentTitleBankNagadTaka: AppCompatTextView
+    private lateinit var layoutOrnamentAmtHeader: ConstraintLayout
+    private lateinit var tvTitleHeaderOrnamentAmt: AppCompatTextView
+    private lateinit var layoutGoldAmtcontent: ConstraintLayout
+    private lateinit var contentTitleGoldAmt: AppCompatTextView
+    private lateinit var layoutSilverAmtcontent: ConstraintLayout
+    private lateinit var contentTitleSilverAmt: AppCompatTextView
+    private lateinit var layoutInvestmentAmtHeader: ConstraintLayout
+    private lateinit var tvTitleHeaderInvestmentAmt: AppCompatTextView
+    private lateinit var layoutShareMarketcontent: ConstraintLayout
+    private lateinit var contentTitleShareMarket: AppCompatTextView
+    private lateinit var layoutOtherInvestcontent: ConstraintLayout
+    private lateinit var contentTitleOtherInvest: AppCompatTextView
+    private lateinit var layoutAssetHeader: ConstraintLayout
+    private lateinit var tvTitleHeaderAsset: AppCompatTextView
+    private lateinit var layoutHouseRentcontent: ConstraintLayout
+    private lateinit var contentTitleHouseRent: AppCompatTextView
+    private lateinit var layoutAssetcontent: ConstraintLayout
+    private lateinit var contentTitleAsset: AppCompatTextView
+
 
     val database by lazy { ZakatRoomDatabase.getDatabase(requireContext()) }
     val repositoryRoom by lazy { RoomRepository(database.zakatDao()) }
 
     companion object {
-
         @JvmStatic
         fun newInstance() = ZakatCalculatorFragment()
     }
@@ -56,12 +78,40 @@ internal class ZakatCalculatorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_jakat_calculator, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_jakat_calculator,
+            container, false
+        )
 
+        initUi(view)
+        return view
+    }
 
-        return binding.root
+    private fun initUi(view: View) {
+        layoutNagadTakaHeader = view.findViewById(R.id.layoutNagadTakaHeader)
+        tvTitleHeaderNagadTaka = layoutNagadTakaHeader.findViewById(R.id.tvTitleHeader)
+        layoutNagadTakacontent = view.findViewById(R.id.layoutNagadTakacontent)
+        contentTitleNagadTaka = layoutNagadTakacontent.findViewById(R.id.contentTitle)
+        layoutBankNagadTakacontent = view.findViewById(R.id.layoutBankNagadTakacontent)
+        contentTitleBankNagadTaka = layoutBankNagadTakacontent.findViewById(R.id.contentTitle)
+        layoutOrnamentAmtHeader = view.findViewById(R.id.layoutOrnamentAmtHeader)
+        tvTitleHeaderOrnamentAmt = layoutOrnamentAmtHeader.findViewById(R.id.tvTitleHeader)
+        layoutGoldAmtcontent = view.findViewById(R.id.layoutGoldAmtcontent)
+        contentTitleGoldAmt = layoutGoldAmtcontent.findViewById(R.id.contentTitle)
+        layoutSilverAmtcontent = view.findViewById(R.id.layoutSilverAmtcontent)
+        contentTitleSilverAmt = layoutSilverAmtcontent.findViewById(R.id.contentTitle)
+        layoutInvestmentAmtHeader = view.findViewById(R.id.layoutInvestmentAmtHeader)
+        tvTitleHeaderInvestmentAmt = layoutInvestmentAmtHeader.findViewById(R.id.tvTitleHeader)
+        layoutShareMarketcontent = view.findViewById(R.id.layoutShareMarketcontent)
+        contentTitleShareMarket = layoutShareMarketcontent.findViewById(R.id.contentTitle)
+        layoutOtherInvestcontent = view.findViewById(R.id.layoutOtherInvestcontent)
+        contentTitleOtherInvest = layoutOtherInvestcontent.findViewById(R.id.contentTitle)
+        layoutAssetHeader = view.findViewById(R.id.layoutAssetHeader)
+        tvTitleHeaderAsset = layoutAssetHeader.findViewById(R.id.tvTitleHeader)
+        layoutHouseRentcontent = view.findViewById(R.id.layoutHouseRentcontent)
+        contentTitleHouseRent = layoutHouseRentcontent.findViewById(R.id.tvTitleHeader)
+        layoutAssetcontent = view.findViewById(R.id.layoutAssetcontent)
+        contentTitleAsset = layoutAssetcontent.findViewById(R.id.contentTitle)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,35 +130,25 @@ internal class ZakatCalculatorFragment : Fragment() {
 
         symbol = getString(R.string.text_symbol_tk)
 
-        binding.layoutNagadTakaHeader.tvTitleHeader.text = getText(R.string.title_nogod_taka)
-        binding.layoutNagadTakacontent.contentTitle.text = getText(R.string.title_nogod_taka)
-        binding.layoutNagadTakacontent.tvSymbol.text = symbol
+        tvTitleHeaderNagadTaka.text = getText(R.string.title_nogod_taka)
+        contentTitleNagadTaka.text = getText(R.string.title_nogod_taka)
 
-        binding.layoutBankNagadTakacontent.contentTitle.text =
+        contentTitleBankNagadTaka.text =
             getText(R.string.title_bank_nogod_taka)
-        binding.layoutBankNagadTakacontent.tvSymbol.text = symbol
 
+        tvTitleHeaderOrnamentAmt.text = getText(R.string.title_ornament_header)
+        contentTitleGoldAmt.text = getText(R.string.text_gold_amount)
+        contentTitleSilverAmt.text = getText(R.string.text_silver_amount)
 
-        binding.layoutOrnamentAmtHeader.tvTitleHeader.text = getText(R.string.title_ornament_header)
-        binding.layoutGoldAmtcontent.contentTitle.text = getText(R.string.text_gold_amount)
-        binding.layoutGoldAmtcontent.tvSymbol.text = symbol
+        tvTitleHeaderInvestmentAmt.text = getText(R.string.title_investment)
+        contentTitleShareMarket.text = getText(R.string.text_share_market)
 
-        binding.layoutSilverAmtcontent.contentTitle.text = getText(R.string.text_silver_amount)
-        binding.layoutSilverAmtcontent.tvSymbol.text = symbol
+        contentTitleOtherInvest.text = getText(R.string.text_other_investment)
 
-        binding.layoutInvestmentAmtHeader.tvTitleHeader.text = getText(R.string.title_investment)
-        binding.layoutShareMarketcontent.contentTitle.text = getText(R.string.text_share_market)
-        binding.layoutShareMarketcontent.tvSymbol.text = symbol
+        tvTitleHeaderAsset.text = getText(R.string.title_asset)
+        contentTitleHouseRent.text = getText(R.string.text_house_rent)
 
-        binding.layoutOtherInvestcontent.contentTitle.text = getText(R.string.text_other_investment)
-        binding.layoutOtherInvestcontent.tvSymbol.text = symbol
-
-        binding.layoutAssetHeader.tvTitleHeader.text = getText(R.string.title_asset)
-        binding.layoutHouseRentcontent.contentTitle.text = getText(R.string.text_house_rent)
-        binding.layoutHouseRentcontent.tvSymbol.text = symbol
-
-        binding.layoutAssetcontent.contentTitle.text = getText(R.string.title_asset)
-        binding.layoutAssetcontent.tvSymbol.text = symbol
+        contentTitleAsset.text = getText(R.string.title_asset)
 
         binding.layoutBusinessHeader.tvTitleHeader.text = getText(R.string.title_business)
         binding.layoutNogodBusinescontent.contentTitle.text = getText(R.string.text_nogod_business)

@@ -57,7 +57,6 @@ internal class QurbaniHomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         binding =
             DataBindingUtil.inflate(

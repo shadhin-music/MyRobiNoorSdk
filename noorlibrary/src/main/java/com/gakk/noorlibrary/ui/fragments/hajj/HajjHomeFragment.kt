@@ -1,15 +1,27 @@
 package com.gakk.noorlibrary.ui.fragments.hajj
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
@@ -34,6 +46,14 @@ internal class HajjHomeFragment : Fragment() {
 
     private lateinit var repository: RestRepository
     private lateinit var model: HajjViewModel
+    private lateinit var header_image: ImageView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var hajjPreRegistration: ConstraintLayout
+    private lateinit var virtualKafela: ConstraintLayout
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var sub_cat_rv: RecyclerView
+    private lateinit var btnRetry: AppCompatButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +65,25 @@ internal class HajjHomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_hajj_home, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_hajj_home,
+            container, false
+        )
 
-        return binding.root
+        initUi(view)
+
+        return view
+    }
+
+    private fun initUi(view: View) {
+        header_image = view.findViewById(R.id.header_image)
+        progressBar = view.findViewById(R.id.progressBar)
+        hajjPreRegistration = view.findViewById(R.id.hajjPreRegistration)
+        virtualKafela = view.findViewById(R.id.virtualKafela)
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        sub_cat_rv = view.findViewById(R.id.sub_cat_rv)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,11 +92,42 @@ internal class HajjHomeFragment : Fragment() {
         updateToolbarForThisFragment()
 
         if (AppPreference.language.equals(LAN_BANGLA)) {
-            binding.hajjPreRegistration.visibility = View.VISIBLE
-            binding.virtualKafela.visibility = View.VISIBLE
+            hajjPreRegistration.visibility = View.VISIBLE
+            virtualKafela.visibility = View.VISIBLE
         }
 
-        binding.item = ImageFromOnline("hajj_page_top_image.png")
+        val item = ImageFromOnline("hajj_page_top_image.png")
+
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(item.fullImageUrl)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                })
+                .error(R.drawable.place_holder_16_9_ratio)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(header_image)
+        }
 
         lifecycleScope.launch {
             val job = launch {
@@ -77,18 +142,19 @@ internal class HajjHomeFragment : Fragment() {
             subscribeObserver()
             loadData()
 
-            binding.noInternetLayout.btnRetry.handleClickEvent {
+            btnRetry.handleClickEvent {
                 loadData()
             }
 
         }
-        binding.hajjPreRegistration.handleClickEvent {
+
+        hajjPreRegistration.handleClickEvent {
             mCallback?.addFragmentToStackAndShow(
                 HajjPreRegistrationFragment.newInstance()
             )
         }
 
-        binding.virtualKafela.handleClickEvent {
+        virtualKafela.handleClickEvent {
             if (isNetworkConnected(requireContext())) {
                 requireContext().startActivity(
                     Intent(
@@ -112,14 +178,10 @@ internal class HajjHomeFragment : Fragment() {
         model.subCategoryListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
-                    binding.noInternetLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
+                    noInternetLayout.visibility = View.GONE
 
                     val list = it.data?.data ?: mutableListOf()
-                    val subCatId = requireContext().getString(R.string.hajj_guide_sub_category_id)
-                    val filteredList =
-                        list.filter { it.id != subCatId } as MutableList<Data>
-
                     val sortedListRobi =
                         list.sortedByDescending { list.indexOf(it) }
                             .toMutableList()
@@ -127,19 +189,19 @@ internal class HajjHomeFragment : Fragment() {
                     setUpRV(sortedListRobi)
                 }
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
-                    binding.noInternetLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.VISIBLE
+                    noInternetLayout.visibility = View.GONE
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
-                    binding.noInternetLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.GONE
+                    noInternetLayout.visibility = View.VISIBLE
                 }
             }
         }
     }
 
     private fun setUpRV(list: MutableList<Data>) {
-        binding.subCatRv.apply {
+        sub_cat_rv.apply {
             adapter = HajjCategoryAdapter().apply {
                 submitList(list)
                 setOnItemClickListener {
@@ -201,8 +263,7 @@ internal class HajjHomeFragment : Fragment() {
                                     detailsActivityCallBack = mCallback,
                                     catId = catID,
                                     subCatId = it.id,
-                                    isFav = false,
-                                    /*pageTitle = category.name*/
+                                    isFav = false
                                 )
                                 fragment?.let { it1 -> mCallback?.addFragmentToStackAndShow(it1) }
                             }
