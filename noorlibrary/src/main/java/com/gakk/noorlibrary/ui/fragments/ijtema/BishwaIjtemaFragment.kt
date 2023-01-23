@@ -3,10 +3,12 @@ package com.gakk.noorlibrary.ui.fragments.ijtema
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
@@ -17,8 +19,6 @@ import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
-import com.gakk.noorlibrary.databinding.DialogNoLiveBinding
-import com.gakk.noorlibrary.databinding.FragmentBishwaIjtemaBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.ui.adapter.ijtema.IjtemaAdapter
@@ -32,7 +32,6 @@ import kotlinx.coroutines.launch
 internal class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, LiteratureListCallBack,
     IjtemaControl {
 
-    private lateinit var binding: FragmentBishwaIjtemaBinding
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var repository: RestRepository
     private lateinit var model: LiteratureViewModel
@@ -42,6 +41,10 @@ internal class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, L
     private var adapter: IjtemaAdapter? = null
     var videoList: MutableList<Data> = mutableListOf()
     private var literatureListWrapper: LiteratureListWrapper? = null
+
+    //view
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var rvLearning: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,13 +64,22 @@ internal class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, L
         savedInstanceState: Bundle?
     ): View? {
         AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding = DataBindingUtil.inflate(
-            inflater,
+
+        val view = inflater.inflate(
             R.layout.fragment_bishwa_ijtema,
-            container,
-            false
+            container, false
         )
-        return binding.root
+
+        initView(view)
+
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvLearning = view.findViewById(R.id.rvLearning)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -125,10 +137,10 @@ internal class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, L
             model.literatureListData.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
                         literatureList = it.data?.data ?: mutableListOf()
@@ -150,9 +162,9 @@ internal class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, L
                             this@BishwaIjtemaFragment
                         )
 
-                        binding.rvLearning.adapter = adapter
+                        rvLearning.adapter = adapter
 
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                     }
                 }
             }
@@ -196,15 +208,15 @@ internal class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, L
                 requireContext(),
                 R.style.MaterialAlertDialog_rounded
             )
-        val binding: DialogNoLiveBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(requireContext()),
+
+        val view = layoutInflater.inflate(
             R.layout.dialog_no_live,
             null,
             false
         )
 
 
-        val dialogView: View = binding.root
+        val dialogView: View = view
         customDialog.setView(dialogView)
 
         val alertDialog = customDialog.show()
@@ -217,8 +229,7 @@ internal class BishwaIjtemaFragment : Fragment(), LiteratureItemClickCallBack, L
         alertDialog.setCancelable(false)
         alertDialog.show()
 
-
-        binding.btnComplete.handleClickEvent {
+        view.findViewById<AppCompatButton>(R.id.btnComplete).handleClickEvent {
             alertDialog.dismiss()
         }
 

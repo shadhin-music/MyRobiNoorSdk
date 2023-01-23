@@ -6,8 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +20,6 @@ import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentIslamicCalenderBdBinding
 import com.gakk.noorlibrary.model.calender.IslamicCalendarModel
 import com.gakk.noorlibrary.model.calender.IslamicChhutiModel
 import com.gakk.noorlibrary.ui.adapter.IslamicCalendarAdapter
@@ -29,15 +31,10 @@ import com.gakk.noorlibrary.util.getLocalisedTextFromResId
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import kotlinx.coroutines.launch
-import java.io.IOException
-import java.io.InputStream
-import java.nio.charset.StandardCharsets
 import java.util.*
 
 
 internal class IslamicCalenderFragmentBd : Fragment() {
-
-    private lateinit var binding: FragmentIslamicCalenderBdBinding
 
     private var currentMonthIndex = 0
     private var mDataAdapter: RecyclerView.Adapter<*>? = null
@@ -50,6 +47,18 @@ internal class IslamicCalenderFragmentBd : Fragment() {
     private var mLayoutManagerIslCht: GridLayoutManager? = null
     private lateinit var repository: RestRepository
     private lateinit var model: LiteratureViewModel
+
+    //view
+
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var calender_view: RelativeLayout
+    private lateinit var recyclerViewIslamicChhuti: RecyclerView
+    private lateinit var txtVwArobiDate:AppCompatTextView
+    private lateinit var txtVwEnglishDate: AppCompatTextView
+    private lateinit var llNext: LinearLayout
+    private lateinit var recyclerViewIslamicCal: RecyclerView
+
+    private lateinit var llLftPrevious: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,15 +77,26 @@ internal class IslamicCalenderFragmentBd : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_islamic_calender_bd,
-                container,
-                false
-            )
+        val view = inflater.inflate(
+            R.layout.fragment_islamic_calender_bd,
+            container, false
+        )
 
-        return binding.root
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        calender_view = view.findViewById(R.id.calender_view)
+        recyclerViewIslamicChhuti = view.findViewById(R.id.recyclerViewIslamicChhuti)
+        txtVwArobiDate = view.findViewById(R.id.txtVwArobiDate)
+        txtVwEnglishDate = view.findViewById(R.id.txtVwEnglishDate)
+        llNext = view.findViewById(R.id.llNext)
+        llLftPrevious = view.findViewById(R.id.llLftPrevious)
+        recyclerViewIslamicCal = view.findViewById(R.id.recyclerViewIslamicCal)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,17 +133,17 @@ internal class IslamicCalenderFragmentBd : Fragment() {
         model.literatureListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
 
                 Status.SUCCESS -> {
                     val literatureList = it.data?.data ?: mutableListOf()
-                    binding.calenderView.recyclerViewIslamicChhuti.adapter =
+                    recyclerViewIslamicChhuti.adapter =
                         IslamicChhutiAdapter(literatureList)
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }
@@ -148,7 +168,7 @@ internal class IslamicCalenderFragmentBd : Fragment() {
 
         Log.e("THE MONTH ", "uCal[2]" + uCal[2] + " i:" + i)
         val instance = CustomIslamicCalendarDataBd
-        binding.calenderView.txtVwArobiDate.text = instance.getIslamicToDay(requireContext(), i)
+        txtVwArobiDate.text = instance.getIslamicToDay(requireContext(), i)
         val instance2 = Calendar.getInstance()
         val calendarUtility = CalendarUtility()
         val weekNameBn: String =
@@ -164,7 +184,7 @@ internal class IslamicCalenderFragmentBd : Fragment() {
             )).substring(2)
         )
         val sb2 = sb.toString()
-        val textView: TextView = binding.calenderView.txtVwEnglishDate
+        val textView: TextView = txtVwEnglishDate
         textView.text = ("$weekNameBn, $sb2")
         val islamicMonthData: ArrayList<IslamicCalendarModel> = instance.getIslamicMonthData(i)
         mResponseData?.clear()
@@ -173,8 +193,8 @@ internal class IslamicCalenderFragmentBd : Fragment() {
     }
 
     private fun initialListener() {
-        binding.calenderView.llNext.setOnClickListener { nextPrevious(1) }
-        binding.calenderView.llLftPrevious.setOnClickListener { nextPrevious(2) }
+        llNext.setOnClickListener { nextPrevious(1) }
+        llLftPrevious.setOnClickListener { nextPrevious(2) }
     }
 
     private fun nextPrevious(i: Int) {
@@ -191,12 +211,12 @@ internal class IslamicCalenderFragmentBd : Fragment() {
 
         val gridLayoutManager2 = GridLayoutManager(requireActivity(), 7)
         this.mLayoutManager = gridLayoutManager2
-        binding.calenderView.recyclerViewIslamicCal.layoutManager = gridLayoutManager2
+        recyclerViewIslamicCal.layoutManager = gridLayoutManager2
         val arrayList2: ArrayList<IslamicCalendarModel> = ArrayList()
         this.mResponseData = arrayList2
         val islamicCalendarAdapter = IslamicCalendarAdapter(arrayList2)
         this.mDataAdapter = islamicCalendarAdapter
-        binding.calenderView.recyclerViewIslamicCal.adapter = islamicCalendarAdapter
+        recyclerViewIslamicCal.adapter = islamicCalendarAdapter
 
         val mCal = Calendar.getInstance(Locale.getDefault())
         mCal.time = Date()
@@ -209,7 +229,7 @@ internal class IslamicCalenderFragmentBd : Fragment() {
 
         val gridLayoutManager = GridLayoutManager(requireActivity(), 1)
         this.mLayoutManagerIslCht = gridLayoutManager
-        binding.calenderView.recyclerViewIslamicChhuti.layoutManager = gridLayoutManager
+        recyclerViewIslamicChhuti.layoutManager = gridLayoutManager
         val arrayList: ArrayList<IslamicChhutiModel> = ArrayList()
         this.mResponseDataIslCht = arrayList
     }

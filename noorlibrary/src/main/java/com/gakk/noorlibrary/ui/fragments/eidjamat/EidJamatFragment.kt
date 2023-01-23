@@ -6,16 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentEidJamatBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.adapter.eidjamat.EidJamatAdapter
 import com.gakk.noorlibrary.util.PermissionManager
@@ -27,11 +27,16 @@ import kotlinx.coroutines.launch
 
 internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
 
-    private lateinit var binding: FragmentEidJamatBinding
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var repository: RestRepository
     private lateinit var model: LiteratureViewModel
     private var literatureList: MutableList<Literature> = mutableListOf()
+
+    //view
+
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var rvEidJamat: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +57,22 @@ internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
         savedInstanceState: Bundle?
     ): View? {
         AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_eid_jamat, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_eid_jamat,
+            container, false
+        )
+
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvEidJamat = view.findViewById(R.id.rvEidJamat)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,10 +106,10 @@ internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
         model.literatureListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
 
                 Status.SUCCESS -> {
@@ -101,9 +118,9 @@ internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
                         literatureList.sortedByDescending { literatureList.indexOf(it) }
                             .toMutableList()
 
-                    binding.rvEidJamat.adapter =
+                    rvEidJamat.adapter =
                         EidJamatAdapter(sortedList, mDetailsCallBack!!, this)
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }

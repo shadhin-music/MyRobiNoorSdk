@@ -6,22 +6,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
-import com.gakk.noorlibrary.databinding.FragmentBillboardQuranBinding
 import com.gakk.noorlibrary.model.billboard.Data
 import com.gakk.noorlibrary.ui.activity.khatamquran.KhatamQuranVideoActivity
 import com.gakk.noorlibrary.ui.adapter.FragmentDestinationMap
+import com.gakk.noorlibrary.util.PLACE_HOLDER_1_1
 import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.util.setImageFromUrl
 
 private const val ARG_BILLBORAD_DATA = "billboradData"
 
 internal class BillboardQuranFragment : Fragment() {
-    private lateinit var binding: FragmentBillboardQuranBinding
     private lateinit var mCallback: MainCallback
     private lateinit var mData: Data
+    private lateinit var imgBillboard : AppCompatImageView
+    private lateinit var progressBar : ProgressBar
 
 
     companion object {
@@ -48,19 +51,30 @@ internal class BillboardQuranFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_billboard_quran, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_billboard_quran,
+            container, false
+        )
+
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        imgBillboard = view.findViewById(R.id.imgBillboard)
+        progressBar = view.findViewById(R.id.progressBar)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.item = mData
+        setImageFromUrl(imgBillboard,mData.fullImageUrl,progressBar,PLACE_HOLDER_1_1)
 
-        binding.imgBillboard.handleClickEvent {
+        imgBillboard.handleClickEvent {
             Log.e("Title", "ss${mData.categoryName.trim()}")
             val title: String? = FragmentDestinationMap.getDestinationFragmentName(
                 mData.categoryName.trim(),
