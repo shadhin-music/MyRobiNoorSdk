@@ -1,221 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/standard_margin"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
-    <data>
-
-    </data>
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/standard_margin"
-        android:fillViewport="true"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/bg">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bg">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDateTodayEng"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="@color/txt_color"
-                    android:textFontWeight="400"
-                    android:fontFamily="sans-serif"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDateArabic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/ash"
-                    android:textFontWeight="400"
-                    android:fontFamily="sans-serif"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDateTodayEng" />
-
-                <com.gakk.noorlibrary.extralib.customcalender.CalendarView
-                    android:id="@+id/calendarView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:cc_abbreviationsLabelsColor="@color/black"
-                    app:cc_anotherMonthsDaysLabelsColor="@color/white"
-                    app:cc_eventsEnabled="true"
-                    app:cc_forwardButtonSrc="@drawable/ic_right_arrow"
-                    app:cc_headerColor="@color/bg"
-                    app:cc_headerLabelColor="@color/black"
-                    app:cc_highlightedDaysLabelsColor="@color/red"
-                    app:cc_previousButtonSrc="@drawable/ic_left_arrow"
-                    app:cc_todayLabelColor="@color/colorPrimary"
-                    app:cc_type="classic"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDateArabic" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTitleTracker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:layout_marginEnd="@dimen/standard_margin"
-                    android:text="@string/ramadan_tracker"
-                    android:fontFamily="sans-serif"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="@color/txt_color"
-                    android:textFontWeight="400"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/calendarView" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDesPrayerTracker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/des_ramadan_tracker"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/ash"
-                    android:fontFamily="sans-serif"
-                    android:textFontWeight="400"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitleTracker" />
-
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="@dimen/small_spacing"
-                    android:background="@color/divider_color"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDesPrayerTracker" />
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
-                    style="@style/CardViewStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:layout_marginTop="@dimen/small_spacing"
-                    android:layout_marginEnd="@dimen/standard_margin"
-                    android:layout_marginBottom="1.5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-
-                            android:id="@+id/rlThmb"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:gravity="center"
-                                android:text="@string/txt_are_you_fasting_today"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/txt_color_title"
-                                android:fontFamily="sans-serif"
-                                android:textFontWeight="400" />
-
-                        </RelativeLayout>
-
-                        <LinearLayout
-                            android:id="@+id/llNamajTrackerBottomPart"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_below="@+id/rlThmb"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:id="@+id/llFastingNo"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.5"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_marginStart="25dp"
-                                    android:layout_marginEnd="15dp"
-                                    android:src="@drawable/ic_close" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/txt_not_fasting"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                    android:textColor="#8A000000" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/llFastingYes"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.5"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_marginEnd="15dp"
-                                    android:src="@drawable/ic_all_checked" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/txt_yes_fasting"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                    android:textColor="@color/txt_color" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <include
-                android:id="@+id/progressLayout"
-                layout="@layout/layout_circular_progress"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDateTodayEng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_color"
+                android:textFontWeight="400"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDateArabic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/ash"
+                android:textFontWeight="400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDateTodayEng" />
+
+            <com.gakk.noorlibrary.extralib.customcalender.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:cc_abbreviationsLabelsColor="@color/black"
+                app:cc_anotherMonthsDaysLabelsColor="@color/white"
+                app:cc_eventsEnabled="true"
+                app:cc_forwardButtonSrc="@drawable/ic_right_arrow"
+                app:cc_headerColor="@color/bg"
+                app:cc_headerLabelColor="@color/black"
+                app:cc_highlightedDaysLabelsColor="@color/red"
+                app:cc_previousButtonSrc="@drawable/ic_left_arrow"
+                app:cc_todayLabelColor="@color/colorPrimary"
+                app:cc_type="classic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDateArabic" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitleTracker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:fontFamily="sans-serif"
+                android:text="@string/ramadan_tracker"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/txt_color"
+                android:textFontWeight="400"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calendarView" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDesPrayerTracker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/des_ramadan_tracker"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/ash"
+                android:textFontWeight="400"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleTracker" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:background="@color/divider_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDesPrayerTracker" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                style="@style/CardViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:layout_marginEnd="@dimen/standard_margin"
+                android:layout_marginBottom="1.5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+
+                        android:id="@+id/rlThmb"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="sans-serif"
+                            android:gravity="center"
+                            android:text="@string/txt_are_you_fasting_today"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/txt_color_title"
+                            android:textFontWeight="400" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llNamajTrackerBottomPart"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/rlThmb"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/llFastingNo"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="15dp"
+                                android:src="@drawable/ic_close" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/txt_not_fasting"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                android:textColor="#8A000000" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llFastingYes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="15dp"
+                                android:src="@drawable/ic_all_checked" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/txt_yes_fasting"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                android:textColor="@color/txt_color" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-</layout>
+
+        <include
+            android:id="@+id/progressLayout"
+            layout="@layout/layout_circular_progress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

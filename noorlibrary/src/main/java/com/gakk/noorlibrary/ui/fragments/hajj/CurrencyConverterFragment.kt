@@ -3,27 +3,28 @@ package com.gakk.noorlibrary.ui.fragments.hajj
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.databinding.DialogCountryListBinding
-import com.gakk.noorlibrary.databinding.FragmentCurrencyconverterBinding
 import com.gakk.noorlibrary.model.currency.CurrencyModel
 import com.gakk.noorlibrary.model.currency.CurrentCurrencyModel
 import com.gakk.noorlibrary.ui.adapter.CountryListAdapter
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HajjViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import kotlin.properties.Delegates
@@ -31,7 +32,6 @@ import kotlin.properties.Delegates
 internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItemClickListener {
 
     private var alertDialog: AlertDialog? = null
-    private lateinit var binding: FragmentCurrencyconverterBinding
     private var mCallback: DetailsCallBack? = null
 
     private lateinit var repository: RestRepository
@@ -44,6 +44,18 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
         FROM, TO
     }
 
+    private lateinit var imgCountryFrom: ImageView
+    private lateinit var spnrFrom: AppCompatTextView
+    private lateinit var spnrTo: AppCompatTextView
+    private lateinit var edtInputValue: EditText
+    private lateinit var convertedCurrecnyName: AppCompatTextView
+    private lateinit var updateTime: AppCompatTextView
+    private lateinit var txtDisplay: AppCompatTextView
+    private lateinit var llBtnCurrencyConvert: LinearLayout
+    private lateinit var btnCurrencyConvert: AppCompatTextView
+    private lateinit var icRefresh: ImageView
+    private lateinit var imgCountryTo: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,16 +66,23 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_currencyconverter,
-                container,
-                false
-            )
+        val view = inflater.inflate(
+            R.layout.fragment_currencyconverter,
+            container, false
+        )
+        imgCountryFrom = view.findViewById(R.id.imgCountryFrom)
+        spnrFrom = view.findViewById(R.id.spnrFrom)
+        spnrTo = view.findViewById(R.id.spnrTo)
+        edtInputValue = view.findViewById(R.id.edtInputValue)
+        convertedCurrecnyName = view.findViewById(R.id.converted_currecny_name)
+        updateTime = view.findViewById(R.id.update_time)
+        txtDisplay = view.findViewById(R.id.txtDisplay)
+        llBtnCurrencyConvert = view.findViewById(R.id.llBtnCurrencyConvert)
+        btnCurrencyConvert = view.findViewById(R.id.btnCurrencyConvert)
+        icRefresh = view.findViewById(R.id.ic_refresh)
+        imgCountryTo = view.findViewById(R.id.imgCountryTo)
 
-        return binding.root
+        return view
     }
 
 
@@ -92,12 +111,12 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
 
         val txtFromCountry: String
 
-            fromCountry = 16
-            binding.imgCountryFrom.setImageResource(R.drawable.ic_bd)
-            txtFromCountry = "Bangladesh - BDT"
+        fromCountry = 16
+        imgCountryFrom.setImageResource(R.drawable.ic_bd)
+        txtFromCountry = "Bangladesh - BDT"
 
-        binding.spnrFrom.text = txtFromCountry
-        binding.spnrTo.text = ("Soudi Arabia - SAR")
+        spnrFrom.text = txtFromCountry
+        spnrTo.text = ("Soudi Arabia - SAR")
 
     }
 
@@ -142,18 +161,18 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
         data?.let {
             val f: Double = it.from.toDouble()
             val t: Double = it.to.toDouble()
-            val userInt = binding.edtInputValue.text.toString().trim().toDouble()
+            val userInt = edtInputValue.text.toString().trim().toDouble()
 
             val main_ratio = t / f
             val percent = main_ratio * userInt
 
-            binding.convertedCurrecnyName.show()
+            convertedCurrecnyName.show()
 
-            binding.updateTime.text =
+            updateTime.text =
                 (resources.getString(R.string.currency_update) + it.date.getTime())
 
 
-            binding.updateTime.show()
+            updateTime.show()
 
             var s = DecimalFormat("##.##").format(
                 percent
@@ -161,7 +180,7 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
             if (AppPreference.language == LAN_BANGLA) {
                 s = s.toString().getNumberInBangla()
             }
-            binding.txtDisplay.text = s
+            txtDisplay.text = s
 
         }
     }
@@ -170,37 +189,37 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
         data?.let {
             Log.d("listOdCU", "loadCountryListInSpinner: ${it.size}")
 
-            binding.spnrFrom.handleClickEvent {
+            spnrFrom.handleClickEvent {
                 showSelectedNameInDialog(it, SELECTION.FROM)
             }
 
-            binding.spnrTo.handleClickEvent {
+            spnrTo.handleClickEvent {
                 showSelectedNameInDialog(it, SELECTION.TO)
             }
 
-            binding.llBtnCurrencyConvert.handleClickEvent {
+            llBtnCurrencyConvert.handleClickEvent {
                 swapCurrency(it)
-                binding.btnCurrencyConvert.performClick()
+                btnCurrencyConvert.performClick()
             }
 
-            binding.btnCurrencyConvert.handleClickEvent {
-                val input = binding.edtInputValue.text.toString()
+            btnCurrencyConvert.handleClickEvent {
+                val input = edtInputValue.text.toString()
                 if (input.isNotBlank()) {
                     convertCurrency(it)
                 }
             }
 
-            binding.icRefresh.handleClickEvent {
-                val txtDisplay =
+            icRefresh.handleClickEvent {
+                val txtDisplays =
                     if (AppPreference.language == LAN_BANGLA) {
                         "0.0".getNumberInBangla()
                     } else {
                         "0.0"
                     }
 
-                binding.txtDisplay.text = txtDisplay
-                binding.updateTime.invisible()
-                binding.convertedCurrecnyName.invisible()
+                txtDisplay.text = txtDisplays
+                updateTime.invisible()
+                convertedCurrecnyName.invisible()
             }
         }
     }
@@ -209,7 +228,7 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
         val from = list[fromCountry]
         val to = list[toCountry]
 
-        binding.convertedCurrecnyName.text = ("${from.currency} - ${to.currency}")
+        convertedCurrecnyName.text = ("${from.currency} - ${to.currency}")
         model.getCurrentRates(from.alphabeticCode, to.alphabeticCode)
     }
 
@@ -266,21 +285,21 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
 
         if (selection == SELECTION.FROM) {
             fromCountry = postion
-            binding.spnrFrom.text = ("${currencyModel.entity} - ${currencyModel.alphabeticCode}")
+            spnrFrom.text = ("${currencyModel.entity} - ${currencyModel.alphabeticCode}")
         } else {
             toCountry = postion
-            binding.spnrTo.text = ("${currencyModel.entity} - ${currencyModel.alphabeticCode}")
+            spnrTo.text = ("${currencyModel.entity} - ${currencyModel.alphabeticCode}")
         }
     }
 
     private fun updateView(currencyModel: CurrencyModel, selection: SELECTION) {
         val view: ImageView?
         if (selection == SELECTION.FROM) {
-            view = binding.imgCountryFrom
-            binding.spnrFrom.text = ("${currencyModel.entity} - ${currencyModel.alphabeticCode}")
+            view = imgCountryFrom
+            spnrFrom.text = ("${currencyModel.entity} - ${currencyModel.alphabeticCode}")
         } else {
-            view = binding.imgCountryTo
-            binding.spnrTo.text = ("${currencyModel.entity} - ${currencyModel.alphabeticCode}")
+            view = imgCountryTo
+            spnrTo.text = ("${currencyModel.entity} - ${currencyModel.alphabeticCode}")
         }
         Glide.with(requireContext())
             .load(currencyModel.fullImageUrl)

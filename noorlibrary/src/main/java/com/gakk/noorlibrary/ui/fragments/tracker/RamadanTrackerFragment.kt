@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,8 +16,8 @@ import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentRamadanTrackerBinding
 import com.gakk.noorlibrary.extralib.customcalender.CalendarDay
+import com.gakk.noorlibrary.extralib.customcalender.CalendarView
 import com.gakk.noorlibrary.extralib.customcalender.EventDay
 import com.gakk.noorlibrary.extralib.customcalender.listeners.OnCalendarPageChangeListener
 import com.gakk.noorlibrary.extralib.customcalender.listeners.OnDayClickListener
@@ -29,7 +31,6 @@ import java.util.*
 
 
 internal class RamadanTrackerFragment : Fragment() {
-    private lateinit var binding: FragmentRamadanTrackerBinding
     private var mCallback: DetailsCallBack? = null
     private lateinit var repository: RestRepository
     private lateinit var model: TrackerViewModel
@@ -44,6 +45,12 @@ internal class RamadanTrackerFragment : Fragment() {
     private var selectedDate = Date()
     private var fromMonth: Date? = null
     private lateinit var toMonth: String
+    private lateinit var calendarView: CalendarView
+    private lateinit var llFastingYes: LinearLayout
+    private lateinit var llFastingNo: LinearLayout
+    private lateinit var tvDateArabic: AppCompatTextView
+    private lateinit var tvDateTodayEng: AppCompatTextView
+    private lateinit var progressLayout: ConstraintLayout
 
     companion object {
 
@@ -63,16 +70,20 @@ internal class RamadanTrackerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_ramadan_tracker,
-                container,
-                false
-            )
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_ramadan_tracker,
+            container, false
+        )
+
+        calendarView = view.findViewById(R.id.calendarView)
+        llFastingYes = view.findViewById(R.id.llFastingYes)
+        llFastingNo = view.findViewById(R.id.llFastingNo)
+        tvDateArabic = view.findViewById(R.id.tvDateArabic)
+        tvDateTodayEng = view.findViewById(R.id.tvDateTodayEng)
+        progressLayout = view.findViewById(R.id.progressLayout)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,7 +108,7 @@ internal class RamadanTrackerFragment : Fragment() {
         currentCalender = Calendar.getInstance(Locale.getDefault())
         currentCalender.time = Date()
 
-        binding.calendarView.setCalendarDayLayout(R.layout.row_calendar_ramadan)
+        calendarView.setCalendarDayLayout(R.layout.row_calendar_ramadan)
         updateDate(Date())
         subscribeObserver()
         fromMonth = Util.getFirstDateOfMonth(Date())
@@ -105,7 +116,7 @@ internal class RamadanTrackerFragment : Fragment() {
         toMonth = Util.getLastDayOfTheMonth(dateFormatForDisplaying.format(Date()))
         model.loadAllRamadanData(dateFormatForDisplaying.format(fromMonth), toMonth)
 
-        binding.calendarView.setOnDayClickListener(object : OnDayClickListener {
+        calendarView.setOnDayClickListener(object : OnDayClickListener {
             override fun onDayClick(eventDay: EventDay) {
 
                 val list = listOf(
@@ -117,19 +128,19 @@ internal class RamadanTrackerFragment : Fragment() {
                     }
                 )
 
-                binding.calendarView.setCalendarDays(list)
+               calendarView.setCalendarDays(list)
 
                 when (Util.checkSelectedDate(dateFormat.format(eventDay.calendar.time))) {
 
                     true -> {
                         selectedDate = eventDay.calendar.time
-                        binding.llFastingYes.isClickable = true
-                        binding.llFastingNo.isClickable = true
+                        llFastingYes.isClickable = true
+                        llFastingNo.isClickable = true
                     }
 
                     else -> {
-                        binding.llFastingYes.isClickable = false
-                        binding.llFastingNo.isClickable = false
+                        llFastingYes.isClickable = false
+                        llFastingNo.isClickable = false
                     }
                 }
 
@@ -137,30 +148,30 @@ internal class RamadanTrackerFragment : Fragment() {
 
         })
 
-        binding.calendarView.setOnForwardPageChangeListener(object : OnCalendarPageChangeListener {
+        calendarView.setOnForwardPageChangeListener(object : OnCalendarPageChangeListener {
             override fun onChange() {
 
-                fromMonth = Util.getFirstDateOfMonth(binding.calendarView.currentPageDate.time)
+                fromMonth = Util.getFirstDateOfMonth(calendarView.currentPageDate.time)
 
                 toMonth =
-                    Util.getLastDayOfTheMonth(dateFormatForDisplaying.format(binding.calendarView.currentPageDate.time))
+                    Util.getLastDayOfTheMonth(dateFormatForDisplaying.format(calendarView.currentPageDate.time))
                 model.loadAllRamadanData(dateFormatForDisplaying.format(fromMonth), toMonth)
             }
         })
 
-        binding.calendarView.setOnPreviousPageChangeListener(object : OnCalendarPageChangeListener {
+        calendarView.setOnPreviousPageChangeListener(object : OnCalendarPageChangeListener {
             override fun onChange() {
-                fromMonth = Util.getFirstDateOfMonth(binding.calendarView.currentPageDate.time)
+                fromMonth = Util.getFirstDateOfMonth(calendarView.currentPageDate.time)
 
                 toMonth =
-                    Util.getLastDayOfTheMonth(dateFormatForDisplaying.format(binding.calendarView.currentPageDate.time))
+                    Util.getLastDayOfTheMonth(dateFormatForDisplaying.format(calendarView.currentPageDate.time))
                 model.loadAllRamadanData(dateFormatForDisplaying.format(fromMonth), toMonth)
             }
 
         })
 
 
-        binding.llFastingYes.handleClickEvent {
+        llFastingYes.handleClickEvent {
             Log.e("Datecheck", "" + dateFormatForDisplaying.format(selectedDate))
 
             val dataRamadan =
@@ -187,7 +198,7 @@ internal class RamadanTrackerFragment : Fragment() {
             }
         }
 
-        binding.llFastingNo.handleClickEvent {
+        llFastingNo.handleClickEvent {
             val dataRamadan =
                 findUsingIterator(dateFormatForDisplaying.format(selectedDate), ramadanDataList)
 
@@ -223,24 +234,24 @@ internal class RamadanTrackerFragment : Fragment() {
 
         //update islamic date
 
-            binding.tvDateArabic.text = (
-                    TimeFormtter.getNumberByLocale(
-                        (com.github.eltohamy.materialhijricalendarview.CalendarDay.from(date)
-                            .getDay() - 1).toString() + " "
-                                + resources.getStringArray(R.array.custom_months)[com.github.eltohamy.materialhijricalendarview.CalendarDay.from(
-                            date
-                        )
-                            .month] + " "
-                                + TimeFormtter.getNumberByLocale(
-                            java.lang.String.valueOf(
-                                com.github.eltohamy.materialhijricalendarview.CalendarDay.from(date).year
-                            )
+        tvDateArabic.text = (
+                TimeFormtter.getNumberByLocale(
+                    (com.github.eltohamy.materialhijricalendarview.CalendarDay.from(date)
+                        .getDay() - 1).toString() + " "
+                            + resources.getStringArray(R.array.custom_months)[com.github.eltohamy.materialhijricalendarview.CalendarDay.from(
+                        date
+                    )
+                        .month] + " "
+                            + TimeFormtter.getNumberByLocale(
+                        java.lang.String.valueOf(
+                            com.github.eltohamy.materialhijricalendarview.CalendarDay.from(date).year
                         )
                     )
-                    )
+                )
+                )
 
         //update english date
-        binding.tvDateTodayEng.text =
+        tvDateTodayEng.text =
             (TimeFormtter.getBanglaWeekName(weekIndex, requireContext())
                 .toString() + ", " + TimeFormtter.getNumberByLocale(day.toString()) + " " + TimeFormtter.getBanglaMonthName(
                 month,
@@ -253,11 +264,11 @@ internal class RamadanTrackerFragment : Fragment() {
         model.ramadanListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
 
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                   progressLayout.visibility = View.GONE
                     when (it.data?.status) {
                         STATUS_SUCCESS -> {
                             ramadanDataList = it.data.data.toArrayList()
@@ -272,7 +283,7 @@ internal class RamadanTrackerFragment : Fragment() {
                 }
 
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }
@@ -280,16 +291,16 @@ internal class RamadanTrackerFragment : Fragment() {
         model.addRamadanData.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
 
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                     model.loadAllRamadanData(dateFormatForDisplaying.format(fromMonth), toMonth)
                 }
 
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         })
@@ -297,15 +308,15 @@ internal class RamadanTrackerFragment : Fragment() {
         model.updateRamadanData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                     model.loadAllRamadanData(dateFormatForDisplaying.format(fromMonth), toMonth)
                 }
 
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }
@@ -333,7 +344,7 @@ internal class RamadanTrackerFragment : Fragment() {
 
         }
 
-        binding.calendarView.setEvents(events)
+        calendarView.setEvents(events)
 
     }
 

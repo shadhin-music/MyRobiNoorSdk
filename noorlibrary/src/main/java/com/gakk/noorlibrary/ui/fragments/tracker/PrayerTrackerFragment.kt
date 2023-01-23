@@ -5,7 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +17,6 @@ import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentPrayerTrackerBinding
 import com.gakk.noorlibrary.extralib.compactcalender.CompactCalendarView
 import com.gakk.noorlibrary.extralib.compactcalender.domain.Event
 import com.gakk.noorlibrary.model.UpCommingPrayer
@@ -36,7 +38,6 @@ import java.util.*
 internal class PrayerTrackerFragment : Fragment() {
     private lateinit var repository: RestRepository
     private lateinit var model: TrackerViewModel
-    private lateinit var binding: FragmentPrayerTrackerBinding
     private var mCallback: DetailsCallBack? = null
     private lateinit var currentCalender: Calendar
     val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
@@ -51,6 +52,18 @@ internal class PrayerTrackerFragment : Fragment() {
     private lateinit var prayerTimeCalculator: PrayerTimeCalculator
     private lateinit var upCommingPrayer: UpCommingPrayer
     private var fromMalaysia = false
+    private lateinit var compactcalendarView: CompactCalendarView
+    private lateinit var tvEngDate: AppCompatTextView
+    private lateinit var switchFajr: SwitchCompat
+    private lateinit var switchJohr: SwitchCompat
+    private lateinit var switchAsr: SwitchCompat
+    private lateinit var switchMagrib: SwitchCompat
+    private lateinit var switchEsha: SwitchCompat
+    private lateinit var prevDate: ImageView
+    private lateinit var nextDate: ImageView
+    private lateinit var tvDateArabic: AppCompatTextView
+    private lateinit var tvDateTodayEng: AppCompatTextView
+    private lateinit var progressLayout: ConstraintLayout
 
     companion object {
 
@@ -71,16 +84,24 @@ internal class PrayerTrackerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_prayer_tracker,
-                container,
-                false
-            )
+        val view = inflater.inflate(
+            R.layout.fragment_prayer_tracker,
+            container, false
+        )
+        compactcalendarView = view.findViewById(R.id.compactcalendar_view)
+        tvEngDate = view.findViewById(R.id.tvEngDate)
+        switchFajr = view.findViewById(R.id.switchFajr)
+        switchJohr = view.findViewById(R.id.switchJohr)
+        switchAsr = view.findViewById(R.id.switchAsr)
+        switchMagrib = view.findViewById(R.id.switchMagrib)
+        switchEsha = view.findViewById(R.id.switchEsha)
+        prevDate = view.findViewById(R.id.prev_date)
+        nextDate = view.findViewById(R.id.next_date)
+        tvDateArabic = view.findViewById(R.id.tvDateArabic)
+        tvDateTodayEng = view.findViewById(R.id.tvDateTodayEng)
+        progressLayout = view.findViewById(R.id.progressLayout)
 
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,24 +132,20 @@ internal class PrayerTrackerFragment : Fragment() {
         updateDate(Date())
         subscribeObserver()
         val fromMonth =
-            dateFormatForDisplaying.format(binding.compactcalendarView.firstDayOfCurrentMonth)
+            dateFormatForDisplaying.format(compactcalendarView.firstDayOfCurrentMonth)
         val toMonth = Util.getLastDayOfTheMonth(dateFormatForDisplaying.format(Date()))
         model.loadAllPrayerData(fromMonth, toMonth)
 
-        binding.compactcalendarView.setUseThreeLetterAbbreviation(true)
+        compactcalendarView.setUseThreeLetterAbbreviation(true)
         currentCalender = Calendar.getInstance(Locale.getDefault())
         currentCalender.time = Date()
-        binding.compactcalendarView.invalidate()
+        compactcalendarView.invalidate()
 
-        binding.tvEngDate.text =
-            dateFormatForMonth.format(binding.compactcalendarView.firstDayOfCurrentMonth)
+        tvEngDate.text =
+            dateFormatForMonth.format(compactcalendarView.firstDayOfCurrentMonth)
 
-        Log.e(
-            "datechk",
-            "Date current or less" + dateFormatForDisplaying.format(binding.compactcalendarView.firstDayOfCurrentMonth)
-        )
 
-        binding.compactcalendarView.setListener(object :
+        compactcalendarView.setListener(object :
             CompactCalendarView.CompactCalendarViewListener {
             override fun onDayClick(dateClicked: Date?) {
                 when (Util.checkSelectedDate(dateFormat.format(dateClicked))) {
@@ -136,13 +153,13 @@ internal class PrayerTrackerFragment : Fragment() {
                         enableSwitch()
                         selectedDate = dateClicked!!
 
-                        val events = binding.compactcalendarView.getEvents(dateClicked)
+                        val events = compactcalendarView.getEvents(dateClicked)
 
-                        binding.switchFajr.isChecked = events[0].checked
-                        binding.switchJohr.isChecked = events[1].checked
-                        binding.switchAsr.isChecked = events[2].checked
-                        binding.switchMagrib.isChecked = events[3].checked
-                        binding.switchEsha.isChecked = events[4].checked
+                        switchFajr.isChecked = events[0].checked
+                        switchJohr.isChecked = events[1].checked
+                        switchAsr.isChecked = events[2].checked
+                        switchMagrib.isChecked = events[3].checked
+                        switchEsha.isChecked = events[4].checked
                         enableSwitchCurrentWaqt(upCommingPrayer.nextWaqtNameTracker)
 
                     }
@@ -162,7 +179,7 @@ internal class PrayerTrackerFragment : Fragment() {
 
                 selectedDate = firstDayOfNewMonth!!
                 prayerList.clear()
-                binding.tvEngDate.setText(dateFormatForMonth.format(firstDayOfNewMonth))
+                tvEngDate.setText(dateFormatForMonth.format(firstDayOfNewMonth))
                 val fromMonthNew =
                     dateFormatForDisplaying.format(firstDayOfNewMonth)
                 val toMonthNew =
@@ -172,20 +189,20 @@ internal class PrayerTrackerFragment : Fragment() {
 
         })
 
-        binding.prevDate.handleClickEvent { binding.compactcalendarView.scrollLeft() }
-        binding.nextDate.handleClickEvent { binding.compactcalendarView.scrollRight() }
+        prevDate.handleClickEvent { compactcalendarView.scrollLeft() }
+        nextDate.handleClickEvent { compactcalendarView.scrollRight() }
 
-        binding.switchFajr.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchFajr.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {
-                val dataFajr = binding.compactcalendarView.getEvents(selectedDate)[0]
+                val dataFajr = compactcalendarView.getEvents(selectedDate)[0]
 
                 when (dataFajr.data) {
                     null -> {
 
                         val salahStatus = SalahStatus(
-                            isChecked, binding.switchJohr.isChecked,
-                            binding.switchAsr.isChecked, binding.switchMagrib.isChecked,
-                            binding.switchEsha.isChecked
+                            isChecked, switchJohr.isChecked,
+                            switchAsr.isChecked, switchMagrib.isChecked,
+                            switchEsha.isChecked
                         )
 
                         model.postPrayerData(
@@ -198,8 +215,8 @@ internal class PrayerTrackerFragment : Fragment() {
                         val data: Data = dataFajr.data as Data
 
                         val salahStatus = SalahStatus(
-                            isChecked, binding.switchJohr.isChecked, binding.switchAsr.isChecked,
-                            binding.switchMagrib.isChecked, binding.switchEsha.isChecked
+                            isChecked, switchJohr.isChecked, switchAsr.isChecked,
+                            switchMagrib.isChecked, switchEsha.isChecked
                         )
                         model.updatePrayerData(
                             data.id,
@@ -211,20 +228,20 @@ internal class PrayerTrackerFragment : Fragment() {
             }
         }
 
-        binding.switchJohr.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchJohr.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {
-                val dataJohr = binding.compactcalendarView.getEvents(selectedDate)[1]
+                val dataJohr = compactcalendarView.getEvents(selectedDate)[1]
 
-                binding.compactcalendarView.getEvents(selectedDate)[1].checked = isChecked
-                binding.compactcalendarView.invalidate()
+                compactcalendarView.getEvents(selectedDate)[1].checked = isChecked
+                compactcalendarView.invalidate()
 
                 when (dataJohr.data) {
                     null -> {
 
                         val salahStatus = SalahStatus(
-                            binding.switchFajr.isChecked, isChecked,
-                            binding.switchAsr.isChecked, binding.switchMagrib.isChecked,
-                            binding.switchEsha.isChecked
+                            switchFajr.isChecked, isChecked,
+                            switchAsr.isChecked, switchMagrib.isChecked,
+                            switchEsha.isChecked
                         )
 
                         model.postPrayerData(
@@ -237,8 +254,8 @@ internal class PrayerTrackerFragment : Fragment() {
                         val data: Data = dataJohr.data as Data
 
                         val salahStatus = SalahStatus(
-                            binding.switchFajr.isChecked, isChecked, binding.switchAsr.isChecked,
-                            binding.switchMagrib.isChecked, binding.switchEsha.isChecked
+                            switchFajr.isChecked, isChecked, switchAsr.isChecked,
+                            switchMagrib.isChecked, switchEsha.isChecked
                         )
 
                         model.updatePrayerData(
@@ -251,20 +268,20 @@ internal class PrayerTrackerFragment : Fragment() {
             }
         }
 
-        binding.switchAsr.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchAsr.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {
-                val dataAsr = binding.compactcalendarView.getEvents(selectedDate)[2]
+                val dataAsr = compactcalendarView.getEvents(selectedDate)[2]
 
-                binding.compactcalendarView.getEvents(selectedDate)[2].checked = isChecked
-                binding.compactcalendarView.invalidate()
+                compactcalendarView.getEvents(selectedDate)[2].checked = isChecked
+                compactcalendarView.invalidate()
 
                 when (dataAsr.data) {
                     null -> {
 
                         val salahStatus = SalahStatus(
-                            binding.switchFajr.isChecked, binding.switchJohr.isChecked,
-                            isChecked, binding.switchMagrib.isChecked,
-                            binding.switchEsha.isChecked
+                            switchFajr.isChecked, switchJohr.isChecked,
+                            isChecked, switchMagrib.isChecked,
+                            switchEsha.isChecked
                         )
 
                         model.postPrayerData(
@@ -276,8 +293,8 @@ internal class PrayerTrackerFragment : Fragment() {
 
                         val data: Data = dataAsr.data as Data
                         val salahStatus = SalahStatus(
-                            binding.switchFajr.isChecked, binding.switchJohr.isChecked, isChecked,
-                            binding.switchMagrib.isChecked, binding.switchEsha.isChecked
+                            switchFajr.isChecked, switchJohr.isChecked, isChecked,
+                            switchMagrib.isChecked, switchEsha.isChecked
                         )
 
                         model.updatePrayerData(
@@ -289,20 +306,20 @@ internal class PrayerTrackerFragment : Fragment() {
                 }
             }
         }
-        binding.switchMagrib.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchMagrib.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {
-                val dataMagrib = binding.compactcalendarView.getEvents(selectedDate)[3]
+                val dataMagrib = compactcalendarView.getEvents(selectedDate)[3]
 
-                binding.compactcalendarView.getEvents(selectedDate)[3].checked = isChecked
-                binding.compactcalendarView.invalidate()
+                compactcalendarView.getEvents(selectedDate)[3].checked = isChecked
+                compactcalendarView.invalidate()
 
                 when (dataMagrib.data) {
                     null -> {
 
                         val salahStatus = SalahStatus(
-                            binding.switchFajr.isChecked, binding.switchJohr.isChecked,
-                            binding.switchAsr.isChecked, isChecked,
-                            binding.switchEsha.isChecked
+                            switchFajr.isChecked, switchJohr.isChecked,
+                            switchAsr.isChecked, isChecked,
+                            switchEsha.isChecked
                         )
 
                         model.postPrayerData(
@@ -314,11 +331,11 @@ internal class PrayerTrackerFragment : Fragment() {
 
                         val data: Data = dataMagrib.data as Data
                         val salahStatus = SalahStatus(
-                            binding.switchFajr.isChecked,
-                            binding.switchJohr.isChecked,
-                            binding.switchAsr.isChecked,
+                            switchFajr.isChecked,
+                            switchJohr.isChecked,
+                            switchAsr.isChecked,
                             isChecked,
-                            binding.switchEsha.isChecked
+                            switchEsha.isChecked
                         )
 
                         model.updatePrayerData(
@@ -331,21 +348,21 @@ internal class PrayerTrackerFragment : Fragment() {
             }
         }
 
-        binding.switchEsha.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchEsha.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {
-                val dataEsha = binding.compactcalendarView.getEvents(selectedDate)[4]
+                val dataEsha = compactcalendarView.getEvents(selectedDate)[4]
 
-                binding.compactcalendarView.getEvents(selectedDate)[4].checked = isChecked
-                binding.compactcalendarView.invalidate()
+                compactcalendarView.getEvents(selectedDate)[4].checked = isChecked
+                compactcalendarView.invalidate()
 
                 when (dataEsha.data) {
                     null -> {
 
                         val salahStatus = SalahStatus(
-                            binding.switchFajr.isChecked,
-                            binding.switchJohr.isChecked,
-                            binding.switchAsr.isChecked,
-                            binding.switchMagrib.isChecked,
+                            switchFajr.isChecked,
+                            switchJohr.isChecked,
+                            switchAsr.isChecked,
+                            switchMagrib.isChecked,
                             isChecked
                         )
 
@@ -358,10 +375,10 @@ internal class PrayerTrackerFragment : Fragment() {
 
                         val data: Data = dataEsha.data as Data
                         val salahStatus = SalahStatus(
-                            binding.switchFajr.isChecked,
-                            binding.switchJohr.isChecked,
-                            binding.switchAsr.isChecked,
-                            binding.switchMagrib.isChecked,
+                            switchFajr.isChecked,
+                            switchJohr.isChecked,
+                            switchAsr.isChecked,
+                            switchMagrib.isChecked,
                             isChecked
                         )
 
@@ -397,47 +414,47 @@ internal class PrayerTrackerFragment : Fragment() {
         if (Util.checkTodayDate(dateFormat.format(selectedDate), dateFormat.format(Date()))) {
             when (nextWaqt) {
                 context?.getString(R.string.txt_fajr) -> {
-                    binding.switchEsha.isEnabled = false
-                    binding.switchFajr.isEnabled = false
-                    binding.switchJohr.isEnabled = false
-                    binding.switchAsr.isEnabled = false
-                    binding.switchMagrib.isEnabled = false
+                    switchEsha.isEnabled = false
+                    switchFajr.isEnabled = false
+                    switchJohr.isEnabled = false
+                    switchAsr.isEnabled = false
+                    switchMagrib.isEnabled = false
                 }
                 context?.getString(R.string.txt_johr) -> {
-                    binding.switchFajr.isEnabled = true
-                    binding.switchJohr.isEnabled = false
-                    binding.switchAsr.isEnabled = false
-                    binding.switchMagrib.isEnabled = false
-                    binding.switchEsha.isEnabled = false
+                    switchFajr.isEnabled = true
+                    switchJohr.isEnabled = false
+                    switchAsr.isEnabled = false
+                    switchMagrib.isEnabled = false
+                    switchEsha.isEnabled = false
                 }
                 context?.getString(R.string.txt_asr) -> {
-                    binding.switchJohr.isEnabled = true
-                    binding.switchFajr.isEnabled = true
-                    binding.switchAsr.isEnabled = false
-                    binding.switchMagrib.isEnabled = false
-                    binding.switchEsha.isEnabled = false
+                    switchJohr.isEnabled = true
+                    switchFajr.isEnabled = true
+                    switchAsr.isEnabled = false
+                    switchMagrib.isEnabled = false
+                    switchEsha.isEnabled = false
                 }
                 context?.getString(R.string.txt_magrib) -> {
-                    binding.switchFajr.isEnabled = true
-                    binding.switchJohr.isEnabled = true
-                    binding.switchAsr.isEnabled = true
-                    binding.switchMagrib.isEnabled = false
-                    binding.switchEsha.isEnabled = false
+                    switchFajr.isEnabled = true
+                    switchJohr.isEnabled = true
+                    switchAsr.isEnabled = true
+                    switchMagrib.isEnabled = false
+                    switchEsha.isEnabled = false
                 }
                 context?.getString(R.string.txt_esha) -> {
-                    binding.switchFajr.isEnabled = true
-                    binding.switchJohr.isEnabled = true
-                    binding.switchAsr.isEnabled = true
-                    binding.switchMagrib.isEnabled = true
-                    binding.switchEsha.isEnabled = false
+                    switchFajr.isEnabled = true
+                    switchJohr.isEnabled = true
+                    switchAsr.isEnabled = true
+                    switchMagrib.isEnabled = true
+                    switchEsha.isEnabled = false
                 }
 
                 else -> {
-                    binding.switchFajr.isEnabled = true
-                    binding.switchJohr.isEnabled = true
-                    binding.switchAsr.isEnabled = true
-                    binding.switchMagrib.isEnabled = true
-                    binding.switchEsha.isEnabled = true
+                    switchFajr.isEnabled = true
+                    switchJohr.isEnabled = true
+                    switchAsr.isEnabled = true
+                    switchMagrib.isEnabled = true
+                    switchEsha.isEnabled = true
                 }
             }
         }
@@ -453,7 +470,7 @@ internal class PrayerTrackerFragment : Fragment() {
 
         //update islamic date
 
-        binding.tvDateArabic.text = (
+        tvDateArabic.text = (
                 TimeFormtter.getNumberByLocale(
                     (CalendarDay.from(date).getDay() - 1).toString() + " "
                             + resources.getStringArray(R.array.custom_months)[CalendarDay.from(
@@ -469,7 +486,7 @@ internal class PrayerTrackerFragment : Fragment() {
                 )
 
         //update english date
-        binding.tvDateTodayEng.text =
+        tvDateTodayEng.text =
             (TimeFormtter.getBanglaWeekName(weekIndex, requireContext())
                 .toString() + ", " + TimeFormtter.getNumberByLocale(day.toString()) + " " + TimeFormtter.getBanglaMonthName(
                 month,
@@ -479,47 +496,47 @@ internal class PrayerTrackerFragment : Fragment() {
     }
 
     fun disableSwitch() {
-        binding.switchFajr.isEnabled = false
-        binding.switchFajr.isChecked = false
+        switchFajr.isEnabled = false
+        switchFajr.isChecked = false
 
-        binding.switchJohr.isEnabled = false
-        binding.switchJohr.isChecked = false
+        switchJohr.isEnabled = false
+        switchJohr.isChecked = false
 
-        binding.switchAsr.isEnabled = false
-        binding.switchAsr.isChecked = false
+        switchAsr.isEnabled = false
+        switchAsr.isChecked = false
 
-        binding.switchMagrib.isEnabled = false
-        binding.switchMagrib.isChecked = false
+        switchMagrib.isEnabled = false
+        switchMagrib.isChecked = false
 
-        binding.switchEsha.isEnabled = false
-        binding.switchEsha.isChecked = false
+        switchEsha.isEnabled = false
+        switchEsha.isChecked = false
     }
 
     fun enableSwitch() {
-        binding.switchFajr.isEnabled = true
-        binding.switchFajr.isChecked = false
+        switchFajr.isEnabled = true
+        switchFajr.isChecked = false
 
-        binding.switchJohr.isEnabled = true
-        binding.switchJohr.isChecked = false
+        switchJohr.isEnabled = true
+        switchJohr.isChecked = false
 
-        binding.switchAsr.isEnabled = true
-        binding.switchAsr.isChecked = false
+        switchAsr.isEnabled = true
+        switchAsr.isChecked = false
 
-        binding.switchMagrib.isEnabled = true
-        binding.switchMagrib.isChecked = false
+        switchMagrib.isEnabled = true
+        switchMagrib.isChecked = false
 
-        binding.switchEsha.isEnabled = true
-        binding.switchEsha.isChecked = false
+        switchEsha.isEnabled = true
+        switchEsha.isChecked = false
     }
 
     private fun subscribeObserver() {
         model.prayerListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                     when (it.data?.status) {
                         STATUS_SUCCESS -> {
                             prayerList = it.data.data.toArrayList()
@@ -547,7 +564,7 @@ internal class PrayerTrackerFragment : Fragment() {
                     }
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }
@@ -591,23 +608,23 @@ internal class PrayerTrackerFragment : Fragment() {
 
     fun updateCalenderEvent(result: Data) {
         val date = inputFormat.parse(result.createdOn)
-        binding.compactcalendarView.getEvents(date)[0].data = result
-        binding.compactcalendarView.getEvents(date)[0].checked =
+        compactcalendarView.getEvents(date)[0].data = result
+        compactcalendarView.getEvents(date)[0].checked =
             result.salahStatus.fajr == true
-        binding.compactcalendarView.getEvents(date)[1].data = result
-        binding.compactcalendarView.getEvents(date)[1].checked =
+        compactcalendarView.getEvents(date)[1].data = result
+        compactcalendarView.getEvents(date)[1].checked =
             result.salahStatus.zuhr == true
-        binding.compactcalendarView.getEvents(date)[2].data = result
-        binding.compactcalendarView.getEvents(date)[2].checked =
+        compactcalendarView.getEvents(date)[2].data = result
+        compactcalendarView.getEvents(date)[2].checked =
             result.salahStatus.asar == true
-        binding.compactcalendarView.getEvents(date)[3].data = result
-        binding.compactcalendarView.getEvents(date)[3].checked =
+        compactcalendarView.getEvents(date)[3].data = result
+        compactcalendarView.getEvents(date)[3].checked =
             result.salahStatus.maghrib == true
-        binding.compactcalendarView.getEvents(date)[4].data = result
-        binding.compactcalendarView.getEvents(date)[4].checked =
+        compactcalendarView.getEvents(date)[4].data = result
+        compactcalendarView.getEvents(date)[4].checked =
             result.salahStatus.isha == true
 
-        binding.compactcalendarView.invalidate()
+        compactcalendarView.invalidate()
     }
 
     fun addCalendarEvent(data: List<Data>, month: Int) {
@@ -678,14 +695,14 @@ internal class PrayerTrackerFragment : Fragment() {
 
 
             if (i == todayDay) {
-                binding.switchFajr.isChecked = eventOne.checked
-                binding.switchJohr.isChecked = eventTwo.checked
-                binding.switchAsr.isChecked = eventThree.checked
-                binding.switchMagrib.isChecked = eventFour.checked
-                binding.switchEsha.isChecked = eventFive.checked
+                switchFajr.isChecked = eventOne.checked
+                switchJohr.isChecked = eventTwo.checked
+                switchAsr.isChecked = eventThree.checked
+                switchMagrib.isChecked = eventFour.checked
+                switchEsha.isChecked = eventFive.checked
             }
 
-            binding.compactcalendarView.addEvents(eventList.toArrayList())
+           compactcalendarView.addEvents(eventList.toArrayList())
 
         }
     }

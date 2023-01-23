@@ -1,24 +1,34 @@
 package com.gakk.noorlibrary.ui.fragments
 
+import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.DialogTasbihResetBinding
-import com.gakk.noorlibrary.databinding.FragmentTasbihBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.tasbih.TasbihModel
 import com.gakk.noorlibrary.ui.adapter.TasbihAdapter
 import com.gakk.noorlibrary.ui.adapter.TasbihHistoryAdapter
 import com.gakk.noorlibrary.util.TimeFormtter
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
@@ -33,7 +43,6 @@ private const val ARG_TIMES = "items"
 
 internal class TasbihFragment : Fragment(), CountControl, PressListener {
 
-    private lateinit var binding: FragmentTasbihBinding
     private var mCallback: DetailsCallBack? = null
     private var localcount = 0
     private var totalCount = 0
@@ -49,6 +58,17 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
     private var duaIndex: Array<String> = arrayOf("0", "1", "2", "3", "4", "5", "6", "7")
     private var viewClickedIndex: Int = 0
     private var buttonClickedIndex: Int = 0
+    private lateinit var tasbihCountIV: AppCompatImageView
+    private lateinit var tvCountRound: AppCompatTextView
+    private lateinit var tvCount: AppCompatTextView
+    private lateinit var progressBarCircle: ProgressBar
+    private lateinit var tvCountTotal: AppCompatTextView
+    private lateinit var onOffSoundIV: AppCompatImageView
+    private lateinit var resetAllBtn: AppCompatImageView
+    private lateinit var rvTasbihItem: RecyclerView
+    private lateinit var rvHistory: RecyclerView
+    private lateinit var tvTimes: AppCompatTextView
+    private lateinit var ivBackTasbih: AppCompatImageView
 
     companion object {
 
@@ -88,11 +108,23 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_tasbih, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_tasbih,
+            container, false
+        )
+        tasbihCountIV = view.findViewById(R.id.tasbihCountIV)
+        tvCountRound = view.findViewById(R.id.tvCountRound)
+        tvCount = view.findViewById(R.id.tvCount)
+        tvCountTotal = view.findViewById(R.id.tvCountTotal)
+        onOffSoundIV = view.findViewById(R.id.onOffSoundIV)
+        resetAllBtn = view.findViewById(R.id.resetAllBtn)
+        rvTasbihItem = view.findViewById(R.id.rvTasbihItem)
+        rvHistory = view.findViewById(R.id.rvHistory)
+        tvTimes = view.findViewById(R.id.tvTimes)
+        ivBackTasbih = view.findViewById(R.id.ivBackTasbih)
+        progressBarCircle = view.findViewById(R.id.progressBarCircle)
 
-        return binding.root
+        return view
     }
 
 
@@ -101,16 +133,46 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
 
         initUI()
 
-        binding.item = ImageFromOnline("ic_tasbeeh_background.png")
+        val item = ImageFromOnline("ic_tasbeeh_background.png")
 
-        binding.tasbihCountIV.handleClickEvent {
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(item.fullImageUrl)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+
+                        return false
+                    }
+
+                })
+                .error(R.drawable.place_holder_16_9_ratio)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(ivBackTasbih)
+        }
+
+        tasbihCountIV.handleClickEvent {
             localcount++
 
             if (localcount > userSelectCount) {
                 if (localcount < userSelectCount + 2) {
                     localcount = 0
                     round++
-                    binding.tvCountRound.setText(
+                    tvCountRound.setText(
                         TimeFormtter.getNumberByLocale(
                             TimeFormtter.getNumber(
                                 round
@@ -123,15 +185,15 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
             } else {
 
                 onPressed()
-                binding.tvCount.setText(
+                tvCount.setText(
                     TimeFormtter.getNumberByLocale(
                         TimeFormtter.getNumber(
                             localcount
                         )!!
                     )
                 )
-                binding.progressBarCircle.max = userSelectCount
-                binding.progressBarCircle.progress = localcount
+                progressBarCircle.max = userSelectCount
+                progressBarCircle.progress = localcount
 
                 if (totalCount >= 0) {
                     totalCount++
@@ -142,7 +204,7 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
 
 
             if (totalCount >= 0) {
-                binding.tvCountTotal.setText(
+                tvCountTotal.setText(
                     TimeFormtter.getNumberByLocale(
                         TimeFormtter.getNumber(
                             totalCount
@@ -150,7 +212,7 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
                     )
                 )
             } else {
-                binding.tvCountTotal.setText(getString(R.string.text_zero))
+                tvCountTotal.setText(getString(R.string.text_zero))
             }
 
             AppPreference.totalCount = totalCount
@@ -158,11 +220,11 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
             handleSound()
         }
 
-        binding.onOffSoundIV.handleClickEvent {
+        onOffSoundIV.handleClickEvent {
             soundButtonClick()
         }
 
-        binding.resetAllBtn.handleClickEvent {
+        resetAllBtn.handleClickEvent {
             showResetDialog()
 
         }
@@ -175,24 +237,24 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
         dua =
             context?.resources?.getStringArray(R.array.tasbih_duas) as Array<String>
 
-        binding.rvTasbihItem.adapter =
+        rvTasbihItem.adapter =
             TasbihAdapter(dua, this, viewClickedIndex, buttonClickedIndex)
         selectedItem = viewClickedIndex.toString()
 
-        binding.rvTasbihItem.scrollToPosition(viewClickedIndex)
+        rvTasbihItem.scrollToPosition(viewClickedIndex)
 
         model = getModels(duaIndex, dua)
 
         historyAdapter = TasbihHistoryAdapter(model)
-        binding.rvHistory.adapter = historyAdapter
+        rvHistory.adapter = historyAdapter
 
         mp = MediaPlayer.create(context, R.raw.second)
         sound = AppPreference.soundflag
         totalCount = AppPreference.totalCount
 
-        binding.progressBarCircle.progress = 0
+        progressBarCircle.progress = 0
 
-        binding.tvCount.setText(
+        tvCount.setText(
             TimeFormtter.getNumberByLocale(
                 TimeFormtter.getNumber(
                     localcount
@@ -200,21 +262,21 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
             )
         )
         Log.e("Times", "ss" + userSelectCount.toString())
-        binding.tvTimes.text =
+        tvTimes.text =
             "/" + TimeFormtter.getNumberByLocale(userSelectCount.toString()) + " " + getString(R.string.txt_times)
-        binding.tvCountRound.text = getString(R.string.text_zero)
+        tvCountRound.text = getString(R.string.text_zero)
 
         when (sound) {
             true -> {
-                binding.onOffSoundIV.setImageResource(R.drawable.ic_btn_sound)
+                onOffSoundIV.setImageResource(R.drawable.ic_btn_sound)
             }
             false -> {
-                binding.onOffSoundIV.setImageResource(R.drawable.ic_btn_sound_off)
+                onOffSoundIV.setImageResource(R.drawable.ic_btn_sound_off)
             }
         }
 
         if (totalCount > 0) {
-            binding.tvCountTotal.setText(
+            tvCountTotal.setText(
                 TimeFormtter.getNumberByLocale(
                     TimeFormtter.getNumber(
                         totalCount
@@ -222,7 +284,7 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
                 )
             )
         } else {
-            binding.tvCountTotal.setText(getString(R.string.text_zero))
+            tvCountTotal.setText(getString(R.string.text_zero))
         }
     }
 
@@ -253,11 +315,11 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
         sound = AppPreference.soundflag
         if (sound) {
             sound = false
-            binding.onOffSoundIV.setImageResource(R.drawable.ic_btn_sound_off)
+            onOffSoundIV.setImageResource(R.drawable.ic_btn_sound_off)
             AppPreference.soundflag = false
         } else {
             sound = true
-            binding.onOffSoundIV.setImageResource(R.drawable.ic_btn_sound)
+            onOffSoundIV.setImageResource(R.drawable.ic_btn_sound)
             AppPreference.soundflag = true
         }
     }
@@ -265,10 +327,10 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
     override fun getUserCount(count: Int) {
         localcount = 0
         userSelectCount = count
-        binding.tvTimes.text =
+        tvTimes.text =
             "/" + TimeFormtter.getNumberByLocale(count.toString()) + " " + getString(R.string.txt_times)
-        binding.tvCount.text = getString(R.string.text_zero)
-        binding.progressBarCircle.progress = 0
+        tvCount.text = getString(R.string.text_zero)
+        progressBarCircle.progress = 0
     }
 
     override fun getSelectedItem(name: String) {
@@ -320,17 +382,17 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
     fun resetTotalCount() {
         AppPreference.cleartotalCount()
         clearHistory(duaIndex)
-        binding.tvCountTotal.setText(getString(R.string.text_zero))
-        binding.tvCount.text = getString(R.string.text_zero)
-        binding.tvCountRound.text = getString(R.string.text_zero)
-        binding.progressBarCircle.progress = 0
+        tvCountTotal.setText(getString(R.string.text_zero))
+        tvCount.text = getString(R.string.text_zero)
+        tvCountRound.text = getString(R.string.text_zero)
+        progressBarCircle.progress = 0
         localcount = 0
         totalCount = 0
     }
 
     fun resetCurrentCount() {
-        binding.tvCount.text = getString(R.string.text_zero)
-        binding.progressBarCircle.progress = 0
+        tvCount.text = getString(R.string.text_zero)
+        progressBarCircle.progress = 0
         localcount = 0
     }
 
@@ -341,7 +403,7 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
             selectedItem
         )
         model = getModels(duaIndex, dua)
-        binding.rvHistory.adapter = model?.let { TasbihHistoryAdapter(it) }
+        rvHistory.adapter = model?.let { TasbihHistoryAdapter(it) }
     }
 
     private fun getModels(index: Array<String>, ars: Array<String>): List<TasbihModel> {
@@ -365,7 +427,7 @@ internal class TasbihFragment : Fragment(), CountControl, PressListener {
         }
 
         model = getModels(duaIndex, dua)
-        binding.rvHistory.adapter = model?.let { TasbihHistoryAdapter(it) }
+        rvHistory.adapter = model?.let { TasbihHistoryAdapter(it) }
     }
 }
 

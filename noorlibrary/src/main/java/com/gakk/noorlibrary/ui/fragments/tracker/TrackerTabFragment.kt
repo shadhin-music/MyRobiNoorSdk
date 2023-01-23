@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.FragmentIslamicNameTabBinding
 import com.gakk.noorlibrary.ui.adapter.TrackerPagerAdapter
 import com.gakk.noorlibrary.util.setApplicationLanguage
+import com.gakk.noorlibrary.views.CustomTabLayout
 
 /**
  * @AUTHOR: Taslima Sumi
@@ -22,8 +23,9 @@ import com.gakk.noorlibrary.util.setApplicationLanguage
 internal class TrackerTabFragment : Fragment() {
 
     private var mDetailsCallBack: DetailsCallBack? = null
-    private lateinit var binding: FragmentIslamicNameTabBinding
     private lateinit var mPageTitles: Array<String>
+    private lateinit var pager: ViewPager
+    private lateinit var tabLayout: CustomTabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +37,15 @@ internal class TrackerTabFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_islamic_name_tab, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_islamic_name_tab,
+            container, false
+        )
+        pager = view.findViewById(R.id.pager)
+        tabLayout = view.findViewById(R.id.tab_layout)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,13 +56,13 @@ internal class TrackerTabFragment : Fragment() {
             requireContext().resources.getString(R.string.prayer_tracker),
             requireContext().resources.getString(R.string.ramadan_tracker)
         )
-        binding.pager.adapter =
+        pager.adapter =
             TrackerPagerAdapter(
                 childFragmentManager,
                 mPageTitles,
                 mDetailsCallBack,
             )
-        binding.tabLayout.setupWithViewPager(binding.pager)
+        tabLayout.setupWithViewPager(pager)
         mDetailsCallBack?.toggleToolBarActionIconsVisibility(false)
         updateToolbarForThisFragment()
     }
