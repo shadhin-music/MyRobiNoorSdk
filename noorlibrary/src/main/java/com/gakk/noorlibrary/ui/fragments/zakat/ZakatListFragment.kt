@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
@@ -24,11 +25,11 @@ import java.io.Serializable
 
 internal class ZakatListFragment : Fragment(), DeleteOperation {
 
-    private lateinit var binding: FragmentZakatListBinding
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var viewModel: ZakatViewModel
     private lateinit var repository: RoomRepository
     private var adapter: ZakatListAdapter? = null
+    private lateinit var listZakat: RecyclerView
 
     val database by lazy { ZakatRoomDatabase.getDatabase(requireContext()) }
     val repositoryRoom by lazy { RoomRepository(database.zakatDao()) }
@@ -50,14 +51,15 @@ internal class ZakatListFragment : Fragment(), DeleteOperation {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
+
+        val view = inflater.inflate(
             R.layout.fragment_zakat_list,
-            container,
-            false
+            container, false
         )
 
         repository = repositoryRoom
+
+        listZakat = view.findViewById(R.id.listZakat)
 
         viewModel = ViewModelProvider(
             this@ZakatListFragment,
@@ -68,10 +70,10 @@ internal class ZakatListFragment : Fragment(), DeleteOperation {
         viewModel.allData.observe(viewLifecycleOwner) {
 
             adapter = ZakatListAdapter(it, this)
-            binding.listZakat.adapter = adapter
+            listZakat.adapter = adapter
             ZakatCalculationObserver.attatchAdapter(adapter)
         }
-        return binding.root
+        return view
     }
 
 

@@ -139,7 +139,6 @@ class FragmentDestinationMap {
                 context.resources.getString(R.string.cat_islamic_podcast) -> PAGE_ISLAMIC_PODCAST
                 context.resources.getString(R.string.cat_khatam_quran) -> PAGE_KHATAM_QURAN
                 context.resources.getString(R.string.cat_eid_jamat) -> PAGE_EID_JAMAT
-                context.resources.getString(R.string.cat_hajj_package) -> PAGE_HAJJ_PACKAGE
                 context.resources.getString(R.string.cat_live_qa) -> PAGE_CAT_LIVE_QA
                 "Online Hut" -> ONLINE_HUT_HOME
                 else -> null

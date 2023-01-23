@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="literature"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
-
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg">
@@ -54,14 +43,12 @@
                             android:id="@+id/appCompatImageView10"
                             android:layout_width="96dp"
                             android:layout_height="96dp"
-                            android:fullImageUrl="@{literature.fullImageUrl}"
                             android:scaleType="centerCrop"
                             android:src="@drawable/place_holder_2_3_ratio"
-                            app:attachedProgressBar="@{progressBar}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:placeHolderDimension="@{constant.PLACE_HOLDER_2_3}" />
+                            />
 
                         <ProgressBar
                             android:id="@+id/progressBar"
@@ -79,7 +66,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/standard_margin"
-                    android:text="@{literature.subcategoryName}"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/txt_color_black"
@@ -95,7 +81,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_spacing"
                     android:layout_marginEnd="@dimen/standard_margin"
-                    android:text="@{literature.textInArabic}"
                     android:textAlignment="center"
                     android:fontFamily="sans-serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -115,13 +100,13 @@
                     app:layout_constraintTop_toBottomOf="@id/tvDetails" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDesOrganisation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/standard_margin"
                     android:layout_marginTop="@dimen/small_spacing"
                     android:layout_marginEnd="@dimen/standard_margin"
                     android:justificationMode="inter_word"
-                    android:text="@{literature.text}"
                     android:textAlignment="center"
                     android:fontFamily="sans-serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -193,4 +178,3 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

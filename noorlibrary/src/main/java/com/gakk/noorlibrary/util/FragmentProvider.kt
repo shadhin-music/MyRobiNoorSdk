@@ -12,8 +12,6 @@ import com.gakk.noorlibrary.ui.fragments.calender.IslamicCalenderFragmentBd
 import com.gakk.noorlibrary.ui.fragments.eidjamat.EidJamatFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.HajjGuideFragment
-import com.gakk.noorlibrary.ui.fragments.hajj.hajjpackage.HajjPackageDetailsFragment
-import com.gakk.noorlibrary.ui.fragments.hajj.hajjpackage.HajjpackageFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjpreRegistrationDetailsFragment
 import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
 import com.gakk.noorlibrary.ui.fragments.inspiration.InspirationDetailsFragment
@@ -146,7 +144,6 @@ object FragmentProvider {
 
             PAGE_EID_JAMAT -> EidJamatFragment.newInstance()
             PAGE_ISLAMIC_PODCAST -> IslamicDiscussFragment.newInstance()
-            PAGE_HAJJ_PACKAGE -> HajjpackageFragment.newInstance()
 
             PAGE_NAMAZ_RULES -> {
                 when (Util.checkSub()) {
@@ -307,10 +304,6 @@ object FragmentProvider {
             )
 
             ORGANIZATION_DETAILS -> OrganizationDetailsFragment.newInstance(
-                itemLiterature = literature!!
-            )
-
-            HAJJ_PACKAGE_DETAILS -> HajjPackageDetailsFragment.newInstance(
                 itemLiterature = literature!!
             )
 

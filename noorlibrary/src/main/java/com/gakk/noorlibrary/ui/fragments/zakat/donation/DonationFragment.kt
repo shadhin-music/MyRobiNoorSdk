@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.rest.Status
@@ -28,13 +29,14 @@ private const val ARG_CAT_NAME = "CatName"
 
 internal class DonationFragment : Fragment() {
 
-    private lateinit var binding: FragmentDonationBinding
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var model: LiteratureViewModel
     private lateinit var repository: RestRepository
     private var literatureList: MutableList<Literature> = mutableListOf()
     private var catName: String? = null
     private var catId: String? = null
+    private lateinit var rvDonation: RecyclerView
+    private lateinit var progressLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +62,16 @@ internal class DonationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
+
+        val view = inflater.inflate(
             R.layout.fragment_donation,
-            container,
-            false
+            container, false
         )
-        return binding.root
+
+        rvDonation = view.findViewById(R.id.rvDonation)
+        progressLayout = view.findViewById(R.id.progressLayout)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,10 +107,10 @@ internal class DonationFragment : Fragment() {
             model.literatureListData.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
                         literatureList = it.data?.data ?: mutableListOf()
@@ -114,28 +119,28 @@ internal class DonationFragment : Fragment() {
                             "Donation" -> {
 
                                 val margins =
-                                    (binding.rvDonation.layoutParams as ConstraintLayout.LayoutParams).apply {
+                                    (rvDonation.layoutParams as ConstraintLayout.LayoutParams).apply {
                                         leftMargin = 16
                                         rightMargin = 16
                                     }
-                                binding.rvDonation.layoutParams = margins
-                                binding.rvDonation.layoutManager =
+                               rvDonation.layoutParams = margins
+                               rvDonation.layoutManager =
                                     GridLayoutManager(requireContext(), 2)
-                                binding.rvDonation.adapter =
+                                rvDonation.adapter =
                                     DonationAdapter(literatureList, mDetailsCallBack!!)
                             }
                             else -> {
-                                binding.rvDonation.layoutManager = LinearLayoutManager(
+                                rvDonation.layoutManager = LinearLayoutManager(
                                     requireContext(),
                                     LinearLayoutManager.VERTICAL,
                                     false
                                 )
-                                binding.rvDonation.adapter =
+                                rvDonation.adapter =
                                     CharityAdapter(literatureList, mDetailsCallBack!!)
                             }
                         }
 
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                     }
                 }
             }

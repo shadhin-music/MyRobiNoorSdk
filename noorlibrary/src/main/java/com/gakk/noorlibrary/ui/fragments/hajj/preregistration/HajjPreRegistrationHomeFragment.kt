@@ -1,20 +1,19 @@
 package com.gakk.noorlibrary.ui.fragments.hajj.preregistration
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentHajjPreRegistrationHomeBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.subcategory.Data
 import com.gakk.noorlibrary.ui.adapter.HajjCategoryAdapter
@@ -26,10 +25,14 @@ import kotlinx.coroutines.launch
 internal class HajjPreRegistrationFragment : Fragment() {
 
     private var mCallback: DetailsCallBack? = null
-    private lateinit var binding: FragmentHajjPreRegistrationHomeBinding
     private lateinit var repository: RestRepository
     private lateinit var model: HajjViewModel
     private lateinit var viewModel: PreregistrationViewModel
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var btnRetry: AppCompatButton
+    private lateinit var btnHajjPreReg: AppCompatButton
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var rvOthersCat: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +44,18 @@ internal class HajjPreRegistrationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
-        binding = DataBindingUtil.inflate(
-            inflater,
+        val view = inflater.inflate(
             R.layout.fragment_hajj_pre_registration_home,
-            container,
-            false
+            container, false
         )
-        return binding.root
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
+        btnHajjPreReg = view.findViewById(R.id.btnHajjPreReg)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvOthersCat = view.findViewById(R.id.rv_others_cat)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +63,7 @@ internal class HajjPreRegistrationFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[PreregistrationViewModel::class.java]
 
-        binding.item = ImageFromOnline("ic_hajj_header_image.png")
+        val item = ImageFromOnline("ic_hajj_header_image.png")
 
         lifecycleScope.launch {
             val job = launch {
@@ -72,12 +78,12 @@ internal class HajjPreRegistrationFragment : Fragment() {
             subscribeObserver()
             loadData()
 
-            binding.noInternetLayout.btnRetry.handleClickEvent {
+            btnRetry.handleClickEvent {
                 loadData()
             }
 
         }
-        binding.btnHajjPreReg.handleClickEvent {
+        btnHajjPreReg.handleClickEvent {
             viewModel.gotoNext(0)
             mCallback?.addFragmentToStackAndShow(
                 HajjpreRegistrationDetailsFragment.newInstance()
@@ -93,8 +99,8 @@ internal class HajjPreRegistrationFragment : Fragment() {
         model.subCategoryListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
-                    binding.noInternetLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
+                    noInternetLayout.visibility = View.GONE
 
                     val list = it.data?.data ?: mutableListOf()
 
@@ -104,19 +110,19 @@ internal class HajjPreRegistrationFragment : Fragment() {
                     setUpRV(filteredList)
                 }
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
-                    binding.noInternetLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.VISIBLE
+                    noInternetLayout.visibility = View.GONE
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
-                    binding.noInternetLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.GONE
+                    noInternetLayout.visibility = View.VISIBLE
                 }
             }
         }
     }
 
     private fun setUpRV(list: MutableList<Data>) {
-        binding.rvOthersCat.apply {
+        rvOthersCat.apply {
             adapter = HajjCategoryAdapter().apply {
                 submitList(list)
                 setOnItemClickListener {

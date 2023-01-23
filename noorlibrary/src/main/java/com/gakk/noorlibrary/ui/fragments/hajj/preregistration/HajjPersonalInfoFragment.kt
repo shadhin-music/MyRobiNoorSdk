@@ -102,9 +102,6 @@ internal class HajjPersonalInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let {
-            context?.setApplicationLanguage(it)
-        }
 
         binding = DataBindingUtil.inflate(
             inflater,

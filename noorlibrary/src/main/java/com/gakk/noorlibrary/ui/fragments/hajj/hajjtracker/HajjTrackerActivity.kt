@@ -42,8 +42,6 @@ import kotlinx.coroutines.launch
 
 internal class HajjTrackerActivity : BaseActivity(), OnMapReadyCallback, BottomSheetDisplay, DataUpdate {
 
-    private lateinit var binding: FragmentHajjTrackerBinding
-
     private var mMap: GoogleMap? = null
     private lateinit var model: HajjViewModel
     private lateinit var repository: RestRepository
@@ -58,13 +56,9 @@ internal class HajjTrackerActivity : BaseActivity(), OnMapReadyCallback, BottomS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.fragment_hajj_tracker)
-        MapsInitializer.initialize(this)
+        setContentView(R.layout.fragment_hajj_tracker)
 
-        var number = ""
-        AppPreference.userNumber.let {
-            number = it!!
-        }
+        MapsInitializer.initialize(this)
 
         checkPermission()
 

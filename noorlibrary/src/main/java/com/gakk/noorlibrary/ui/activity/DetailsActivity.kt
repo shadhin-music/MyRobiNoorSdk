@@ -26,7 +26,6 @@ import com.gakk.noorlibrary.ui.adapter.DivisionCallbackFunc
 import com.gakk.noorlibrary.ui.adapter.SurahListAdapter
 import com.gakk.noorlibrary.ui.fragments.*
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
-import com.gakk.noorlibrary.ui.fragments.hajj.hajjpackage.HajjpackageFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationListFragment
 import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
@@ -360,7 +359,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             HajjPreRegistrationListFragment::class.java -> (fragment as HajjPreRegistrationListFragment).updateToolbarForThisFragment()
             QurbaniHomeFragment::class.java -> (fragment as QurbaniHomeFragment).updateToolbarForThisFragment()
             BishwaIjtemaFragment::class.java -> (fragment as BishwaIjtemaFragment).updateToolbarForThisFragment()
-            HajjpackageFragment::class.java -> (fragment as HajjpackageFragment).updateToolbarForThisFragment()
         }
     }
 

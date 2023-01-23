@@ -41,7 +41,6 @@ import kotlinx.coroutines.launch
 
 internal class HajjHomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHajjHomeBinding
     private var mCallback: DetailsCallBack? = null
 
     private lateinit var repository: RestRepository
@@ -65,6 +64,7 @@ internal class HajjHomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(
             R.layout.fragment_hajj_home,
             container, false

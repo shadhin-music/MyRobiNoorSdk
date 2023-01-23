@@ -1,12 +1,5 @@
 package com.gakk.noorlibrary.ui.fragments.zakat.donation
 
-/*import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCCustomerInfoInitializer
-import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization
-import com.sslwireless.sslcommerzlibrary.model.response.SSLCTransactionInfoModel
-import com.sslwireless.sslcommerzlibrary.model.util.SSLCCurrencyType
-import com.sslwireless.sslcommerzlibrary.model.util.SSLCSdkType
-import com.sslwireless.sslcommerzlibrary.view.singleton.IntegrateSSLCommerz
-import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener*/
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

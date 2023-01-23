@@ -5,16 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentHajjAddressBinding
 import com.gakk.noorlibrary.model.hajjpackage.PersonalInfoItem
 import com.gakk.noorlibrary.model.hajjpackage.PreRegisteredUserInfo
 import com.gakk.noorlibrary.util.*
@@ -25,12 +27,17 @@ import kotlinx.coroutines.launch
 internal class HajjAddressFragment : Fragment() {
 
     private var mCallback: DetailsCallBack? = null
-    private lateinit var binding: FragmentHajjAddressBinding
     private lateinit var viewModel: PreregistrationViewModel
     private lateinit var hajjViewModel: HajjViewModel
     private lateinit var repository: RestRepository
     private lateinit var personalInfo: PersonalInfoItem
-
+    private lateinit var btnSave: AppCompatButton
+    private lateinit var spinner_district: AppCompatSpinner
+    private lateinit var etParmanentAddress: AppCompatEditText
+    private lateinit var etPresentAddress: AppCompatEditText
+    private lateinit var etPhone: AppCompatEditText
+    private lateinit var etEmailAddress: AppCompatEditText
+    private lateinit var progressLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +50,19 @@ internal class HajjAddressFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
+        val view = inflater.inflate(
+            R.layout.fragment_hajj_address,
+            container, false
+        )
+        btnSave = view.findViewById(R.id.btnSave)
+        spinner_district = view.findViewById(R.id.spinner_district)
+        etParmanentAddress = view.findViewById(R.id.etParmanentAddress)
+        etPresentAddress = view.findViewById(R.id.etPresentAddress)
+        etPhone = view.findViewById(R.id.etPhone)
+        etEmailAddress = view.findViewById(R.id.etEmailAddress)
+        progressLayout = view.findViewById(R.id.progressLayout)
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_hajj_address, container, false)
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,14 +74,14 @@ internal class HajjAddressFragment : Fragment() {
             personalInfo = item
         }
 
-        binding.btnSave.handleClickEvent {
+        btnSave.handleClickEvent {
 
-            val permanentDistrict = binding.spinnerDistrict.selectedItem.toString()
-            val permanentAddress = binding.etParmanentAddress.text.toString()
-            val presentAddress = binding.etPresentAddress.text.toString()
-            val mobileNumber = binding.etPhone.text.toString()
+            val permanentDistrict = spinner_district.selectedItem.toString()
+            val permanentAddress = etParmanentAddress.text.toString()
+            val presentAddress = etPresentAddress.text.toString()
+            val mobileNumber = etPhone.text.toString()
             val userNumber = "880$mobileNumber"
-            val email = binding.etEmailAddress.text.toString()
+            val email = etEmailAddress.text.toString()
 
             if (permanentDistrict.equals("নির্বাচন করুন")) {
                 mCallback?.showToastMessage(getString(R.string.txt_error_district))
@@ -128,11 +143,11 @@ internal class HajjAddressFragment : Fragment() {
             when (it.status) {
                 Status.LOADING -> {
                     Log.e("addHajjPreregistration", "loading")
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
                     Log.e("addHajjPreregistration", "SUCCESS${it.data?.data.toString()}")
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                     mCallback?.showToastMessage("Successfully saved!")
                     val preRegisteredUserInfo = PreRegisteredUserInfo(
                         it.data?.data?.trackingNo,
@@ -144,7 +159,7 @@ internal class HajjAddressFragment : Fragment() {
                 }
 
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                     mCallback?.showToastMessage(getString(R.string.api_error_msg))
                     Log.e("addHajjPreregistration", "ERROR${it.data?.error}")
                 }

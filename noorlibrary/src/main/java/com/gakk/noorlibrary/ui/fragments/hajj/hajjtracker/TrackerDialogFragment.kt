@@ -6,14 +6,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.DialogTrackLocationHajjBinding
 import com.gakk.noorlibrary.extralib.country_code_picker.CCPmodel
 import com.gakk.noorlibrary.extralib.country_code_picker.ccp
 import com.gakk.noorlibrary.model.hajjtracker.HajjTrackingListResponse
@@ -25,15 +29,20 @@ import com.gakk.noorlibrary.viewModel.HajjViewModel
 import kotlinx.coroutines.launch
 
 
-internal class TrackerDialogFragment : Fragment(), TrackerListControl,ccp.OnCcpClickListener {
-    private lateinit var binding: DialogTrackLocationHajjBinding
+internal class TrackerDialogFragment : Fragment(), TrackerListControl, ccp.OnCcpClickListener {
 
     private lateinit var model: HajjViewModel
     private lateinit var repository: RestRepository
     private lateinit var bottomSheetDisplayCallback: BottomSheetDisplay
     private var trackingAdapter: HajjTrackingListAdapter? = null
-    private var country_code:String = "880"
+    private var country_code: String = "880"
     private val ccp_core = ccp(this@TrackerDialogFragment)
+    private lateinit var imgBackShare: AppCompatImageView
+    private lateinit var ccpBtn: LinearLayout
+    private lateinit var btnShareLocation: AppCompatButton
+    private lateinit var etNumber: AppCompatEditText
+    private lateinit var rvTrackerList: RecyclerView
+    private lateinit var ccp_result: TextView
 
 
     override fun onAttach(context: Context) {
@@ -46,26 +55,32 @@ internal class TrackerDialogFragment : Fragment(), TrackerListControl,ccp.OnCcpC
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_track_location_hajj, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.dialog_track_location_hajj,
+            container, false
+        )
+        imgBackShare = view.findViewById(R.id.imgBackShare)
+        ccpBtn = view.findViewById(R.id.ccpBtn)
+        btnShareLocation = view.findViewById(R.id.btnShareLocation)
+        rvTrackerList = view.findViewById(R.id.rvTrackerList)
+        ccp_result = view.findViewById(R.id.ccp_result)
+
+        return view
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.imgBackShare.handleClickEvent {
+        imgBackShare.handleClickEvent {
             bottomSheetDisplayCallback.showBottomSheet(2)
         }
 
-        context?.let { ccp_core.setup_ccp(it,binding.ccpBtn) }
+        context?.let { ccp_core.setup_ccp(it, ccpBtn) }
 
-        binding.btnShareLocation.handleClickEvent {
-            val trackerNumber = binding.etNumber.text.toString()
-            model.locationTrackRequestFromSharer("${country_code.replace("+","")}$trackerNumber")
+        btnShareLocation.handleClickEvent {
+            val trackerNumber = etNumber.text.toString()
+            model.locationTrackRequestFromSharer("${country_code.replace("+", "")}$trackerNumber")
         }
 
         lifecycleScope.launch {
@@ -106,7 +121,7 @@ internal class TrackerDialogFragment : Fragment(), TrackerListControl,ccp.OnCcpC
                 Status.SUCCESS -> {
                     trackingAdapter =
                         HajjTrackingListAdapter(it.data?.data, bottomSheetDisplayCallback, this)
-                    binding.rvTrackerList.adapter = trackingAdapter
+                    rvTrackerList.adapter = trackingAdapter
                 }
 
                 Status.LOADING -> {
@@ -143,7 +158,7 @@ internal class TrackerDialogFragment : Fragment(), TrackerListControl,ccp.OnCcpC
             if (trackingAdapter == null) {
                 Log.e("fragment", "adapter null")
                 trackingAdapter = HajjTrackingListAdapter(list, bottomSheetDisplayCallback, this)
-                binding.rvTrackerList.adapter = trackingAdapter
+                rvTrackerList.adapter = trackingAdapter
             } else {
                 Log.e("fragment", "adapter not null")
                 trackingAdapter?.notifyDataSetChanged()
@@ -160,8 +175,7 @@ internal class TrackerDialogFragment : Fragment(), TrackerListControl,ccp.OnCcpC
     override fun onItemClick(postion: Int, ccp_list: ArrayList<CCPmodel>) {
         val result = ccp_list[postion]
         this.country_code = result.dialCode.toString()
-        binding.ccpResult.text =String.format("%1$2s %2$2s", result.countryCode, result.dialCode)
-
+        ccp_result.text = String.format("%1$2s %2$2s", result.countryCode, result.dialCode)
     }
 
 }

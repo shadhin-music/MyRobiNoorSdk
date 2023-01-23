@@ -17,7 +17,6 @@ import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.roomdb.RoomRepository
 import com.gakk.noorlibrary.data.roomdb.ZakatRoomDatabase
-import com.gakk.noorlibrary.databinding.FragmentJakatCalculatorBinding
 import com.gakk.noorlibrary.model.zakat.ZakatDataModel
 import com.gakk.noorlibrary.ui.fragments.ZakatCalculationObserver
 import com.gakk.noorlibrary.util.TimeFormtter

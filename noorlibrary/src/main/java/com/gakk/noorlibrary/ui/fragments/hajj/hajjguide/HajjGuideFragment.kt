@@ -28,9 +28,6 @@ import java.io.Serializable
 internal class HajjGuideFragment : Fragment(), OnMapReadyCallback, ImageChangeListener {
 
     @Transient
-    private lateinit var binding: FragmentHajjTrackerBinding
-
-    @Transient
     private var mMap: GoogleMap? = null
 
     @Transient
@@ -60,6 +57,9 @@ internal class HajjGuideFragment : Fragment(), OnMapReadyCallback, ImageChangeLi
     @Transient
     private var mCallback: DetailsCallBack? = null
 
+    @Transient
+    private lateinit var bottomSheet: ConstraintLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -79,14 +79,15 @@ internal class HajjGuideFragment : Fragment(), OnMapReadyCallback, ImageChangeLi
         savedInstanceState: Bundle?
     ): View? {
 
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_hajj_tracker, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_hajj_tracker,
+            container, false
+        )
 
+        bottomSheet = view.findViewById(R.id.bottomSheet)
+        sheetBehavior = BottomSheetBehavior.from(bottomSheet)
 
-        sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
-
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

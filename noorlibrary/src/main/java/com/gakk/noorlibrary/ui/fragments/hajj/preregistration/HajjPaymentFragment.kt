@@ -7,16 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentHajjPaymentBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.activity.PreRegistrationBrowserActivity
 import com.gakk.noorlibrary.util.*
@@ -29,7 +30,6 @@ import kotlinx.coroutines.launch
 internal class HajjPaymentFragment : Fragment() {
 
     private var mCallback: DetailsCallBack? = null
-    private lateinit var binding: FragmentHajjPaymentBinding
     private lateinit var viewModel: PreregistrationViewModel
     private lateinit var viewModelSub: SubscriptionViewModel
     private lateinit var viewModelHajj: HajjViewModel
@@ -39,6 +39,12 @@ internal class HajjPaymentFragment : Fragment() {
     private var name: String? = null
     private var email: String? = null
     private var literatureList: MutableList<Literature> = mutableListOf()
+    private lateinit var cardMfsPayment: CardView
+    private lateinit var cardPayment: CardView
+    private lateinit var appCompatCheckBox: AppCompatCheckBox
+    private lateinit var cardBankPayment: CardView
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var tvFee: AppCompatTextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,11 +57,19 @@ internal class HajjPaymentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_hajj_payment, container, false)
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_hajj_payment,
+            container, false
+        )
+        cardMfsPayment = view.findViewById(R.id.cardMfsPayment)
+        appCompatCheckBox = view.findViewById(R.id.appCompatCheckBox)
+        cardPayment = view.findViewById(R.id.cardPayment)
+        cardBankPayment = view.findViewById(R.id.cardBankPayment)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        tvFee = view.findViewById(R.id.tvFee)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,9 +83,9 @@ internal class HajjPaymentFragment : Fragment() {
             email = it?.email
         }
 
-        binding.cardMfsPayment.setOnClickListener {
+        cardMfsPayment.setOnClickListener {
 
-            if (!binding.appCompatCheckBox.isChecked) {
+            if (!appCompatCheckBox.isChecked) {
                 Toast.makeText(
                     requireContext(),
                     "শর্তাবলীতে সম্মতি প্রদান করুন ",
@@ -88,12 +102,12 @@ internal class HajjPaymentFragment : Fragment() {
             }
         }
 
-        binding.cardPayment.handleClickEvent {
-            binding.cardMfsPayment.performClick()
+        cardPayment.handleClickEvent {
+            cardMfsPayment.performClick()
         }
 
-        binding.cardBankPayment.handleClickEvent {
-            binding.cardMfsPayment.performClick()
+        cardBankPayment.handleClickEvent {
+            cardMfsPayment.performClick()
         }
 
         lifecycleScope.launch {
@@ -133,18 +147,19 @@ internal class HajjPaymentFragment : Fragment() {
         model.literatureListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
                     literatureList = it.data?.data ?: mutableListOf()
 
-                    binding.literature = literatureList.get(0)
+                    val literature = literatureList.get(0)
+                    tvFee.text = literature.text
 
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
 
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }
@@ -153,11 +168,11 @@ internal class HajjPaymentFragment : Fragment() {
             when (it.status) {
                 Status.LOADING -> {
                     Log.e("paymentSslHajj", "LOADING")
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
 
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                     Log.e("paymentSslHajj", "SUCCESS${it.data?.errorCode}")
                     if (it.data?.errorCode.equals("200")) {
                         if (it.data?.gatewayPageURL?.isNotEmpty() == true) {
@@ -182,7 +197,7 @@ internal class HajjPaymentFragment : Fragment() {
 
                 Status.ERROR -> {
                     Log.e("paymentSslHajj", "ERROR")
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }

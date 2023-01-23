@@ -1,263 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
-    tools:context=".ui.fragments.hajj.HajjAddressFragment">
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg"
-        android:fillViewport="true"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDistrict"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin">
+            android:layout_marginTop="@dimen/small_spacing"
+            android:fontFamily="sans-serif"
+            android:text="@string/zilla"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/txt_color_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDistrict"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutDistrict"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@drawable/ic_rectangle"
+            android:padding="@dimen/standard_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDistrict">
+
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_district"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_spacing"
-                android:fontFamily="sans-serif"
-                android:text="@string/zilla"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/txt_color_title"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:entries="@array/bd_districts"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutDistrict"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPermanentAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:fontFamily="sans-serif"
+            android:text="@string/permanent_address"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/txt_color_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutDistrict" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutPermanentAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@drawable/ic_rectangle"
+            android:minHeight="88dp"
+            android:padding="@dimen/small_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPermanentAddress">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etParmanentAddress"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standard_margin"
-                android:background="@drawable/ic_rectangle"
-                android:padding="@dimen/standard_margin"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/margin_14"
+                android:background="@null"
+                android:hint="আপনার স্থায়ী ঠিকানা লিখুন"
+                android:imeOptions="actionNext"
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDistrict">
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPresentAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:fontFamily="sans-serif"
+            android:text="@string/present_address"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/txt_color_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutPermanentAddress" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spinner_district"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:entries="@array/bd_districts"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutPresentAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@drawable/ic_rectangle"
+            android:minHeight="88dp"
+            android:padding="@dimen/small_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPresentAddress">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPresentAddress"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/margin_14"
+                android:background="@null"
+                android:hint="আপনার বর্তমান ঠিকানা লিখুন"
+                android:imeOptions="actionNext"
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:fontFamily="sans-serif"
+            android:text="@string/txt_mobile_number"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/txt_color_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutPresentAddress" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutPhone"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@drawable/ic_rectangle"
+            android:padding="@dimen/small_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPhone">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPermanentAddress"
-                android:layout_width="match_parent"
+                android:id="@+id/tvCode"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_spacing"
-                android:fontFamily="sans-serif"
-                android:text="@string/permanent_address"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:text="+880"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/txt_color_title"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/txt_color_black"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutDistrict" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutPermanentAddress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standard_margin"
-                android:background="@drawable/ic_rectangle"
-                android:minHeight="88dp"
-                android:padding="@dimen/small_spacing"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPermanentAddress">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etParmanentAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:layout_marginTop="@dimen/margin_14"
-                    android:background="@null"
-                    android:hint="আপনার স্থায়ী ঠিকানা লিখুন"
-                    android:imeOptions="actionNext"
-                    android:inputType="textMultiLine"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPresentAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_spacing"
-                android:fontFamily="sans-serif"
-                android:text="@string/present_address"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/txt_color_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutPermanentAddress" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutPresentAddress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standard_margin"
-                android:background="@drawable/ic_rectangle"
-                android:minHeight="88dp"
-                android:padding="@dimen/small_spacing"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPresentAddress">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etPresentAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:layout_marginTop="@dimen/margin_14"
-                    android:background="@null"
-                    android:hint="আপনার বর্তমান ঠিকানা লিখুন"
-                    android:imeOptions="actionNext"
-                    android:inputType="textMultiLine"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_spacing"
-                android:fontFamily="sans-serif"
-                android:text="@string/txt_mobile_number"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/txt_color_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutPresentAddress" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutPhone"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPhone"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="@dimen/standard_margin"
-                android:background="@drawable/ic_rectangle"
-                android:padding="@dimen/small_spacing"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPhone">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvCode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:text="+880"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/txt_color_black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etPhone"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:background="@null"
-                    android:hint="মোবাইল নম্বর দিন"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone"
-                    android:maxLength="10"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tvCode"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvEmailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_spacing"
-                android:fontFamily="sans-serif"
-                android:text="ইমেইল"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:background="@null"
+                android:hint="মোবাইল নম্বর দিন"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="10"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/txt_color_title"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutPhone" />
+                app:layout_constraintStart_toEndOf="@id/tvCode"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutEmailAddress"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:fontFamily="sans-serif"
+            android:text="ইমেইল"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/txt_color_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutPhone" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutEmailAddress"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@drawable/ic_rectangle"
+            android:padding="@dimen/small_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEmailAddress">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etEmailAddress"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="@dimen/standard_margin"
-                android:background="@drawable/ic_rectangle"
-                android:padding="@dimen/small_spacing"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvEmailAddress">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etEmailAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:background="@null"
-                    android:hint="ইমেইল এড্রেস লিখুন"
-                    android:imeOptions="actionDone"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/standard_margin"
-                android:layout_marginBottom="@dimen/small_spacing"
-                android:background="@drawable/bg_call"
-                android:text="সংরক্ষণ করুন"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:paddingTop="@dimen/small_spacing"
-                android:paddingBottom="@dimen/small_spacing"
-                app:layout_constraintTop_toBottomOf="@id/layoutEmailAddress"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <include
-                android:id="@+id/progressLayout"
-                layout="@layout/layout_circular_progress"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:background="@null"
+                android:hint="ইমেইল এড্রেস লিখুন"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-</layout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:layout_marginBottom="@dimen/small_spacing"
+            android:background="@drawable/bg_call"
+            android:paddingTop="@dimen/small_spacing"
+            android:paddingBottom="@dimen/small_spacing"
+            android:text="সংরক্ষণ করুন"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutEmailAddress" />
+
+        <include
+            android:id="@+id/progressLayout"
+            layout="@layout/layout_circular_progress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
