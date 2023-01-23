@@ -6,16 +6,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentIslamicDiscussBinding
 import com.gakk.noorlibrary.ui.adapter.podcast.IslamicDiscussAdapter
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.setApplicationLanguage
@@ -25,9 +26,14 @@ import kotlinx.coroutines.launch
 internal class IslamicDiscussFragment : Fragment() {
 
     private var mDetailsCallBack: DetailsCallBack? = null
-    private lateinit var binding: FragmentIslamicDiscussBinding
     private lateinit var modelLiterature: LiteratureViewModel
     private lateinit var repository: RestRepository
+
+    //view
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var rvDiscuss : RecyclerView
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +53,22 @@ internal class IslamicDiscussFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_islamic_discuss, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_islamic_discuss,
+            container, false
+        )
+
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvDiscuss = view.findViewById(R.id.rvDiscuss)
+
     }
 
     @SuppressLint("MissingPermission")
@@ -88,18 +106,18 @@ internal class IslamicDiscussFragment : Fragment() {
             when (it.status) {
                 Status.LOADING -> {
                     Log.e("Islamicdiscuss", "LOADING")
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
                     Log.e("Islamicdiscuss", "SUCCESS")
                     val imageList = it.data?.data
-                    binding.rvDiscuss.adapter = imageList?.let { it1 -> IslamicDiscussAdapter(it1) }
+                    rvDiscuss.adapter = imageList?.let { it1 -> IslamicDiscussAdapter(it1) }
 
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
                 Status.ERROR -> {
                     Log.e("Islamicdiscuss", "ERROR")
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }

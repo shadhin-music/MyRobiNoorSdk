@@ -4,19 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentInspirationDetailsBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.adapter.InspirationAdapter
+import com.gakk.noorlibrary.util.PLACE_HOLDER_16_9
 import com.gakk.noorlibrary.util.RepositoryProvider
+import com.gakk.noorlibrary.util.setImageFromUrl
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
+import com.gakk.noorlibrary.views.TextViewNormalArabic
 import kotlinx.coroutines.launch
 
 
@@ -24,11 +30,20 @@ private const val ARG_CAT_ID = "catId"
 
 internal class InspirationDetailsFragment : Fragment() {
 
-    private lateinit var binding: FragmentInspirationDetailsBinding
     private lateinit var mCallback: DetailsCallBack
     private lateinit var repository: RestRepository
     private lateinit var model: LiteratureViewModel
     private var mCatId: String? = null
+
+    //view
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var rvMoreInspiration:RecyclerView
+    private lateinit var imgBg: AppCompatImageView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tvDesArabic: TextViewNormalArabic
+    private lateinit var tvPronunciation: AppCompatTextView
+    private lateinit var tvMeaning: AppCompatTextView
+
 
 
     companion object {
@@ -57,14 +72,27 @@ internal class InspirationDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_inspiration_details,
-                container,
-                false
-            )
-        return binding.root
+
+        val view = inflater.inflate(
+            R.layout.fragment_inspiration_details,
+            container, false
+        )
+
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvMoreInspiration = view.findViewById(R.id.rvMoreInspiration)
+        imgBg = view.findViewById(R.id.imgBg)
+        progressBar = view.findViewById(R.id.progressBar)
+        tvDesArabic = view.findViewById(R.id.tvDesArabic)
+        tvPronunciation =view.findViewById(R.id.tvPronunciation)
+        tvMeaning = view.findViewById(R.id.tvMeaning)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,7 +129,11 @@ internal class InspirationDetailsFragment : Fragment() {
                 Status.SUCCESS -> {
                     // binding.progressLayout.root.visibility = View.GONE
                     val item = it.data?.data?.get(0)
-                    binding.literature = item
+
+                    setImageFromUrl(imgBg,item?.fullImageUrl,progressBar,PLACE_HOLDER_16_9)
+                    tvDesArabic.text = item?.title
+                    tvPronunciation.text = item?.pronunciation
+                    tvMeaning.text = item?.text
                     model.loadImageLiteratureListBySubCategory(
                         mCatId!!,
                         "undefined",
@@ -109,7 +141,7 @@ internal class InspirationDetailsFragment : Fragment() {
                     )
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                     mCallback.showToastMessage(it.message ?: "Error occured !")
                 }
 
@@ -123,7 +155,7 @@ internal class InspirationDetailsFragment : Fragment() {
                 Status.LOADING -> Unit
 
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
 
                     val imageList = it.data?.data
                     setupRV(imageList)
@@ -138,6 +170,6 @@ internal class InspirationDetailsFragment : Fragment() {
 
     private fun setupRV(list: MutableList<Literature>?) {
         val adapter = list?.let { InspirationAdapter(it) }
-        binding.rvMoreInspiration.adapter = adapter
+        rvMoreInspiration.adapter = adapter
     }
 }

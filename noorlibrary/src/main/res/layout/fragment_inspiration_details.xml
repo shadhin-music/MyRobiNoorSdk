@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="literature"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
-
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-        <import type="android.view.View" />
-    </data>
-
-    <androidx.core.widget.NestedScrollView
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -33,15 +19,12 @@
                 android:layout_marginStart="@dimen/standard_margin"
                 android:layout_marginTop="@dimen/standard_margin"
                 android:layout_marginEnd="@dimen/standard_margin"
-                android:fullImageUrl="@{literature.fullImageUrl}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/place_holder_16_9_ratio"
-                app:attachedProgressBar="@{progressBar}"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:placeHolderDimension="@{constant.PLACE_HOLDER_16_9}" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -60,7 +43,6 @@
                 android:layout_marginTop="@dimen/standard_margin"
                 android:layout_marginEnd="@dimen/standard_margin"
                 android:lineSpacingMultiplier="1.5"
-                android:text="@{literature.title}"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/txt_color_black"
@@ -76,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standard_margin"
                 android:lineSpacingMultiplier="1"
-                android:text="@{literature.pronunciation}"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/txt_color_black"
@@ -96,7 +77,6 @@
                 android:layout_marginTop="@dimen/standard_margin"
                 android:layout_marginEnd="@dimen/standard_margin"
                 android:lineSpacingMultiplier="1"
-                android:text="@{literature.text}"
                 android:fontFamily="sans-serif"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -151,4 +131,3 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-</layout>

@@ -6,17 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.gakk.noorlibrary.BuildConfig
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentInstructiveVideoBinding
 import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.ui.activity.QuranSchoolPlayerActivity
 import com.gakk.noorlibrary.ui.adapter.InstructiveVideoAdapter
@@ -29,11 +28,15 @@ private const val ARG_CATEGORY_TYPE = "categoryType"
 
 internal class InstructiveVideoFragment : Fragment(), InstructiveVideoAdapter.OnItemClickListener {
 
-    private lateinit var binding: FragmentInstructiveVideoBinding
     private lateinit var mCallback: DetailsCallBack
     private lateinit var repository: RestRepository
     private lateinit var videoModel: VideoViewModel
     private var mCatType: String? = null
+
+    //view
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var rvInstructiveVideo: RecyclerView
+
 
     companion object {
         @JvmStatic
@@ -63,10 +66,22 @@ internal class InstructiveVideoFragment : Fragment(), InstructiveVideoAdapter.On
         savedInstanceState: Bundle?
     ): View? {
         AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_instructive_video, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_instructive_video,
+            container, false
+        )
+
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvInstructiveVideo = view.findViewById(R.id.rvInstructiveVideo)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,7 +131,7 @@ internal class InstructiveVideoFragment : Fragment(), InstructiveVideoAdapter.On
         videoModel.videoList.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                     val classList = it.data?.data
                     setupRV(classList)
 
@@ -137,7 +152,7 @@ internal class InstructiveVideoFragment : Fragment(), InstructiveVideoAdapter.On
         val adapter = InstructiveVideoAdapter(this, mCallback).apply {
             submitList(list)
         }
-        binding.rvInstructiveVideo.adapter = adapter
+        rvInstructiveVideo.adapter = adapter
 
     }
 
