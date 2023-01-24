@@ -11,7 +11,6 @@ import com.gakk.noorlibrary.callbacks.MainCallback
 import com.gakk.noorlibrary.databinding.LayoutMenuItemBinding
 import com.gakk.noorlibrary.model.BottomSheetItem
 import com.gakk.noorlibrary.ui.activity.YoutubePlayerActivity
-import com.gakk.noorlibrary.ui.activity.khatamquran.KhatamQuranVideoActivity
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjtracker.HajjTrackerActivity
 import com.gakk.noorlibrary.ui.fragments.tabs.MoreFragmentCallBack
 import com.gakk.noorlibrary.util.*
@@ -55,10 +54,6 @@ internal class BottomSheetAdapter(
                             Intent(it.context, YoutubePlayerActivity::class.java).apply {
                                 putExtra(IS_IJTEMA_LIVE_VIDEO, false)
                             }
-                        )
-                    } else if (title == PAGE_KHATAM_QURAN) {
-                        it.context.startActivity(
-                            Intent(it.context, KhatamQuranVideoActivity::class.java)
                         )
                     } else if (title == PAGE_HAJJ_SHARE_LOCATION) {
                         it.context.startActivity(
@@ -140,6 +135,7 @@ class FragmentDestinationMap {
                 context.resources.getString(R.string.cat_eid_jamat) -> PAGE_EID_JAMAT
                 context.resources.getString(R.string.cat_live_qa) -> PAGE_CAT_LIVE_QA
                 "Online Hut" -> ONLINE_HUT_HOME
+                context.resources.getString(R.string.cat_umrah_hajj) -> PAGE_UMRAH_HAJJ
                 else -> null
             }
         }

@@ -8,7 +8,6 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.model.quranSchool.Scholar
 import com.gakk.noorlibrary.ui.fragments.*
-import com.gakk.noorlibrary.ui.fragments.calender.IslamicCalenderFragmentBd
 import com.gakk.noorlibrary.ui.fragments.eidjamat.EidJamatFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.HajjGuideFragment
@@ -24,6 +23,7 @@ import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.tracker.TrackerTabFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.ZakatCalculatorFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.*
+import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import java.io.Serializable
 
 
@@ -238,16 +238,6 @@ object FragmentProvider {
                     }
                 }
 
-            PAGE_ISLAMIC_CALENDER -> when (Util.checkSub()) {
-                true -> {
-                    IslamicCalenderFragmentBd.newInstance()
-                }
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-
-            }
-
             PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
 
             PAGE_TRACKER -> when (Util.checkSub()) {
@@ -314,6 +304,9 @@ object FragmentProvider {
             PAGE_HAJJ_GUIDE -> HajjGuideFragment.newInstance()
 
             PAGE_HAJJ_PREREGISTRATION -> HajjpreRegistrationDetailsFragment.newInstance()
+
+            PAGE_UMRAH_HAJJ -> UmrahHajjFragment.newInstance()
+
 
             else -> null
         }

@@ -56,4 +56,8 @@
 
     <color name="defaultColor">#2962FF</color>
 
+    <color name="divider">#1F000000</color>
+    <color name="status_success">#E6F5F0</color>
+    <color name="status_failed">#4DEADE7F</color>
+
 </resources>

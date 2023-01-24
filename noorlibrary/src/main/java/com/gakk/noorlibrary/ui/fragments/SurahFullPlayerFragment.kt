@@ -7,18 +7,20 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.SeekBar
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatSeekBar
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.*
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentSurahFullPlayerBinding
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.service.AudioPlayerService
 import com.gakk.noorlibrary.ui.adapter.FullPlayerAdapter
@@ -30,12 +32,21 @@ import kotlinx.coroutines.launch
 internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerCallBack {
 
     private var mDetailsCallBack: DetailsCallBack? = null
-    private lateinit var binding: FragmentSurahFullPlayerBinding
     private lateinit var surahList: MutableList<Data>
     private var adapter: FullPlayerAdapter? = null
 
     private lateinit var model: QuranViewModel
     private lateinit var repository: RestRepository
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var playerControl: ConstraintLayout
+    private lateinit var exoProgressMini: AppCompatSeekBar
+    private lateinit var btnPrev: ImageButton
+    private lateinit var btnNext: ImageButton
+    private lateinit var btnPlayPause: ImageButton
+    private lateinit var rvFullPlayer: RecyclerView
+    private lateinit var tvCurrentTime: AppCompatTextView
+    private lateinit var tvDuration: AppCompatTextView
+
 
     private var favAction: () -> Unit =
         {
@@ -72,10 +83,22 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_surah_full_player, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_surah_full_player,
+            container, false
+        )
+        progressLayout = view.findViewById(R.id.progressLayout)
+        playerControl = view.findViewById(R.id.playerControl)
+        exoProgressMini = playerControl.findViewById(R.id.exo_progress_mini)
+        btnPrev = playerControl.findViewById(R.id.btnPrev)
+        btnNext = playerControl.findViewById(R.id.btnNext)
+        btnPlayPause = playerControl.findViewById(R.id.btnPlayPause)
+        tvCurrentTime = playerControl.findViewById(R.id.tvCurrentTime)
+        tvDuration = playerControl.findViewById(R.id.tvDuration)
+        rvFullPlayer = view.findViewById(R.id.rvFullPlayer)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -100,7 +123,7 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
                 when (it.status) {
                     Status.SUCCESS -> {
                         SurahListControl.getSelectedSurah().isSurahFavByThisUser = true
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         updateToolbarForThisFragment()
                         var surah = Data(
                             id = SurahListControl.getSelectedSurah()!!.id,
@@ -110,10 +133,10 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
                         FavouriteSurahObserver.postFavouriteNotification(surah)
                     }
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         mDetailsCallBack?.showToastMessage(resources.getString(R.string.error_message))
                     }
                 }
@@ -124,7 +147,7 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
                     Status.SUCCESS -> {
 
                         SurahListControl.getSelectedSurah().isSurahFavByThisUser = false
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         updateToolbarForThisFragment()
                         var surah = Data(
                             id = SurahListControl.getSelectedSurah()!!.id,
@@ -135,19 +158,19 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
 
                     }
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         mDetailsCallBack?.showToastMessage(resources.getString(R.string.error_message))
                     }
                 }
             })
 
 
-            binding.playerControl.let {
+            playerControl.let {
 
-                it.exoProgressMini.setOnSeekBarChangeListener(object :
+                exoProgressMini.setOnSeekBarChangeListener(object :
                     SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(
                         seekBar: SeekBar?,
@@ -170,18 +193,18 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
 
                 })
 
-                it.btnPrev.handleClickEvent {
+                btnPrev.handleClickEvent {
                     decrementSelectedIndex()
                     loadUIWithUpdatedIndex()
                     AudioPlayerService.executePlayerCommand(PREV_COMMAND)
                 }
 
-                it.btnNext.handleClickEvent {
+                btnNext.handleClickEvent {
                     incrementSelectedIndex()
                     loadUIWithUpdatedIndex()
                     AudioPlayerService.executePlayerCommand(NEXT_COMMAND)
                 }
-                it.btnPlayPause.handleClickEvent {
+                btnPlayPause.handleClickEvent {
                     handlePlayPause()
                 }
             }
@@ -190,19 +213,19 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
                 when (it.status) {
                     Status.SUCCESS -> {
 
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         SurahListControl.getSelectedSurah().isSurahFavByThisUser = it.data!!.data
                         updateToolbarForThisFragment()
                         showUI()
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         mDetailsCallBack?.showToastMessage(resources.getString(R.string.error_message))
                         updateToolbarForThisFragment()
                         showUI()
                     }
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
 
                     }
                 }
@@ -221,7 +244,7 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
 
         if (adapter == null) {
             adapter = FullPlayerAdapter(surahList, itemClickAction)
-            binding.rvFullPlayer.adapter = adapter
+            rvFullPlayer.adapter = adapter
         } else {
             adapter?.updateSurahList(surahList)
             adapter?.notifyDataSetChanged()
@@ -255,11 +278,11 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
 
     fun inflateplayerControl() {
         var selectedSurah = SurahListControl.getSelectedSurah()
-        binding.playerControl?.let {
-            it.tvCurrentTime.setText("00".getLocalisedDuration())
-            it.tvDuration.setText(selectedSurah.durationLocalised)
-            it.btnPrev.isEnabled = SurahListControl.curIndex!! > 0
-            it.btnNext.isEnabled = SurahListControl.curIndex!! < surahList.size - 1
+        playerControl?.let {
+            tvCurrentTime.setText("00".getLocalisedDuration())
+            tvDuration.setText(selectedSurah.durationLocalised)
+            btnPrev.isEnabled = SurahListControl.curIndex!! > 0
+            btnNext.isEnabled = SurahListControl.curIndex!! < surahList.size - 1
         }
     }
 
@@ -309,15 +332,15 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
     }
 
     private fun showUI() {
-        binding.playerControl.root.visibility = VISIBLE
-        binding.rvFullPlayer.visibility = VISIBLE
+        playerControl.visibility = VISIBLE
+        rvFullPlayer.visibility = VISIBLE
         mDetailsCallBack?.toggleToolBarActionIconsVisibility(true)
 
     }
 
     private fun hideUI() {
-        binding.playerControl.root.visibility = INVISIBLE
-        binding.rvFullPlayer.visibility = INVISIBLE
+        playerControl.visibility = INVISIBLE
+        rvFullPlayer.visibility = INVISIBLE
         mDetailsCallBack?.toggleToolBarActionIconsVisibility(false)
     }
 
@@ -371,22 +394,22 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
     }
 
     override fun updatePlayerControlPlayPauseButton(isPlaying: Boolean) {
-        binding.playerControl?.let {
+        playerControl?.let {
             when (isPlaying) {
-                true -> it.btnPlayPause.setImageResource(R.drawable.ic_pause_filled_enabled)
-                false -> it.btnPlayPause.setImageResource(R.drawable.ic_play_filled_enabled)
+                true -> btnPlayPause.setImageResource(R.drawable.ic_pause_filled_enabled)
+                false -> btnPlayPause.setImageResource(R.drawable.ic_play_filled_enabled)
             }
         }
     }
 
     override fun updatePlayerControlTotalDuration(ms: Long) {
-        binding.playerControl.exoProgressMini.max = ms.toInt()
-        binding.playerControl.tvDuration.setText(TimeFormtter.getDurationFromMsByLocale(ms))
+        exoProgressMini.max = ms.toInt()
+        tvDuration.setText(TimeFormtter.getDurationFromMsByLocale(ms))
     }
 
     override fun updatePlayerControlCurrentDuration(ms: Long) {
-        binding.playerControl.exoProgressMini.progress = ms.toInt()
-        binding.playerControl.tvCurrentTime.setText(TimeFormtter.getDurationFromMsByLocale(ms))
+        exoProgressMini.progress = ms.toInt()
+        tvCurrentTime.setText(TimeFormtter.getDurationFromMsByLocale(ms))
     }
 
 
@@ -399,8 +422,8 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
     override fun togglePlayerControlVisibility(show: Boolean) {
         Log.i("VISIBILITY", "$show")
         when (show) {
-            true -> binding.playerControl.root.visibility = VISIBLE
-            false -> binding.playerControl.root.visibility = View.GONE
+            true -> playerControl.visibility = VISIBLE
+            false -> playerControl.visibility = View.GONE
         }
     }
 

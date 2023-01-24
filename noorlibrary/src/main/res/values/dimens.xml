@@ -30,6 +30,8 @@
     <dimen name="day_label_size_events_enabled">30dp</dimen>
     <dimen name="day_label_size_events_disabled">38dp</dimen>
     <dimen name="abbreviation_text_size_max">14sp</dimen>
+    <dimen name="_48sdp">48dp</dimen>
+    <dimen name="_64sdp">64dp</dimen>
 
 
 </resources>

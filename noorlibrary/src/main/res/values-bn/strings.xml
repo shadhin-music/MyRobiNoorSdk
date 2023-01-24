@@ -469,4 +469,15 @@
     <string name="txt_dua_eight">লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ</string>
 
     <string name="title_notification">নোটিফিকেশন</string>
+    <string name="cat_umrah_details">উমরাহ হজ্জ প্যাকেজ</string>
+    <string name="umrah_package_book_btn">প্যাকেজ বুক করুন</string>
+    <string name="hint_passport_number">পাসপোর্ট নম্বর</string>
+    <string name="txt_next1">পরবর্তী ধাপ</string>
+    <string name="txt_error_passport">আপনার পাসপোর্ট নম্বর দিন</string>
+    <string name="txt_error_correct_passport">বৈধ পাসপোর্ট নম্বর দিন</string>
+    <string name="payment_title">পেমেন্ট করুন</string>
+    <string name="cat_umrah_pay_history">বুকিং হিস্ট্রি</string>
+    <string name="umrah_hajj_pay_history_price">%1$s %2$s %3$s</string>
+    <string name="cat_umrah_hajj">উমরাহ‌\nপ্যাকেজ</string>
+
 </resources>

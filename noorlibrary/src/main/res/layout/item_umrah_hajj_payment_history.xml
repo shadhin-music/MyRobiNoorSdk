@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_spacing"
+        android:background="@color/bg">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg"
+                android:orientation="vertical">
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/datetime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/standard_margin"
+                            android:layout_marginTop="@dimen/standard_margin"
+                            android:fontFamily="@font/notosansbengali_regular"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/standard_margin"
+                            android:layout_marginTop="@dimen/small_spacing"
+                            android:fontFamily="@font/notosansbengali_regular"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosansbengali_regular"
+                            android:textColor="@color/ash"
+                            android:layout_marginStart="@dimen/standard_margin"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/statusBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardElevation="0dp"
+                            app:cardCornerRadius="20dp"
+                            android:layout_marginStart="@dimen/standard_margin"
+                            android:layout_marginEnd="@dimen/standard_margin"
+                            android:layout_marginTop="@dimen/small_spacing"
+                            android:layout_marginBottom="@dimen/standard_margin"
+                            app:cardPreventCornerOverlap="false"
+                            app:cardUseCompatPadding="false">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/small_spacing"
+                                android:orientation="horizontal">
+
+                                <FrameLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="5">
+
+                                    <TextView
+                                        android:layout_gravity="center|left"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/notosansbengali_regular"
+                                        android:text="পেমেন্ট স্ট্যাটাস"
+                                        android:textColor="@color/ash"
+                                        android:layout_marginStart="@dimen/standard_margin"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                                </FrameLayout>
+
+
+                                <FrameLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="5">
+
+                                    <LinearLayout
+                                        android:layout_gravity="center|right"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginEnd="@dimen/standard_margin"
+                                        android:layout_height="match_parent"
+                                        android:orientation="horizontal">
+
+
+                                        <ImageView
+                                            android:id="@+id/statusIcon"
+                                            android:layout_gravity="center"
+                                            android:layout_width="15dp"
+                                            android:layout_height="11dp"
+                                            android:background="@null"
+                                            android:scaleType="centerCrop"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                                        <TextView
+                                            android:id="@+id/status"
+                                            android:layout_gravity="center"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/notosansbengali_regular"
+                                            android:layout_marginStart="@dimen/standard_margin"
+                                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+
+                                    </LinearLayout>
+
+                                </FrameLayout>
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

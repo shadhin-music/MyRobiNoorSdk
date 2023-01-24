@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View.*
 import android.widget.ImageButton
+import androidx.annotation.DrawableRes
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -34,6 +35,7 @@ import com.gakk.noorlibrary.ui.fragments.zakat.donation.DonationHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.OrganizationDetailsFragment
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.ui.fragments.BiographyFragment
+import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import java.io.File
 import java.util.*
 
@@ -169,6 +171,13 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
                 )
             }
 
+            PAGE_UMRAH_HAJJ -> {
+
+                FragmentProvider.getFragmentByName(
+                    name = mPage
+                )
+            }
+
             else -> FragmentProvider.getFragmentByName(name = mPage, detailsActivityCallBack = this)
         }
 
@@ -195,46 +204,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
 
     override fun setToolBarTitle(title: String?) {
         binding?.toolBar?.title?.setText(title)
-    }
-
-    override fun toggleToolBarActionIconsVisibility(
-        isVisible: Boolean,
-        buttonType: ActionButtonType?
-    ) {
-        when (buttonType) {
-            ActionButtonType.TypeOne -> {
-                when (isVisible) {
-                    true -> {
-                        binding?.toolBar?.btnCustomActionOne?.visibility = VISIBLE
-                    }
-                    false -> {
-                        binding?.toolBar?.btnCustomActionOne?.visibility = GONE
-                    }
-                }
-            }
-            ActionButtonType.TypeTwo -> {
-                when (isVisible) {
-                    true -> {
-                        binding?.toolBar?.btnCustomActionTwo?.visibility = VISIBLE
-                    }
-                    false -> {
-                        binding?.toolBar?.btnCustomActionTwo?.visibility = GONE
-                    }
-                }
-            }
-            null -> {
-                when (isVisible) {
-                    true -> {
-                        binding?.toolBar?.btnCustomActionOne?.visibility = VISIBLE
-                        binding?.toolBar?.btnCustomActionTwo?.visibility = VISIBLE
-                    }
-                    false -> {
-                        binding?.toolBar?.btnCustomActionOne?.visibility = INVISIBLE
-                        binding?.toolBar?.btnCustomActionTwo?.visibility = GONE
-                    }
-                }
-            }
-        }
     }
 
 
@@ -287,14 +256,24 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
                 binding?.toolBar?.btnCustomActionTwo?.tag = tag
                 binding?.toolBar?.btnCustomActionTwo?.let { updateButtonIconBasedOnTag(it) }
             }
+
+            ActionButtonType.TypeThree -> {
+                binding?.toolBar?.btnCustomActionThree?.tag = tag
+                binding?.toolBar?.btnCustomActionThree?.let { updateButtonIconBasedOnTag(it) }
+            }
+
         }
     }
 
     override fun setActionOfActionButton(action: () -> Unit, actionButtonType: ActionButtonType) {
         when (actionButtonType) {
+
             ActionButtonType.TypeOne -> binding?.toolBar?.btnCustomActionOne?.handleClickEvent { action() }
             ActionButtonType.TypeTwo -> binding?.toolBar?.btnCustomActionTwo?.handleClickEvent { action() }
+            ActionButtonType.TypeThree -> binding?.toolBar?.btnCustomActionThree?.handleClickEvent { action() }
+
         }
+
     }
 
     /**
@@ -359,6 +338,8 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             HajjPreRegistrationListFragment::class.java -> (fragment as HajjPreRegistrationListFragment).updateToolbarForThisFragment()
             QurbaniHomeFragment::class.java -> (fragment as QurbaniHomeFragment).updateToolbarForThisFragment()
             BishwaIjtemaFragment::class.java -> (fragment as BishwaIjtemaFragment).updateToolbarForThisFragment()
+            UmrahHajjFragment::class.java -> (fragment as UmrahHajjFragment).setupToolbarCallback()
+
         }
     }
 
@@ -448,6 +429,67 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:$number")
         startActivity(intent)
+    }
+
+    override fun toggleToolBarActionIconsVisibility(
+        isVisible: Boolean,
+        buttonType: ActionButtonType?,
+        @DrawableRes
+        buttonRes: Int?
+    ) {
+        when (buttonType) {
+            ActionButtonType.TypeOne -> {
+                when (isVisible) {
+                    true -> {
+                        binding?.toolBar?.btnCustomActionOne?.visibility = VISIBLE
+                    }
+                    false -> {
+                        binding?.toolBar?.btnCustomActionOne?.visibility = GONE
+                    }
+                }
+            }
+            ActionButtonType.TypeTwo -> {
+                when (isVisible) {
+                    true -> {
+                        binding?.toolBar?.btnCustomActionTwo?.visibility = VISIBLE
+                    }
+                    false -> {
+                        binding?.toolBar?.btnCustomActionTwo?.visibility = GONE
+                    }
+                }
+            }
+
+            ActionButtonType.TypeThree -> {
+                when (isVisible) {
+                    true -> {
+                        binding?.toolBar?.btnCustomActionThree?.visibility = VISIBLE
+                    }
+                    false -> {
+                        binding?.toolBar?.btnCustomActionThree?.visibility = GONE
+                    }
+                }
+
+                if (buttonRes != null) {
+                    binding?.toolBar?.btnCustomActionThree?.setImageResource(buttonRes)
+                }
+
+            }
+
+            null -> {
+                when (isVisible) {
+                    true -> {
+                        binding?.toolBar?.btnCustomActionOne?.visibility = VISIBLE
+                        binding?.toolBar?.btnCustomActionTwo?.visibility = VISIBLE
+                        binding?.toolBar?.btnCustomActionThree?.visibility = VISIBLE
+                    }
+                    false -> {
+                        binding?.toolBar?.btnCustomActionOne?.visibility = GONE
+                        binding?.toolBar?.btnCustomActionTwo?.visibility = GONE
+                        binding?.toolBar?.btnCustomActionThree?.visibility = GONE
+                    }
+                }
+            }
+        }
     }
 }
 

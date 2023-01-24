@@ -183,6 +183,7 @@ internal class HajjPaymentFragment : Fragment() {
                                         PreRegistrationBrowserActivity::class.java
                                     ).putExtra(TRACKING_NO_TAG, trackingNo)
                                         .putExtra(PAYMENT_URL_TAG, it.data.gatewayPageURL)
+                                        .putExtra(PAYMENT_STATUS_TAG, PAYMENT_HAJJ_PRE_REG)
                                 )
                                 requireActivity().finish()
                             } else {

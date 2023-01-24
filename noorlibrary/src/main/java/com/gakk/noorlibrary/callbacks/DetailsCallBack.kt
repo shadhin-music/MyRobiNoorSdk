@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.callbacks
 
+import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.databinding.LayoutRozaPrimaryHeaderBinding
@@ -18,7 +19,12 @@ interface DetailsCallBack {
     fun handleNavigationUpAction()
     fun addFragmentToStackAndShow(fragment: Fragment)
     fun setToolBarTitle(title: String?)
-    fun toggleToolBarActionIconsVisibility(isVisible: Boolean, buttonType: ActionButtonType? = null)
+    fun toggleToolBarActionIconsVisibility(
+        isVisible: Boolean,
+        buttonType: ActionButtonType? = null,
+        @DrawableRes
+        buttonRes: Int? = null
+    )
     fun showDialogWithActionAndParam(
         dialogType: DialogType, surahListAdapter: SurahListAdapter? = null,
         binding: LayoutRozaPrimaryHeaderBinding? = null,
@@ -51,5 +57,6 @@ interface DetailsCallBack {
 sealed class ActionButtonType {
     object TypeOne : ActionButtonType()
     object TypeTwo : ActionButtonType()
+    object TypeThree : ActionButtonType()
 }
 

@@ -162,13 +162,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
             bottomSheetItems.add(
                 BottomSheetItem(
-                    R.drawable.ic_cat_khatam_e_quran,
-                    getString(R.string.cat_khatam_quran)
-                )
-            )
-
-            bottomSheetItems.add(
-                BottomSheetItem(
                     R.drawable.ic_live_question_answer,
                     getString(R.string.cat_live_qa)
                 )
@@ -222,15 +215,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         bottomSheetItems.add(
             BottomSheetItem(
-                R.drawable.ic_cat_calender,
-                getString(R.string.cat_islamic_calender)
-            )
-        )
-
-
-
-        bottomSheetItems.add(
-            BottomSheetItem(
                 R.drawable.ic_cat_tracker,
                 getString(R.string.cat_tracker)
             )
@@ -253,6 +237,8 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                 getString(R.string.cat_donation)
             )
         )
+
+
 
 
         if (AppPreference.language.equals(LAN_BANGLA)) {
@@ -298,6 +284,13 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             BottomSheetItem(
                 R.drawable.ic_islamic_event,
                 getString(R.string.cat_islamic_event)
+            )
+        )
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_umrah_hajj,
+                getString(R.string.cat_umrah_hajj)
             )
         )
 
