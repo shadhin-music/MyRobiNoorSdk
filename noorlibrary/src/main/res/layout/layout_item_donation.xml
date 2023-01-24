@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="literature"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
+<!--        <variable-->
+<!--            name="literature"-->
+<!--            type="com.gakk.noorlibrary.model.literature.Literature" />-->
 
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-    </data>
+<!--        <variable-->
+<!--            name="constant"-->
+<!--            type="com.gakk.noorlibrary.util.ConstantsKt" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,14 +39,12 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/standard_margin"
-                    android:fullImageUrl="@{literature.fullImageUrl}"
                     android:scaleType="centerCrop"
                     android:src="@drawable/place_holder_1_1_ratio"
-                    app:attachedProgressBar="@{progressBar}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:placeHolderDimension="@{constant.PLACE_HOLDER_1_1}" />
+                  />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/standard_margin"
-                    android:text="@{literature.subcategoryName}"
+                    android:id="@+id/tvTitle"
                     android:fontFamily="sans-serif"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -67,4 +67,4 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</RelativeLayout>
