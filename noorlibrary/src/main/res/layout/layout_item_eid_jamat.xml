@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="literature"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
-    </data>
+<!--        <variable-->
+<!--            name="literature"-->
+<!--            type="com.gakk.noorlibrary.model.literature.Literature" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -51,7 +51,6 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif"
                     android:maxLines="2"
-                    android:text="@{literature.title}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/txt_color_black"
                     android:textFontWeight="400"
@@ -76,7 +75,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="@{literature.text}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/ash"
                     android:visibility="gone"
