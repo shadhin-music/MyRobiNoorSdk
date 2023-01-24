@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
@@ -28,21 +29,21 @@ internal class EidJamatAdapter(
 
     inner class EidJamatViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
         var view: View = layoutView
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EidJamatViewHolder {
         when (viewType) {
             ITEM_HEADER -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_eid_jamat_header, parent, false)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.item_eid_jamat_header,parent,false)
 
                 return EidJamatViewHolder(view)
 
             }
 
             else -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.layout_item_eid_jamat, parent, false)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_eid_jamat,parent,false)
 
                 return EidJamatViewHolder(view)
 
@@ -57,19 +58,19 @@ internal class EidJamatAdapter(
                 val ivHeader = holder.view.findViewById<AppCompatImageView>(R.id.ivHeader)
                 val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
                 progressBar.visibility = View.GONE
-                Glide.with(holder.view.context)
-                    .load(ImageFromOnline("header_eid_jamat.png").fullImageUrl).into(ivHeader)
+                 Glide.with(holder.view.context).load(ImageFromOnline("header_eid_jamat.png").fullImageUrl).into(ivHeader)
+               // holder.bindingHeader?.item =
             }
 
             ITEM_LIST -> {
                 val listItem = jamatList.get(position - 1)
-                val titleMosque = holder.view.findViewById<AppCompatTextView>(R.id.titleMosque)
-                titleMosque.text = listItem.title
-                val tvLocationMosque =
-                    holder.view.findViewById<AppCompatTextView>(R.id.tvLocationMosque)
+             //   holder.bindingOrganizations?.literature = listItem
+               val  titleMosque = holder.view.findViewById<AppCompatTextView>(R.id.titleMosque)
+                   titleMosque.text = listItem.title
+                val  tvLocationMosque = holder.view.findViewById<AppCompatTextView>(R.id.tvLocationMosque)
                 tvLocationMosque.text = listItem.text
                 val ivDirection = holder.view.findViewById<AppCompatImageView>(R.id.ivDirection)
-                ivDirection?.handleClickEvent {
+              ivDirection?.handleClickEvent {
                     mapOpenController.openMap(
                         listItem.latitude?.toDouble()!!,
                         listItem.longitude?.toDouble()!!
@@ -81,11 +82,11 @@ internal class EidJamatAdapter(
                     when (tvLocationMosque?.visibility) {
                         View.VISIBLE -> {
                             listItem.isExand = false
-                            tvLocationMosque?.visibility = View.GONE
+                  tvLocationMosque?.visibility = View.GONE
                         }
                         View.GONE -> {
                             listItem.isExand = true
-                            tvLocationMosque?.visibility = View.VISIBLE
+                        tvLocationMosque?.visibility = View.VISIBLE
                         }
                     }
                 }

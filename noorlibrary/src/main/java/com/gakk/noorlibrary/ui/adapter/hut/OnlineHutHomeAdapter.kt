@@ -1,21 +1,24 @@
 package com.gakk.noorlibrary.ui.adapter.hut
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.databinding.ItemHeaderOnlineHutBinding
-import com.gakk.noorlibrary.databinding.LayoutItemLocationwiseHutBinding
-import com.gakk.noorlibrary.databinding.LayoutItemOnlineHutBinding
-import com.gakk.noorlibrary.databinding.LayoutItemTitleHutBinding
+
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.fragments.onlinehut.OnlineHutLocationwiseFrgment
 import com.gakk.noorlibrary.util.CITY_NAME_NORTH
 import com.gakk.noorlibrary.util.CITY_NAME_SOUTH
+import com.gakk.noorlibrary.util.CircleImageView
 import com.gakk.noorlibrary.util.handleClickEvent
 
 internal class OnlineHutHomeAdapter(
@@ -29,97 +32,72 @@ internal class OnlineHutHomeAdapter(
     val ITEM_TITLE = 2
     val ITEM_HUT = 3
 
-    inner class ViewHolder : RecyclerView.ViewHolder {
+    inner class ViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
+        var view: View = layoutView
 
-        var bindingItemHeaderOnlineHutBinding: ItemHeaderOnlineHutBinding? = null
-
-        constructor(itemView: ItemHeaderOnlineHutBinding) : super(itemView.root) {
-            bindingItemHeaderOnlineHutBinding = itemView
-        }
-
-        var bindingLocationwiseHut: LayoutItemLocationwiseHutBinding? = null
-
-        constructor(itemView: LayoutItemLocationwiseHutBinding) : super(itemView.root) {
-            bindingLocationwiseHut = itemView
-        }
-
-        var bindingTitleHut: LayoutItemTitleHutBinding? = null
-
-        constructor(itemView: LayoutItemTitleHutBinding) : super(itemView.root) {
-            bindingTitleHut = itemView
-        }
-
-        var bindingOnlineHut: LayoutItemOnlineHutBinding? = null
-
-        constructor(itemView: LayoutItemOnlineHutBinding) : super(itemView.root) {
-            bindingOnlineHut = itemView
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         when (viewType) {
             ITEM_HEADER -> {
-                val binding: ItemHeaderOnlineHutBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.item_header_online_hut,
-                    parent,
-                    false
-                )
-                return ViewHolder(binding)
+
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_header_online_hut, parent, false)
+                return ViewHolder(view)
+
             }
 
             ITEM_LOCATION -> {
-                val binding: LayoutItemLocationwiseHutBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_item_locationwise_hut,
-                    parent,
-                    false
-                )
-                return ViewHolder(binding)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_item_locationwise_hut, parent, false)
+                return ViewHolder(view)
             }
+
 
             ITEM_TITLE -> {
-                val binding: LayoutItemTitleHutBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_item_title_hut,
-                    parent,
-                    false
-                )
-                return ViewHolder(binding)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_item_title_hut, parent, false)
+                return ViewHolder(view)
             }
 
+
             else -> {
-                val binding: LayoutItemOnlineHutBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_item_online_hut,
-                    parent,
-                    false
-                )
-                return ViewHolder(binding)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_item_online_hut, parent, false)
+                return ViewHolder(view)
             }
+
         }
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (holder.itemViewType) {
 
             ITEM_HEADER -> {
-                holder.bindingItemHeaderOnlineHutBinding?.item = ImageFromOnline("ic_header_online_hut.png")
+                val image = holder.itemView.findViewById<AppCompatImageView>(R.id.ivHeaderHut)
+                Glide.with(holder.view.context).load(ImageFromOnline("ic_north_city_corporation.png").fullImageUrl).into(image)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.visibility = View.GONE
             }
             ITEM_LOCATION -> {
-                holder.bindingLocationwiseHut?.itemNorth =
-                    ImageFromOnline("ic_north_city_corporation.png")
-                holder.bindingLocationwiseHut?.item =
-                    ImageFromOnline("ic_south_city_corporation.png")
-                holder.bindingLocationwiseHut?.ivNorthCity?.handleClickEvent {
+                val ivNorthCity = holder.itemView.findViewById<AppCompatImageView>(R.id.ivNorthCity)
+                Glide.with(holder.view.context).load(ImageFromOnline("ic_header_online_hut.png").fullImageUrl).into(ivNorthCity)
+                val ivSouthCity = holder.itemView.findViewById<AppCompatImageView>(R.id.ivSouthCity)
+                Glide.with(holder.view.context).load( ImageFromOnline("ic_south_city_corporation.png").fullImageUrl).into(ivSouthCity)
+                val progressBarNorth = holder.view.findViewById<ProgressBar>(R.id.progressBarNorth)
+                progressBarNorth.visibility = View.GONE
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.visibility = View.GONE
+
+               ivNorthCity?.handleClickEvent {
                     detailsCallBack.addFragmentToStackAndShow(
                         OnlineHutLocationwiseFrgment.newInstance(
                             CITY_NAME_NORTH
                         )
                     )
                 }
-
-                holder.bindingLocationwiseHut?.ivSouthCity?.handleClickEvent {
+              ivSouthCity?.handleClickEvent {
                     detailsCallBack.addFragmentToStackAndShow(
                         OnlineHutLocationwiseFrgment.newInstance(
                             CITY_NAME_SOUTH
@@ -130,9 +108,13 @@ internal class OnlineHutHomeAdapter(
             ITEM_HUT -> {
 
                 val listItem = literatureList.get(position - 3)
-                holder.bindingOnlineHut?.item = listItem
-
-                holder.bindingOnlineHut?.root?.handleClickEvent {
+                val image = holder.itemView.findViewById<AppCompatImageView>(R.id.img)
+                Glide.with(holder.view.context).load(listItem?.fullImageUrl).into(image)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.visibility = View.GONE
+              //  holder.bindingOnlineHut?.item = listItem
+                 val constraintLayout:ConstraintLayout = holder.view.findViewById(R.id.constraint)
+                constraintLayout.handleClickEvent {
                     listItem.refUrl?.let { detailsCallBack.openUrl(it) }
                 }
             }
