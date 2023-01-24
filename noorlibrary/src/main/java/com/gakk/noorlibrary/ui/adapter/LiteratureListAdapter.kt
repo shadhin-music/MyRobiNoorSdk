@@ -1,19 +1,19 @@
 package com.gakk.noorlibrary.ui.adapter
 
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.FavUnFavCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.*
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 
@@ -27,6 +27,7 @@ const val FOOTER = 2
 val DOWNLOADABLE = 3
 const val JAKAT_HEADER = 4
 const val JAKAT_QUERY = 5
+const val OTHER = 6
 
 internal class LiteratureListAdapter(
     list: MutableList<Literature>?,
@@ -55,124 +56,127 @@ internal class LiteratureListAdapter(
         return mList ?: mutableListOf()
     }
 
-    inner class LiteratureViewHolder : RecyclerView.ViewHolder {
+    inner class LiteratureViewHolder(layoutId: Int,layoutView: View) :
+        RecyclerView.ViewHolder(layoutView) {
 
-        var literatureBinding: LayoutLiteratureBinding? = null
+         val view:View = layoutView
 
-        constructor(binding: LayoutLiteratureBinding) : super(binding.root) {
-            literatureBinding = binding
-            literatureBinding?.let {
-                actionImageControl.setLayoutActionImage(it, mIsFavList)
-
-                it.imgAction.handleClickEvent {
-                    val literature = mList?.get(bindingAdapterPosition)
-                    when (mIsFavList) {
-                        true -> {
-                            var lCId = literature?.category!!
-                            var lscId = literature?.subcategory ?: ""
-                            var id = literature?.id!!
-                            var pos = adapterPosition
-                            mFavCallBack?.performFavOrUnFavAction(lCId, lscId, id, pos, false)
-                        }
-                        false -> {
-                            mItemClickCallBack?.goToListeratureDetailsFragment(
-                                adapterPosition,
-                                mIsFavList
-                            )
-                        }
-                    }
-                }
-                it.root.handleClickEvent {
-                    mItemClickCallBack?.goToListeratureDetailsFragment(adapterPosition, mIsFavList)
-                }
-
-            }
-        }
-
-        var noDataBinding: LayoutNoDataBinding? = null
-
-        constructor(binding: LayoutNoDataBinding) : super(binding.root) {
-            noDataBinding = binding
-        }
+        val layoutTag = layoutId
 
 
-        var downloadTag: String? = null
-        fun setTag(tag: String, binding: LayoutDownloadableBinding) {
-            if (downloadTag != null) {
-                DownloadProgressControl.removeLayoutFromMap(downloadTag!!, binding)
-            }
-            downloadTag = tag
-            DownloadProgressControl.addLayoutToMapAndUpdate(downloadTag!!, binding)
-
-        }
-
-        var categoryDownloadableBinding: LayoutDownloadableBinding? = null
-
-        constructor(binding: LayoutDownloadableBinding) : super(binding.root) {
-            categoryDownloadableBinding = binding
-
-
-            categoryDownloadableBinding?.root?.handleClickEvent {
-                mItemClickCallBack?.goToListeratureDetailsFragment(adapterPosition, false)
-            }
-
-            categoryDownloadableBinding?.root?.let {
-                it.resizeView(
-                    ViewDimension.HalfScreenWidth,
-                    mDetailsCallBack?.getScreenWith(),
-                    it.context
-                )
-            }
-        }
-
-
-        var footerBinding: LayoutFooterBinding? = null
-
-        constructor(binding: LayoutFooterBinding) : super(binding.root) {
-            footerBinding = binding
-        }
-
-        var jakatHeadrBinding: LayoutJaktHeaderBinding? = null
-
-        constructor(binding: LayoutJaktHeaderBinding) : super(binding.root) {
-            jakatHeadrBinding = binding
-
-            jakatHeadrBinding?.item = ImageFromOnline("ic_zakat_img.png")
-        }
-
-        var jakatQueryBinding: LayoutJakatQueryBinding? = null
-
-        constructor(binding: LayoutJakatQueryBinding) : super(binding.root) {
-            jakatQueryBinding = binding
-            jakatQueryBinding?.let { binding ->
-
-                toggleJakatDescriptionVisibility(binding.root, binding)
-
-                binding.btnToggleCollapse?.let {
-                    toggleJakatDescriptionVisibility(it, binding)
-
-                }
-            }
-
-        }
-
-        fun toggleJakatDescriptionVisibility(view: View, binding: LayoutJakatQueryBinding) {
+        fun toggleJakatDescriptionVisibility(view: View, binding: View) {
             view.handleClickEvent {
-                when (binding.tvDesc.visibility) {
+
+                val tvDesc = binding.findViewById<AppCompatTextView>(R.id.tvDesc)
+                val btnToggleCollapse = binding.findViewById<AppCompatImageView>(R.id.btnToggleCollapse)
+
+
+                when (tvDesc.visibility) {
+
                     VISIBLE -> {
-                        binding.btnToggleCollapse.setImageResource(R.drawable.ic_plus)
-                        binding.tvDesc.visibility = GONE
+                        btnToggleCollapse.setImageResource(R.drawable.ic_plus)
+                        tvDesc.visibility = GONE
                     }
                     GONE -> {
-                        binding.btnToggleCollapse.setImageResource(R.drawable.ic_minus)
-                        binding.tvDesc.visibility = View.VISIBLE
+                        btnToggleCollapse.setImageResource(R.drawable.ic_minus)
+                        tvDesc.visibility = VISIBLE
+                    }
+                    INVISIBLE -> Unit
+                }
+            }
+        }
+
+        init {
+
+            when(layoutId)
+            {
+                OTHER ->
+                {
+
+                    view.apply {
+
+                        actionImageControl.setLayoutActionImage(this, mIsFavList)
+
+                        this.findViewById<ImageView>(R.id.imgAction).handleClickEvent {
+                            val literature = mList?.get(bindingAdapterPosition)
+                            when (mIsFavList) {
+                                true -> {
+                                    var lCId = literature?.category!!
+                                    var lscId = literature.subcategory ?: ""
+                                    var id = literature.id!!
+                                    var pos = adapterPosition
+                                    mFavCallBack?.performFavOrUnFavAction(lCId, lscId, id, pos, false)
+                                }
+                                false -> {
+                                    mItemClickCallBack?.goToListeratureDetailsFragment(
+                                        adapterPosition,
+                                        mIsFavList
+                                    )
+                                }
+                            }
+                        }
+                        view.handleClickEvent {
+                            mItemClickCallBack?.goToListeratureDetailsFragment(adapterPosition, mIsFavList)
+                        }
+
                     }
                 }
+
+                DOWNLOADABLE ->
+                {
+
+                    view.handleClickEvent {
+                        mItemClickCallBack?.goToListeratureDetailsFragment(adapterPosition, false)
+                    }
+
+                    view.let {
+                        it.resizeView(
+                            ViewDimension.HalfScreenWidth,
+                            mDetailsCallBack?.getScreenWith(),
+                            it.context
+                        )
+                    }
+                }
+
+
+                JAKAT_HEADER ->
+                {
+
+                    view.apply {
+
+                        val item = ImageFromOnline("ic_zakat_img.png")
+                        val imgJakatHeader = this.findViewById<AppCompatImageView>(R.id.imgJakatHeader)
+                        val progressBar = this.findViewById<ProgressBar>(R.id.progressBar)
+
+                        setImageFromUrl(imgJakatHeader,item.fullImageUrl,progressBar)
+                    }
+
+
+                }
+
+                JAKAT_QUERY ->
+                {
+
+
+                    view.apply {
+
+                        toggleJakatDescriptionVisibility(this,this)
+
+                        val btnToggleCollapse = this.findViewById<AppCompatImageView>(R.id.btnToggleCollapse)
+
+                        btnToggleCollapse?.let {
+                            toggleJakatDescriptionVisibility(it,this)
+
+                        }
+                    }
+
+                }
+
             }
         }
     }
 
-    fun getSerialNumber(number: Int): String? {
+    fun getSerialNumber(number: Int): String {
         return if (number < 10) {
             "0$number"
         } else number.toString()
@@ -180,63 +184,48 @@ internal class LiteratureListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LiteratureViewHolder {
 
+        lateinit var view:View
+
         when (viewType) {
             NO_DATA -> {
-                val binding: LayoutNoDataBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_no_data,
-                    parent,
-                    false
-                )
-                return LiteratureViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_no_data,parent,false)
+
+                return LiteratureViewHolder(NO_DATA, view)
             }
             DOWNLOADABLE -> {
-                val binding: LayoutDownloadableBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_downloadable,
-                    parent,
-                    false
-                )
-                return LiteratureViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_downloadable,parent,false)
+
+                return LiteratureViewHolder(DOWNLOADABLE, view)
             }
             FOOTER -> {
-                val binding: LayoutFooterBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_footer,
-                    parent,
-                    false
-                )
-                return LiteratureViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_footer,parent,false)
+
+
+                return LiteratureViewHolder(FOOTER, view)
             }
 
 
             JAKAT_HEADER -> {
-                val binding: LayoutJaktHeaderBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_jakt_header,
-                    parent,
-                    false
-                )
-                return LiteratureViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_jakt_header,parent,false)
+
+                return LiteratureViewHolder(JAKAT_HEADER, view)
             }
             JAKAT_QUERY -> {
-                val binding: LayoutJakatQueryBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_jakat_query,
-                    parent,
-                    false
-                )
-                return LiteratureViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_jakat_query,parent,false)
+
+                return LiteratureViewHolder(JAKAT_QUERY, view)
             }
             //common literature Layout binding
             else -> {
-                val binding: LayoutLiteratureBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_literature,
-                    parent,
-                    false
-                )
-                return LiteratureViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_literature,parent,false)
+
+                return LiteratureViewHolder(OTHER, view)
             }
         }
 
@@ -244,36 +233,62 @@ internal class LiteratureListAdapter(
 
     override fun onBindViewHolder(holder: LiteratureViewHolder, position: Int) {
 
-        holder.noDataBinding?.let {
-            it.item = ImageFromOnline("bg_no_data.png")
-        }
 
-        holder.literatureBinding?.let {
-            it.literature = mList?.get(position)
-        }
+        when(holder.layoutTag)
+        {
+            NO_DATA ->
+            {
+                NoDataLayout(holder.view)
+            }
 
-        holder.categoryDownloadableBinding?.let {
-            it.downloadable = mList?.get(position)
-            holder.setTag(mList?.get(position)?.id!!, it)
-        }
+            OTHER ->
+            {
+                val tvTitle = holder.view.findViewById<AppCompatTextView>(R.id.tvTitle)
+                val literature = mList?.get(position)
+                tvTitle?.text = literature?.title
 
-        holder.footerBinding?.let {
-            when (mPagingViewCallBack.hasMoreData()) {
-                true -> mPagingViewCallBack.loadNextPage()
-                false -> {
-                    it.root.layoutParams.height = 0
-                    it.root.visibility = GONE
+            }
+
+            DOWNLOADABLE ->
+            {
+
+                val imgThumb = holder.view.findViewById<ImageView>(R.id.imgThumb)
+                val downloadable = mList?.get(position)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                if (progressBar != null) {
+                    setImageFromUrl(imgThumb,downloadable?.fullImageUrl,progressBar,PLACE_HOLDER_2_3)
+                }
+
+            }
+
+            FOOTER ->
+            {
+                when (mPagingViewCallBack.hasMoreData()) {
+                    true -> mPagingViewCallBack.loadNextPage()
+                    false -> {
+                        holder.view.layoutParams?.height = 0
+                        holder.view.visibility = GONE
+                    }
+                }
+            }
+
+            JAKAT_QUERY ->
+            {
+                mList?.let {
+
+                    val tvTitle = holder.view.findViewById<AppCompatTextView>(R.id.tvTitle)
+                    val tvDesc = holder.view.findViewById<AppCompatTextView>(R.id.tvDesc)
+                    val query = it[position - 1]
+                    tvTitle?.text = query.title
+                    tvDesc?.text = query.text
+                    val number = holder.view.findViewById<AppCompatTextView>(R.id.number)
+                    number?.text =
+                        TimeFormtter.getNumberByLocale(getSerialNumber(position))
                 }
             }
         }
 
-        holder.jakatQueryBinding?.let { binding ->
-            mList?.let {
-                binding.query = it.get(position - 1)
-                binding.number.text =
-                    TimeFormtter.getNumberByLocale(getSerialNumber(position).toString())
-            }
-        }
+
     }
 
 
@@ -360,13 +375,13 @@ internal class LiteratureListAdapter(
 
 private class LiteratureListLayoutActionImageControl() {
 
-    fun setLayoutActionImage(binding: LayoutLiteratureBinding, isFavList: Boolean) {
+    fun setLayoutActionImage(binding: View, isFavList: Boolean) {
         when (isFavList) {
             true -> {
-                binding.imgAction.setImageResource(R.drawable.ic_favorite_filled)
+                binding.findViewById<ImageView>(R.id.imgAction).setImageResource(R.drawable.ic_favorite_filled)
             }
             false -> {
-                binding.imgAction.setImageResource(R.drawable.ic_chevron_right)
+                binding.findViewById<ImageView>(R.id.imgAction).setImageResource(R.drawable.ic_chevron_right)
             }
         }
     }

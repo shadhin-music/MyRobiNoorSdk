@@ -16,21 +16,23 @@ import android.util.Log
 import android.view.SurfaceView
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseActivity
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.ActivityKhatamQuranVideoBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.khatam.KhatamQuranVideosResponse
 import com.gakk.noorlibrary.model.khatam.Videos
@@ -41,12 +43,12 @@ import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.VideoViewModel
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ui.DefaultTimeBar
+import com.google.android.exoplayer2.ui.PlayerView
 import kotlinx.coroutines.launch
 
 
 internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
 
-    private lateinit var binding: ActivityKhatamQuranVideoBinding
     private var player: ExoPlayer? = null
     private var currentWindow = 0
     private var playbackPosition = 0L
@@ -58,10 +60,23 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
     private lateinit var videoModel: VideoViewModel
     private lateinit var adapter: KhatamQuranVideoAdapter
 
+    //view
+    private lateinit var videoView : PlayerView
+    private lateinit var switchAudio : SwitchCompat
+    private lateinit var rvQuranVideos: RecyclerView
+    private lateinit var noDataLayout:  ConstraintLayout
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var clKhatamQuran : ConstraintLayout
+    private lateinit var tvLearnQuran : AppCompatTextView
+    private lateinit var tvDesQuranLearn : AppCompatTextView
+    private lateinit var imgNoInternet: ImageView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_khatam_quran_video)
+
+        setContentView(R.layout.activity_khatam_quran_video)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
@@ -114,13 +129,23 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
 
         override fun onServiceDisconnected(name: ComponentName?) {
             Log.i("VideoPlayerService", "onServiceDisconnected: ${name?.className}")
-            binding.videoView.player = null
+            videoView.player = null
         }
 
     }
 
     @SuppressLint("MissingPermission")
     private fun initUI() {
+
+        videoView = findViewById(R.id.videoView)
+        switchAudio = findViewById(R.id.switchAudio)
+        rvQuranVideos = findViewById(R.id.rvQuranVideos)
+        noDataLayout = findViewById(R.id.noDataLayout)
+        progressLayout = findViewById(R.id.progressLayout)
+        clKhatamQuran = findViewById(R.id.clKhatamQuran)
+        tvLearnQuran = findViewById(R.id.tvLearnQuran)
+        tvDesQuranLearn = findViewById(R.id.tvDesQuranLearn)
+
         setStatusColor(R.color.black1)
         setStatusbarTextDark()
 
@@ -148,11 +173,11 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
             subscribeObserver()
         }
 
-        binding.switchAudio.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchAudio.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 player?.setVideoSurface(null)
             } else {
-                val surface = binding.videoView.videoSurfaceView as SurfaceView
+                val surface = videoView.videoSurfaceView as SurfaceView
                 player?.setVideoSurfaceView(surface)
             }
 
@@ -172,26 +197,29 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
                                 videoList.sortedByDescending { videoList.indexOf(it) }
                                     .toMutableList()
 
-                            binding.video = sortedList.get(0)
+                            val  video = sortedList.get(0)
+                            tvLearnQuran.text = video.title
+                            tvDesQuranLearn.text = video.text
 
                             adapter = KhatamQuranVideoAdapter(sortedList, this)
-                            binding.rvQuranVideos.adapter = adapter
+                            rvQuranVideos.adapter = adapter
                             startVideoService(Videos(videos = sortedList, playWhenReady = true))
                         }
                         STATUS_NO_DATA -> {
-                            binding.noDataLayout.item = ImageFromOnline("bg_no_data.png")
-                            binding.noDataLayout.root.visibility = View.VISIBLE
+                            val item = ImageFromOnline("bg_no_data.png")
+                            setImageFromUrlNoProgress(imgNoInternet,item.fullImageUrl)
+                            noDataLayout.visibility = View.VISIBLE
                         }
                     }
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
                 Status.LOADING -> {
                     Log.e("videoQuran", "Loading")
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.ERROR -> {
                     Log.e("videoQuran", "Error")
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }
@@ -222,7 +250,7 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
 
         setUpPlayerControlView()
         player = (service as VideoPlayerService.VideoBinder).player
-        binding.videoView.player = player
+        videoView.player = player
 
         player?.addListener(object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -290,8 +318,8 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
     private fun setUpPlayerControlView() {
         playerControlView = findViewById(R.id.playerControlCourse)!!
         playerControlView.findViewById<DefaultTimeBar>(R.id.exo_progress)
-        toggleOrientationButton = binding.videoView.findViewById(R.id.toggleOrientationButton)
-        backButton = binding.videoView.findViewById(R.id.backButton)
+        toggleOrientationButton = videoView.findViewById(R.id.toggleOrientationButton)
+        backButton = videoView.findViewById(R.id.backButton)
 
         toggleOrientationButton.handleClickEvent {
             isPortrait = if (isPortrait) {
@@ -321,7 +349,7 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
 
     private fun prepareLandscapeUI() {
         toggleOrientationButton.setImageResource(R.drawable.ic_baseline_fullscreen_exit_24)
-        val layoutParams = binding.videoView.layoutParams as ConstraintLayout.LayoutParams
+        val layoutParams = videoView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
         layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT
         hideSystemUI()
@@ -329,7 +357,7 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
 
     private fun preparePortraitUI() {
         toggleOrientationButton.setImageResource(R.drawable.ic_baseline_fullscreen_24)
-        val layoutParams = binding.videoView.layoutParams as ConstraintLayout.LayoutParams
+        val layoutParams = videoView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.width = 0
         layoutParams.height = 0
         showSystemUI()
@@ -337,7 +365,7 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
 
     private fun hideSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, binding.clKhatamQuran).let { controller ->
+        WindowInsetsControllerCompat(window, clKhatamQuran).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
             controller.systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
@@ -348,7 +376,7 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowInsetsControllerCompat(
             window,
-            binding.clKhatamQuran
+            clKhatamQuran
         ).show(WindowInsetsCompat.Type.systemBars())
     }
 
@@ -370,7 +398,8 @@ internal class KhatamQuranVideoActivity : BaseActivity(), ItemClickControl {
             }
         } else {
             player?.seekTo(index, 0L)
-            binding.video = video
+            tvLearnQuran.text = video.title
+            tvDesQuranLearn.text = video.text
         }
     }
 }

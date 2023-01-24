@@ -6,18 +6,19 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentBiographyBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.adapter.SliderAdapter
 import com.gakk.noorlibrary.extralib.StepBarView.stepbarView
@@ -36,9 +37,6 @@ internal class BiographyFragment : Fragment(), SliderControl {
     private var literatureList: MutableList<Literature> = mutableListOf()
 
     @Transient
-    private lateinit var binding: FragmentBiographyBinding
-
-    @Transient
     private var mDetailsCallBack: DetailsCallBack? = null
 
     @Transient
@@ -49,6 +47,15 @@ internal class BiographyFragment : Fragment(), SliderControl {
 
     private val step_bar_view : stepbarView = stepbarView()
 
+    // view
+
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var page_stepper: RecyclerView
+    private lateinit var vpBiography: ViewPager2
+    private lateinit var tvTitle : AppCompatTextView
+    private lateinit var tvDesVisual: AppCompatTextView
+
+
 
 
     var currentIndex: Int by Delegates.observable(0) { property, old, new ->
@@ -56,7 +63,7 @@ internal class BiographyFragment : Fragment(), SliderControl {
 
             step_bar_view.setActiveStep(new)
             //binding.stepBarView.reachedStep = new + 1
-            binding.vpBiography.currentItem = new
+            vpBiography.currentItem = new
         }
     }
 
@@ -75,14 +82,24 @@ internal class BiographyFragment : Fragment(), SliderControl {
         savedInstanceState: Bundle?
     ): View? {
         AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding = DataBindingUtil.inflate(
-            inflater,
+
+        val view = inflater.inflate(
             R.layout.fragment_biography,
-            container,
-            false
+            container, false
         )
 
-        return binding.root
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        page_stepper = view.findViewById(R.id.page_stepper)
+        vpBiography = view.findViewById(R.id.vpBiography)
+        tvTitle = view.findViewById(R.id.tvTitle)
+        tvDesVisual = view.findViewById(R.id.tvDesVisual)
     }
 
 
@@ -107,16 +124,16 @@ internal class BiographyFragment : Fragment(), SliderControl {
             model.literatureListData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         literatureList = it.data?.data ?: mutableListOf()
 
-                        context?.let { step_bar_view.setup_stepbar(it,binding.pageStepper,literatureList.size,36F,3F,7F , true,null,false) }
+                        context?.let { step_bar_view.setup_stepbar(it,page_stepper,literatureList.size,36F,3F,7F , true,null,false) }
 
                         step_bar_view.getActiveStep(object: stepbarView.stepListner
                         {
@@ -132,7 +149,7 @@ internal class BiographyFragment : Fragment(), SliderControl {
                         //binding.stepBarView.requestLayout()
                         val adapter =
                             SliderAdapter(requireActivity())
-                        binding.vpBiography.adapter = adapter
+                        vpBiography.adapter = adapter
 
 
                         for (i in 0..literatureList.size - 1) {
@@ -150,7 +167,7 @@ internal class BiographyFragment : Fragment(), SliderControl {
                 }
             })
 
-            binding.vpBiography.registerOnPageChangeCallback(object :
+            vpBiography.registerOnPageChangeCallback(object :
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(
                     position: Int,
@@ -164,7 +181,7 @@ internal class BiographyFragment : Fragment(), SliderControl {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     currentIndex = position
-                    binding.pageStepper.layoutManager?.scrollToPosition(position)
+                    page_stepper.layoutManager?.scrollToPosition(position)
 
                     /*binding.distanceSeekBar.scrollTo(
                         context!!.dipToPixels(85F * position).toInt(),
@@ -188,8 +205,8 @@ internal class BiographyFragment : Fragment(), SliderControl {
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, resources.displayMetrics)
 
     fun setData(list: MutableList<Literature>, index: Int) {
-        binding.tvTitle.setText(list[index].title)
-        binding.tvDesVisual.setText(list[index].text)
+        tvTitle.setText(list[index].title)
+        tvDesVisual.setText(list[index].text)
     }
 
     companion object {

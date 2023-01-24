@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <data>
-        <variable
-            name="downloadable"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-    </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="@color/bg"
         android:padding="4dp"
         android:layout_width="160dp"
@@ -36,9 +26,6 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
-                    android:fullImageUrl="@{downloadable.fullImageUrl}"
-                    app:attachedProgressBar="@{progressBar}"
-                    app:placeHolderDimension="@{constant.PLACE_HOLDER_2_3}"
                     android:src="@drawable/place_holder_2_3_ratio"
                     app:layout_constraintDimensionRatio="h,2:3"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -112,4 +99,3 @@
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

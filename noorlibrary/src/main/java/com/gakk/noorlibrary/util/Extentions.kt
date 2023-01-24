@@ -14,6 +14,7 @@ import android.text.TextUtils
 import android.util.Base64
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -23,8 +24,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.Coil
 import coil.request.ImageRequest
 import com.gakk.noorlibrary.Noor
+import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.khatam.KhatamQuranVideosResponse
 import java.io.*
 import java.nio.charset.StandardCharsets
@@ -399,5 +402,15 @@ suspend fun getBitmapFromUrlX(bitmapURL: String?, context: Activity?) {
         }
     }
 
+}
 
+// No Data Binding
+
+fun NoDataLayout(view:View)
+{
+    val imgNoInternet = view.findViewById<ImageView>(R.id.imgNoInternet)
+    val item = ImageFromOnline("bg_no_data.png")
+    if (imgNoInternet != null) {
+        setImageFromUrlNoProgress(imgNoInternet,item.fullImageUrl)
+    }
 }

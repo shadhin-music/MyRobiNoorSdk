@@ -1,26 +1,18 @@
 package com.gakk.noorlibrary.ui.fragments.qurbani
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
@@ -28,6 +20,7 @@ import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
+import com.gakk.noorlibrary.databinding.FragmentQurbaniHomeBinding
 import com.gakk.noorlibrary.databinding.LayoutLiteratureBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
@@ -47,11 +40,16 @@ internal class QurbaniHomeFragment : Fragment() {
     private lateinit var videoModel: VideoViewModel
     private var literatureListWrapper: LiteratureListWrapper? = null
     var videoList: MutableList<Data> = mutableListOf()
-    private lateinit var progressBar: ProgressBar
-    private lateinit var ivHeader: AppCompatImageView
-    private lateinit var clHut: ConstraintLayout
-    private lateinit var progressLayout: ConstraintLayout
-    private lateinit var rvLiteratureList: RecyclerView
+
+
+    //view
+    private lateinit var ivHeader : AppCompatImageView
+    private lateinit var clHut : ConstraintLayout
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var rvLiteratureList : RecyclerView
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,55 +70,33 @@ internal class QurbaniHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         val view = inflater.inflate(
             R.layout.fragment_qurbani_home,
             container, false
         )
 
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
         ivHeader = view.findViewById(R.id.ivHeader)
         clHut = view.findViewById(R.id.clHut)
         progressLayout = view.findViewById(R.id.progressLayout)
         rvLiteratureList = view.findViewById(R.id.rvLiteratureList)
-
-        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         updateToolbarForThisFragment()
 
         val item = ImageFromOnline("qurbani_header.png")
-
-        Noor.appContext?.let {
-            Glide.with(it)
-                .load(item.fullImageUrl)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-
-                        return false
-                    }
-
-                })
-                .error(R.drawable.place_holder_2_3_ratio)
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .into(ivHeader)
-        }
+        setImageFromUrlNoProgress(ivHeader,item.fullImageUrl)
 
         if (AppPreference.language.equals(LAN_BANGLA)) {
             clHut.visibility = View.VISIBLE
@@ -202,7 +178,8 @@ internal class QurbaniHomeFragment : Fragment() {
                     mAdapter.expressionViewHolderBinding = { eachItem, positionItem, viewBinding ->
 
                         val view = viewBinding as LayoutLiteratureBinding
-                        view.literature = eachItem
+                        val literature = eachItem
+                        view.tvTitle.text = literature.title
                         view.root.setOnClickListener {
                             val qurbaniDiscussTitle = eachItem.title?.trim()?.replace(" ", "")
 

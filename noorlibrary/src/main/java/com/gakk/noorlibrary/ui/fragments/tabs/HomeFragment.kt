@@ -234,7 +234,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
                         }
                         STATUS_NO_DATA -> {
-                            binding.noDataLayout.item = ImageFromOnline("bg_no_data.png")
+                           // binding.noDataLayout.item = ImageFromOnline("bg_no_data.png")
                             binding.noDataLayout.root.visibility = View.VISIBLE
                         }
                     }
