@@ -239,6 +239,8 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
         )
 
 
+
+
         if (AppPreference.language.equals(LAN_BANGLA)) {
 
             bottomSheetItems.add(
@@ -282,6 +284,13 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             BottomSheetItem(
                 R.drawable.ic_islamic_event,
                 getString(R.string.cat_islamic_event)
+            )
+        )
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_umrah_hajj,
+                getString(R.string.cat_umrah_hajj)
             )
         )
 
