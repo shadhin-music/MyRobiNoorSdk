@@ -1,11 +1,16 @@
 package com.gakk.noorlibrary.ui.adapter.khatamquran
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.databinding.LayoutItemKhatamQuranBinding
 import com.gakk.noorlibrary.model.khatam.KhatamQuranVideosResponse
@@ -22,25 +27,30 @@ internal class KhatamQuranVideoAdapter(
 
     var currentMediaId: String? = null
 
-    inner class ViewHolder(binding: LayoutItemKhatamQuranBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        var itemLiveVideosBinding: LayoutItemKhatamQuranBinding? = binding
+    inner class ViewHolder(layoutView: View) :
+        RecyclerView.ViewHolder(layoutView) {
+        var view= layoutView
+       // var itemLiveVideosBinding: LayoutItemKhatamQuranBinding? = binding
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: LayoutItemKhatamQuranBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.layout_item_khatam_quran,
-            parent,
-            false
-        )
-        return ViewHolder(binding)
+
+        val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_khatam_quran,parent,false)
+
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val listItem = videoList.get(position)
-        holder.itemLiveVideosBinding?.video = listItem
+       // holder.itemLiveVideosBinding?.video = listItem
+      val  tvVideoTitle:AppCompatTextView = holder.view.findViewById(R.id.tvVideoTitle)
+            tvVideoTitle.text = listItem.title
+        val  tvSubTitle:AppCompatTextView = holder.view.findViewById(R.id.tvSubTitle)
+        tvSubTitle.text = listItem.text
+        val  tvDuration:AppCompatTextView = holder.view.findViewById(R.id.tvDuration)
+        tvDuration.text = listItem.textInArabic
+        val ivVideo = holder.itemView.findViewById<AppCompatImageView>(R.id.ivVideo)
 
         holder.itemView.handleClickEvent {
             listItem.let { callBack.setVideoData(it, position) }
@@ -48,10 +58,10 @@ internal class KhatamQuranVideoAdapter(
 
         when (listItem.isPlaying) {
             true -> {
-                holder.itemLiveVideosBinding?.ivVideo?.setImageResource(R.drawable.ic_pause_green)
+           ivVideo?.setImageResource(R.drawable.ic_pause_green)
             }
             else -> {
-                holder.itemLiveVideosBinding?.ivVideo?.setImageResource(R.drawable.ic_play_2)
+              ivVideo?.setImageResource(R.drawable.ic_play_2)
             }
         }
         if (listItem.isSelected == true) {
@@ -66,10 +76,13 @@ internal class KhatamQuranVideoAdapter(
     }
 
     fun makeViewSelected(holder: ViewHolder) {
-        holder.itemLiveVideosBinding?.clParentQuran?.setBackgroundResource(R.drawable.rounded_green_one)
-        holder.itemLiveVideosBinding?.tvVideoTitle?.setTextColor(
+        val clParentQuran:ConstraintLayout = holder.view.findViewById(R.id.clParentQuran)
+      clParentQuran?.setBackgroundResource(R.drawable.rounded_green_one)
+        val  tvVideoTitle:AppCompatTextView = holder.view.findViewById(R.id.tvVideoTitle)
+        val ivVideo = holder.itemView.findViewById<AppCompatImageView>(R.id.ivVideo)
+        tvVideoTitle?.setTextColor(
             ContextCompat.getColor(
-                holder.itemLiveVideosBinding?.clParentQuran?.context!!,
+              clParentQuran?.context!!,
                 R.color.txt_color_black
             )
         )
@@ -80,15 +93,18 @@ internal class KhatamQuranVideoAdapter(
              )
          )*/
 
-        holder.itemLiveVideosBinding?.ivVideo?.setColorFilter(
-            ContextCompat.getColor(holder.itemLiveVideosBinding?.ivVideo?.context!!,R.color.colorPrimary))
+       ivVideo?.setColorFilter(
+            ContextCompat.getColor(ivVideo?.context!!,R.color.colorPrimary))
     }
 
     fun makeViewUnSelected(holder: ViewHolder) {
-        holder.itemLiveVideosBinding?.clParentQuran?.setBackgroundResource(R.drawable.bg_border_rounded_gray)
-        holder.itemLiveVideosBinding?.tvVideoTitle?.setTextColor(
+        val clParentQuran:ConstraintLayout = holder.view.findViewById(R.id.clParentQuran)
+        val  tvVideoTitle:AppCompatTextView = holder.view.findViewById(R.id.tvVideoTitle)
+       clParentQuran?.setBackgroundResource(R.drawable.bg_border_rounded_gray)
+        val ivVideo = holder.itemView.findViewById<AppCompatImageView>(R.id.ivVideo)
+      tvVideoTitle?.setTextColor(
             ContextCompat.getColor(
-                holder.itemLiveVideosBinding?.clParentQuran?.context!!,
+       clParentQuran?.context!!,
                 R.color.ash
             )
         )
@@ -107,8 +123,8 @@ internal class KhatamQuranVideoAdapter(
              )
          )*/
 
-        holder.itemLiveVideosBinding?.ivVideo?.setColorFilter(
-            ContextCompat.getColor(holder.itemLiveVideosBinding?.ivVideo?.context!!,R.color.ash))
+        ivVideo?.setColorFilter(
+            ContextCompat.getColor(ivVideo?.context!!,R.color.ash))
     }
 
     fun setPlayingSong(mediaId: String?, isPlaying: Boolean) {

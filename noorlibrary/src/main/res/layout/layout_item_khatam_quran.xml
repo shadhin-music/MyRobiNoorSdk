@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="video"
-            type="com.gakk.noorlibrary.model.khatam.KhatamQuranVideosResponse.Data" />
-    </data>
+<!--        <variable-->
+<!--            name="video"-->
+<!--            type="com.gakk.noorlibrary.model.khatam.KhatamQuranVideosResponse.Data" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clParentQuran"
@@ -52,7 +52,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="@{video.title}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/ash"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -61,10 +60,10 @@
                     tools:text="খতম-ই কুরআন ০১" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSubTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="@{video.text}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/disabled_color"
                     app:layout_constraintEnd_toEndOf="@id/tvVideoTitle"
@@ -88,7 +87,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="@{video.textInArabic}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/ash"
                     app:layout_constraintStart_toStartOf="parent"
