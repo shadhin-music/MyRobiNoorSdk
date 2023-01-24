@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentHajjPreRegistrationListBinding
 import com.gakk.noorlibrary.databinding.ItemLocationwiseHutBinding
-import com.gakk.noorlibrary.databinding.LayoutItemLocationwiseHutBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.adapter.base.BaseAdapter
 import com.gakk.noorlibrary.util.CITY_NAME_NORTH
@@ -30,11 +29,14 @@ private const val ARG_CITY_TYPE = "cityName"
 
 internal class OnlineHutLocationwiseFrgment : Fragment() {
 
-    private lateinit var binding: FragmentHajjPreRegistrationListBinding
     private var mCallback: DetailsCallBack? = null
     private lateinit var repository: RestRepository
     private lateinit var model: LiteratureViewModel
     private var mCityName: String? = null
+
+    //view
+    private lateinit var rvPreregistration : RecyclerView
+    private lateinit var progressLayout : ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +65,21 @@ internal class OnlineHutLocationwiseFrgment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
+
+        val view = inflater.inflate(
             R.layout.fragment_hajj_pre_registration_list,
-            container,
-            false
+            container, false
         )
-        return binding.root
+
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvPreregistration = view.findViewById(R.id.rvPreregistration)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -107,7 +117,7 @@ internal class OnlineHutLocationwiseFrgment : Fragment() {
         model.literatureListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
                     val mAdapter = BaseAdapter<Literature>()
@@ -145,11 +155,11 @@ internal class OnlineHutLocationwiseFrgment : Fragment() {
                         )
                     }
 
-                    binding.rvPreregistration.adapter = mAdapter
-                    binding.progressLayout.root.visibility = View.GONE
+                    rvPreregistration.adapter = mAdapter
+                    progressLayout.visibility = View.GONE
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }

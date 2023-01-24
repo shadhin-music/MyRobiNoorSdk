@@ -25,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/standard_margin"
                 android:layout_marginTop="@dimen/margin_12"
-                android:text="@{data.date}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:textColor="@color/disabled_color"
                 android:textFontWeight="400"

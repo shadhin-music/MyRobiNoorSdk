@@ -6,10 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
@@ -31,13 +34,22 @@ import kotlinx.coroutines.launch
 
 internal class QurbaniHomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentQurbaniHomeBinding
     private var mCallback: DetailsCallBack? = null
     private lateinit var repository: RestRepository
     private lateinit var model: LiteratureViewModel
     private lateinit var videoModel: VideoViewModel
     private var literatureListWrapper: LiteratureListWrapper? = null
     var videoList: MutableList<Data> = mutableListOf()
+
+
+    //view
+    private lateinit var ivHeader : AppCompatImageView
+    private lateinit var clHut : ConstraintLayout
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var rvLiteratureList : RecyclerView
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,15 +70,23 @@ internal class QurbaniHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_qurbani_home,
-                container,
-                false
-            )
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_qurbani_home,
+            container, false
+        )
+
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        ivHeader = view.findViewById(R.id.ivHeader)
+        clHut = view.findViewById(R.id.clHut)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvLiteratureList = view.findViewById(R.id.rvLiteratureList)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,12 +95,13 @@ internal class QurbaniHomeFragment : Fragment() {
 
         updateToolbarForThisFragment()
 
-        binding.item = ImageFromOnline("qurbani_header.png")
+        val item = ImageFromOnline("qurbani_header.png")
+        setImageFromUrlNoProgress(ivHeader,item.fullImageUrl)
 
         if (AppPreference.language.equals(LAN_BANGLA)) {
-            binding.clHut.visibility = View.VISIBLE
+            clHut.visibility = View.VISIBLE
 
-            binding.clHut.handleClickEvent {
+            clHut.handleClickEvent {
                 val fragment = FragmentProvider.getFragmentByName(
                     ONLINE_HUT_HOME,
                     detailsActivityCallBack = mCallback
@@ -148,7 +169,7 @@ internal class QurbaniHomeFragment : Fragment() {
         model.literatureListData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
                     val mAdapter = BaseAdapter<Literature>()
@@ -157,7 +178,8 @@ internal class QurbaniHomeFragment : Fragment() {
                     mAdapter.expressionViewHolderBinding = { eachItem, positionItem, viewBinding ->
 
                         val view = viewBinding as LayoutLiteratureBinding
-                        view.literature = eachItem
+                        val literature = eachItem
+                        view.tvTitle.text = literature.title
                         view.root.setOnClickListener {
                             val qurbaniDiscussTitle = eachItem.title?.trim()?.replace(" ", "")
 
@@ -200,11 +222,11 @@ internal class QurbaniHomeFragment : Fragment() {
                         )
                     }
 
-                    binding.rvLiteratureList.adapter = mAdapter
-                    binding.progressLayout.root.visibility = View.GONE
+                    rvLiteratureList.adapter = mAdapter
+                    progressLayout.visibility = View.GONE
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }

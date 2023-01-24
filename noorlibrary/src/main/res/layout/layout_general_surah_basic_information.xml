@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-        <variable
-            name="surah"
-            type="com.gakk.noorlibrary.model.quran.surah.Data" />
-    </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +26,6 @@
                     android:id="@+id/number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{surah.surahNumber}"
                     android:padding="@dimen/standard_margin"
                     android:textColor="@color/colorPrimary"
                     android:textFontWeight="400"
@@ -70,7 +63,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:text="@{surah.surahBasicInfo}"
                     android:textColor="@color/disabled_color"
                     android:textFontWeight="400"
                     android:fontFamily="sans-serif"
@@ -86,7 +78,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:text="@{surah.nameInArabic}"
                     android:textColor="@color/colorPrimary"
                     android:textFontWeight="700"
                     tools:text="ةحتافلا"
@@ -100,4 +91,3 @@
 
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

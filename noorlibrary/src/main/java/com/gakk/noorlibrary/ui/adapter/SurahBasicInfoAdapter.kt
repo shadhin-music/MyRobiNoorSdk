@@ -2,24 +2,22 @@ package com.gakk.noorlibrary.ui.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
-import com.gakk.noorlibrary.databinding.LayoutFavouriteSurahBasicInformationBinding
-import com.gakk.noorlibrary.databinding.LayoutFooterBinding
-import com.gakk.noorlibrary.databinding.LayoutGeneralSurahBasicInformationBinding
-import com.gakk.noorlibrary.databinding.LayoutNoDataBinding
-import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.ui.fragments.FavUnFavActionCallBack
 import com.gakk.noorlibrary.util.FAVOURITE_SURAH
+import com.gakk.noorlibrary.util.NoDataLayout
 import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.views.TextViewNormalArabic
 
 class SurahBasicInfoAdapter(
     surahList: MutableList<Data>?,
@@ -35,6 +33,7 @@ class SurahBasicInfoAdapter(
     val CELL_FAVOURITE_SURAH = 1
     val CELL_FOOTER = 2
     val CELL_NO_CONTENT = 3
+    val CELL_OTHER = 4
 
     val mAction = action
     val mDetailsCallBack = detailsCallBack
@@ -42,145 +41,133 @@ class SurahBasicInfoAdapter(
     val mPagingViewCallBack = pagingViewCallBack
     val mFavUnFavActionCallBack = favUnFavActionCallBack
 
-
     var viewControl: ViewControl = ViewControl()
 
-    inner class SurahBasicInfoViewHolder : RecyclerView.ViewHolder {
+    inner class SurahBasicInfoViewHolder(layoutId: Int, layoutView: View) :
+        RecyclerView.ViewHolder(layoutView) {
 
-        var gerenalSurahBinding: LayoutGeneralSurahBasicInformationBinding? = null
+         var view: View = layoutView
 
-        constructor(binding: LayoutGeneralSurahBasicInformationBinding) : super(binding.root) {
-            gerenalSurahBinding = binding
-            gerenalSurahBinding?.root?.let {
+        val layoutTag = layoutId
 
-                it.handleClickEvent {
-                    Log.i("AdapterPos", "$adapterPosition")
-                    if (adapterPosition != -1) {
-                        mSurahList?.let {
-                            var id = it.get(adapterPosition).id
-                            val fragment = mAction?.invoke(id!!, mDetailsCallBack, it)
-                            mDetailsCallBack?.addFragmentToStackAndShow(fragment!!)
+        init {
+
+            when(layoutId)
+            {
+                CELL_GENERAL_SURAH ->
+                {
+
+                    view.let {
+
+                        it.handleClickEvent {
+                            Log.i("AdapterPos", "$adapterPosition")
+                            if (adapterPosition != -1) {
+                                mSurahList?.let {
+                                    var id = it.get(adapterPosition).id
+                                    val fragment = mAction?.invoke(id!!, mDetailsCallBack, it)
+                                    mDetailsCallBack.addFragmentToStackAndShow(fragment!!)
+                                }
+                            }
+
                         }
+                    }
+                }
+
+
+                CELL_OTHER ->
+                {
+
+                    val favourite = view.findViewById<ImageView>(R.id.favourite)
+
+                    favourite.handleClickEvent {
+                            var id = mSurahList?.get(adapterPosition)!!.id
+                            mFavUnFavActionCallBack.unFavSurah(id!!, adapterPosition)
+
                     }
 
                 }
             }
-
         }
 
-        var favouriteSurahBinding: LayoutFavouriteSurahBasicInformationBinding? = null
 
-        constructor(binding: LayoutFavouriteSurahBasicInformationBinding) : super(binding.root) {
-            favouriteSurahBinding = binding
-            favouriteSurahBinding?.root?.let {
-
-                it.handleClickEvent {
-                    Log.i("AdapterPos", "$adapterPosition")
-                    if (bindingAdapterPosition != -1) {
-                        mSurahList?.let {
-                            var id = it.get(adapterPosition).id
-                            val fragment = mAction?.invoke(id!!, mDetailsCallBack, it)
-                            mDetailsCallBack?.addFragmentToStackAndShow(fragment!!)
-                        }
-                    }
-                }
-            }
-
-
-            favouriteSurahBinding?.favourite?.let {
-
-                it.handleClickEvent {
-                    var id = mSurahList?.get(adapterPosition)!!.id
-                    mFavUnFavActionCallBack.unFavSurah(id!!, adapterPosition)
-                }
-            }
-        }
-
-        var noItemBinding: LayoutNoDataBinding? = null
-
-        constructor(binding: LayoutNoDataBinding) : super(binding.root) {
-            noItemBinding = binding
-        }
-
-        var footerBinding: LayoutFooterBinding? = null
-
-        constructor(binding: LayoutFooterBinding) : super(binding.root) {
-            footerBinding = binding
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurahBasicInfoViewHolder {
-        var binding: ViewBinding
+
+        lateinit var view: View
 
 
         return when (viewType) {
             CELL_GENERAL_SURAH -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_general_surah_basic_information,
-                    parent,
-                    false
-                )
-                SurahBasicInfoViewHolder(binding as LayoutGeneralSurahBasicInformationBinding)
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_general_surah_basic_information,parent,false)
+                SurahBasicInfoViewHolder(CELL_GENERAL_SURAH,view)
             }
 
             CELL_NO_CONTENT -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_no_data,
-                    parent,
-                    false
-                )
-                SurahBasicInfoViewHolder(binding as LayoutNoDataBinding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_no_data,parent,false)
+
+
+                SurahBasicInfoViewHolder(CELL_NO_CONTENT,view)
             }
 
             CELL_FOOTER -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_footer,
-                    parent,
-                    false
-                )
-                SurahBasicInfoViewHolder(binding as LayoutFooterBinding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_footer,parent,false)
+
+                SurahBasicInfoViewHolder(CELL_FOOTER,view)
             }
             else -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_favourite_surah_basic_information,
-                    parent,
-                    false
-                )
-                SurahBasicInfoViewHolder(binding as LayoutFavouriteSurahBasicInformationBinding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_favourite_surah_basic_information,parent,false)
+
+                SurahBasicInfoViewHolder(CELL_OTHER,view)
             }
         }
     }
 
     override fun onBindViewHolder(holder: SurahBasicInfoViewHolder, position: Int) {
-        holder.gerenalSurahBinding?.let {
-            mSurahList?.let { list ->
-                it.surah = list.get(position)
-                holder.gerenalSurahBinding?.number?.text = list[position].surahNumber
+
+        when(holder.layoutTag)
+        {
+            CELL_GENERAL_SURAH ->
+            {
+                mSurahList?.let { list ->
+                    val number = holder.view.findViewById<AppCompatTextView>(R.id.number)
+                    val title = holder.view.findViewById<AppCompatTextView>(R.id.title)
+                    val nameAyasLoc = holder.view.findViewById<AppCompatTextView>(R.id.nameAyasLoc)
+                    val textArabic = holder.view.findViewById<TextViewNormalArabic>(R.id.textArabic)
+                    number?.text = list[position].surahNumber
+                    title?.text = list[position].name
+                    nameAyasLoc?.text = list[position].surahBasicInfo
+                    textArabic?.text = list[position].nameInArabic
+
+                }
+
             }
 
-        }
-
-        holder.favouriteSurahBinding?.let {
-            mSurahList?.let { list ->
-                it.surah = list.get(position)
+            CELL_OTHER ->
+            {
+                mSurahList?.let { list ->
+                    val number = holder.view.findViewById<AppCompatTextView>(R.id.number)
+                    number?.text = list[position].surahNumber
+                }
             }
 
-        }
+            CELL_FOOTER ->
+            {
+                when (mPagingViewCallBack.hasMoreData()) {
+                    true -> mPagingViewCallBack.loadNextPage()
+                    else -> holder.view.visibility = GONE
+                }
+            }
 
-        holder.footerBinding?.let {
-            when (mPagingViewCallBack.hasMoreData()) {
-                true -> mPagingViewCallBack.loadNextPage()
-                else -> it.root.visibility = GONE
+            CELL_NO_CONTENT ->
+            {
+                NoDataLayout(holder.view)
             }
         }
 
-        holder.noItemBinding?.let {
-            it.item = ImageFromOnline("bg_no_data.png")
-        }
     }
 
     fun addItemToList(list: MutableList<Data>) {

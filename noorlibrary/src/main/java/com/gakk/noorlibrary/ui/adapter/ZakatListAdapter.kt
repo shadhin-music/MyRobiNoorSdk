@@ -1,16 +1,15 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.LayoutItemSavedJakatBinding
-import com.gakk.noorlibrary.databinding.LayoutNoDataBinding
-import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.zakat.ZakatDataModel
 import com.gakk.noorlibrary.ui.fragments.zakat.DeleteOperation
+import com.gakk.noorlibrary.util.NoDataLayout
 import com.gakk.noorlibrary.util.handleClickEvent
 
 const val ZAKAT_CALC_VIEW = 1
@@ -25,48 +24,31 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
         mDeleteOperation = deleteOperation
     }
 
-    inner class ViewHolder :
-        RecyclerView.ViewHolder {
+    inner class ViewHolder(layoutId: Int, layoutView: View,) :
+        RecyclerView.ViewHolder(layoutView) {
+
+         var view: View = layoutView
+        val layoutTag = layoutId
 
 
-        var jakatBinding: LayoutItemSavedJakatBinding? = null
-
-        constructor(itemView: LayoutItemSavedJakatBinding) : super(itemView.root) {
-            jakatBinding = itemView
-        }
-
-        var noDataBinding: LayoutNoDataBinding? = null
-
-        constructor(itemView: LayoutNoDataBinding) : super(itemView.root) {
-            noDataBinding = itemView
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ViewDataBinding
+        lateinit var view:View
 
         when (viewType) {
             ZAKAT_CALC_VIEW -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_item_saved_jakat,
-                    parent,
-                    false
-                )
 
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_saved_jakat,parent,false)
 
-                return ViewHolder(binding as LayoutItemSavedJakatBinding)
+                return ViewHolder(ZAKAT_CALC_VIEW,view)
             }
 
             NO_DATA -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_no_data,
-                    parent,
-                    false
-                )
 
-                return ViewHolder(binding as LayoutNoDataBinding)
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_no_data,parent,false)
+
+                return ViewHolder(NO_DATA,view)
             }
 
             else -> throw IllegalStateException("Illegal view type")
@@ -75,20 +57,27 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.noDataBinding?.let {
-            it.item = ImageFromOnline("bg_no_data.png")
-        }
+        when(holder.layoutTag)
+        {
+            ZAKAT_CALC_VIEW ->
+            {
+                val  tvDate = holder.view.findViewById<AppCompatTextView>(R.id.tvDate)
+                val ivDelete = holder.view.findViewById<AppCompatImageView>(R.id.ivDelete)
+                val data = mZakatList[position]
+                tvDate.text = data.date
 
-        holder.jakatBinding?.let {
-            it.data = mZakatList[position]
-        }
+                ivDelete.handleClickEvent {
 
+                    mDeleteOperation.deleteData(mZakatList[position])
+                }
+            }
 
-        holder.jakatBinding?.let {
-            it.ivDelete!!.handleClickEvent {
-                mDeleteOperation.deleteData(mZakatList[position])
+            NO_DATA ->
+            {
+                NoDataLayout(holder.view)
             }
         }
+
     }
 
     override fun getItemCount(): Int {

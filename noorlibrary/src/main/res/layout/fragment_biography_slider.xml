@@ -21,15 +21,12 @@
             android:id="@+id/imgBillboard"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:fullImageUrl="@{item.fullImageUrl}"
             android:scaleType="centerCrop"
             android:src="@drawable/place_holder_1_1_ratio"
-            app:attachedProgressBar="@{progressBar}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:placeHolderDimension="@{constant.PLACE_HOLDER_1_1}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressBar"
