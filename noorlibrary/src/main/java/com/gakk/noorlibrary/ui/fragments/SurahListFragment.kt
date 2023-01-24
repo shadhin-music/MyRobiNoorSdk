@@ -7,22 +7,25 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentSurahListBinding
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.ui.adapter.SurahBasicInfoAdapter
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.ALL_SURAH
+import com.gakk.noorlibrary.util.FAVOURITE_SURAH
+import com.gakk.noorlibrary.util.RepositoryProvider
+import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.viewModel.QuranViewModel
 import kotlinx.coroutines.launch
 import java.io.Serializable
@@ -31,14 +34,12 @@ import java.io.Serializable
 internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActionCallBack {
 
     private val ARG_PAGE_TYPE = "pageType"
-    private val ARG_CALL_BACK = "detailsCallBack"
     private val ARG_ACTION_CREATE_SURAH_DETAIL_FRAGMENT = "createSurahDetailFragment"
 
     private var mPageType: String? = null
     private lateinit var mDetailsCallBack: DetailsCallBack
     private var getSurahDetailFragment: ((String, DetailsCallBack, MutableList<com.gakk.noorlibrary.model.quran.surah.Data>) -> Fragment?)? =
         null
-    private lateinit var binding: FragmentSurahListBinding
 
     private lateinit var model: QuranViewModel
     private lateinit var repository: RestRepository
@@ -49,6 +50,11 @@ internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActio
     private var mCurrentPage: Int = 1
     private var mFavUnFavIndex: Int = -1
     private var mFavUnFavSurah: Data? = null
+
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var surahListRv: RecyclerView
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var btnRetry: AppCompatButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,10 +73,17 @@ internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActio
         savedInstanceState: Bundle?
     ): View? {
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_surah_list, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_surah_list,
+            container, false
+        )
 
-        return binding.root
+        progressLayout = view.findViewById(R.id.progressLayout)
+        surahListRv = view.findViewById(R.id.surahList)
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -93,7 +106,7 @@ internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActio
                     Status.SUCCESS -> {
                         surahList = it.data?.data
                         if (mCurrentPage == 1) {
-                            binding.progressLayout.root.visibility = GONE
+                            progressLayout.visibility = GONE
                             adapter = SurahBasicInfoAdapter(
                                 surahList,
                                 mPageType!!,
@@ -107,8 +120,8 @@ internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActio
                                 Log.i("OSASASASASS", "Observer added......")
                             }
 
-                            binding.surahList.adapter = adapter
-                            binding.surahList.layoutManager = LinearLayoutManager(context)
+                            surahListRv.adapter = adapter
+                            surahListRv.layoutManager = LinearLayoutManager(context)
                         } else {
                             if (surahList == null) {
                                 mHasMoreData = false
@@ -121,14 +134,14 @@ internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActio
                     }
                     Status.LOADING -> {
                         if (mCurrentPage == 1) {
-                            binding.progressLayout.root.visibility = VISIBLE
+                            progressLayout.visibility = VISIBLE
                         }
-                        binding.noInternetLayout.root.visibility = GONE
+                        noInternetLayout.visibility = GONE
 
                     }
                     Status.ERROR -> {
-                        binding.noInternetLayout.root.visibility = VISIBLE
-                        binding.progressLayout.root.visibility = GONE
+                        noInternetLayout.visibility = VISIBLE
+                        progressLayout.visibility = GONE
                     }
                 }
             })
@@ -136,15 +149,15 @@ internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActio
             model.unFavouriteSurahResponse.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         adapter.removeItemFromList(mFavUnFavIndex)
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         mDetailsCallBack?.showToastMessage(resources.getString(R.string.error_message))
                     }
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = VISIBLE
                     }
                 }
             })
@@ -152,21 +165,21 @@ internal class SurahListFragment : Fragment(), PagingViewCallBack, FavUnFavActio
             model.favouriteSurahResponse.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         adapter.insertItemToList(mFavUnFavSurah!!)
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         mDetailsCallBack?.showToastMessage(resources.getString(R.string.error_message))
                     }
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = VISIBLE
                     }
                 }
             })
 
             loadData()
-            binding.noInternetLayout.btnRetry.handleClickEvent {
+            btnRetry.handleClickEvent {
                 loadData()
             }
 

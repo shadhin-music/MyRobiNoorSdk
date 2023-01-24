@@ -82,8 +82,19 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
     lateinit var btnPrevContent: ImageButton
 
     @Transient
+    lateinit var btnNextContent: ImageButton
+
+    @Transient
     lateinit var tvPrevContent: AppCompatTextView
 
+    @Transient
+    lateinit var tvNextContent: AppCompatTextView
+
+    @Transient
+    lateinit var layoutPrevActionContent: ConstraintLayout
+
+    @Transient
+    lateinit var nextActionContent: ConstraintLayout
 
     @Transient
     private val step_bar_view: stepbarView = stepbarView()
@@ -118,6 +129,10 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
         prevNextPanel = view.findViewById(R.id.prevNextPanel)
         btnPrevContent = prevNextPanel.findViewById(R.id.btnPrevContent)
         tvPrevContent = prevNextPanel.findViewById(R.id.tvPrevContent)
+        btnNextContent = prevNextPanel.findViewById(R.id.btnNextContent)
+        tvNextContent = prevNextPanel.findViewById(R.id.tvNextContent)
+        layoutPrevActionContent = prevNextPanel.findViewById(R.id.layoutPrevActionContent)
+        nextActionContent = prevNextPanel.findViewById(R.id.nextActionContent)
 
         when (mCatName) {
             CAT_MEN -> {
@@ -299,47 +314,47 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
     }
 
     override fun setNextControlState() {
-        /* index.let {
+        index.let {
 
-             when (it >= sortedList.size - 1) {
-                 true -> {
-                     prevNextPanel.btnNextContent.isEnabled = false
-                     prevNextPanel.tvNextContent.setTextColor(
-                         requireContext().resources.getColor(
-                             R.color.disabled_color
-                         )
-                     )
-                 }
-                 false -> {
-                     prevNextPanel.btnNextContent.isEnabled = true
-                     prevNextPanel.tvNextContent.setTextColor(
-                         requireContext().resources.getColor(
-                             R.color.colorPrimary
-                         )
-                     )
-                 }
-             }
-         }*/
+            when (it >= sortedList.size - 1) {
+                true -> {
+                    btnNextContent.isEnabled = false
+                    tvNextContent.setTextColor(
+                        requireContext().resources.getColor(
+                            R.color.disabled_color
+                        )
+                    )
+                }
+                false -> {
+                    btnNextContent.isEnabled = true
+                    tvNextContent.setTextColor(
+                        requireContext().resources.getColor(
+                            R.color.colorPrimary
+                        )
+                    )
+                }
+            }
+        }
     }
 
     override fun setPrevControlClickEvent() {
 
-        /* prevNextPanel.layoutPrevActionContent.handleClickEvent {
-             if (index > 0) {
-                 prevNextPanel.btnPrevContent.isEnabled = true
-                 prevNextPanel.tvPrevContent.setTextColor(
-                     requireContext().resources.getColor(
-                         R.color.colorPrimary
-                     )
-                 )
-                 index--
-                 if (index >= 0) {
-                     setData(sortedList, index)
-                     setUpPrevNextControlState()
-                 } else index++
+        layoutPrevActionContent.handleClickEvent {
+            if (index > 0) {
+                btnPrevContent.isEnabled = true
+                tvPrevContent.setTextColor(
+                    requireContext().resources.getColor(
+                        R.color.colorPrimary
+                    )
+                )
+                index--
+                if (index >= 0) {
+                    setData(sortedList, index)
+                    setUpPrevNextControlState()
+                } else index++
 
-             }
-         }*/
+            }
+        }
     }
 
     fun Context.dipToPixels(dipValue: Float) =
@@ -347,7 +362,7 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
 
     override fun setNextControlClickEvent() {
 
-        //stepBarView.layoutManager?.scrollToPosition(index)
+        stepBarView.layoutManager?.scrollToPosition(index)
 
 
         /*binding.stepBarView.scrollTo(
@@ -355,23 +370,23 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
             0
         )*/
 
-        /*  prevNextPanel.nextActionContent.handleClickEvent {
-              if (index < sortedList.size - 1) {
-                  prevNextPanel.btnNextContent.isEnabled = true
-                  prevNextPanel.tvNextContent.setTextColor(
-                      requireContext().resources.getColor(
-                          R.color.colorPrimary
-                      )
-                  )
-                  index++
-                  setData(sortedList, index)
-                  setUpPrevNextControlState()
+        nextActionContent.handleClickEvent {
+            if (index < sortedList.size - 1) {
+                btnNextContent.isEnabled = true
+                tvNextContent.setTextColor(
+                    requireContext().resources.getColor(
+                        R.color.colorPrimary
+                    )
+                )
+                index++
+                setData(sortedList, index)
+                setUpPrevNextControlState()
 
-              }
-          }
+            }
+        }
 
-          if (index >= 0)
-              step_bar_view.setActiveStep(index)*/
+        if (index >= 0)
+            step_bar_view.setActiveStep(index)
 
     }
 }

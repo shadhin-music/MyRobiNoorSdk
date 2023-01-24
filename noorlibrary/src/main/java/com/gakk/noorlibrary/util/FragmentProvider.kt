@@ -8,7 +8,6 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.model.quranSchool.Scholar
 import com.gakk.noorlibrary.ui.fragments.*
-import com.gakk.noorlibrary.ui.fragments.calender.IslamicCalenderFragmentBd
 import com.gakk.noorlibrary.ui.fragments.eidjamat.EidJamatFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.HajjGuideFragment
@@ -237,16 +236,6 @@ object FragmentProvider {
                         SubscriptionFragment.newInstance()
                     }
                 }
-
-            PAGE_ISLAMIC_CALENDER -> when (Util.checkSub()) {
-                true -> {
-                    IslamicCalenderFragmentBd.newInstance()
-                }
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-
-            }
 
             PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
 

@@ -162,13 +162,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
             bottomSheetItems.add(
                 BottomSheetItem(
-                    R.drawable.ic_cat_khatam_e_quran,
-                    getString(R.string.cat_khatam_quran)
-                )
-            )
-
-            bottomSheetItems.add(
-                BottomSheetItem(
                     R.drawable.ic_live_question_answer,
                     getString(R.string.cat_live_qa)
                 )
@@ -219,15 +212,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                 getString(R.string.cat_tasbih)
             )
         )
-
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_calender,
-                getString(R.string.cat_islamic_calender)
-            )
-        )
-
-
 
         bottomSheetItems.add(
             BottomSheetItem(

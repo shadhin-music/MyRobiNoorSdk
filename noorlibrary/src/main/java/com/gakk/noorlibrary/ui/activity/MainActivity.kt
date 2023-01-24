@@ -42,8 +42,6 @@ import com.gakk.noorlibrary.job.RozaAlarmControlJob
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.model.quranSchool.Scholar
-import com.gakk.noorlibrary.service.VideoPlayerService
-import com.gakk.noorlibrary.ui.activity.khatamquran.KhatamQuranVideoActivity
 import com.gakk.noorlibrary.ui.adapter.SliderAdapter
 import com.gakk.noorlibrary.ui.fragments.CompassFragment
 import com.gakk.noorlibrary.ui.fragments.LiteratureHomeFragment
@@ -377,8 +375,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
 
     override fun onDestroy() {
-        val intent = Intent(this, VideoPlayerService::class.java)
-        stopService(intent)
+
         super.onDestroy()
     }
 
@@ -599,12 +596,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
                             Intent(this, YoutubePlayerActivity::class.java).apply {
                                 putExtra(IS_IJTEMA_LIVE_VIDEO, false)
                             }
-                        )
-                    }
-                    PAGE_KHATAM_QURAN -> {
-
-                        startActivity(
-                            Intent(this, KhatamQuranVideoActivity::class.java)
                         )
                     }
                     else -> {

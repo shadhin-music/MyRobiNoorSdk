@@ -4,24 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.FragmentQuranHomeBinding
 import com.gakk.noorlibrary.ui.adapter.SurahListFragmentPagerAdapter
 import com.gakk.noorlibrary.util.FragmentProvider
 import com.gakk.noorlibrary.util.PAGE_SURAH_DETAILS
-import com.gakk.noorlibrary.util.setApplicationLanguage
+import com.gakk.noorlibrary.views.CustomTabLayout
 
 
 internal class QuranHomeFragment : Fragment() {
 
     private lateinit var mDetailsCallBack: DetailsCallBack
-    private lateinit var binding: FragmentQuranHomeBinding
     private lateinit var mPageTitles: Array<String>
+    private lateinit var pager: ViewPager
+    private lateinit var tabLayout: CustomTabLayout
+
     private val getSurahDetailFragment: (String, DetailsCallBack, MutableList<com.gakk.noorlibrary.model.quran.surah.Data>) -> Fragment? =
         { id, callBack, list ->
             FragmentProvider.getFragmentByName(
@@ -36,17 +36,23 @@ internal class QuranHomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mDetailsCallBack =  requireActivity() as DetailsCallBack
+        mDetailsCallBack = requireActivity() as DetailsCallBack
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_quran_home, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_quran_home,
+            container, false
+        )
+
+        pager = view.findViewById(R.id.pager)
+        tabLayout = view.findViewById(R.id.tab_layout)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,14 +62,14 @@ internal class QuranHomeFragment : Fragment() {
             requireContext().resources.getString(R.string.surah_list),
             requireContext().resources.getString(R.string.fav_list)
         )
-        binding.pager.adapter =
+        pager.adapter =
             SurahListFragmentPagerAdapter(
                 childFragmentManager,
                 mPageTitles,
                 mDetailsCallBack,
                 getSurahDetailFragment
             )
-        binding.tabLayout.setupWithViewPager(binding.pager)
+        tabLayout.setupWithViewPager(pager)
         mDetailsCallBack.toggleToolBarActionIconsVisibility(false)
         updateToolbarForThisFragment()
     }
