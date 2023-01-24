@@ -1,34 +1,36 @@
 package com.gakk.noorlibrary.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.SeekBar
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatSeekBar
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.audioPlayer.AudioManager
 import com.gakk.noorlibrary.callbacks.*
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentSurahDetailsBinding
 import com.gakk.noorlibrary.databinding.LayoutSurahDetailsHeaderBinding
 import com.gakk.noorlibrary.model.quran.surahDetail.Data
 import com.gakk.noorlibrary.service.AudioPlayerService
 import com.gakk.noorlibrary.ui.adapter.SurahDetailsAdapter
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.QuranViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import java.io.Serializable
 
 
@@ -41,7 +43,6 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
     private var mSurahId: String? = null
     private var mDetailsCallBack: DetailsCallBack? = null
-    private lateinit var binding: FragmentSurahDetailsBinding
     private var adapter: SurahDetailsAdapter? = null
 
     private lateinit var model: QuranViewModel
@@ -55,10 +56,23 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
     private var surahDetails: Data? = null
     private var ayatList: MutableList<com.gakk.noorlibrary.model.quran.ayah.Data>? = null
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var btnRetry: AppCompatButton
+    private lateinit var layoutZoomControl: ConstraintLayout
+    private lateinit var btnZoomOut: ImageButton
+    private lateinit var btnZoomIn: ImageButton
+    private lateinit var rvSurahDetails: RecyclerView
+    private lateinit var layoutMiniPlayer: ConstraintLayout
+    private lateinit var btnPrev: ImageButton
+    private lateinit var btnNext: ImageButton
+    private lateinit var btnPlayPause: ImageButton
+    private lateinit var tvDuration: AppCompatTextView
+    private lateinit var tvCurrentTime: AppCompatTextView
+    private lateinit var tvSurahName: AppCompatTextView
+    private lateinit var tvAyahNum: AppCompatTextView
 
-    private var favAction: () -> Unit = { mSurahId?.let { model.favouriteSurah(it) } }
-    private var unFavAction: () -> Unit = { mSurahId?.let { model.unFavouriteSurah(it) } }
-
+    private lateinit var exoProgressMini: AppCompatSeekBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +89,30 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_surah_details, container, false)
 
+        val view = inflater.inflate(
+            R.layout.fragment_surah_details,
+            container, false
+        )
 
-        return binding.root
+        progressLayout = view.findViewById(R.id.progressLayout)
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
+        layoutZoomControl = view.findViewById(R.id.layoutZoomControl)
+        rvSurahDetails = view.findViewById(R.id.rvSurahDetails)
+        layoutMiniPlayer = view.findViewById(R.id.layoutMiniPlayer)
+        btnZoomOut = layoutZoomControl.findViewById(R.id.btnZoomOut)
+        btnZoomIn = layoutZoomControl.findViewById(R.id.btnZoomIn)
+        btnPrev = layoutMiniPlayer.findViewById(R.id.btnPrev)
+        btnNext = layoutMiniPlayer.findViewById(R.id.btnNext)
+        btnPlayPause = layoutMiniPlayer.findViewById(R.id.btnPlayPause)
+        exoProgressMini = layoutMiniPlayer.findViewById(R.id.exo_progress_mini)
+        tvDuration = layoutMiniPlayer.findViewById(R.id.tvDuration)
+        tvCurrentTime = layoutMiniPlayer.findViewById(R.id.tvCurrentTime)
+        tvSurahName = layoutMiniPlayer.findViewById(R.id.tvSurahName)
+        tvAyahNum = layoutMiniPlayer.findViewById(R.id.tvAyahNum)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,14 +150,14 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
-                        binding.noInternetLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = GONE
+                        noInternetLayout.visibility = VISIBLE
                     }
                     Status.LOADING -> {
                         if (mPageNo == 1) {
-                            binding.progressLayout.root.visibility = VISIBLE
+                            progressLayout.visibility = VISIBLE
                         }
-                        binding.noInternetLayout.root.visibility = GONE
+                        noInternetLayout.visibility = GONE
                     }
                 }
             })
@@ -133,7 +166,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                 when (it.status) {
                     Status.SUCCESS -> {
 
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         surahDetails?.isSurahFavByThisUser = it.data?.data!!
                         adapter?.updateSurahDetails(surahDetails)
                         adapter?.notifyItemChanged(0)
@@ -143,18 +176,16 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         mDetailsCallBack?.showToastMessage(resources.getString(R.string.error_message))
                         updateToolbarForThisFragment()
                         showUI()
                     }
                     Status.LOADING -> {
-                        //binding.progressLayout.root.visibility = VISIBLE
 
                     }
                 }
             })
-
 
             model.ayahBySurahId.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -166,14 +197,14 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
-                        binding.noInternetLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = GONE
+                        noInternetLayout.visibility = VISIBLE
                     }
                     Status.LOADING -> {
                         if (mPageNo == 1) {
-                            binding.progressLayout.root.visibility = VISIBLE
+                            progressLayout.visibility = VISIBLE
                         }
-                        binding.noInternetLayout.root.visibility = GONE
+                        noInternetLayout.visibility = GONE
                     }
                 }
             })
@@ -184,9 +215,9 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                         surahDetails?.isSurahFavByThisUser = true
                         adapter?.updateSurahDetails(surahDetails)
                         adapter?.notifyItemChanged(0)
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         updateToolbarForThisFragment()
-                        var surah = com.gakk.noorlibrary.model.quran.surah.Data(
+                        val surah = com.gakk.noorlibrary.model.quran.surah.Data(
                             id = surahDetails!!.id,
                             order = surahDetails!!.order,
                             name = surahDetails!!.name
@@ -194,10 +225,10 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                         FavouriteSurahObserver.postFavouriteNotification(surah)
                     }
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         mDetailsCallBack?.showToastMessage(resources.getString(R.string.error_message))
                     }
                 }
@@ -210,8 +241,8 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                         surahDetails?.isSurahFavByThisUser = false
                         adapter?.updateSurahDetails(surahDetails)
                         adapter?.notifyItemChanged(0)
-                        //EMON
-                        binding.progressLayout.root.visibility = GONE
+
+                        progressLayout.visibility = GONE
                         updateToolbarForThisFragment()
                         var surah = com.gakk.noorlibrary.model.quran.surah.Data(
                             id = surahDetails!!.id,
@@ -222,45 +253,38 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
                     }
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         mDetailsCallBack?.showToastMessage(resources.getString(R.string.error_message))
                     }
                 }
             })
 
-            binding.noInternetLayout.btnRetry.handleClickEvent {
+            btnRetry.handleClickEvent {
                 loadData()
             }
 
-
-            // AudioPlayerService.configureServiceScope()
         }
-
-
-
         AudioPlayerService.attatchSurahDetailsCallBack(this)
     }
 
     override fun onPause() {
         super.onPause()
-        // AudioPlayerService.detachSurahDetailsCallBack()
+
         Log.i("FLC", "OnPause()")
     }
 
     override fun onResume() {
         super.onResume()
-        var isPlaying = com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.getIsNotPaused()
+        val isPlaying = AudioManager.PlayerControl.getIsNotPaused()
         updateMiniPlayerPlayPauseButton(isPlaying)
 
-        // AudioPlayerService.attatchSurahDetailsCallBack(this)
         Log.i("FLC", "onResume()")
     }
 
     override fun onDestroy() {
-        // AudioPlayerService.detachSurahDetailsCallBack()
         super.onDestroy()
     }
 
@@ -268,10 +292,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
         mDetailsCallBack?.setToolBarTitle(resources.getString(R.string.cat_quran))
         mDetailsCallBack?.toggleToolBarActionIconsVisibility(false, ActionButtonType.TypeOne)
         mDetailsCallBack?.toggleToolBarActionIconsVisibility(false, ActionButtonType.TypeTwo)
-//        setFavButtonIcon(surahDetails!!.isSurahFavByThisUser)
-//        setFavButtonAction(surahDetails!!.isSurahFavByThisUser)
         mDetailsCallBack?.setOrUpdateActionButtonTag(SHARE, ActionButtonType.TypeTwo)
-
     }
 
     companion object {
@@ -285,7 +306,6 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
             SurahDetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SURAH_ID, surahId)
-                   // putSerializable(ARG_DETAILS_CALL_BACK, detailsCallBack)
                     putSerializable(ARG_SURAH_LIST, surahList as Serializable)
                 }
             }
@@ -296,13 +316,13 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
     }
 
     private fun setUpZoomBtnClickEvents() {
-        binding.layoutZoomControl.btnZoomOut.handleClickEvent {
-
+        btnZoomOut.handleClickEvent {
             adapter?.getFontControl()!!.decrementCurrentAyaOffset()
             toggleZoomButtonsStatus()
             adapter?.getFontControl()!!.updateAllLayouts()
         }
-        binding.layoutZoomControl.btnZoomIn.handleClickEvent {
+
+        btnZoomIn.handleClickEvent {
 
             adapter?.getFontControl()?.incrementCurrentAyaOffset()
             toggleZoomButtonsStatus()
@@ -318,15 +338,15 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
     private fun toggleZoomInButtonStatus() {
         when (adapter?.getFontControl()!!.getCurrentAyaOffset() < MAX_ZOOM_LEVEL) {
-            true -> binding.layoutZoomControl.btnZoomIn.isEnabled = true
-            false -> binding.layoutZoomControl.btnZoomIn.isEnabled = false
+            true -> btnZoomIn.isEnabled = true
+            false -> btnZoomIn.isEnabled = false
         }
     }
 
     private fun toggleZoomOutButtonStatus() {
         when (adapter!!.getFontControl().getCurrentAyaOffset() > 0) {
-            true -> binding.layoutZoomControl.btnZoomOut.isEnabled = true
-            false -> binding.layoutZoomControl.btnZoomOut.isEnabled = false
+            true -> btnZoomOut.isEnabled = true
+            false -> btnZoomOut.isEnabled = false
         }
     }
 
@@ -367,8 +387,8 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                 inflateMiniPlayerWithSelectedSurah()
                 prepareMiniPlayerControls()
                 if (adapter == null) {
-                    binding.rvSurahDetails.itemAnimator = null
-                    binding.rvSurahDetails.layoutManager = LinearLayoutManager(context)
+                    rvSurahDetails.itemAnimator = null
+                    rvSurahDetails.layoutManager = LinearLayoutManager(context)
                     adapter = SurahDetailsAdapter(
                         mDetailsCallBack,
                         this,
@@ -378,7 +398,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                         pageReloadCallBack = this@SurahDetailsFragment,
                         playPauseFavControl = this
                     )
-                    binding.rvSurahDetails.adapter = adapter
+                    rvSurahDetails.adapter = adapter
                 } else {
                     adapter?.updateSurahDetails(surahDetails)
                     ayatList?.let {
@@ -390,8 +410,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                 toggleZoomButtonsStatus()
 
 
-
-                binding.layoutMiniPlayer.root.handleClickEvent {
+                layoutMiniPlayer.handleClickEvent {
 
                     mDetailsCallBack?.addFragmentToStackAndShow(
                         FragmentProvider.getFragmentByName(
@@ -416,16 +435,15 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
     }
 
     fun hideExistingUI() {
-        binding.layoutZoomControl.root.visibility = GONE
-        binding.layoutMiniPlayer.root.visibility = GONE
+        layoutZoomControl.visibility = GONE
+        layoutMiniPlayer.visibility = GONE
         mDetailsCallBack?.toggleToolBarActionIconsVisibility(false)
-        binding.rvSurahDetails.visibility = INVISIBLE
+        rvSurahDetails.visibility = INVISIBLE
     }
 
     fun showUI() {
-        binding.layoutZoomControl.root.visibility = VISIBLE
-        // binding.layoutMiniPlayer.root.visibility= VISIBLE
-        binding.rvSurahDetails.visibility = VISIBLE
+        layoutZoomControl.visibility = VISIBLE
+        rvSurahDetails.visibility = VISIBLE
     }
 
     fun checkIsCurrentSurahFavByUser() {
@@ -433,21 +451,21 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
     }
 
     private fun prepareMiniPlayerControls() {
-        binding.layoutMiniPlayer?.let {
+        layoutMiniPlayer?.let {
 
-            it.btnPrev.handleClickEvent {
+            btnPrev.handleClickEvent {
                 SurahListControl.decrementCurrentIndex()
                 reloadPage()
                 AudioPlayerService.executePlayerCommand(PREV_COMMAND)
 
             }
-            it.btnNext.handleClickEvent {
+            btnNext.handleClickEvent {
                 SurahListControl.incrementCurrentIndex()
                 reloadPage()
                 AudioPlayerService.executePlayerCommand(NEXT_COMMAND)
 
             }
-            it.btnPlayPause.handleClickEvent {
+            btnPlayPause.handleClickEvent {
 
                 if (SurahListControl.surahList != null) {
 
@@ -483,19 +501,19 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
     override fun inflateMiniPlayerWithSelectedSurah() {
 
-        // binding.layoutMiniPlayer.root.visibility= GONE
         if (AudioPlayerService?.isServiceRunning ?: false && com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl?.getPlayListType() == SURAH_LIST_TYPE) {
-            com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl?.getCurrentSurah()?.let {
-                //  binding.layoutMiniPlayer.root.visibility= VISIBLE
-                binding.layoutMiniPlayer.surah = it
+            AudioManager.PlayListControl?.getCurrentSurah()?.let {
 
-                binding.layoutMiniPlayer?.let {
-                    it.btnPrev.isEnabled = SurahListControl.curIndex!! > 0
-                    it.btnNext.isEnabled =
+                val surah = it
+                tvSurahName.text = surah.name
+                tvAyahNum.text = surah.ayahCountWithPrefix
+
+                layoutMiniPlayer?.let {
+                    btnPrev.isEnabled = SurahListControl.curIndex!! > 0
+                    btnNext.isEnabled =
                         SurahListControl!!.curIndex!! < SurahListControl.surahList!!.size - 1
-                    //  it.tvDuration.setText(surahDetails?.duration?.getLocalisedDuration())
-                    // it.tvCurrentTime.setText("0:00".getLocalisedDuration())
-                    it.exoProgressMini.setOnSeekBarChangeListener(object :
+
+                    exoProgressMini.setOnSeekBarChangeListener(object :
                         SeekBar.OnSeekBarChangeListener {
                         override fun onProgressChanged(
                             seekBar: SeekBar?,
@@ -511,7 +529,8 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
                         override fun onStopTrackingTouch(seekBar: SeekBar?) {
                             var seekPos = seekBar?.progress?.toLong()
-                            com.gakk.noorlibrary.audioPlayer.AudioManager.getAudioPlayer()?.seekTo(seekPos ?: 0)
+                            com.gakk.noorlibrary.audioPlayer.AudioManager.getAudioPlayer()
+                                ?.seekTo(seekPos ?: 0)
 
                         }
 
@@ -544,26 +563,26 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
     }
 
     override fun updateMiniPlayerPlayPauseButton(isPlaying: Boolean) {
-        binding.layoutMiniPlayer?.let {
+        layoutMiniPlayer?.let {
             when (isPlaying) {
-                true -> it.btnPlayPause.setImageResource(R.drawable.ic_pause_filled_enabled)
-                false -> it.btnPlayPause.setImageResource(R.drawable.ic_play_filled_enabled)
+                true -> btnPlayPause.setImageResource(R.drawable.ic_pause_filled_enabled)
+                false -> btnPlayPause.setImageResource(R.drawable.ic_play_filled_enabled)
             }
         }
     }
 
     override fun updateMiniPlayerTotalDuration(ms: Long) {
-        binding.layoutMiniPlayer?.let {
-            it.exoProgressMini.max = ms.toInt()
-            it.tvDuration.setText(TimeFormtter.getDurationFromMsByLocale(ms))
+        layoutMiniPlayer?.let {
+            exoProgressMini.max = ms.toInt()
+            tvDuration.setText(TimeFormtter.getDurationFromMsByLocale(ms))
         }
     }
 
     override fun updateMiniPlayerCurrentDuration(ms: Long) {
         Log.i("CurTIMEMS", "Current Time ms:$ms -${TimeFormtter.getDurationFromMsByLocale(ms)}")
-        binding.layoutMiniPlayer?.let {
-            it.exoProgressMini.progress = ms.toInt()
-            it.tvCurrentTime.setText(TimeFormtter.getDurationFromMsByLocale(ms))
+        layoutMiniPlayer?.let {
+           exoProgressMini.progress = ms.toInt()
+            tvCurrentTime.setText(TimeFormtter.getDurationFromMsByLocale(ms))
         }
     }
 
@@ -578,8 +597,8 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
     override fun toggleMiniPlayerVisibility(show: Boolean) {
         Log.i("VISIBILITY", "$show")
         when (show) {
-            true -> binding.layoutMiniPlayer.root.visibility = VISIBLE
-            false -> binding.layoutMiniPlayer.root.visibility = GONE
+            true -> layoutMiniPlayer.visibility = VISIBLE
+            false -> layoutMiniPlayer.visibility = GONE
         }
 
     }
@@ -591,7 +610,9 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
             if (SurahListControl.surahList!!.size > 0) {
                 var currentSurahId = "-1"
                 try {
-                    currentSurahId = com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getCurrentSurah()?.id?:"-1"
+                    currentSurahId =
+                        com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getCurrentSurah()?.id
+                            ?: "-1"
                 } catch (e: Exception) {
 
                 }
