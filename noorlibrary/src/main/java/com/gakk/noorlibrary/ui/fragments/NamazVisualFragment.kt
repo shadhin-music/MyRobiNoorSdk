@@ -81,6 +81,9 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
     @Transient
     lateinit var btnPrevContent: ImageButton
 
+    @Transient
+    lateinit var tvPrevContent: AppCompatTextView
+
 
     @Transient
     private val step_bar_view: stepbarView = stepbarView()
@@ -114,6 +117,7 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
         imgVisual = view.findViewById(R.id.imgVisual)
         prevNextPanel = view.findViewById(R.id.prevNextPanel)
         btnPrevContent = prevNextPanel.findViewById(R.id.btnPrevContent)
+        tvPrevContent = prevNextPanel.findViewById(R.id.tvPrevContent)
 
         when (mCatName) {
             CAT_MEN -> {
@@ -268,33 +272,33 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
         setNextControlClickEvent()
     }
 
-      override fun setPrevControlState() {
-         /* index.let {
+    override fun setPrevControlState() {
+        index.let {
 
-              when (it > 0) {
-                  true -> {
-                      Log.e("index", "greater" + index)
-                      btnPrevContent.isEnabled = true
-                      tvPrevContent.setTextColor(
-                          requireContext().resources.getColor(
-                              R.color.colorPrimary
-                          )
-                      )
-                  }
-                  false -> {
-                      Log.e("index", "smaller" + index)
-                      prevNextPanel.btnPrevContent.isEnabled = false
-                      prevNextPanel.tvPrevContent.setTextColor(
-                          requireContext().resources.getColor(
-                              R.color.disabled_color
-                          )
-                      )
-                  }
-              }
-          }*/
-      }
+            when (it > 0) {
+                true -> {
+                    Log.e("index", "greater" + index)
+                    btnPrevContent.isEnabled = true
+                    tvPrevContent.setTextColor(
+                        requireContext().resources.getColor(
+                            R.color.colorPrimary
+                        )
+                    )
+                }
+                false -> {
+                    Log.e("index", "smaller" + index)
+                    btnPrevContent.isEnabled = false
+                    tvPrevContent.setTextColor(
+                        requireContext().resources.getColor(
+                            R.color.disabled_color
+                        )
+                    )
+                }
+            }
+        }
+    }
 
-     override fun setNextControlState() {
+    override fun setNextControlState() {
         /* index.let {
 
              when (it >= sortedList.size - 1) {
@@ -316,7 +320,7 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
                  }
              }
          }*/
-     }
+    }
 
     override fun setPrevControlClickEvent() {
 
