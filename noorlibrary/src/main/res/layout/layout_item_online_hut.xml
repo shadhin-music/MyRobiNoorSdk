@@ -2,37 +2,37 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="item"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
+<!--        <variable-->
+<!--            name="item"-->
+<!--            type="com.gakk.noorlibrary.model.literature.Literature" />-->
 
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-    </data>
+<!--        <variable-->
+<!--            name="constant"-->
+<!--            type="com.gakk.noorlibrary.util.ConstantsKt" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_spacing"
         android:paddingStart="@dimen/standard_margin"
-        android:paddingEnd="@dimen/standard_margin">
+        android:paddingEnd="@dimen/standard_margin"
+        android:id="@+id/constraint"
+        >
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:fullImageUrl="@{item.fullImageUrl}"
             android:scaleType="centerCrop"
             android:src="@drawable/place_holder_16_9_ratio"
-            app:attachedProgressBar="@{progressBar}"
             app:layout_constraintDimensionRatio="h,1:0.3353658536585366"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeHolderDimension="@{constant.PLACE_HOLDER_16_9}" />
+             />
 
         <ProgressBar
             android:id="@+id/progressBar"

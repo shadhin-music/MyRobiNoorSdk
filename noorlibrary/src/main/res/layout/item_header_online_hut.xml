@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="item"
-            type="com.gakk.noorlibrary.model.ImageFromOnline" />
-    </data>
+<!--        <variable-->
+<!--            name="item"-->
+<!--            type="com.gakk.noorlibrary.model.ImageFromOnline" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,9 +17,8 @@
             android:id="@+id/ivHeaderHut"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:imageUrl="@{item.fullImageUrl}"
             android:scaleType="centerCrop"
-            app:attachedProgressBar="@{progressBar}"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="h,1:0.5638888888888889"
             app:layout_constraintEnd_toEndOf="parent"

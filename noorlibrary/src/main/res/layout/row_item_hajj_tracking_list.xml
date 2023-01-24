@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="user"
-            type="com.gakk.noorlibrary.model.hajjtracker.HajjTrackingListResponse.Data" />
-    </data>
+<!--        <variable-->
+<!--            name="user"-->
+<!--            type="com.gakk.noorlibrary.model.hajjtracker.HajjTrackingListResponse.Data" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,10 +21,8 @@
             android:id="@+id/ivUser"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:imageUrl="@{user.fullImageUrl}"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_profile_default"
-            app:attachedProgressBar="@{progressBar}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:text="@{user.trackerName}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/txt_color_black"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +63,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:text="@{user.sharerPhone}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:textColor="@color/ash"
                 app:layout_constraintStart_toStartOf="parent"

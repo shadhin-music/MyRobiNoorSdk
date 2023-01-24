@@ -29,17 +29,7 @@ internal class EidJamatAdapter(
 
     inner class EidJamatViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
         var view: View = layoutView
-//        var bindingHeader: ItemEidJamatHeaderBinding? = null
-//
-//        constructor(itemView: ItemEidJamatHeaderBinding) : super(itemView.root) {
-//            bindingHeader = itemView
-//        }
-//
-//        var bindingOrganizations: LayoutItemEidJamatBinding? = null
-//
-//        constructor(itemView: LayoutItemEidJamatBinding) : super(itemView.root) {
-//            bindingOrganizations = itemView
-//        }
+
 
     }
 

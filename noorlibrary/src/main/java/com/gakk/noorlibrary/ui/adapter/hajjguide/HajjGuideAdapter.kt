@@ -3,6 +3,10 @@ package com.gakk.noorlibrary.ui.adapter.hajjguide
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
@@ -23,19 +27,9 @@ internal class HajjGuideAdapter(
     val ITEM_HEADER = 0
     val ITEM_GUIDE = 1
 
-    inner class ViewHolder : RecyclerView.ViewHolder {
+    inner class ViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
+       var view: View = layoutView
 
-        var bindingGuideHeader: ItemHajjGuideHeaderBinding? = null
-
-        constructor(itemView: ItemHajjGuideHeaderBinding) : super(itemView.root) {
-            bindingGuideHeader = itemView
-        }
-
-        var hajjGuideBinding: ItemHajjGuideBinding? = null
-
-        constructor(itemView: ItemHajjGuideBinding) : super(itemView.root) {
-            hajjGuideBinding = itemView
-        }
     }
 
     override fun onCreateViewHolder(
@@ -44,22 +38,16 @@ internal class HajjGuideAdapter(
     ): ViewHolder {
         when (viewType) {
             ITEM_HEADER -> {
-                val binding: ItemHajjGuideHeaderBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.item_hajj_guide_header,
-                    parent,
-                    false
-                )
-                return ViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.item_hajj_guide_header,parent,false)
+
+                return ViewHolder(view)
+
             }
             else -> {
-                val binding: ItemHajjGuideBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.item_hajj_guide,
-                    parent,
-                    false
-                )
-                return ViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.item_hajj_guide,parent,false)
+
+                return ViewHolder(view)
+
             }
         }
     }
@@ -69,46 +57,56 @@ internal class HajjGuideAdapter(
         when (holder.itemViewType) {
             ITEM_GUIDE -> {
                 val listItem = stepList.get(position - 1)
-                holder.hajjGuideBinding?.item = listItem
 
-                holder.hajjGuideBinding?.tvSerialStep?.setText(TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(position)!!))
-
-
+              //  holder.hajjGuideBinding?.item = listItem
+             val title:AppCompatTextView = holder.view.findViewById(R.id.appCompatTextView26)
+                title.text = listItem.title
+                val text:AppCompatTextView = holder.view.findViewById(R.id.appCompatTextView27)
+                text.text = listItem.text
+               val tvSerialStep:AppCompatTextView = holder.view.findViewById(R.id.tvSerialStep)
+                tvSerialStep?.setText(TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(position)!!))
+//                val tvStep:AppCompatTextView = holder.view.findViewById(R.id.tvStep)
+               val ivStatus:AppCompatImageView = holder.view.findViewById(R.id.ivStatus)
+               val ivItemToogle:AppCompatImageView = holder.view.findViewById(R.id.ivItemToogle)
+                val rbDone: AppCompatRadioButton = holder.view.findViewById(R.id.rbDone)
+                val rbNotYet:AppCompatRadioButton = holder.view.findViewById(R.id.rbNotYet)
+                val clContainerParent:ConstraintLayout = holder.view.findViewById(R.id.clContainerParent)
+                val clToogle:ConstraintLayout = holder.view.findViewById(R.id.clToogle)
                 if (AppPreference.loadHajjGuideStep(position.toString() + AppPreference.userNumber)) {
-                    holder.hajjGuideBinding?.ivStatus?.visibility = View.VISIBLE
-                    holder.hajjGuideBinding?.rbDone?.isChecked = true
+                    ivStatus?.visibility = View.VISIBLE
+                      rbDone?.isChecked = true
                 } else {
-                    holder.hajjGuideBinding?.ivStatus?.visibility = View.GONE
-                    holder.hajjGuideBinding?.rbNotYet?.isChecked = true
+                   ivStatus?.visibility = View.GONE
+                    rbNotYet?.isChecked = true
                 }
 
-                holder.hajjGuideBinding?.rbDone?.handleClickEvent {
+             rbDone?.handleClickEvent {
                     imageChangeListener.onRadioBtnClick(position,"Done")
                 }
 
-                holder.hajjGuideBinding?.rbNotYet?.handleClickEvent {
+               rbNotYet?.handleClickEvent {
                     imageChangeListener.onRadioBtnClick(position,"NotYet")
                 }
 
-                holder.hajjGuideBinding?.clContainerParent?.handleClickEvent {
-                    when (holder.hajjGuideBinding?.clToogle?.visibility) {
+                  clContainerParent?.handleClickEvent {
+                    when (clToogle?.visibility) {
                         View.VISIBLE -> {
                             listItem.isExand = false
-                            holder.hajjGuideBinding?.clToogle?.visibility = View.GONE
-                            holder.hajjGuideBinding?.ivItemToogle?.setImageResource(R.drawable.ic_expand_more)
+                          clToogle?.visibility = View.GONE
+                      ivItemToogle?.setImageResource(R.drawable.ic_expand_more)
                         }
                         View.GONE -> {
                             listItem.isExand = true
-                            holder.hajjGuideBinding?.clToogle?.visibility = View.VISIBLE
-                            holder.hajjGuideBinding?.ivItemToogle?.setImageResource(R.drawable.ic_expand_less)
+                        clToogle?.visibility = View.VISIBLE
+                        ivItemToogle?.setImageResource(R.drawable.ic_expand_less)
                         }
                     }
                 }
 
                 if (listItem.isExand) {
-                    holder.hajjGuideBinding?.clToogle?.visibility = View.VISIBLE
+                 clToogle?.visibility = View.VISIBLE
                 } else {
-                    holder.hajjGuideBinding?.clToogle?.visibility = View.GONE
+                    clToogle?.visibility = View.GONE
                 }
             }
         }
