@@ -40,6 +40,9 @@ import com.gakk.noorlibrary.model.tracker.PostPrayerDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.AllRamadanDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.add.PostRamadanDataResponse
 import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
+import com.mcc.noor.model.umrah_hajj.CheckUmrahReg
+import com.mcc.noor.model.umrah_hajj.UmrahHajjModel
+import com.mcc.noor.model.umrah_hajj.UmrahHajjRegResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -385,4 +388,30 @@ interface ApiService {
     suspend fun paymentStatusUpdateAndSendEmail(
         @Path("trackingNo") trackingNo: String
     ): CommonApiResponse
+
+    // umrah hajj package
+
+    @GET("Umrah/Packages")
+    suspend fun getAllUmrahPackage(): UmrahHajjModel
+
+
+    @POST("Umrah/Registration")
+    suspend fun postUmrahPersonalInfo(
+        @Body param: RequestBody
+    ): UmrahHajjRegResponse
+
+    @GET("Umrah/RegistrationStatus/{passport}")
+    suspend fun checkUmrahPersonalInfo(
+        @Path("passport") passport: String,
+    ): CheckUmrahReg
+
+    @GET("Umrah/RegistrationHistory/{Msisdn}")
+    suspend fun UmrahGetAllPaymentHistory(
+        @Path("Msisdn") Msisdn: String,
+    ): CheckUmrahReg
+
+    @POST("Umrah/PaymentNotification")
+    suspend fun UmrahPaymentStatus(
+        @Body param: RequestBody
+    ): UmrahHajjRegResponse
 }

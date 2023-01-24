@@ -140,6 +140,7 @@ class FragmentDestinationMap {
                 context.resources.getString(R.string.cat_eid_jamat) -> PAGE_EID_JAMAT
                 context.resources.getString(R.string.cat_live_qa) -> PAGE_CAT_LIVE_QA
                 "Online Hut" -> ONLINE_HUT_HOME
+                context.resources.getString(R.string.cat_umrah_hajj) -> PAGE_UMRAH_HAJJ
                 else -> null
             }
         }

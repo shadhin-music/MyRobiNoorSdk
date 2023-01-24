@@ -402,8 +402,6 @@ class SurahListAdapterProvider(
 
     init {
         msurahDetailsCallBack = surahDetailsCallBack!!
-
-
     }
 
     fun getAdapter() = SurahListAdapter(msurahDetailsCallBack)

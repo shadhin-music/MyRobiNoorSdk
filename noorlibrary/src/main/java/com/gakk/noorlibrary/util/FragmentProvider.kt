@@ -24,6 +24,7 @@ import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.tracker.TrackerTabFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.ZakatCalculatorFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.*
+import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import java.io.Serializable
 
 
@@ -314,6 +315,9 @@ object FragmentProvider {
             PAGE_HAJJ_GUIDE -> HajjGuideFragment.newInstance()
 
             PAGE_HAJJ_PREREGISTRATION -> HajjpreRegistrationDetailsFragment.newInstance()
+
+            PAGE_UMRAH_HAJJ -> UmrahHajjFragment.newInstance()
+
 
             else -> null
         }

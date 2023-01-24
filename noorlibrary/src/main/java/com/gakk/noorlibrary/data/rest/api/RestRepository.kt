@@ -50,6 +50,7 @@ import com.gakk.noorlibrary.util.ImageHelper
 import com.gakk.noorlibrary.util.NAGAD_PUSER
 import com.gakk.noorlibrary.util.SSL_PUSER
 import com.google.gson.Gson
+import com.mcc.noor.model.umrah_hajj.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -600,5 +601,37 @@ class RestRepository(
     ): CommonApiResponse {
         return contentApiService.paymentStatusUpdateAndSendEmail(trackingNo)
     }
+
+    // umrah hajj package
+
+    suspend fun getUmrahHajjPackage(): UmrahHajjModel {
+        return contentApiService.getAllUmrahPackage()
+    }
+
+    suspend fun postUmrahHajjPersoanlInfo(data: UmrahHajjPersonalPostModel): UmrahHajjRegResponse {
+
+        val JSON = "application/json; charset=utf-8".toMediaType()
+
+        val body = JSONObject(Gson().toJson(data)).toString().toRequestBody(JSON)
+
+        return contentApiService.postUmrahPersonalInfo(body)
+    }
+
+    suspend fun checkUmrahPersonalInfo(passport: String): CheckUmrahReg {
+
+        return contentApiService.checkUmrahPersonalInfo(passport)
+    }
+
+    suspend fun GetAllPaymentHistoryUmrah(msisdn: String): CheckUmrahReg {
+
+        return contentApiService.UmrahGetAllPaymentHistory(msisdn)
+    }
+
+    suspend fun UmrahPaymentNotification(data: UmrahPaymentStatus): UmrahHajjRegResponse {
+        val JSON = "application/json; charset=utf-8".toMediaType()
+        val body = JSONObject(Gson().toJson(data)).toString().toRequestBody(JSON)
+        return contentApiService.UmrahPaymentStatus(body)
+    }
+
 }
 

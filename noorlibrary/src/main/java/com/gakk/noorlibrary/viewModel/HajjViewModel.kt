@@ -2,6 +2,7 @@ package com.gakk.noorlibrary.viewModel
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,9 +19,9 @@ import com.gakk.noorlibrary.model.hajjtracker.HajjLocationShareRequestResponse
 import com.gakk.noorlibrary.model.hajjtracker.HajjShareLocationGetResponse
 import com.gakk.noorlibrary.model.hajjtracker.HajjTrackingListResponse
 import com.gakk.noorlibrary.model.subcategory.SubcategoriesByCategoryIdResponse
-import com.gakk.noorlibrary.util.LAN_BANGLA
-import com.gakk.noorlibrary.util.loadJSONFromAsset
-import com.gakk.noorlibrary.util.singleArgViewModelFactory
+import com.gakk.noorlibrary.util.*
+import com.mcc.noor.model.umrah_hajj.UmrahPaymentStatus
+import com.mcc.noor.ui.fragments.payment.PaymentResource
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
@@ -34,6 +35,7 @@ import java.util.*
  * @AUTHOR: Mehedi Hasan
  * @DATE: 4/26/2021, Mon
  */
+
 internal class HajjViewModel(private val repository: RestRepository) : ViewModel() {
     companion object {
         val FACTORY = singleArgViewModelFactory(::HajjViewModel)
@@ -74,8 +76,10 @@ internal class HajjViewModel(private val repository: RestRepository) : ViewModel
     var refundRequest: MutableLiveData<Resource<HajjLocationShareRequestResponse>> =
         MutableLiveData()
 
-    var paymentStatus: MutableLiveData<Resource<CommonApiResponse>> =
+    private val _paymentStatus: MutableLiveData<PaymentResource> =
         MutableLiveData()
+
+    val paymentStatus: LiveData<PaymentResource> get() = _paymentStatus
 
 
     fun loadSubCategoriesByCatId(catId: String, pageNo: String) {
@@ -155,6 +159,19 @@ internal class HajjViewModel(private val repository: RestRepository) : ViewModel
         }
     }
 
+    private fun loadJSONFromAsset(inputStream: InputStream): String? {
+        val json: String = try {
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            String(buffer, StandardCharsets.UTF_8)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return null
+        }
+        return json
+    }
 
 
     fun getCurrentRates(from: String, to: String) {
@@ -421,22 +438,49 @@ internal class HajjViewModel(private val repository: RestRepository) : ViewModel
         }
     }
 
-    fun updatePaymentStatus(trackingNo: String) {
+    fun updatePaymentStatus(trackingNo: String,paymentTag:String) {
         viewModelScope.launch {
-            paymentStatus.postValue(Resource.loading(data = null))
+            _paymentStatus.postValue(PaymentResource.Loading)
             try {
-                paymentStatus.postValue(
-                    Resource.success(
-                        data = repository.updatePaymentStatus(trackingNo)
-                    )
-                )
+
+                when(paymentTag)
+                {
+                    PAYMENT_HAJJ_PRE_REG ->
+                    {
+                        _paymentStatus.postValue(
+                            PaymentResource.hajj_pre_reg(
+                                Resource.success(
+                                    data = repository.updatePaymentStatus(trackingNo)
+                                )
+                            )
+
+                        )
+                    }
+                    PAYMENT_UMRAH_HAJJ_REG ->
+                    {
+                        _paymentStatus.postValue(
+                            PaymentResource.umrah_hajj_reg(
+                                Resource.success(
+                                    data = repository.UmrahPaymentNotification(UmrahPaymentStatus(trackingNo,trackingNo)))
+                            )
+                        )
+
+                    }
+
+                    else ->
+                    {
+                        _paymentStatus.postValue(
+                            PaymentResource.Error("Error Occurred!"
+                            ))
+                    }
+
+                }
+
             } catch (e: Exception) {
-                paymentStatus.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
+
+                _paymentStatus.postValue(
+                    PaymentResource.Error( e.message ?: "Error Occurred!"
+                    ))
             }
         }
     }

@@ -23,6 +23,7 @@ import com.gakk.noorlibrary.databinding.ActivitySubscriptionBrowserBinding
 import com.gakk.noorlibrary.databinding.DialogHajjRefundBinding
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HajjViewModel
+import com.mcc.noor.ui.fragments.payment.PaymentResource
 import kotlinx.coroutines.launch
 
 
@@ -35,15 +36,24 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setApplicationLanguage(AppPreference.language!!)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_subscription_browser)
 
         val url: String?
         val trackongNo: String?
+        val paymentTag: String?
 
         intent.let {
             trackongNo = intent.getStringExtra(TRACKING_NO_TAG)
             url = intent.getStringExtra(PAYMENT_URL_TAG)
+            paymentTag = intent.getStringExtra(PAYMENT_STATUS_TAG)
+        }
+
+
+        if(trackongNo == null || paymentTag == null) {
+            finish()
+            return
         }
 
         binding.toolBar.root.visibility = View.GONE
@@ -70,7 +80,9 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 Log.e("onPageFinished", url)
                 if (url.contains("SSLPaySuccessCallBack")) {
-                    trackongNo?.let { viewModelHajj.updatePaymentStatus(it) }
+                    trackongNo.let {
+                        viewModelHajj.updatePaymentStatus(it,paymentTag.toString())
+                    }
                 } else if (url.contains("SSLPayFailCallBack")) {
                     showPaymentStatusDialog(0)
                 }
@@ -96,23 +108,26 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
     private fun subscribeObserver() {
 
         viewModelHajj.paymentStatus.observe(this@PreRegistrationBrowserActivity) {
-            when (it.status) {
-                Status.LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
 
-                Status.SUCCESS -> {
-                    showPaymentStatusDialog(1)
-
-                    binding.progressBar.visibility = View.GONE
-                }
-
-                Status.ERROR -> {
+            when(it)
+            {
+                is PaymentResource.Error ->
+                {
                     showPaymentStatusDialog(0)
                     binding.progressBar.visibility = View.GONE
                 }
+                PaymentResource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is PaymentResource.hajj_pre_reg -> paymentSuccess()
+                is PaymentResource.umrah_hajj_reg -> paymentSuccess()
             }
+
         }
+    }
+    private fun paymentSuccess()
+    {
+        showPaymentStatusDialog(1)
+
+        binding.progressBar.visibility = View.GONE
     }
 
     fun showPaymentStatusDialog(status: Int) {

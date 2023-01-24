@@ -195,6 +195,9 @@ const val PRODUCT_ID_FIFTEEN_DAYS = "0300410706"
 const val PRODUCT_ID_SEVEN_DAYS_ROBI = "0300418810"
 const val PRODUCT_ID_THIRTY_DAYS_ROBI = "0300418812"
 
+const val UMRAH_SERVICE_ID = "2284"
+const val SSL_SERVICE_ID_MONTHLY = "2280"
+
 
 const val SUB_END_PART_ROBI = "&backurl=http://noorsawab.com/"
 const val PLAN_NAME_WEEKLY = "Weekly"
@@ -203,7 +206,10 @@ const val PLAN_NAME_WEEKLY_ROBI = "WeeklyRobi"
 const val PLAN_NAME_MONTHLY_ROBI = "MonthlyRobi"
 const val CHANNEL_ID = "12345"
 const val ACTION_SHARE = "com.mcc.noor.ACTION_SHARE"
+const val PAYMENT_STATUS_TAG = "PaymentTag"
+const val PAYMENT_HAJJ_PRE_REG = "HajjPreReg"
 
+const val PAGE_UMRAH_HAJJ = "Umrah Hajj"
 const val COUNTRY_NAME = "MALAYSIA"
 const val COUNTRY_NAME_BN = "মালয়েশিয়া"
 const val STATUS_SUCCESS = 200
@@ -249,4 +255,5 @@ const val CITY_NAME_NORTH = "North"
 const val CITY_NAME_SOUTH = "South"
 const val SUB_CAT_ID_UNDEFINED = "undefined"
 const val USER_NAME_TAG = "UserName"
+const val PAYMENT_UMRAH_HAJJ_REG = "UmrahHajjReg"
 
