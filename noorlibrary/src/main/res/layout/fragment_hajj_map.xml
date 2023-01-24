@@ -1,108 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
 
     <RelativeLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg">
+        android:layout_height="wrap_content"
+        android:background="@color/bg"
+        android:orientation="horizontal"
+        android:padding="@dimen/standard_margin">
 
-        <RelativeLayout
-            android:id="@+id/header_layout"
+        <LinearLayout
+            android:id="@+id/ll_icons"
+            android:layout_width="@dimen/hajjMapLeftIconLinWidth"
+            android:layout_height="@dimen/hajjMapLeftIconLinHeight"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hajjMapLeftIconHeight"
+                android:contentDescription="@string/default_content_des"
+                android:padding="2dp"
+                android:src="@drawable/ic_location_from" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hajjMapLeftIconHeight"
+                android:contentDescription="@string/default_content_des"
+                android:src="@drawable/ic_map_line" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hajjMapLeftIconHeight"
+                android:contentDescription="@string/default_content_des"
+                android:padding="2dp"
+                android:src="@drawable/ic_location_to" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bg"
-            android:orientation="horizontal"
-            android:padding="@dimen/standard_margin">
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/ll_icons"
+            android:layout_toEndOf="@+id/ll_icons"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll_icons"
-                android:layout_width="@dimen/hajjMapLeftIconLinWidth"
-                android:layout_height="@dimen/hajjMapLeftIconLinHeight"
-                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
                 android:orientation="vertical">
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/hajjMapLeftIconHeight"
-                    android:contentDescription="@string/default_content_des"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_location_from" />
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/hajjMapPlaceSelectMargin"
+                    android:background="@drawable/bg_border_rounded_gray"
+                    android:paddingLeft="@dimen/hajjMapPlaceSelectPaddingLR"
+                    android:paddingRight="@dimen/hajjMapPlaceSelectPaddingLR">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/hajjMapLeftIconHeight"
-                    android:contentDescription="@string/default_content_des"
-                    android:src="@drawable/ic_map_line" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/hajjMapLeftIconHeight"
-                    android:contentDescription="@string/default_content_des"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_location_to" />
+                    <Spinner
+                        android:id="@+id/spinner_from"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:entries="@array/hajj_tracker_places" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/ll_icons"
-                android:layout_toEndOf="@+id/ll_icons"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/hajjMapPlaceSelectMargin"
+                    android:background="@drawable/bg_border_rounded_gray"
+                    android:paddingLeft="@dimen/hajjMapPlaceSelectPaddingLR"
+                    android:paddingRight="@dimen/hajjMapPlaceSelectPaddingLR">
 
-                    <RelativeLayout
+                    <Spinner
+                        android:id="@+id/spinner_to"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/hajjMapPlaceSelectMargin"
-                        android:background="@drawable/bg_border_rounded_gray"
-                        android:paddingLeft="@dimen/hajjMapPlaceSelectPaddingLR"
-                        android:paddingRight="@dimen/hajjMapPlaceSelectPaddingLR">
-
-                        <Spinner
-                            android:id="@+id/spinner_from"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:entries="@array/hajj_tracker_places" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/hajjMapPlaceSelectMargin"
-                        android:background="@drawable/bg_border_rounded_gray"
-                        android:paddingLeft="@dimen/hajjMapPlaceSelectPaddingLR"
-                        android:paddingRight="@dimen/hajjMapPlaceSelectPaddingLR">
-
-                        <Spinner
-                            android:id="@+id/spinner_to"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:entries="@array/hajj_tracker_places" />
-                    </RelativeLayout>
-                </LinearLayout>
+                        android:layout_centerVertical="true"
+                        android:entries="@array/hajj_tracker_places" />
+                </RelativeLayout>
             </LinearLayout>
-        </RelativeLayout>
-
-        <FrameLayout
-            android:id="@+id/flMap"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/header_layout">
-
-        </FrameLayout>
+        </LinearLayout>
     </RelativeLayout>
-</layout>
+
+    <FrameLayout
+        android:id="@+id/flMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header_layout">
+
+    </FrameLayout>
+</RelativeLayout>

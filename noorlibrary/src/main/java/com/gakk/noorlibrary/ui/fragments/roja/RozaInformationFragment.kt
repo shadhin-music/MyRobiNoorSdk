@@ -7,21 +7,19 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.DialogType
-import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.callbacks.NOTFICATION
 import com.gakk.noorlibrary.data.LocationHelper
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentRozaInformationBinding
 import com.gakk.noorlibrary.databinding.LayoutRozaPrimaryHeaderBinding
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
 import com.gakk.noorlibrary.ui.adapter.roja.RozaInformationAdapter
@@ -29,7 +27,6 @@ import com.gakk.noorlibrary.ui.fragments.DivisionSelectionCallback
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.HomeViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
@@ -38,7 +35,6 @@ import kotlinx.coroutines.launch
 internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
     private var mDetailsCallBack: DetailsCallBack? = null
-    private lateinit var binding: FragmentRozaInformationBinding
     private lateinit var adapter: RozaInformationAdapter
     private var ramadanIfterSehriTimes: MutableList<IfterAndSehriTime> = ArrayList()
     private var nextTenDaysIfterSehriTimes: MutableList<IfterAndSehriTime> = ArrayList()
@@ -47,6 +43,10 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
     private lateinit var locationHelper: LocationHelper
     private lateinit var repository: RestRepository
     private var fromMalaysia: Boolean = false
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var rvRozaInfo: RecyclerView
+    private lateinit var btnRetry: AppCompatButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +63,15 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
         mDetailsCallBack?.setToolBarTitle(context?.resources!!.getString(R.string.cat_roja))
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_roza_information, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_roza_information,
+            container, false
+        )
+
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvRozaInfo = view.findViewById(R.id.rvRozaInfo)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
 
         AppPreference.ramadanSehriIfterTimes?.let {
             ramadanIfterSehriTimes = it
@@ -95,19 +102,19 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
             loadData()
 
-            model.literatureListData.observe(viewLifecycleOwner, {
+            model.literatureListData.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.noInternetLayout.root.visibility = GONE
-                        binding.progressLayout.root.visibility = VISIBLE
+                        noInternetLayout.visibility = GONE
+                        progressLayout.visibility = VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.noInternetLayout.root.visibility = VISIBLE
-                        binding.progressLayout.root.visibility = GONE
+                        noInternetLayout.visibility = VISIBLE
+                        progressLayout.visibility = GONE
                     }
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = GONE
-                        var list = it.data?.data ?: mutableListOf()
+                        progressLayout.visibility = GONE
+                        val list = it.data?.data ?: mutableListOf()
                         adapter = RozaInformationAdapter(
                             this@RozaInformationFragment,
                             ramadanIfterSehriTimes,
@@ -115,16 +122,16 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                             list,
                             fromMalaysia
                         )
-                        binding.rvRozaInfo.adapter = adapter
+                        rvRozaInfo.adapter = adapter
                     }
                 }
-            })
+            }
         }
-        binding.noInternetLayout.btnRetry.handleClickEvent {
+        btnRetry.handleClickEvent {
             loadData()
         }
 
-        return binding.root
+        return view
     }
 
     fun loadData() {
@@ -141,10 +148,13 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
             RozaInformationFragment()
     }
 
-    override fun showDivisionListAlert(binding: LayoutRozaPrimaryHeaderBinding) {
+    override fun showDivisionListAlert(view: View) {
+        Log.e("showDivisionListAlert","Need to configure without binding")
+    }
+   /* override fun showDivisionListAlert(binding: LayoutRozaPrimaryHeaderBinding) {
         mDetailsCallBack?.showDialogWithActionAndParam(
             dialogType = DialogType.RozaDivisionListDialog,
             binding = binding
         )
-    }
+    }*/
 }

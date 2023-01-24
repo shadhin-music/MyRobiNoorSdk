@@ -1,117 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
 
-    <data>
+    <include
+        android:id="@+id/header"
+        layout="@layout/item_nearest_mosque_header" />
 
-    </data>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMosque"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/small_spacing"
+        android:paddingBottom="@dimen/margin_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutMap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg">
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:background="@drawable/ic_bg_login_enable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/item_nearest_mosque_header" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMosque"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/standard_margin"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
             android:layout_marginEnd="@dimen/standard_margin"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/small_spacing"
-            android:paddingBottom="@dimen/margin_20"
-            app:layout_constraintBottom_toTopOf="@+id/discalimer_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header">
+            android:src="@drawable/ic_location"
+            app:layout_constraintBottom_toBottomOf="@id/tvMapView"
+            app:layout_constraintEnd_toStartOf="@id/tvMapView"
+            app:layout_constraintTop_toTopOf="@id/tvMapView" />
 
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <LinearLayout
-            android:id="@+id/discalimer_layout"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMapView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/layoutMap"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvMosque">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorWhiteDisabled" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/standard_margin"
-                android:layout_marginEnd="@dimen/standard_margin"
-                android:paddingTop="@dimen/small_spacing"
-                android:paddingBottom="@dimen/small_spacing"
-                android:text="@string/restaturant_disclaimer"
-                android:gravity="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textColor="@color/black_secondary"
-                android:fontFamily="sans-serif"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorWhiteDisabled" />
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutMap"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:layout_marginBottom="@dimen/margin_20"
-            android:background="@drawable/ic_bg_login_enable"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:layout_marginEnd="@dimen/standard_margin"
-                android:src="@drawable/ic_location"
-                app:layout_constraintBottom_toBottomOf="@id/tvMapView"
-                app:layout_constraintEnd_toStartOf="@id/tvMapView"
-                app:layout_constraintTop_toTopOf="@id/tvMapView" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMapView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_map_view"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/txt_white"
-                android:fontFamily="sans-serif"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <include
-            android:id="@+id/progressLayout"
-            layout="@layout/layout_circular_progress"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:elevation="@dimen/margin_12"
-            android:visibility="gone"
+            android:fontFamily="sans-serif"
+            android:text="@string/txt_map_view"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/txt_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+
+    <include
+        android:id="@+id/progressLayout"
+        layout="@layout/layout_circular_progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="@dimen/margin_12"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,11 +8,15 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -24,7 +28,6 @@ import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentNamazVisualBinding
 import com.gakk.noorlibrary.extralib.StepBarView.stepbarView
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.*
@@ -35,8 +38,6 @@ import kotlinx.coroutines.launch
 private const val ARG_CAT_NAME = "catName"
 
 internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBack {
-    @Transient
-    private lateinit var binding: FragmentNamazVisualBinding
 
     @Transient
     private var mDetailsCallBack: DetailsCallBack? = null
@@ -59,6 +60,29 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
     @Transient
     lateinit var mCatId: String
 
+    @Transient
+    lateinit var stepBarView: RecyclerView
+
+    @Transient
+    lateinit var progressLayout: ConstraintLayout
+
+    @Transient
+    lateinit var tvTitle: AppCompatTextView
+
+    @Transient
+    lateinit var tvDesVisual: AppCompatTextView
+
+    @Transient
+    lateinit var imgVisual: AppCompatImageView
+
+    @Transient
+    lateinit var prevNextPanel: ConstraintLayout
+
+    @Transient
+    lateinit var btnPrevContent: ImageButton
+
+
+    @Transient
     private val step_bar_view: stepbarView = stepbarView()
 
 
@@ -77,12 +101,19 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
+
+        val view = inflater.inflate(
             R.layout.fragment_namaz_visual,
-            container,
-            false
+            container, false
         )
+
+        stepBarView = view.findViewById(R.id.stepBarView)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        tvTitle = view.findViewById(R.id.tvTitle)
+        tvDesVisual = view.findViewById(R.id.tvDesVisual)
+        imgVisual = view.findViewById(R.id.imgVisual)
+        prevNextPanel = view.findViewById(R.id.prevNextPanel)
+        btnPrevContent = prevNextPanel.findViewById(R.id.btnPrevContent)
 
         when (mCatName) {
             CAT_MEN -> {
@@ -90,7 +121,7 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
                 context?.let {
                     step_bar_view.setup_stepbar(
                         it,
-                        binding.stepBarView,
+                        stepBarView,
                         11,
                         36F,
                         3F,
@@ -108,7 +139,7 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
                 context?.let {
                     step_bar_view.setup_stepbar(
                         it,
-                        binding.stepBarView,
+                        stepBarView,
                         10,
                         36F,
                         3F,
@@ -138,20 +169,18 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
             model.literatureListData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.LOADING -> {
-                        //binding.noInternetLayout.root.visibility = View.GONE
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
-                        // binding.noInternetLayout.root.visibility = View.VISIBLE
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         val list = it.data?.data ?: mutableListOf()
                         sortedList =
                             list.sortedByDescending { list.indexOf(it) }.toMutableList()
                         setData(sortedList, 0)
-                        binding.stepBarView.visibility = View.VISIBLE
+                        stepBarView.visibility = View.VISIBLE
                         setUpPrevNextControlState()
                     }
                 }
@@ -169,13 +198,13 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
         }
 
         updateToolbarForThisFragment()
-        return binding.root
+        return view
     }
 
     fun setData(list: MutableList<Literature>, index: Int) {
 
-        binding.tvTitle.setText(TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(index + 1)!!) + ". " + list[index].title)
-        binding.tvDesVisual.setText(list[index].text)
+        tvTitle.setText(TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(index + 1)!!) + ". " + list[index].title)
+        tvDesVisual.setText(list[index].text)
         Noor.appContext?.let {
             Glide.with(it)
                 .load(list[index].fullImageUrl?.replace("<size>", "1280"))
@@ -204,7 +233,7 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
                 })
                 .error(R.drawable.place_holder_4_3_ratio)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into(binding.imgVisual)
+                .into(imgVisual)
         }
     }
 
@@ -239,74 +268,74 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
         setNextControlClickEvent()
     }
 
-    override fun setPrevControlState() {
-        index.let {
+      override fun setPrevControlState() {
+         /* index.let {
 
-            when (it > 0) {
-                true -> {
-                    Log.e("index", "greater" + index)
-                    binding.prevNextPanel.btnPrevContent.isEnabled = true
-                    binding.prevNextPanel.tvPrevContent.setTextColor(
-                        requireContext().resources.getColor(
-                            R.color.colorPrimary
-                        )
-                    )
-                }
-                false -> {
-                    Log.e("index", "smaller" + index)
-                    binding.prevNextPanel.btnPrevContent.isEnabled = false
-                    binding.prevNextPanel.tvPrevContent.setTextColor(
-                        requireContext().resources.getColor(
-                            R.color.disabled_color
-                        )
-                    )
-                }
-            }
-        }
-    }
+              when (it > 0) {
+                  true -> {
+                      Log.e("index", "greater" + index)
+                      btnPrevContent.isEnabled = true
+                      tvPrevContent.setTextColor(
+                          requireContext().resources.getColor(
+                              R.color.colorPrimary
+                          )
+                      )
+                  }
+                  false -> {
+                      Log.e("index", "smaller" + index)
+                      prevNextPanel.btnPrevContent.isEnabled = false
+                      prevNextPanel.tvPrevContent.setTextColor(
+                          requireContext().resources.getColor(
+                              R.color.disabled_color
+                          )
+                      )
+                  }
+              }
+          }*/
+      }
 
-    override fun setNextControlState() {
-        index.let {
+     override fun setNextControlState() {
+        /* index.let {
 
-            when (it >= sortedList.size - 1) {
-                true -> {
-                    binding.prevNextPanel.btnNextContent.isEnabled = false
-                    binding.prevNextPanel.tvNextContent.setTextColor(
-                        requireContext().resources.getColor(
-                            R.color.disabled_color
-                        )
-                    )
-                }
-                false -> {
-                    binding.prevNextPanel.btnNextContent.isEnabled = true
-                    binding.prevNextPanel.tvNextContent.setTextColor(
-                        requireContext().resources.getColor(
-                            R.color.colorPrimary
-                        )
-                    )
-                }
-            }
-        }
-    }
+             when (it >= sortedList.size - 1) {
+                 true -> {
+                     prevNextPanel.btnNextContent.isEnabled = false
+                     prevNextPanel.tvNextContent.setTextColor(
+                         requireContext().resources.getColor(
+                             R.color.disabled_color
+                         )
+                     )
+                 }
+                 false -> {
+                     prevNextPanel.btnNextContent.isEnabled = true
+                     prevNextPanel.tvNextContent.setTextColor(
+                         requireContext().resources.getColor(
+                             R.color.colorPrimary
+                         )
+                     )
+                 }
+             }
+         }*/
+     }
 
     override fun setPrevControlClickEvent() {
 
-        binding.prevNextPanel.layoutPrevActionContent.handleClickEvent {
-            if (index > 0) {
-                binding.prevNextPanel.btnPrevContent.isEnabled = true
-                binding.prevNextPanel.tvPrevContent.setTextColor(
-                    requireContext().resources.getColor(
-                        R.color.colorPrimary
-                    )
-                )
-                index--
-                if (index >= 0) {
-                    setData(sortedList, index)
-                    setUpPrevNextControlState()
-                } else index++
+        /* prevNextPanel.layoutPrevActionContent.handleClickEvent {
+             if (index > 0) {
+                 prevNextPanel.btnPrevContent.isEnabled = true
+                 prevNextPanel.tvPrevContent.setTextColor(
+                     requireContext().resources.getColor(
+                         R.color.colorPrimary
+                     )
+                 )
+                 index--
+                 if (index >= 0) {
+                     setData(sortedList, index)
+                     setUpPrevNextControlState()
+                 } else index++
 
-            }
-        }
+             }
+         }*/
     }
 
     fun Context.dipToPixels(dipValue: Float) =
@@ -314,7 +343,7 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
 
     override fun setNextControlClickEvent() {
 
-        binding.stepBarView.layoutManager?.scrollToPosition(index)
+        //stepBarView.layoutManager?.scrollToPosition(index)
 
 
         /*binding.stepBarView.scrollTo(
@@ -322,23 +351,23 @@ internal class NamazVisualFragment : Fragment(), PreviousNextPanelControlCallBac
             0
         )*/
 
-        binding.prevNextPanel.nextActionContent.handleClickEvent {
-            if (index < sortedList.size - 1) {
-                binding.prevNextPanel.btnNextContent.isEnabled = true
-                binding.prevNextPanel.tvNextContent.setTextColor(
-                    requireContext().resources.getColor(
-                        R.color.colorPrimary
-                    )
-                )
-                index++
-                setData(sortedList, index)
-                setUpPrevNextControlState()
+        /*  prevNextPanel.nextActionContent.handleClickEvent {
+              if (index < sortedList.size - 1) {
+                  prevNextPanel.btnNextContent.isEnabled = true
+                  prevNextPanel.tvNextContent.setTextColor(
+                      requireContext().resources.getColor(
+                          R.color.colorPrimary
+                      )
+                  )
+                  index++
+                  setData(sortedList, index)
+                  setUpPrevNextControlState()
 
-            }
-        }
+              }
+          }
 
-        if (index >= 0)
-            step_bar_view.setActiveStep(index)
+          if (index >= 0)
+              step_bar_view.setActiveStep(index)*/
 
     }
 }

@@ -8,22 +8,19 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.DialogType
-import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.callbacks.NOTFICATION
 import com.gakk.noorlibrary.data.LocationHelper
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentRozaInformationBinding
-import com.gakk.noorlibrary.databinding.LayoutRozaPrimaryHeaderBinding
 import com.gakk.noorlibrary.model.roza.Data
 import com.gakk.noorlibrary.model.roza.IftarAndSheriTimeforBD
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
@@ -38,7 +35,6 @@ import kotlinx.coroutines.launch
 internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
     private var mDetailsCallBack: DetailsCallBack? = null
-    private lateinit var binding: FragmentRozaInformationBinding
     private lateinit var adapter: RozaInformationAdapter
     private var list2: MutableList<Data> = ArrayList()
     private var ramadanIfterSehriTimes2: MutableList<IftarAndSheriTimeforBD> = ArrayList()
@@ -52,6 +48,10 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
     private lateinit var locationHelper: LocationHelper
     private lateinit var repository: RestRepository
     private var fromMalaysia: Boolean = false
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var rvRozaInfo: RecyclerView
+    private lateinit var btnRetry: AppCompatButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,12 +69,17 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
         locationHelper = LocationHelper(requireContext())
 
         mDetailsCallBack?.setToolBarTitle(context?.resources!!.getString(R.string.cat_roja))
-       /* mDetailsCallBack?.toggleToolBarActionIconsVisibility(true, ActionButtonType.TypeTwo)
-        mDetailsCallBack?.setOrUpdateActionButtonTag(NOTFICATION, ActionButtonType.TypeTwo)*/
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_roza_information, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_roza_information,
+            container, false
+        )
+
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvRozaInfo = view.findViewById(R.id.rvRozaInfo)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
+
 
         AppPreference.ramadanSehriIfterTimes?.let {
             ramadanIfterSehriTimes = it
@@ -107,15 +112,15 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
             model.literatureListData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.noInternetLayout.root.visibility = GONE
-                        binding.progressLayout.root.visibility = VISIBLE
+                        noInternetLayout.visibility = GONE
+                        progressLayout.visibility = VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.noInternetLayout.root.visibility = VISIBLE
-                        binding.progressLayout.root.visibility = GONE
+                        noInternetLayout.visibility = VISIBLE
+                        progressLayout.visibility = GONE
                     }
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         var list = it.data?.data ?: mutableListOf()
                         /* adapter = RozaInformationAdapter(
                              this@RozaInformationFragment,
@@ -127,7 +132,7 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                          )
                          Log.e("TAG","Message: "+ list)
                          binding.rvRozaInfo.adapter = adapter*/
-                        if (binding.rvRozaInfo.adapter == null) {
+                        if (rvRozaInfo.adapter == null) {
                             adapter = RozaInformationAdapter(
                                 this@RozaInformationFragment,
                                 ramadanIfterSehriTimes,
@@ -137,7 +142,7 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                                 fromMalaysia
                             )
                             Log.e("TAG", "Message: " + list)
-                            binding.rvRozaInfo.adapter = adapter
+                            rvRozaInfo.adapter = adapter
                         } else {
                             adapter.mDuaList = list
                             adapter.duaItemCount = list.size
@@ -150,20 +155,18 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
             model.ramadanListData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.noInternetLayout.root.visibility = GONE
-                        binding.progressLayout.root.visibility = VISIBLE
+                        noInternetLayout.visibility = GONE
+                        progressLayout.visibility = VISIBLE
                     }
                     Status.ERROR -> {
-                        binding.noInternetLayout.root.visibility = VISIBLE
-                        binding.progressLayout.root.visibility = GONE
+                        noInternetLayout.visibility = VISIBLE
+                        progressLayout.visibility = GONE
                     }
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         var list2 = it.data?.data?.toMutableList()
 
-                        //adapter.notifyDataSetChanged()
-
-                        if (binding.rvRozaInfo.adapter == null) {
+                        if (rvRozaInfo.adapter == null) {
                             adapter = RozaInformationAdapter(
                                 this@RozaInformationFragment,
                                 ramadanIfterSehriTimes,
@@ -174,7 +177,7 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
                             )
                             Log.e("TAG", "Message: " + list2)
-                            binding.rvRozaInfo.adapter = adapter
+                            rvRozaInfo.adapter = adapter
                         } else {
                             adapter.mRamadanSehriIfterTimesFromAPI = list2!!
                             adapter.mNextTenDaysSehriIfterTimesFromAPI = list2!!
@@ -186,11 +189,11 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
             })
         }
 
-        binding.noInternetLayout.btnRetry.handleClickEvent {
+        btnRetry.handleClickEvent {
             loadData("Dhaka", "0")
         }
 
-        return binding.root
+        return view
     }
 
     override fun onDestroy() {
@@ -218,82 +221,82 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
     companion object {
         @JvmStatic
-        fun newInstance(detailsCallBack: DetailsCallBack) =
-            RozaInformationFragment().apply {
-               /* arguments = Bundle().apply {
-                    putSerializable(ARG_DETAILS_CALL_BACK, detailsCallBack)
-                }*/
-            }
+        fun newInstance() =
+            RozaInformationFragment()
     }
 
-    override fun showDivisionListAlert(binding: LayoutRozaPrimaryHeaderBinding) {
-        mDetailsCallBack?.showDialogWithActionAndParam(
-            dialogType = DialogType.RozaDivisionListDialog,
-            binding = binding,
-            divisionCallbackFunc = { name, index ->
-                Log.i("TAG", "showDivisionListAlert: $name $index")
-                // model.loadRamadanTimingData("Dhaka")
-//                if(index==-1){
-//                    binding.tvDivision.text = "Dhaka"
-//                    adapter.selectedDivision = "Dhaka"
-//                }
-                if (index == 0) {
-                    loadData("Dhaka", index.toString())
-                    binding.tvDivision.text = "Dhaka"
-                    adapter.selectedDivision = "Dhaka"
-                    Log.i("TAG", "showDivisionListAlert: $name $index")
-                }
-                if (index == 1) {
-                    loadData("Barisal", index.toString())
-                    binding.tvDivision.text = "Barisal"
-                    adapter.selectedDivision = "Barisal"
-                }
-                if (index == 2) {
-                    loadData("Chattogram", index.toString())
-                    binding.tvDivision.text = "Chittagong"
-                    adapter.selectedDivision = "Chittagong"
-                }
-
-                if (index == 3) {
-                    loadData("Sylhet", index.toString())
-                    binding.tvDivision.text = "Sylhet"
-                    adapter.selectedDivision = "Sylhet"
-                }
-                if (index == 4) {
-                    loadData("Rangpur", index.toString())
-                    binding.tvDivision.text = "Rangpur"
-                    adapter.selectedDivision = "Rangpur"
-                }
-                if (index == 5) {
-                    loadData("Rajshahi", index.toString())
-                    binding.tvDivision.text = "Rajshahi"
-                    adapter.selectedDivision = "Rajshahi"
-                }
-                if (index == 6) {
-                    loadData("Khulna", index.toString())
-                    binding.tvDivision.text = "Khulna"
-                    adapter.selectedDivision = "Khulna"
-                }
-                if (index == 7) {
-                    loadData("Mymensingh", index.toString())
-                    binding.tvDivision.text = "Mymensingh"
-                    adapter.selectedDivision = "Mymensingh"
-                }
-//                else{
-//                    index ==0
-//                    binding.tvDivision.
-//                }
-                adapter.notifyDataSetChanged()
-                Log.e("TAG", "Message: called")
-            }
-        )
-
-
+    override fun showDivisionListAlert(view: View) {
+        Log.e("showDivisionListAlert","Need to configure without binding")
     }
+
+    /* override fun showDivisionListAlert(view: View) {
+         mDetailsCallBack?.showDialogWithActionAndParam(
+             dialogType = DialogType.RozaDivisionListDialog,
+             binding = view,
+             divisionCallbackFunc = { name, index ->
+                 Log.i("TAG", "showDivisionListAlert: $name $index")
+                 // model.loadRamadanTimingData("Dhaka")
+ //                if(index==-1){
+ //                    binding.tvDivision.text = "Dhaka"
+ //                    adapter.selectedDivision = "Dhaka"
+ //                }
+                 if (index == 0) {
+                     loadData("Dhaka", index.toString())
+                     binding.tvDivision.text = "Dhaka"
+                     adapter.selectedDivision = "Dhaka"
+                     Log.i("TAG", "showDivisionListAlert: $name $index")
+                 }
+                 if (index == 1) {
+                     loadData("Barisal", index.toString())
+                     binding.tvDivision.text = "Barisal"
+                     adapter.selectedDivision = "Barisal"
+                 }
+                 if (index == 2) {
+                     loadData("Chattogram", index.toString())
+                     binding.tvDivision.text = "Chittagong"
+                     adapter.selectedDivision = "Chittagong"
+                 }
+
+                 if (index == 3) {
+                     loadData("Sylhet", index.toString())
+                     binding.tvDivision.text = "Sylhet"
+                     adapter.selectedDivision = "Sylhet"
+                 }
+                 if (index == 4) {
+                     loadData("Rangpur", index.toString())
+                     binding.tvDivision.text = "Rangpur"
+                     adapter.selectedDivision = "Rangpur"
+                 }
+                 if (index == 5) {
+                     loadData("Rajshahi", index.toString())
+                     binding.tvDivision.text = "Rajshahi"
+                     adapter.selectedDivision = "Rajshahi"
+                 }
+                 if (index == 6) {
+                     loadData("Khulna", index.toString())
+                     binding.tvDivision.text = "Khulna"
+                     adapter.selectedDivision = "Khulna"
+                 }
+                 if (index == 7) {
+                     loadData("Mymensingh", index.toString())
+                     binding.tvDivision.text = "Mymensingh"
+                     adapter.selectedDivision = "Mymensingh"
+                 }
+ //                else{
+ //                    index ==0
+ //                    binding.tvDivision.
+ //                }
+                 adapter.notifyDataSetChanged()
+                 Log.e("TAG", "Message: called")
+             }
+         )
+
+
+     }*/
 
 
 }
 
 interface DivisionSelectionCallback {
-    fun showDivisionListAlert(binding: LayoutRozaPrimaryHeaderBinding)
+    fun showDivisionListAlert(view: View)
 }

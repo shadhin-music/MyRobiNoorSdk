@@ -1,98 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/standard_margin"
+    android:layout_marginEnd="@dimen/standard_margin">
 
-    <data>
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layoutSeekbar"
+        style="@style/CardViewStyleNoElevation"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standard_margin"
-        android:layout_marginEnd="@dimen/standard_margin">
+        android:layout_marginTop="@dimen/standard_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/layoutSeekbar"
-            style="@style/CardViewStyleNoElevation"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/standard_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:padding="@dimen/standard_margin">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_distance"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.gakk.noorlibrary.extralib.bubbleseekbar.BubbleSeekBar
+                android:id="@+id/distanceSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/standard_margin">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDistance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_distance"
-                    android:textColor="@color/black"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.gakk.noorlibrary.extralib.bubbleseekbar.BubbleSeekBar
-                    android:id="@+id/distanceSeekBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_spacing"
-                    android:layout_marginBottom="@dimen/small_spacing"
-                    app:barrierMargin="0dp"
-                    app:bsb_auto_adjust_section_mark="true"
-                    app:bsb_bubble_color="@color/colorPrimary"
-                    app:bsb_bubble_text_color="@color/txt_white"
-                    app:bsb_bubble_text_size="12sp"
-                    app:bsb_is_float_type="false"
-                    app:bsb_max="10"
-                    app:bsb_min="1"
-                    app:bsb_progress="0"
-                    app:bsb_second_track_color="@color/colorPrimary"
-                    app:bsb_section_count="3"
-                    app:bsb_section_text_position="below_section_mark"
-                    app:bsb_show_progress_in_float="true"
-                    app:bsb_show_section_mark="true"
-                    app:bsb_show_section_text="true"
-                    app:bsb_show_thumb_text="true"
-                    app:bsb_touch_to_seek="true"
-                    app:bsb_track_color="@color/colorPrimaryDark"
-                    app:bsb_track_size="3dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDistance" />
+                android:layout_marginTop="@dimen/small_spacing"
+                android:layout_marginBottom="@dimen/small_spacing"
+                app:barrierMargin="0dp"
+                app:bsb_auto_adjust_section_mark="true"
+                app:bsb_bubble_color="@color/colorPrimary"
+                app:bsb_bubble_text_color="@color/txt_white"
+                app:bsb_bubble_text_size="12sp"
+                app:bsb_is_float_type="false"
+                app:bsb_max="10"
+                app:bsb_min="1"
+                app:bsb_progress="0"
+                app:bsb_second_track_color="@color/colorPrimary"
+                app:bsb_section_count="3"
+                app:bsb_section_text_position="below_section_mark"
+                app:bsb_show_progress_in_float="true"
+                app:bsb_show_section_mark="true"
+                app:bsb_show_section_text="true"
+                app:bsb_show_thumb_text="true"
+                app:bsb_touch_to_seek="true"
+                app:bsb_track_color="@color/colorPrimaryDark"
+                app:bsb_track_size="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDistance" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvLocationNearset"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/standard_margin"
-            android:text=""
-            android:visibility="gone"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/txt_color_black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutSeekbar" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvLocationNearset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:text=""
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/txt_color_black"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutSeekbar" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvLocationDes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_4"
-            android:text="@string/des_near_mosque"
-            android:visibility="gone"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textColor="@color/ash"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLocationNearset" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvLocationDes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        android:text="@string/des_near_mosque"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/ash"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLocationNearset" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

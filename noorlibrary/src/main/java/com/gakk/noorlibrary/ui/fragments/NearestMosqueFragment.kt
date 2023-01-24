@@ -9,20 +9,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.LocationHelper
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentNearestMosqueBinding
 import com.gakk.noorlibrary.extralib.bubbleseekbar.BubbleSeekBar
 import com.gakk.noorlibrary.model.nearby.PlaceInfo
 import com.gakk.noorlibrary.model.nearby.Result
@@ -40,9 +41,6 @@ import java.io.Serializable
 private const val CATEGORY_TYPE = "categoryType"
 
 internal class NearestMosqueFragment : Fragment(), DistanceControl {
-
-    @Transient
-    private lateinit var binding: FragmentNearestMosqueBinding
 
     @Transient
     private lateinit var mCallback: DetailsCallBack
@@ -70,6 +68,24 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
 
     @Transient
     private lateinit var adapter: NearestMosqueAdapter
+
+    @Transient
+    private lateinit var progressLayout: ConstraintLayout
+
+    @Transient
+    private lateinit var rvMosque: RecyclerView
+
+    @Transient
+    private lateinit var header: ConstraintLayout
+
+    @Transient
+    private lateinit var distanceSeekBar: BubbleSeekBar
+
+    @Transient
+    private lateinit var tvLocationNearset: AppCompatTextView
+
+    @Transient
+    private lateinit var layoutMap: ConstraintLayout
 
     companion object {
 
@@ -100,24 +116,23 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
+
+        val view = inflater.inflate(
+            R.layout.fragment_nearest_mosque,
+            container, false
+        )
+
         lifecycleScope.launch {
-            binding =
-                DataBindingUtil.inflate(
-                    inflater,
-                    R.layout.fragment_nearest_mosque,
-                    container,
-                    false
-                )
 
+            progressLayout = view.findViewById(R.id.progressLayout)
+            rvMosque = view.findViewById(R.id.rvMosque)
+            header = view.findViewById(R.id.header)
+            layoutMap = view.findViewById(R.id.layoutMap)
+            distanceSeekBar = header.findViewById(R.id.distanceSeekBar)
+            tvLocationNearset = header.findViewById(R.id.tvLocationNearset)
 
-            var resource = R.drawable.ic_mosque_marker
-            if (categoryType == PAGE_NEAREST_RESTAURANT) {
-                resource = R.drawable.ic_restaurant_marker
-                binding.discalimerLayout.show()
-            } else {
-                binding.discalimerLayout.hide()
-            }
+            val resource = R.drawable.ic_mosque_marker
+
             bitmapDescriptor = BitmapDescriptorFactory.fromResource(resource)
 
 
@@ -137,8 +152,8 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
                 when (it.status) {
                     Status.LOADING -> {
                         Log.e("Mosque", "loading")
-                        binding.progressLayout.root.visibility = View.VISIBLE
-                        binding.rvMosque.visibility = View.GONE
+                        progressLayout.visibility = View.VISIBLE
+                        rvMosque.visibility = View.GONE
                     }
 
                     Status.SUCCESS -> {
@@ -169,7 +184,7 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
 
                         if (!this@NearestMosqueFragment::adapter.isInitialized) {
 
-                            binding.rvMosque.visibility = View.VISIBLE
+                            rvMosque.visibility = View.VISIBLE
 
                             adapter = NearestMosqueAdapter(
                                 mCallback,
@@ -181,34 +196,32 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
                                     openLocationInMap(pi)
                                 }
                             }
-                            binding.rvMosque.adapter = adapter
-                            binding.progressLayout.root.visibility = View.GONE
+                            rvMosque.adapter = adapter
+                            progressLayout.visibility = View.GONE
                         } else {
-                            binding.progressLayout.root.visibility = View.GONE
+                            progressLayout.visibility = View.GONE
 
                             adapter.updatePlaceInfo(placeInfoList)
                             adapter.notifyDataSetChanged()
-                            binding.rvMosque.visibility = View.VISIBLE
-
+                            rvMosque.visibility = View.VISIBLE
                         }
 
-                        binding.rvMosque.layoutManager = LinearLayoutManager(requireContext())
+                        rvMosque.layoutManager = LinearLayoutManager(requireContext())
 
                     }
 
                     Status.ERROR -> {
                         Log.e("Mosque", "error${it.message}")
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
 
                     }
                 }
             }
 
-            binding.header.distanceSeekBar.setProgress(4f)
-
+            distanceSeekBar.setProgress(4f)
         }
 
-        return binding.root
+        return view
     }
 
     override fun onRequestPermissionsResult(
@@ -273,7 +286,7 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
 
     private fun setUpHeader() {
 
-        binding.header.let {
+        header.let {
             val sb = StringBuilder(requireContext().getString(R.string.title_near_mosque))
             val city = TimeFormtter.getAdressWithCityName(
                 requireContext()
@@ -283,33 +296,33 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
                 sb.append(city)
             }
 
-            it.tvLocationNearset.text = sb.toString()
+            tvLocationNearset.text = sb.toString()
         }
 
-        binding.header.let {
+        header.let {
 
-            it.distanceSeekBar.setCustomSectionTextArray { sectionCount, array ->
+            distanceSeekBar.setCustomSectionTextArray { sectionCount, array ->
                 array.clear()
                 array.put(
                     0,
-                    it.distanceSeekBar.context.getString(R.string.one_km_txt)
+                    distanceSeekBar.context.getString(R.string.one_km_txt)
                 )
                 array.put(
                     1,
-                    it.distanceSeekBar.context.getString(R.string.three_km_txt)
+                    distanceSeekBar.context.getString(R.string.three_km_txt)
                 )
                 array.put(
                     2,
-                    it.distanceSeekBar.context.getString(R.string.five_km_text)
+                    distanceSeekBar.context.getString(R.string.five_km_text)
                 )
                 array.put(
                     3,
-                    it.distanceSeekBar.context.getString(R.string.ten_km_txt)
+                    distanceSeekBar.context.getString(R.string.ten_km_txt)
                 )
                 array
             }
 
-            it.distanceSeekBar.setOnProgressChangedListener(object :
+            distanceSeekBar.setOnProgressChangedListener(object :
                 BubbleSeekBar.OnProgressChangedListener {
                 override fun onProgressChanged(
                     bubbleSeekBar: BubbleSeekBar,
@@ -360,7 +373,7 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
             mCallback.setToolBarTitle(getString(R.string.cat_nearest_retuarant))
         }
 
-        binding.layoutMap.handleClickEvent {
+        layoutMap.handleClickEvent {
             mCallback.addFragmentToStackAndShow(
                 MapFragment.newInstance(
                     this,
@@ -413,7 +426,7 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
         Log.d("setMenuVisibility", "setMenuVisibility: $menuVisible")
     }
 
-    fun test(){
+    fun test() {
 
     }
 

@@ -19,7 +19,6 @@ import com.gakk.noorlibrary.ui.fragments.instructiveVideo.InstructiveVideoFragme
 import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
 import com.gakk.noorlibrary.ui.fragments.onlinehut.OnlintHutHomeFragment
 import com.gakk.noorlibrary.ui.fragments.quranSchool.QuranSchoolHomeFragment
-import com.gakk.noorlibrary.ui.fragments.quranSchool.ScholarsListFragment
 import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.tracker.TrackerTabFragment
@@ -222,16 +221,6 @@ object FragmentProvider {
                 InstructiveVideoFragment.newInstance(
                     "Live Qa"
                 )
-            PAGE_SCHOLARS_LIST -> when (Util.checkSub()) {
-                true -> {
-                    ScholarsListFragment.newInstance(
-                        detailsActivityCallBack!!
-                    )
-                }
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-            }
 
 
             PAGE_HAJJ_HOME ->

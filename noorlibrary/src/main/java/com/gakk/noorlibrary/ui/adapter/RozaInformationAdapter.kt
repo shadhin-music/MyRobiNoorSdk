@@ -92,7 +92,7 @@ internal class RozaInformationAdapter(
             primaryHeaderBinding.let {
                 it?.let {
                     it.layoutDivisionContainer.handleClickEvent {
-                        mCallBack?.showDivisionListAlert(it)
+                        //mCallBack?.showDivisionListAlert(it)
                     }
                 }
 

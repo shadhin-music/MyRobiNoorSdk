@@ -15,29 +15,27 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.LinearLayout
+import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.*
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.FragmentHajjMapBinding
 import com.gakk.noorlibrary.databinding.LayoutMarkerDetailsDialogBinding
-import com.gakk.noorlibrary.util.exH
-import com.gakk.noorlibrary.util.setApplicationLanguage
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.*
 
 
 internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
 
-    private lateinit var binding: FragmentHajjMapBinding
     private var mCallback: DetailsCallBack? = null
     private var mMap: GoogleMap? = null
     private lateinit var trackerTitles: Array<String>
     private lateinit var stepList: ArrayList<LatLng>
     private var mIsSpinnerFirstCall = true
+    private lateinit var spinnerTo: Spinner
+    private lateinit var spinnerFrom: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +47,16 @@ internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_hajj_map, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_hajj_map,
+            container, false
+        )
+
+        spinnerTo = view.findViewById(R.id.spinner_to)
+        spinnerFrom = view.findViewById(R.id.spinner_from)
+
+        return view
     }
 
 
@@ -97,13 +100,13 @@ internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun initDistanceSpinner() {
-        binding.spinnerTo.onItemSelectedListener = onItemSelectedListener
+        spinnerTo.onItemSelectedListener = onItemSelectedListener
     }
 
     private fun drawMarker(position: Int) {
         Log.d("drawmarker", "drawMarker: called")
         mMap?.clear()
-        val fromPos = binding.spinnerFrom.selectedItemPosition
+        val fromPos = spinnerFrom.selectedItemPosition
 
         if (stepList.isEmpty()) {
             initAllLocation()

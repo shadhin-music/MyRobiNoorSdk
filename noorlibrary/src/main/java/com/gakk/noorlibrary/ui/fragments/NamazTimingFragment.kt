@@ -1,10 +1,16 @@
 package com.gakk.noorlibrary.ui.fragments
 
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.*
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,13 +19,19 @@ import androidx.lifecycle.lifecycleScope
 import coil.Coil
 import coil.ImageLoader
 import coil.request.ImageRequest
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.LocationHelper
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.databinding.DialogNamazerDakBinding
-import com.gakk.noorlibrary.databinding.FragmentNamazTimingBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.UpCommingPrayer
 import com.gakk.noorlibrary.model.literature.Literature
@@ -39,8 +51,6 @@ import kotlin.math.floor
 
 internal class NamazTimingFragment : Fragment() {
 
-    private var fromMalaysia: Boolean = false
-    private lateinit var binding: FragmentNamazTimingBinding
     private lateinit var prayerTimeCalculator: PrayerTimeCalculator
     private lateinit var upCommingPrayer: UpCommingPrayer
     private var prayerHandler: Handler? = null
@@ -49,7 +59,6 @@ internal class NamazTimingFragment : Fragment() {
     private lateinit var modelLiterature: LiteratureViewModel
     private lateinit var repository: RestRepository
     private lateinit var locationHelper: LocationHelper
-    private var ppTimes: ArrayList<List<Long>> = arrayListOf()
     private var listNamazerDak: MutableList<Literature> = arrayListOf()
     private lateinit var imageLoader: ImageLoader
     private lateinit var downloadScope: CoroutineScope
@@ -59,27 +68,104 @@ internal class NamazTimingFragment : Fragment() {
     var month = 0
     var day = 0
 
+    private lateinit var tvNextPrayer: AppCompatTextView
+    private lateinit var tvFajrTime: AppCompatTextView
+    private lateinit var tvJohurTime: AppCompatTextView
+    private lateinit var tvAsrTime: AppCompatTextView
+    private lateinit var tvMagribTime: AppCompatTextView
+    private lateinit var tvEshaTime: AppCompatTextView
+    private lateinit var ivNamazDak: AppCompatImageView
+    private lateinit var tvMinute: AppCompatTextView
+    private lateinit var tvDateHeader: AppCompatTextView
+    private lateinit var tvGreeting: AppCompatTextView
+    private lateinit var tvTimeLeft: AppCompatTextView
+
+    private lateinit var layoutHeader: ConstraintLayout
+    private lateinit var rlFajr: RelativeLayout
+    private lateinit var rlJohur: RelativeLayout
+    private lateinit var rlAsr: RelativeLayout
+    private lateinit var rlMagrib: RelativeLayout
+    private lateinit var rlEsha: RelativeLayout
+    private lateinit var progressCircular: ProgressBar
+    private lateinit var tvNextWaqt: AppCompatTextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var ivParent: AppCompatImageView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_namaz_timing, container, false)
-
+        val view = inflater.inflate(
+            R.layout.fragment_namaz_timing,
+            container, false
+        )
         locationHelper = LocationHelper(requireContext())
+
+        tvNextPrayer = view.findViewById(R.id.tvNextPrayer)
+        tvFajrTime = view.findViewById(R.id.tvFajrTime)
+        tvJohurTime = view.findViewById(R.id.tvJohurTime)
+        tvAsrTime = view.findViewById(R.id.tvAsrTime)
+        tvMagribTime = view.findViewById(R.id.tvMagribTime)
+        tvEshaTime = view.findViewById(R.id.tvEshaTime)
+        layoutHeader = view.findViewById(R.id.layoutHeader)
+        tvMinute = layoutHeader.findViewById(R.id.tvMinute)
+        tvDateHeader = layoutHeader.findViewById(R.id.tvDateHeader)
+        tvGreeting = layoutHeader.findViewById(R.id.tvGreeting)
+        tvTimeLeft = view.findViewById(R.id.tvTimeLeft)
+        tvNextWaqt = view.findViewById(R.id.tvNextWaqt)
+        ivNamazDak = view.findViewById(R.id.ivNamazDak)
+        rlFajr = view.findViewById(R.id.rlFajr)
+        rlJohur = view.findViewById(R.id.rlJohur)
+        rlAsr = view.findViewById(R.id.rlAsr)
+        rlMagrib = view.findViewById(R.id.rlMagrib)
+        rlEsha = view.findViewById(R.id.rlEsha)
+        progressCircular = view.findViewById(R.id.progressCircular)
+        progressBar = view.findViewById(R.id.progressBar)
+        ivParent = view.findViewById(R.id.ivParent)
+
         prayerTimeCalculator = PrayerTimeCalculator(requireContext())
         upCommingPrayer = prayerTimeCalculator.getUpCommingPrayer()
-        binding.upcommingPrayer = upCommingPrayer
+        val upcommingPrayer = upCommingPrayer
 
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.e("Checkfun", "onViewCreated")
 
-        binding.item = ImageFromOnline("ic_bg_namaz_timing.png")
+        val item = ImageFromOnline("ic_bg_namaz_timing.png")
+
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(item.fullImageUrl)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                })
+                .error(R.drawable.place_holder_16_9_ratio)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(ivParent)
+        }
 
         lifecycleScope.launch {
 
@@ -157,7 +243,7 @@ internal class NamazTimingFragment : Fragment() {
     }
 
     private fun setNamazTime() {
-        binding.tvNextPrayer.setText(R.string.tct_next_prayer_robi)
+        tvNextPrayer.setText(R.string.tct_next_prayer_robi)
 
         setDateTime()
 
@@ -186,24 +272,24 @@ internal class NamazTimingFragment : Fragment() {
 
         when (AppPreference.language) {
             LAN_BANGLA -> {
-                binding.tvFajrTime.text = fajrTxt.getNumberInBangla()
-                binding.tvJohurTime.text = johurTxt.getNumberInBangla()
-                binding.tvAsrTime.text = asrTxt.getNumberInBangla()
-                binding.tvMagribTime.text = magribTxt.getNumberInBangla()
-                binding.tvEshaTime.text = eshaTxt.getNumberInBangla()
+                tvFajrTime.text = fajrTxt.getNumberInBangla()
+                tvJohurTime.text = johurTxt.getNumberInBangla()
+                tvAsrTime.text = asrTxt.getNumberInBangla()
+                tvMagribTime.text = magribTxt.getNumberInBangla()
+                tvEshaTime.text = eshaTxt.getNumberInBangla()
             }
 
             else -> {
-                binding.tvFajrTime.text = fajrTxt
-                binding.tvJohurTime.text = johurTxt
-                binding.tvAsrTime.text = asrTxt
-                binding.tvMagribTime.text = magribTxt
-                binding.tvEshaTime.text = eshaTxt
+                tvFajrTime.text = fajrTxt
+                tvJohurTime.text = johurTxt
+                tvAsrTime.text = asrTxt
+                tvMagribTime.text = magribTxt
+                tvEshaTime.text = eshaTxt
             }
         }
 
 
-        binding.ivNamazDak.handleClickEvent {
+        ivNamazDak.handleClickEvent {
             modelLiterature.loadImageBasedLiteratureListBySubCategory(
                 getString(R.string.namaz_dak_id), "undefined", "1"
             )
@@ -250,11 +336,7 @@ internal class NamazTimingFragment : Fragment() {
         }
 
         binding.btnShare.handleClickEvent {
-             getBitmapFromUrl(shareItem?.fullImageUrl!!)
-
-            /* lifecycleScope.launch {
-                 getBitmapFromUrlX(shareItem?.fullImageUrl!!, requireActivity())
-             }*/
+            getBitmapFromUrl(shareItem?.fullImageUrl!!)
 
             alertDialog.dismiss()
         }
@@ -281,7 +363,7 @@ internal class NamazTimingFragment : Fragment() {
 
     private fun updateTime() {
         val minute = TimeFormtter.getCurrentTime() + " "
-        binding.layoutHeader.tvMinute.text = minute
+        tvMinute.text = minute
     }
 
 
@@ -300,11 +382,11 @@ internal class NamazTimingFragment : Fragment() {
 
 
 
-        binding.layoutHeader.tvDateHeader.text = dateTxt
+        tvDateHeader.text = dateTxt
 
         updateTime()
 
-        binding.layoutHeader.tvGreeting.text = getGreetingMessage()
+        tvGreeting.text = getGreetingMessage()
     }
 
 
@@ -322,34 +404,35 @@ internal class NamazTimingFragment : Fragment() {
     }
 
     fun setBg(nextWaqt: String) {
-        binding.rlFajr.background = null
-        binding.rlJohur.background = null
-        binding.rlAsr.background = null
-        binding.rlMagrib.background = null
-        binding.rlEsha.background = null
+        rlFajr.background = null
+        rlJohur.background = null
+        rlAsr.background = null
+        rlMagrib.background = null
+        rlEsha.background = null
+
         when (nextWaqt) {
             context?.getString(R.string.txt_fajr) -> {
-                binding.rlEsha.background = ResourcesCompat.getDrawable(
+                rlEsha.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.ic_area_bg_namaz_row, null
                 )
             }
             context?.getString(R.string.txt_johr) -> {
-                binding.rlFajr.background = ResourcesCompat.getDrawable(
+                rlFajr.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.ic_area_bg_namaz_row, null
                 )
             }
             context?.getString(R.string.txt_asr) -> {
-                binding.rlJohur.background = ResourcesCompat.getDrawable(
+                rlJohur.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.ic_area_bg_namaz_row, null
                 )
             }
             context?.getString(R.string.txt_magrib) -> {
-                binding.rlAsr.background = ResourcesCompat.getDrawable(
+                rlAsr.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.ic_area_bg_namaz_row, null
                 )
             }
             context?.getString(R.string.txt_esha) -> {
-                binding.rlMagrib.background = ResourcesCompat.getDrawable(
+                rlMagrib.background = ResourcesCompat.getDrawable(
                     resources, R.drawable.ic_area_bg_namaz_row, null
                 )
             }
@@ -370,10 +453,10 @@ internal class NamazTimingFragment : Fragment() {
 
                 setBg(upCommingPrayer.nextWaqtName)
 
-
                 try {
-                    binding.upcommingPrayer = upCommingPrayer
-                    binding.tvTimeLeft.text = getNumberByLocale(upCommingPrayer.timeLeft)
+                    val upcommingPrayer = upCommingPrayer
+                    tvNextWaqt.text = upcommingPrayer.nextWaqtName
+                    tvTimeLeft.text = getNumberByLocale(upCommingPrayer.timeLeft)
 
                     val currentWaqtStartingTime = when (upCommingPrayer.nextWaqtName) {
                         context?.resources?.getString(R.string.txt_fajr) -> TimeFormtter.milliSecondsFromTimeStringV5(
@@ -387,7 +470,6 @@ internal class NamazTimingFragment : Fragment() {
                             false -> TimeFormtter.milliSecondsFromTimeStringV3(upCommingPrayer.nextWaqtTime)
                         }
 
-
                     val maxTimeDifference = upCommingWaqtStartingTime - currentWaqtStartingTime
 
                     val currentTimeDifference =
@@ -398,7 +480,7 @@ internal class NamazTimingFragment : Fragment() {
                         floor(100.00f - ((currentTimeDifference.toDouble() / maxTimeDifference) * 100))
 
 
-                    binding.progressCircular.progress = percentage.toInt()
+                    progressCircular.progress = percentage.toInt()
 
                 } catch (e: Exception) {
                     Log.e("Checkprogress", "Time Left :${e.localizedMessage}")

@@ -1,195 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <data>
-
-        <variable
-            name="data"
-            type="com.gakk.noorlibrary.model.quranSchool.Scholar" />
-
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-        <variable
-            name="item"
-            type="com.gakk.noorlibrary.model.ImageFromOnline" />
-
-    </data>
-
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:background="@color/bg">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/rlHeader"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/bg">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/rlHeader"
+            <RelativeLayout
+                android:id="@+id/header_layout_Quran"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:visibility="gone">
 
-                <RelativeLayout
-                    android:id="@+id/header_layout_Quran"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:layout_margin="@dimen/standard_margin">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/standard_margin">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBg"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:imageUrl="@{item.fullImageUrl}"
-                            android:scaleType="centerCrop"
-                            app:attachedProgressBar="@{progressBarBg}"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="h,1:0.5625"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ProgressBar
-                            android:id="@+id/progressBarBg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivBg"
-                            app:layout_constraintEnd_toEndOf="@+id/ivBg"
-                            app:layout_constraintStart_toStartOf="@+id/ivBg"
-                            app:layout_constraintTop_toTopOf="@+id/ivBg">
-
-                        </ProgressBar>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLearnOnline"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_20"
-                            android:layout_marginBottom="@dimen/standard_margin"
-                            android:text="অনলাইনে কুরআন শিখুন, নূর অ্যাপে"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                            android:textColor="@color/white"
-                            android:textFontWeight="400"
-                            android:fontFamily="sans-serif"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="কুরআন শিক্ষা ক্লাস"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                            android:textColor="@color/white"
-                            android:textFontWeight="700"
-                            android:fontFamily="sans-serif"
-                            app:layout_constraintBottom_toTopOf="@id/tvLearnOnline"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@id/tvLearnOnline" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/header_layout_scholar_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/standard_margin"
-                    android:visibility="gone">
-
-                    <com.gakk.noorlibrary.util.CircleImageView
-                        android:id="@+id/scholars_img"
-                        android:layout_width="87dp"
-                        android:layout_height="87dp"
-                        android:layout_centerHorizontal="true"
-                        android:contentDescription="@string/default_content_des"
-                        android:fullImageUrl="@{data.contentBaseUrl+'/'+data.imageUrl}"
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivBg"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/place_holder_1_1_ratio"
-                        app:attachedProgressBar="@{progressBar}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="h,1:0.5625"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:placeHolderDimension="@{constant.PLACE_HOLDER_1_1}" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ProgressBar
-                        android:id="@+id/progressBar"
+                        android:id="@+id/progressBarBg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/scholars_img"
-                        android:layout_alignBottom="@+id/scholars_img"
-                        android:layout_centerHorizontal="true" />
+                        app:layout_constraintBottom_toBottomOf="@+id/ivBg"
+                        app:layout_constraintEnd_toEndOf="@+id/ivBg"
+                        app:layout_constraintStart_toStartOf="@+id/ivBg"
+                        app:layout_constraintTop_toTopOf="@+id/ivBg">
+
+                    </ProgressBar>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/scholar_name"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvLearnOnline"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/scholars_img"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/small_spacing"
-                        android:text="@{data.name}"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:textColor="@color/black"
-                        android:fontFamily="sans-serif-medium"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/scholar_name"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/small_spacing"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="3"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:layout_marginBottom="@dimen/standard_margin"
                         android:fontFamily="sans-serif"
-                        android:text="@{data.about}"
+                        android:text="অনলাইনে কুরআন শিখুন, নূর অ্যাপে"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textColor="@color/black_secondary" />
-                </RelativeLayout>
-            </LinearLayout>
+                        android:textColor="@color/white"
+                        android:textFontWeight="400"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/title"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="কুরআন শিক্ষা ক্লাস"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700"
+                        app:layout_constraintBottom_toTopOf="@id/tvLearnOnline"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tvLearnOnline" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/header_layout_scholar_video"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rlHeader"
-                android:layout_marginStart="@dimen/standard_margin"
-                android:layout_marginTop="@dimen/small_spacing"
-                android:layout_marginEnd="@dimen/standard_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@color/txt_color_black"
-                android:fontFamily="sans-serif"/>
+                android:padding="@dimen/standard_margin"
+                android:visibility="gone">
+
+                <com.gakk.noorlibrary.util.CircleImageView
+                    android:id="@+id/scholars_img"
+                    android:layout_width="87dp"
+                    android:layout_height="87dp"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/default_content_des"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/place_holder_1_1_ratio"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/scholars_img"
+                    android:layout_alignBottom="@+id/scholars_img"
+                    android:layout_centerHorizontal="true" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/scholar_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/scholars_img"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/black" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAbout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/scholar_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:maxLines="3"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/black_secondary" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlHeader"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:fontFamily="sans-serif"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/txt_color_black" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/child_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/title"
-                android:layout_marginStart="@dimen/standard_margin"
-                android:layout_marginTop="@dimen/small_spacing"
-                android:layout_marginEnd="@dimen/standard_margin"
-                android:clipToPadding="false"
-                android:paddingBottom="@dimen/standard_margin"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/layout_quran_school_old_child_item" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/child_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/title"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/small_spacing"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/standard_margin"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/layout_quran_school_old_child_item" />
 
-            <include
-                android:id="@+id/progressLayout"
-                layout="@layout/layout_circular_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:layout_centerInParent="true"
-                android:visibility="visible" />
-        </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
-</layout>
+        <include
+            android:id="@+id/progressLayout"
+            layout="@layout/layout_circular_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_centerInParent="true"
+            android:visibility="visible" />
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
