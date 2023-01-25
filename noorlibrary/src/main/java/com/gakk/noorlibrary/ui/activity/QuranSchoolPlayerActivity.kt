@@ -15,6 +15,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
@@ -28,6 +29,7 @@ import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.ui.adapter.QuranSchoolAdapter
 import com.gakk.noorlibrary.ui.adapter.QuranSchoolChildAdapter
 import com.gakk.noorlibrary.util.*
+import com.google.android.exoplayer2.ui.PlayerView
 
 
 /**
@@ -39,7 +41,15 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
     QuranSchoolChildAdapter.OnItemClickListener,
     QuranSchoolAdapter.OnItemClickListener {
 
-    private lateinit var binding: ActivityYoutubePlayerBinding
+    private lateinit var scholarsName:TextView
+    private lateinit var tvTitlePlayer:TextView
+
+    private lateinit var emptyLayout:View
+    private lateinit var nextVideoRv:RecyclerView
+    private lateinit var mainContainer:View
+    private lateinit var videoView: PlayerView
+
+   // private lateinit var binding: ActivityYoutubePlayerBinding
     private lateinit var playerControlView: ConstraintLayout
     private lateinit var tvVideoTitle: TextView
     private lateinit var btnShare: ImageButton
@@ -57,10 +67,19 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_youtube_player)
-
+        setContentView( R.layout.activity_youtube_player)
+        setupUi()
         setStatusColor(R.color.txt_color_title)
         getParcelable()
+    }
+
+    private fun setupUi() {
+        scholarsName = findViewById(R.id.scholars_name)
+        tvTitlePlayer = findViewById(R.id.tvTitlePlayer)
+        emptyLayout = findViewById(R.id.empty_layout)
+        nextVideoRv = findViewById(R.id.next_video_rv)
+        mainContainer = findViewById(R.id.mainContainer)
+        videoView = findViewById(R.id.videoView)
     }
 
     private fun getParcelable() {
@@ -82,9 +101,9 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
 
                 checkItemsSizeQuran(it)
                 if (isQuranLiveClass){
-                    binding.scholarsName.text = item?.singer ?: ""
+                    scholarsName.text = item?.singer ?: ""
                 }else {
-                    binding.scholarsName.text = item?.contenTtitle ?: ""
+                    scholarsName.text = item?.contenTtitle ?: ""
                 }
 
             }
@@ -95,24 +114,24 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
                 it.removeAt(position)
 
                 checkItemsSize(it)
-                binding.scholarsName.text = itemVideo.scholarName ?: ""
+                scholarsName.text = itemVideo.scholarName ?: ""
             }
         }
 
         when (isInstructiveVideo) {
             true -> {
                 if (catType.equals("Instructive Video")) {
-                    binding.tvTitlePlayer.setText(getString(R.string.cat_instructive_video))
+                    tvTitlePlayer.setText(getString(R.string.cat_instructive_video))
                 } else {
-                    binding.tvTitlePlayer.setText(getString(R.string.cat_live_qa))
+                    tvTitlePlayer.setText(getString(R.string.cat_live_qa))
                 }
             }
 
             false -> {
                 if (isQuranLiveClass) {
-                    binding.tvTitlePlayer.setText(item?.contenTtitle)
+                    tvTitlePlayer.setText(item?.contenTtitle)
                 } else {
-                    binding.tvTitlePlayer.setText(getString(R.string.digital_school))
+                    tvTitlePlayer.setText(getString(R.string.digital_school))
                 }
             }
         }
@@ -121,23 +140,23 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
 
     private fun checkItemsSize(it: ArrayList<QuranSchoolModel>) {
         if (it.size >= 2) {
-            binding.emptyLayout.hide()
-            binding.nextVideoRv.show()
+            emptyLayout.hide()
+            nextVideoRv.show()
             setUpRV(it)
         } else {
-            binding.emptyLayout.show()
-            binding.nextVideoRv.hide()
+            emptyLayout.show()
+            nextVideoRv.hide()
         }
     }
 
     private fun checkItemsSizeQuran(it: ArrayList<Data>) {
         if (it.size >= 2) {
-            binding.emptyLayout.hide()
-            binding.nextVideoRv.show()
+           emptyLayout.hide()
+           nextVideoRv.show()
             setUpRVQuran(it)
         } else {
-            binding.emptyLayout.show()
-            binding.nextVideoRv.hide()
+            emptyLayout.show()
+            nextVideoRv.hide()
         }
     }
 
@@ -145,14 +164,14 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
         val adapter = QuranSchoolChildAdapter(this).apply {
             submitList(it)
         }
-        binding.nextVideoRv.adapter = adapter
+        nextVideoRv.adapter = adapter
     }
 
     private fun setUpRVQuran(it: ArrayList<Data>) {
         val adapter = QuranSchoolAdapter(this).apply {
             submitList(it)
         }
-        binding.nextVideoRv.adapter = adapter
+        nextVideoRv.adapter = adapter
     }
 
     override fun onItemClick(postion: Int, currentList: List<QuranSchoolModel>) {
@@ -166,7 +185,7 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
         if (postion < currentList.size) {
             val item = currentList[postion]
             item.let { model ->
-                binding.scholarsName.text = item.contenTtitle ?: ""
+                scholarsName.text = item.contenTtitle ?: ""
                 setData(item.contentFullUrl)
             }
         }
@@ -239,7 +258,7 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
         player = ExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
-                binding.videoView.player = exoPlayer
+                videoView.player = exoPlayer
 
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.addListener(object : Player.Listener {
@@ -271,7 +290,7 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
 
     private fun setUpPlayerControlView() {
         playerControlView = findViewById(R.id.playerControlView)!!
-        toggleOrientationButton = binding.videoView.findViewById(R.id.toggleOrientationButton)
+        toggleOrientationButton = videoView.findViewById(R.id.toggleOrientationButton)
         tvVideoTitle = playerControlView.findViewById(R.id.tvVideoTitle)
         btnShare = playerControlView.findViewById(R.id.btnShare)
 
@@ -300,7 +319,7 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
 
     private fun prepareLandscapeUI() {
         toggleOrientationButton.setImageResource(R.drawable.ic_baseline_fullscreen_exit_24)
-        val layoutParams = binding.videoView.layoutParams as ConstraintLayout.LayoutParams
+        val layoutParams = videoView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
         layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT
         hideSystemUI()
@@ -308,7 +327,7 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
 
     private fun preparePortraitUI() {
         toggleOrientationButton.setImageResource(R.drawable.ic_baseline_fullscreen_24)
-        val layoutParams = binding.videoView.layoutParams as ConstraintLayout.LayoutParams
+        val layoutParams = videoView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.width = 0
         layoutParams.height = 0
         showSystemUI()
@@ -316,7 +335,7 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
 
     private fun hideSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, binding.mainContainer).let { controller ->
+        WindowInsetsControllerCompat(window, mainContainer).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
             controller.systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
@@ -327,7 +346,7 @@ internal class QuranSchoolPlayerActivity : BaseActivity(),
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowInsetsControllerCompat(
             window,
-            binding.mainContainer
+            mainContainer
         ).show(WindowInsetsCompat.Type.systemBars())
     }
 

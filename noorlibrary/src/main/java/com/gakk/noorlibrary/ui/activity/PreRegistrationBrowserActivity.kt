@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -29,7 +30,12 @@ import kotlinx.coroutines.launch
 
 internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySubscriptionBrowserBinding
+    private lateinit var progressBar:ProgressBar
+    private lateinit var webview:WebView
+    private lateinit var toolBar:View
+
+
+    //private lateinit var binding: ActivitySubscriptionBrowserBinding
     private lateinit var viewModelHajj: HajjViewModel
     private lateinit var repository: RestRepository
 
@@ -38,7 +44,8 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setApplicationLanguage(AppPreference.language!!)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_subscription_browser)
+        setContentView( R.layout.activity_subscription_browser)
+        setupUi()
 
         val url: String?
         val trackongNo: String?
@@ -56,19 +63,19 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
             return
         }
 
-        binding.toolBar.root.visibility = View.GONE
+        toolBar.visibility = View.GONE
 
-        binding.webview.settings.javaScriptEnabled = true
-        binding.webview.settings.domStorageEnabled = true
-        binding.webview.settings.useWideViewPort = true
-        binding.webview.settings.loadWithOverviewMode = true
-        binding.progressBar.visibility = View.VISIBLE
+        webview.settings.javaScriptEnabled = true
+        webview.settings.domStorageEnabled = true
+        webview.settings.useWideViewPort = true
+        webview.settings.loadWithOverviewMode = true
+        progressBar.visibility = View.VISIBLE
 
         if (url != null) {
-            binding.webview.loadUrl(url)
+           webview.loadUrl(url)
         }
 
-        binding.webview.setWebViewClient(object : WebViewClient() {
+        webview.setWebViewClient(object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
                 request: WebResourceRequest
@@ -77,7 +84,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
             }
 
             override fun onPageFinished(view: WebView, url: String) {
-                binding.progressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE
                 Log.e("onPageFinished", url)
                 if (url.contains("SSLPaySuccessCallBack")) {
                     trackongNo.let {
@@ -105,6 +112,12 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
     }
 
+    private fun setupUi() {
+        progressBar = findViewById(R.id.progressBar)
+        webview = findViewById(R.id.webview)
+        toolBar = findViewById(R.id.toolBar_a)
+    }
+
     private fun subscribeObserver() {
 
         viewModelHajj.paymentStatus.observe(this@PreRegistrationBrowserActivity) {
@@ -114,9 +127,9 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 is PaymentResource.Error ->
                 {
                     showPaymentStatusDialog(0)
-                    binding.progressBar.visibility = View.GONE
+                    progressBar.visibility = View.GONE
                 }
-                PaymentResource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                PaymentResource.Loading -> progressBar.visibility = View.VISIBLE
                 is PaymentResource.hajj_pre_reg -> paymentSuccess()
                 is PaymentResource.umrah_hajj_reg -> paymentSuccess()
             }
@@ -127,7 +140,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
     {
         showPaymentStatusDialog(1)
 
-        binding.progressBar.visibility = View.GONE
+        progressBar.visibility = View.GONE
     }
 
     fun showPaymentStatusDialog(status: Int) {
