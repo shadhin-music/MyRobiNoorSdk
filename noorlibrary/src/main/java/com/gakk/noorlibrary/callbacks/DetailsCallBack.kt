@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.callbacks
 
+import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.base.DialogType
@@ -27,7 +28,7 @@ interface DetailsCallBack {
     )
     fun showDialogWithActionAndParam(
         dialogType: DialogType, surahListAdapter: SurahListAdapter? = null,
-        binding: LayoutRozaPrimaryHeaderBinding? = null,
+        binding: View? = null,
         actionWithSingleParam: ((String) -> Unit)? = null,
         actionOneWithNoParameter: (() -> Unit)? = null,
         actionTwoWithNoParameter: (() -> Unit)? = null,

@@ -1,49 +1,22 @@
 package com.gakk.noorlibrary.model
 
 import androidx.annotation.Keep
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
-import androidx.databinding.library.baseAdapters.BR
 
 @Keep
-class UpCommingPrayer : BaseObservable() {
-    @get: Bindable
-    var currentWaqtStartingTime: String = ""
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.currentWaqtStartingTime)
-        }
+data class UpCommingPrayer(
 
-    @get: Bindable
-    var nextWaqtName: String = ""
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.nextWaqtName)
-        }
-    @get: Bindable
-    var currentWaqtName: String = ""
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.currentWaqtName)
-        }
-    @get: Bindable
-    var nextWaqtNameTracker: String = ""
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.nextWaqtNameTracker)
-        }
+    var currentWaqtStartingTime: String,
 
-    @get: Bindable
-    var nextWaqtTime: String = ""
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.nextWaqtTime)
-        }
+    var nextWaqtName: String,
 
-    @get: Bindable
-    var timeLeft: String = ""
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.timeLeft)
-        }
-}
+
+    var currentWaqtName: String,
+
+    var nextWaqtNameTracker: String,
+
+
+    var nextWaqtTime: String,
+
+
+    var timeLeft: String
+)
