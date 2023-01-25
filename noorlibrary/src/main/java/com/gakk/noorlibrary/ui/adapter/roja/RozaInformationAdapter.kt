@@ -5,11 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
@@ -20,6 +27,7 @@ import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
 import com.gakk.noorlibrary.roza.CalenderUtil
 import com.gakk.noorlibrary.ui.fragments.DivisionSelectionCallback
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.views.TextViewNormalArabic
 import com.github.eltohamy.materialhijricalendarview.CalendarDay
 import com.google.android.material.tabs.TabLayout
 import java.text.SimpleDateFormat
@@ -62,138 +70,117 @@ internal class RozaInformationAdapter(
     }
 
 
-    inner class RozaInformationViewHolder : RecyclerView.ViewHolder {
+    inner class RozaInformationViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
+       var view = layoutView
+       // var primaryHeaderBinding: LayoutRozaPrimaryHeaderBinding? = null
 
-        var primaryHeaderBinding: LayoutRozaPrimaryHeaderBinding? = null
+//        constructor(binding: LayoutRozaPrimaryHeaderBinding) : super(binding.root) {
+//            primaryHeaderBinding = binding
+//            primaryHeaderBinding.let {
+//                it?.let {
+//                    it.layoutDivisionContainer.handleClickEvent {
+//                       // mCallBack?.showDivisionListAlert(it)
+//                    }
+//                }
+//
+//
+//            }
+//
+//        }
+//
+//        var sehriIfterHeaderBindingBinding: LayoutRozaSehriIfterHeaderBinding? = null
+//
+//        constructor(binding: LayoutRozaSehriIfterHeaderBinding) : super(binding.root) {
+//            sehriIfterHeaderBindingBinding = binding
+//            sehriIfterHeaderBindingBinding?.let {
 
-        constructor(binding: LayoutRozaPrimaryHeaderBinding) : super(binding.root) {
-            primaryHeaderBinding = binding
-            primaryHeaderBinding.let {
-                it?.let {
-                    it.layoutDivisionContainer.handleClickEvent {
-                       // mCallBack?.showDivisionListAlert(it)
-                    }
-                }
+//            }
+//        }
 
 
-            }
 
-        }
-
-        var sehriIfterHeaderBindingBinding: LayoutRozaSehriIfterHeaderBinding? = null
-
-        constructor(binding: LayoutRozaSehriIfterHeaderBinding) : super(binding.root) {
-            sehriIfterHeaderBindingBinding = binding
-            sehriIfterHeaderBindingBinding?.let {
-                it.tabRamadanPeriod?.selectTab(it.tabRamadanPeriod.getTabAt(mPeriodControl.mSelectedPeriod))
-                it.tvDate.setText(getSehriIfterHeaderFormattedDate())
-            }
-        }
-
-        fun getSehriIfterHeaderFormattedDate(): String {
-            val cal: Calendar
-            var year = 0
-            var month = 0
-            var day = 0
-
-            try {
-                cal = Calendar.getInstance()
-                cal.timeInMillis = System.currentTimeMillis()
-                year = cal.get(Calendar.YEAR)
-                month = cal.get(Calendar.MONTH)
-                day = cal.get(Calendar.DATE)
-
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
-
-            val calHijri = Calendar.getInstance()
-            calHijri.time = Date()
-            calHijri.add(Calendar.DAY_OF_MONTH, -1)
-            var dateTxt = ""
-            dateTxt =
-                (TimeFormtter.getNumberByLocale(day.toString()) + " " + Noor.appContext
-                    ?.let {
-                        TimeFormtter.getBanglaMonthName(month, it)
-                    } + " " + TimeFormtter.getNumberByLocale(year.toString())
-                        + "   |   " + TimeFormtter.getNumberByLocale(
-                    (CalendarDay.from(Date()).getDay() - 1).toString()
-                ) + " " + Noor.appContext?.resources!!.getStringArray(R.array.custom_months)[CalendarDay.from(
-                    Date()
-                ).getMonth()] + " " + TimeFormtter.getNumberByLocale(
-                    CalendarDay.from(Date()).getYear().toString()
-                ))
-
-            return dateTxt
-        }
-
-        var rozaInfoCellBinding: LayoutRozaInfoCellBinding? = null
-
-        constructor(binding: LayoutRozaInfoCellBinding) : super(binding.root) {
-            rozaInfoCellBinding = binding
-        }
-
-        var duaHeaderBinding: LayoutRozaDuaHeaderBinding? = null
-
-        @SuppressLint("MissingPermission")
-        constructor(binding: LayoutRozaDuaHeaderBinding) : super(binding.root) {
-            duaHeaderBinding = binding
-        }
-
-        var duaBinding: LayoutRozaDuaBinding? = null
-
-        constructor(binding: LayoutRozaDuaBinding) : super(binding.root) {
-            duaBinding = binding
-        }
+//        var rozaInfoCellBinding: LayoutRozaInfoCellBinding? = null
+//
+//        constructor(binding: LayoutRozaInfoCellBinding) : super(binding.root) {
+//            rozaInfoCellBinding = binding
+//        }
+//
+//        var duaHeaderBinding: LayoutRozaDuaHeaderBinding? = null
+//
+//        @SuppressLint("MissingPermission")
+//        constructor(binding: LayoutRozaDuaHeaderBinding) : super(binding.root) {
+//            duaHeaderBinding = binding
+//        }
+//
+//        var duaBinding: LayoutRozaDuaBinding? = null
+//
+//        constructor(binding: LayoutRozaDuaBinding) : super(binding.root) {
+//            duaBinding = binding
+//        }
     }
+    fun getSehriIfterHeaderFormattedDate(): String {
+        val cal: Calendar
+        var year = 0
+        var month = 0
+        var day = 0
 
+        try {
+            cal = Calendar.getInstance()
+            cal.timeInMillis = System.currentTimeMillis()
+            year = cal.get(Calendar.YEAR)
+            month = cal.get(Calendar.MONTH)
+            day = cal.get(Calendar.DATE)
+
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+
+        val calHijri = Calendar.getInstance()
+        calHijri.time = Date()
+        calHijri.add(Calendar.DAY_OF_MONTH, -1)
+        var dateTxt = ""
+        dateTxt =
+            (TimeFormtter.getNumberByLocale(day.toString()) + " " + Noor.appContext
+                ?.let {
+                    TimeFormtter.getBanglaMonthName(month, it)
+                } + " " + TimeFormtter.getNumberByLocale(year.toString())
+                    + "   |   " + TimeFormtter.getNumberByLocale(
+                (CalendarDay.from(Date()).getDay() - 1).toString()
+            ) + " " + Noor.appContext?.resources!!.getStringArray(R.array.custom_months)[CalendarDay.from(
+                Date()
+            ).getMonth()] + " " + TimeFormtter.getNumberByLocale(
+                CalendarDay.from(Date()).getYear().toString()
+            ))
+
+        return dateTxt
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RozaInformationViewHolder {
         when (viewType) {
             _HEADER -> {
-                val binding: LayoutRozaPrimaryHeaderBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_roza_primary_header,
-                    parent,
-                    false
-                )
-                return RozaInformationViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_primary_header,parent,false)
+                return RozaInformationViewHolder(view)
+
             }
             _SEHRI_IFTER_HEADER -> {
-                val binding: LayoutRozaSehriIfterHeaderBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_roza_sehri_ifter_header,
-                    parent,
-                    false
-                )
-                return RozaInformationViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_sehri_ifter_header,parent,false)
+                return RozaInformationViewHolder(view)
+
             }
             _ROZA_INFO -> {
-                val binding: LayoutRozaInfoCellBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_roza_info_cell,
-                    parent,
-                    false
-                )
-                return RozaInformationViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_info_cell,parent,false)
+                return RozaInformationViewHolder(view)
+
             }
 
             _ESSENTIAL_DUA_HEADER -> {
-                val binding: LayoutRozaDuaHeaderBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_roza_dua_header,
-                    parent,
-                    false
-                )
-                return RozaInformationViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_dua_header,parent,false)
+                return RozaInformationViewHolder(view)
+
             }
             else -> {
-                val binding: LayoutRozaDuaBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_roza_dua,
-                    parent,
-                    false
-                )
-                return RozaInformationViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_dua,parent,false)
+                return RozaInformationViewHolder(view)
+
             }
         }
 
@@ -203,66 +190,76 @@ internal class RozaInformationAdapter(
         when (holder.itemViewType) {
             _HEADER -> {
 
-                holder.primaryHeaderBinding?.let {
-                    it.item = ImageFromOnline("bg_ramadan.png")
+//                holder.primaryHeaderBinding?.let {
+                    val item = ImageFromOnline("bg_ramadan.png")
+                val tvIfterOrSehriTitle:AppCompatTextView = holder.view.findViewById(R.id.tvInfo)
+                val tvTitle:AppCompatTextView = holder.view.findViewById(R.id.tvTitle)
+                val  imageAlarm:ImageView = holder.view.findViewById(R.id.imageAlarm)
+                val  imageFilterView:AppCompatImageView = holder.view.findViewById(R.id.imageFilterView)
+                     Glide.with(holder.itemView.context).load(item.fullImageUrl).into(imageFilterView)
+                    tvTitle.setText(R.string.today_sehri_iftar_robi)
+                val tvIfterOrSehriTime = holder.view.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
+                val tvInfo = holder.view.findViewById<AppCompatTextView>(R.id.tvInfo)
+                val tvInfoLarge = holder.view.findViewById<AppCompatTextView>(R.id.tvInfoLarge)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.visibility = View.GONE
+                val   imgSehriOrIfter: ImageView = holder.view.findViewById(R.id.imgSehriOrIfter)
 
-                    it.tvTitle.setText(R.string.today_sehri_iftar_robi)
-
-                    it.layoutIfterInfo.imgSehriOrIfter.setImageResource(R.drawable.ic_islam)
-                    it.layoutIfterInfo.tvIfterOrSehriTitle.setText(R.string.ifter_time_today)
+                  imgSehriOrIfter.setImageResource(R.drawable.ic_islam)
+                          tvIfterOrSehriTitle.setText(R.string.ifter_time_today)
 
                     val todaysIfterSehri =
                         todaySehriIfterControl.getSehriIfterTimeForToday(mDisplayableSehriIfterList)
 
-                    it.root.context.resources.getText(R.string.evening)
-                    it.root.context.resources.getText(R.string.txt_minute)
+                    holder.view.context.resources.getText(R.string.evening)
+                holder.view.context.resources.getText(R.string.txt_minute)
 
-                    it.layoutSehriInfo.tvIfterOrSehriTime.setText(
+                    tvIfterOrSehriTime.setText(
                         "${todaysIfterSehri?.sehriTimeStr} ${
-                            it.root.context.resources.getText(
+                            holder.view.context.resources.getText(
                                 R.string.txt_minute
                             )
                         }"
                     )
-                    it.layoutIfterInfo.tvIfterOrSehriTime.setText(
+                   tvIfterOrSehriTime.setText(
                         "${todaysIfterSehri?.ifterTimeStr} ${
-                            it.root.context.resources.getText(
+                            holder.view.context.resources.getText(
                                 R.string.txt_minute
                             )
                         }"
                     )
 
-                    it?.tvInfo?.visibility = VISIBLE
-                    it?.tvInfoLarge?.visibility = VISIBLE
-                    it?.imageFilterView?.visibility = VISIBLE
+                    tvInfo?.visibility = VISIBLE
+                   tvInfoLarge?.visibility = VISIBLE
+                    imageFilterView?.visibility = VISIBLE
 
                     when {
                         CalenderUtil.isRamadanNow() == false && CalenderUtil.isShabanNow() == false -> {
                             //hide both tvInfo & tvInfoLarge
-                            it?.tvInfo?.visibility = GONE
-                            it?.tvInfoLarge?.visibility = GONE
-                            it?.imageFilterView?.visibility = GONE
+                           tvInfo?.visibility = GONE
+                          tvInfoLarge?.visibility = GONE
+                          imageFilterView?.visibility = GONE
 
                         }
                         CalenderUtil.isRamadanNow() == true -> {
-                            it?.tvInfo?.text = it?.root?.context?.getText(R.string.holy_ramadan)
-                            it?.tvInfoLarge?.text =
-                                "${it?.root?.context?.getText(R.string.today)} ${
+                           tvInfo?.text = holder.view.context.getText(R.string.holy_ramadan)
+                         tvInfoLarge?.text =
+                                "${holder.view.context?.getText(R.string.today)} ${
                                     TimeFormtter.getNumberByLocale(
                                         CalenderUtil.getDayOfHizriMonth().toString()
                                     )
-                                } ${it?.root?.context?.getText(R.string.cat_roja)}"
+                                } ${holder.view.context.getText(R.string.cat_roja)}"
                         }
 
                         CalenderUtil.isShabanNow() == true -> {
-                            it?.tvInfo?.text =
-                                it?.root?.context?.getText(R.string.time_left_till_ramadan)
-                            it?.tvInfoLarge?.text =
-                                "${it?.root?.context?.getText(R.string.only_more)} ${
+                            tvInfo?.text =
+                                holder.view.context.getText(R.string.time_left_till_ramadan)
+                            tvInfoLarge?.text =
+                                "${holder.view.context.getText(R.string.only_more)} ${
                                     TimeFormtter.getNumberByLocale(
                                         CalenderUtil.daysLeftTillRamadan().toString()
                                     )
-                                } ${it?.root?.context?.getText(R.string.day_meaning_v2)}"
+                                } ${holder.view.context.getText(R.string.day_meaning_v2)}"
                         }
 
 
@@ -270,11 +267,11 @@ internal class RozaInformationAdapter(
 
                     if (fromMalaysia) {
                         //hide both tvInfo & tvInfoLarge
-                        it?.tvInfo?.visibility = GONE
-                        it?.tvInfoLarge?.visibility = GONE
-                        it?.imageFilterView?.visibility = GONE
+                       tvInfo?.visibility = GONE
+                        tvInfoLarge?.visibility = GONE
+                        imageFilterView?.visibility = GONE
                     }
-                    it.layoutIfterInfo.imageAlarm.setOnClickListener { it ->
+                    imageAlarm.setOnClickListener { it ->
 
                         gotoDefaultAlarm(
                             todaysIfterSehri?.ifterTimeStr!!,
@@ -284,7 +281,7 @@ internal class RozaInformationAdapter(
                         )
                     }
 
-                    it.layoutSehriInfo.imageAlarm.setOnClickListener { it ->
+                    imageAlarm.setOnClickListener { it ->
                         gotoDefaultAlarm(
                             todaysIfterSehri?.sehriTimeStr!!,
                             it.context,
@@ -293,17 +290,21 @@ internal class RozaInformationAdapter(
                         )
                     }
                 }
-            }
+           // }
 
             _SEHRI_IFTER_HEADER -> {
+                val tabRamadanPeriod:TabLayout = holder.view.findViewById(R.id.tabRamadanPeriod)
+                val tvDate:AppCompatTextView =holder.view.findViewById(R.id.tvDate)
+                tabRamadanPeriod?.selectTab(tabRamadanPeriod.getTabAt(mPeriodControl.mSelectedPeriod))
+                tvDate.setText(getSehriIfterHeaderFormattedDate())
+                val tvTitle:AppCompatTextView =holder.view.findViewById(R.id.tvTitle)
+                  tvTitle?.setText(R.string.today_sehri_iftar_time_table_robi)
 
-                holder.sehriIfterHeaderBindingBinding?.tvTitle?.setText(R.string.today_sehri_iftar_time_table_robi)
-
-                holder.sehriIfterHeaderBindingBinding?.tabRamadanPeriod?.addOnTabSelectedListener(
+             tabRamadanPeriod?.addOnTabSelectedListener(
                     object : TabLayout.OnTabSelectedListener {
                         override fun onTabSelected(tab: TabLayout.Tab?) {
 
-                            mPeriodControl.updateSelectedPeriod(holder.sehriIfterHeaderBindingBinding?.tabRamadanPeriod?.selectedTabPosition!!)
+                            mPeriodControl.updateSelectedPeriod(tabRamadanPeriod?.selectedTabPosition!!)
                             notifyItemRangeChanged(3, 10)
                             // Log.i("MSELECTEDPOS",holder.sehriIfterHeaderBindingBinding?.tabRamadanPeriod?.selectedTabPosition.toString())
                         }
@@ -320,10 +321,10 @@ internal class RozaInformationAdapter(
 
                 when (CalenderUtil.isRamadanNow() && !fromMalaysia) {
                     true -> {
-                        holder.sehriIfterHeaderBindingBinding?.tabRamadanPeriod?.visibility =
+                   tabRamadanPeriod?.visibility =
                             VISIBLE
                     }
-                    false -> holder.sehriIfterHeaderBindingBinding?.tabRamadanPeriod?.visibility =
+                    false ->tabRamadanPeriod?.visibility =
                         GONE
                 }
 
@@ -331,14 +332,15 @@ internal class RozaInformationAdapter(
             }
             _ROZA_INFO -> {
                 if (position == 2) {
+                    val tvDay = holder.view.findViewById<AppCompatTextView>(R.id.tvDay)
 
                     when (CalenderUtil.isRamadanNow() && !fromMalaysia) {
-                        true -> holder.rozaInfoCellBinding?.tvDay?.setText(
+                        true -> tvDay?.setText(
                             Noor.appContext?.resources?.getText(
                                 R.string.ramadan
                             )
                         )
-                        else -> holder.rozaInfoCellBinding?.tvDay?.setText(
+                        else -> tvDay?.setText(
                             Noor.appContext?.resources?.getText(
                                 R.string.date
                             )
@@ -347,34 +349,39 @@ internal class RozaInformationAdapter(
 
 
                 } else {
-
+                    val tvDay = holder.view.findViewById<AppCompatTextView>(R.id.tvDay)
+                    val scrim = holder.view.findViewById<LinearLayout>(R.id.scrim)
+                    val tvDate = holder.view.findViewById<AppCompatTextView>(R.id.tvDate)
+                    val tvLastTimeOfSehri = holder.view.findViewById<AppCompatTextView>(R.id.tvLastTimeOfSehri)
+                    val tvTimeOfIftari = holder.view.findViewById<AppCompatTextView>(R.id.tvTimeOfIftari)
                     val pos = position - 3 + mPeriodControl.mSelectedPeriod * 10
 
                     if (mDisplayableSehriIfterList.size > 0) {
                         val sehriIfterTime = mDisplayableSehriIfterList.get(pos)
                         when (sehriIfterTime.isToday) {
                             true -> {
-                                holder.rozaInfoCellBinding?.scrim?.visibility = VISIBLE
+                             scrim?.visibility = VISIBLE
                             }
                             else -> {
-                                holder.rozaInfoCellBinding?.scrim?.visibility = GONE
+                              scrim?.visibility = GONE
                             }
                         }
                         if (CalenderUtil.isRamadanNow() && !fromMalaysia) {
-                            holder.rozaInfoCellBinding?.tvDay?.setText(sehriIfterTime.dayOfHizriMonth)
+                          tvDay?.setText(sehriIfterTime.dayOfHizriMonth)
                         } else {
-                            holder.rozaInfoCellBinding?.tvDay?.setText(sehriIfterTime.dayOfGeorgianMonth)
+                           tvDay?.setText(sehriIfterTime.dayOfGeorgianMonth)
                         }
 
-                        holder.rozaInfoCellBinding?.tvDate?.setText(sehriIfterTime.dayOfWeek)
-                        holder.rozaInfoCellBinding?.tvLastTimeOfSehri?.setText(sehriIfterTime.sehriTimeStr)
-                        holder.rozaInfoCellBinding?.tvTimeOfIftari?.setText(sehriIfterTime.ifterTimeStr)
+                       tvDate?.setText(sehriIfterTime.dayOfWeek)
+                       tvLastTimeOfSehri?.setText(sehriIfterTime.sehriTimeStr)
+                       tvTimeOfIftari?.setText(sehriIfterTime.ifterTimeStr)
                     }
 
                 }
             }
             _DUA_INFO -> {
-                holder.duaBinding?.let { binding ->
+
+//                holder.duaBinding?.let { binding ->
                     mDuaList?.let {
                         var pos = if (fromMalaysia) {
                             position - mDisplayableSehriIfterList.size - 3
@@ -382,77 +389,84 @@ internal class RozaInformationAdapter(
                             position - 14
                         }
                         var literature = it.get(pos)
-                        binding.dua = literature
-
-
-                        holder.duaBinding?.btnToggleCollapse?.handleClickEvent {
-                            when (holder.duaBinding?.tvDuaDesc?.visibility) {
+//                        binding.dua = literature
+                        val  tvDuaTitle:AppCompatTextView = holder.view.findViewById(R.id.tvDuaTitle)
+                        val  tvDuaDesc:AppCompatTextView = holder.view.findViewById(R.id.tvDuaDesc)
+                        val  tvDesArabic: TextViewNormalArabic = holder.view.findViewById(R.id.tvDesArabic)
+                        val  tvDuaMeaning:AppCompatTextView = holder.view.findViewById(R.id.tvDuaMeaning)
+                        val btnToggleCollapse:ImageView = holder.view.findViewById(R.id.btnToggleCollapse)
+                        tvDuaTitle.text= literature.title
+                        tvDesArabic.text = literature.textInArabic
+                        tvDuaDesc.text = literature.text
+                        tvDuaMeaning.text = literature.pronunciation
+                       btnToggleCollapse?.handleClickEvent {
+                            when (tvDuaDesc?.visibility) {
                                 VISIBLE -> {
-                                    holder.duaBinding?.btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
-                                    holder.duaBinding?.tvDuaDesc?.visibility = GONE
-                                    holder.duaBinding?.tvDesArabic?.visibility = GONE
-                                    holder.duaBinding?.tvDuaMeaning?.visibility = GONE
+                                   btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
+                                       tvDuaDesc?.visibility = GONE
+                                       tvDesArabic?.visibility = GONE
+                                       tvDuaMeaning?.visibility = GONE
                                 }
                                 GONE -> {
-                                    holder.duaBinding?.btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
-                                    holder.duaBinding?.tvDuaDesc?.visibility = VISIBLE
+                                   btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
+                                    tvDuaDesc?.visibility = VISIBLE
                                     literature.textInArabic?.let {
                                         if (it.isNotEmpty()) {
-                                            holder.duaBinding?.tvDesArabic?.visibility = VISIBLE
+                                           tvDesArabic?.visibility = VISIBLE
                                         }
                                     }
                                     literature.pronunciation?.let {
                                         if (it.isNotEmpty()) {
-                                            holder.duaBinding?.tvDuaMeaning?.visibility = VISIBLE
+                                            tvDuaMeaning?.visibility = VISIBLE
                                         }
                                     }
                                 }
                             }
                         }
-                        holder.duaBinding?.tvDuaTitle?.handleClickEvent {
-                            when (holder.duaBinding?.tvDuaDesc?.visibility) {
+                    tvDuaTitle?.handleClickEvent {
+                            when (tvDuaDesc?.visibility) {
                                 VISIBLE -> {
-                                    holder.duaBinding?.btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
-                                    holder.duaBinding?.tvDuaDesc?.visibility = GONE
-                                    holder.duaBinding?.tvDesArabic?.visibility = GONE
-                                    holder.duaBinding?.tvDuaMeaning?.visibility = GONE
+                                 btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
+                                   tvDuaDesc?.visibility = GONE
+                                  tvDesArabic?.visibility = GONE
+                               tvDuaMeaning?.visibility = GONE
                                 }
                                 GONE -> {
-                                    holder.duaBinding?.btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
-                                    holder.duaBinding?.tvDuaDesc?.visibility = VISIBLE
+                                   btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
+                                    tvDuaDesc?.visibility = VISIBLE
                                     literature.textInArabic?.let {
                                         if (it.isNotEmpty()) {
-                                            holder.duaBinding?.tvDesArabic?.visibility = VISIBLE
+                                        tvDesArabic?.visibility = VISIBLE
                                         }
                                     }
                                     literature.pronunciation?.let {
                                         if (it.isNotEmpty()) {
-                                            holder.duaBinding?.tvDuaMeaning?.visibility = VISIBLE
+                                            tvDuaMeaning?.visibility = VISIBLE
                                         }
                                     }
                                 }
                             }
                         }
 
-                        holder.duaBinding?.root?.handleClickEvent {
-                            when (holder.duaBinding?.tvDuaDesc?.visibility) {
+                      holder.itemView.handleClickEvent {
+                            when (tvDuaDesc?.visibility) {
                                 VISIBLE -> {
-                                    holder.duaBinding?.btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
-                                    holder.duaBinding?.tvDuaDesc?.visibility = GONE
-                                    holder.duaBinding?.tvDesArabic?.visibility = GONE
-                                    holder.duaBinding?.tvDuaMeaning?.visibility = GONE
+                                    btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
+                                   tvDuaDesc?.visibility = GONE
+                                   tvDesArabic?.visibility = GONE
+                             tvDuaMeaning?.visibility = GONE
                                 }
                                 GONE -> {
-                                    holder.duaBinding?.btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
-                                    holder.duaBinding?.tvDuaDesc?.visibility = VISIBLE
+                                   btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
+                                  tvDuaDesc?.visibility = VISIBLE
                                     literature.textInArabic?.let {
                                         if (it.isNotEmpty()) {
-                                            holder.duaBinding?.tvDesArabic?.visibility = VISIBLE
+                                          tvDesArabic?.visibility = VISIBLE
                                         }
                                     }
                                     literature.pronunciation?.let {
                                         if (it.isNotEmpty()) {
-                                            holder.duaBinding?.tvDuaMeaning?.visibility = VISIBLE
+                                            tvDuaMeaning?.visibility = VISIBLE
                                         }
                                     }
                                 }
@@ -461,7 +475,7 @@ internal class RozaInformationAdapter(
                     }
 
 
-                }
+               // }
 
             }
         }

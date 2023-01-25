@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -125,14 +126,16 @@ internal class IjtemaAdapter(
             ITEM_CONTENT -> {
                 val listItem = literatureList.get(position - 2)
                 val serial = (position - 2) + 1
+                val number :AppCompatTextView = holder.itemView.findViewById(R.id.number)
+                val  tvTitle:AppCompatTextView = holder.itemView.findViewById(R.id.tvTitle)
+                tvTitle.text =listItem.title
 
-//                holder.bindingIjtema?.literature = listItem
-//                holder.bindingIjtema?.number?.text =
-//                    TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(serial).toString())
-//
-//                holder.bindingIjtema?.root?.handleClickEvent {
-//                    mItemClickCallBack?.goToListeratureDetailsFragment(position - 2, false)
-//                }
+               number?.text =
+                    TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(serial).toString())
+
+                holder.itemView.handleClickEvent {
+                    mItemClickCallBack?.goToListeratureDetailsFragment(position - 2, false)
+                }
             }
 
             else -> {
