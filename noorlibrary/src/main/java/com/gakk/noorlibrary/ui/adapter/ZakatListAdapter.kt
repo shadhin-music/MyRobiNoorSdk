@@ -28,7 +28,7 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
         RecyclerView.ViewHolder(layoutView) {
 
          var view: View = layoutView
-        val layoutTag = layoutId
+         val layoutTag = layoutId
 
 
     }
