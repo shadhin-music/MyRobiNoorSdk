@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-        <variable
-            name="contentbaseurl"
-            type="java.lang.String" />
-
-        <variable
-            name="tracker"
-            type="com.gakk.noorlibrary.model.home.Item" />
-
-        <variable
-            name="data"
-            type="com.gakk.noorlibrary.model.home.Data" />
-    </data>
-
-    <androidx.cardview.widget.CardView
+    xmlns:tools="http://schemas.android.com/tools"
         style="@style/CardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +31,6 @@
                     android:layout_height="@dimen/size_24"
                     android:layout_centerVertical="true"
                     android:adjustViewBounds="true"
-                    android:patchImageFullUrl="@{data.fullImageUrl}"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_calendar_check" />
 
@@ -62,7 +41,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/small_spacing"
                     android:layout_toEndOf="@+id/imgInspiration"
-                    android:text="@{data.patchName}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/txt_color_title"
                     android:fontFamily="sans-serif-medium"
@@ -108,15 +86,12 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@null"
-                        android:fullImageUrl="@{contentbaseurl.concat(@string/slash).concat(tracker.imageUrl)}"
                         android:scaleType="centerCrop"
                         android:src="@drawable/place_holder_16_9_ratio"
-                        app:attachedProgressBar="@{progressBar}"
                         app:layout_constraintDimensionRatio="h,1:0.27027"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:placeHolderDimension="@{constant.PLACE_HOLDER_16_9}">
+                        app:layout_constraintTop_toTopOf="parent">
 
                     </androidx.appcompat.widget.AppCompatImageView>
 
@@ -212,4 +187,3 @@
             layout="@layout/layout_circular_progress"
             android:visibility="gone" />
     </androidx.cardview.widget.CardView>
-</layout>
