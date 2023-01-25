@@ -2,20 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
 
-        <variable
-            name="contentbaseurl"
-            type="java.lang.String" />
-
-        <variable
-            name="romjanamol"
-            type="com.gakk.noorlibrary.model.home.Item" />
-
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-    </data>
 
     <androidx.cardview.widget.CardView
         style="@style/CardViewStyle"
@@ -36,14 +23,13 @@
                 android:layout_width="0dp"
                 android:layout_height="216dp"
                 android:adjustViewBounds="true"
-                android:fullImageUrl="@{contentbaseurl.concat(@string/slash).concat(romjanamol.imageUrl)}"
                 android:scaleType="fitXY"
                 android:src="@drawable/place_holder_1_1_ratio"
-                app:attachedProgressBar="@{progressBar}"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:placeHolderDimension="@{constant.PLACE_HOLDER_1_1}" />
+               />
 
             <ProgressBar
                 android:id="@+id/progressBar"
