@@ -17,8 +17,9 @@
         android:roundIcon="@drawable/noor_logo_bangla"
         android:supportsRtl="true"
         android:theme="@style/Theme.Noor"
+        android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
-        tools:replace="android:allowBackup">
+        tools:replace="android:allowBackup,android:usesCleartextTraffic">
         <activity
             android:name=".MainSdkActivity"
             android:exported="true">
