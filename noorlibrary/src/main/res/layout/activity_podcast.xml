@@ -164,8 +164,7 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@null"
-                    android:imageUrlNoProgress="@{itemNoData.fullImageUrl}" />
+                    android:background="@null" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTitle"

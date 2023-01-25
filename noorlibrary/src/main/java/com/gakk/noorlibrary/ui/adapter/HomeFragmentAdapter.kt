@@ -750,11 +750,11 @@ class HomeFragmentAdapter(
                 return HomeFragmentViewHolder(CELL_ISLAM_PILLER,view)
             }
 
-            CELL_LEARN_QURAN -> {
+          /*  CELL_LEARN_QURAN -> {
                 view = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_learn_quran,parent,false)
 
                 return HomeFragmentViewHolder(CELL_LEARN_QURAN,view)
-            }
+            }*/
 
             else -> throw IllegalStateException("Illegal view type")
         }

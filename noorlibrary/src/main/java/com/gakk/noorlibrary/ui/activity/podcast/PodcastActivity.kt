@@ -21,7 +21,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,8 +37,6 @@ import com.gakk.noorlibrary.base.BaseActivity
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.ActivityPodcastBinding
-import com.gakk.noorlibrary.databinding.DialogNoLiveBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.podcast.CommentListResponse
 import com.gakk.noorlibrary.model.podcast.LiveVideosResponse
@@ -808,15 +805,14 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
                 this,
                 R.style.MaterialAlertDialog_rounded
             )
-        val binding: DialogNoLiveBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
+        val binding: View = LayoutInflater.from(this).inflate(
             R.layout.dialog_no_live,
             null,
             false
         )
 
 
-        val dialogView: View = binding.root
+        val dialogView: View = binding
         customDialog.setView(dialogView)
 
         val alertDialog = customDialog.show()
@@ -826,13 +822,13 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
         )
 
 
-        binding.tvTitleExit.setText(liveMessage)
+        binding.findViewById<TextView>(R.id.tvTitleExit).setText(liveMessage)
         alertDialog.window?.setGravity(Gravity.CENTER)
         alertDialog.setCancelable(false)
         alertDialog.show()
 
 
-        binding.btnComplete.handleClickEvent {
+        binding.findViewById<View>(R.id.btnComplete).handleClickEvent {
             alertDialog.dismiss()
         }
 

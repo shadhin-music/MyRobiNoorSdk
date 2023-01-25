@@ -1,245 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.core.widget.NestedScrollView
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:background="@drawable/currency_top_bg">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/standard_margin">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/converted_currecny_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"
+                    tools:text="Bangladeshi Taka - SAUDI Riyal" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtDisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/converted_currecny_name"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:fontFamily="sans-serif"
+                    android:text="0.0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="@color/currency_txt_color" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/update_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/ic_refresh"
+                    android:layout_alignBottom="@+id/ic_refresh"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"
+                    tools:text="last update on 12 jan" />
+
+                <ImageView
+                    android:id="@+id/ic_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtDisplay"
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/default_content_des"
+                    android:padding="@dimen/small_spacing"
+                    android:src="@drawable/ic_refresh_currency" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlDisplay"
+            android:background="#f5f5f5">
 
-            <RelativeLayout
-                android:id="@+id/rlDisplay"
+            <LinearLayout
+                android:id="@+id/llCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginLeft="@dimen/standard_margin"
                 android:layout_marginTop="@dimen/standard_margin"
-                android:layout_marginEnd="@dimen/standard_margin"
-                android:background="@drawable/currency_top_bg">
+                android:layout_marginRight="@dimen/standard_margin"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_border_rounded_gray"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_12">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgCountryFrom"
+                            android:layout_width="25dp"
+                            android:layout_height="15dp"
+                            android:scaleType="centerCrop" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/spnrFrom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:drawableEnd="@drawable/ic_expand_more"
+                            android:fontFamily="sans-serif"
+                            android:gravity="start"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            tools:text="Malaysia" />
+
+                    </LinearLayout>
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/standard_margin">
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/small_spacing"
+                    android:layout_marginBottom="@dimen/small_spacing"
+                    android:layout_weight="0.12"
+                    android:gravity="center">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/converted_currecny_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/white"
-                        android:visibility="invisible"
-                        android:fontFamily="sans-serif"
-                        tools:text="Bangladeshi Taka - SAUDI Riyal" />
+                    <LinearLayout
+                        android:id="@+id/llBtnCurrencyConvert"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:padding="7dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtDisplay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/converted_currecny_name"
-                        android:layout_marginTop="@dimen/small_spacing"
-                        android:text="0.0"
-                        android:fontFamily="sans-serif"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                        android:textColor="@color/currency_txt_color" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/update_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/ic_refresh"
-                        android:layout_alignBottom="@+id/ic_refresh"
-                        android:gravity="center_vertical"
-                        android:visibility="invisible"
-                        android:fontFamily="sans-serif"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/white"
-                        tools:text="last update on 12 jan" />
-
-                    <ImageView
-                        android:id="@+id/ic_refresh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtDisplay"
-                        android:layout_alignParentEnd="true"
-                        android:contentDescription="@string/default_content_des"
-                        android:padding="@dimen/small_spacing"
-                        android:src="@drawable/ic_refresh_currency" />
-
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="11dp"
+                            android:src="@drawable/ic_swap" />
+                    </LinearLayout>
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_border_rounded_gray"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_12">
 
-            </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-            <RelativeLayout
+                        <ImageView
+                            android:id="@+id/imgCountryTo"
+                            android:layout_width="25dp"
+                            android:layout_height="15dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_sar_flag" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/spnrTo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/small_spacing"
+                            android:drawableEnd="@drawable/ic_expand_more"
+                            android:fontFamily="sans-serif"
+                            android:gravity="start"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            tools:text="Saudi Arab" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llInputValue"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/llCountry"
+                android:layout_marginLeft="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginRight="@dimen/standard_margin"
+                android:background="@drawable/bg_border_rounded_white"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtInputValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@null"
+                    android:hint="0.0"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLength="32"
+                    android:maxLines="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textColor="#1f1f1f"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rlDisplay"
-                android:background="#f5f5f5">
+                android:layout_below="@+id/llInputValue"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/llCountry"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnCurrencyConvert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/standard_margin"
-                    android:layout_marginTop="@dimen/standard_margin"
                     android:layout_marginRight="@dimen/standard_margin"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/bg_border_rounded_gray"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="@dimen/margin_12">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/imgCountryFrom"
-                                android:layout_width="25dp"
-                                android:layout_height="15dp"
-                                android:scaleType="centerCrop"
-                                 />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/spnrFrom"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:drawableEnd="@drawable/ic_expand_more"
-                                android:gravity="start"
-                                android:fontFamily="sans-serif"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                tools:text="Malaysia" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="@dimen/small_spacing"
-                        android:layout_marginBottom="@dimen/small_spacing"
-                        android:layout_weight="0.12"
-                        android:gravity="center">
-
-                        <LinearLayout
-                            android:id="@+id/llBtnCurrencyConvert"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="0dp"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginEnd="0dp"
-                            android:layout_marginBottom="0dp"
-                            android:padding="7dp">
-
-                            <ImageView
-                                android:layout_width="14dp"
-                                android:layout_height="11dp"
-                                android:src="@drawable/ic_swap" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/bg_border_rounded_gray"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="@dimen/margin_12">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/imgCountryTo"
-                                android:layout_width="25dp"
-                                android:layout_height="15dp"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/ic_sar_flag" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/spnrTo"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/small_spacing"
-                                android:drawableEnd="@drawable/ic_expand_more"
-                                android:gravity="start"
-                                android:fontFamily="sans-serif"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                tools:text="Saudi Arab" />
-
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llInputValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/llCountry"
-                    android:layout_marginLeft="@dimen/standard_margin"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:layout_marginRight="@dimen/standard_margin"
-                    android:background="@drawable/bg_border_rounded_white"
+                    android:background="@drawable/btn_currency"
+                    android:fontFamily="sans-serif-medium"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:padding="@dimen/standard_margin"
+                    android:text="@string/hjCurrencyConvert"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/white" />
 
-                    <EditText
-                        android:id="@+id/edtInputValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@null"
-                        android:hint="0.0"
-                        android:imeOptions="actionDone"
-                        android:inputType="numberDecimal"
-                        android:maxLength="32"
-                        android:maxLines="1"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:textColor="#1f1f1f"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/llInputValue"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/btnCurrencyConvert"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/standard_margin"
-                        android:layout_marginRight="@dimen/standard_margin"
-                        android:background="@drawable/btn_currency"
-                        android:gravity="center"
-                        android:padding="@dimen/standard_margin"
-                        android:text="@string/hjCurrencyConvert"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/white"
-                        android:fontFamily="sans-serif-medium"/>
-
-                </LinearLayout>
-            </RelativeLayout>
+            </LinearLayout>
         </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
-</layout>
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

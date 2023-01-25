@@ -1,248 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:clickable="true">
 
-    <data>
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg"
-        android:clickable="true">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            android:paddingBottom="@dimen/standard_margin"
-            app:layout_constraintBottom_toTopOf="@id/llCheckbox"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivBgTotalAsset"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="@dimen/standard_margin"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_bg_total_asset"
-                    app:layout_constraintDimensionRatio="h,1:0.3048780"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvPreReg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
-                    android:text="@string/hajj_pre_registration_fee"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="@id/ivBgTotalAsset"
-                    app:layout_constraintStart_toStartOf="@id/ivBgTotalAsset"
-                    app:layout_constraintTop_toTopOf="@id/ivBgTotalAsset" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/payamount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_spacing"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="@id/ivBgTotalAsset"
-                    app:layout_constraintStart_toStartOf="@id/ivBgTotalAsset"
-                    app:layout_constraintTop_toBottomOf="@id/tvPreReg" />
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvPaymentOptionChoose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_spacing"
-                    android:text="@string/choose_a_payment_option"
-                    app:layout_constraintStart_toStartOf="@id/ivBgTotalAsset"
-                    app:layout_constraintTop_toBottomOf="@id/ivBgTotalAsset" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardBankPayment"
-                    android:layout_width="0dp"
-                    android:layout_height="64dp"
-                    android:layout_margin="@dimen/margin_10"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="@dimen/small_spacing"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvPaymentOptionChoose">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_marginLeft="@dimen/small_spacing"
-                            android:layout_marginTop="@dimen/margin_10"
-                            android:layout_marginBottom="@dimen/margin_10"
-                            android:layout_weight=".5"
-                            android:src="@drawable/bank_payment" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="4"
-                            android:text="ব্যাংক পেমেন্ট"
-                            android:textColor="@color/txt_color_black"
-                            android:textSize="18sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight=".5"
-                            android:src="@drawable/ic_right_arrow" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardPayment"
-                    android:layout_width="0dp"
-                    android:layout_height="64dp"
-                    android:layout_margin="@dimen/margin_10"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="@dimen/small_spacing"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardBankPayment">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="@dimen/_48sdp"
-                            android:layout_marginLeft="@dimen/small_spacing"
-                            android:layout_marginTop="@dimen/margin_10"
-                            android:layout_marginBottom="@dimen/margin_10"
-                            android:layout_weight=".5"
-                            android:src="@drawable/ic_mfs_logo" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="4"
-                            android:text="কার্ড পেমেন্ট"
-                            android:textColor="@color/txt_color_black"
-                            android:textSize="18sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight=".5"
-                            android:src="@drawable/ic_right_arrow" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardMfsPayment"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_64sdp"
-                    android:layout_margin="@dimen/margin_10"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="@dimen/small_spacing"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardPayment"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <ImageView
-                            android:layout_width="@dimen/_48sdp"
-                            android:layout_height="@dimen/_48sdp"
-                            android:layout_marginLeft="@dimen/small_spacing"
-                            android:layout_marginTop="@dimen/margin_10"
-                            android:layout_marginBottom="@dimen/margin_10"
-                            android:layout_weight=".5"
-                            android:src="@drawable/mfs_payment" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="4"
-                            android:text="এমএফএস পেমেন্ট"
-                            android:textColor="@color/txt_color_black"
-                            android:textSize="18sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight=".5"
-                            android:src="@drawable/ic_right_arrow" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/standard_margin"
+        app:layout_constraintBottom_toTopOf="@id/llCheckbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/llCheckbox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:layout_marginBottom="@dimen/standard_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/appCompatCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBgTotalAsset"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/standard_margin"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_bg_total_asset"
+                app:layout_constraintDimensionRatio="h,1:0.3048780"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTerm"
-                android:layout_width="0dp"
+                android:id="@+id/tvPreReg"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hajj_payment_term"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/txt_color_black"
-                app:layout_constraintBottom_toBottomOf="@id/appCompatCheckBox"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/appCompatCheckBox"
-                app:layout_constraintTop_toTopOf="@id/appCompatCheckBox" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginTop="28dp"
+                android:text="@string/hajj_pre_registration_fee"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/ivBgTotalAsset"
+                app:layout_constraintStart_toStartOf="@id/ivBgTotalAsset"
+                app:layout_constraintTop_toTopOf="@id/ivBgTotalAsset" />
 
-        <include
-            android:id="@+id/progressLayout"
-            layout="@layout/layout_circular_progress"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/payamount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/ivBgTotalAsset"
+                app:layout_constraintStart_toStartOf="@id/ivBgTotalAsset"
+                app:layout_constraintTop_toBottomOf="@id/tvPreReg" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPaymentOptionChoose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_spacing"
+                android:text="@string/choose_a_payment_option"
+                app:layout_constraintStart_toStartOf="@id/ivBgTotalAsset"
+                app:layout_constraintTop_toBottomOf="@id/ivBgTotalAsset" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardBankPayment"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_margin="@dimen/margin_10"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/small_spacing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPaymentOptionChoose">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="@dimen/small_spacing"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_weight=".5"
+                        android:src="@drawable/bank_payment" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="4"
+                        android:text="ব্যাংক পেমেন্ট"
+                        android:textColor="@color/txt_color_black"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".5"
+                        android:src="@drawable/ic_right_arrow" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardPayment"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_margin="@dimen/margin_10"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/small_spacing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardBankPayment">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="@dimen/_48sdp"
+                        android:layout_marginLeft="@dimen/small_spacing"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_weight=".5"
+                        android:src="@drawable/ic_mfs_logo" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="4"
+                        android:text="কার্ড পেমেন্ট"
+                        android:textColor="@color/txt_color_black"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".5"
+                        android:src="@drawable/ic_right_arrow" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMfsPayment"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_margin="@dimen/margin_10"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/small_spacing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardPayment">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_48sdp"
+                        android:layout_height="@dimen/_48sdp"
+                        android:layout_marginLeft="@dimen/small_spacing"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_weight=".5"
+                        android:src="@drawable/mfs_payment" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="4"
+                        android:text="এমএফএস পেমেন্ট"
+                        android:textColor="@color/txt_color_black"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".5"
+                        android:src="@drawable/ic_right_arrow" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llCheckbox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/appCompatCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTerm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hajj_payment_term"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/txt_color_black"
+            app:layout_constraintBottom_toBottomOf="@id/appCompatCheckBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/appCompatCheckBox"
+            app:layout_constraintTop_toTopOf="@id/appCompatCheckBox" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</layout>
+    <include
+        android:id="@+id/progressLayout"
+        layout="@layout/layout_circular_progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

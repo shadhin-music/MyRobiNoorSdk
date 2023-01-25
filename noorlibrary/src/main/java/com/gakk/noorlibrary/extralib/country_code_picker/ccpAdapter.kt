@@ -8,11 +8,9 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.ItemCcpBinding
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.setImageFromUrl
 import org.w3c.dom.Text

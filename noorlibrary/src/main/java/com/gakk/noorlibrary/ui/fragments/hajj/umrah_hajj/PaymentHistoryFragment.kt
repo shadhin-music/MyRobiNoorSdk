@@ -23,7 +23,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.UmrahHajjViewModel
 import com.google.gson.Gson
-import com.mcc.noor.ui.adapter.umrahhajj.UmrahPaymentHistoryAdapter
+import com.gakk.noorlibrary.ui.adapter.umrahhajj.UmrahPaymentHistoryAdapter
 import kotlinx.coroutines.launch
 
 

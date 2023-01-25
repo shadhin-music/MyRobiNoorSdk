@@ -1,36 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
-    </data>
-
-    <RelativeLayout
-        android:orientation="vertical"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnHome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/standard_margin"
+        android:background="@color/white"
+        android:paddingTop="@dimen/standard_margin"
+        android:paddingBottom="@dimen/standard_margin"
+        android:text="Noor Home"
+        android:textColor="@color/deep_red" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnHome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Noor Home"
-            android:background="@color/white"
-            android:textColor="@color/deep_red"
-            android:paddingTop="@dimen/standard_margin"
-            android:paddingBottom="@dimen/standard_margin"
-            android:layout_margin="@dimen/standard_margin" />
+    <EditText
+        android:id="@+id/phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-        <EditText
-            android:id="@+id/phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:hint="Phone number"
+        android:inputType="textPhonetic"
 
-            android:hint="Phone number"
-            android:inputType="textPhonetic"
-
-            android:text="8801917589656" />
-    </RelativeLayout>
-</layout>
+        android:text="8801917589656" />
+</RelativeLayout>

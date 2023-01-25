@@ -62,7 +62,14 @@ class PrayerTimeCalculator(mContext: Context) {
     fun getUpCommingMalayPrayer(): UpCommingPrayer {
         allWaqtOverForTOday = false
 
-        val upCommingPrayer = UpCommingPrayer()
+        val upCommingPrayer = UpCommingPrayer(
+            currentWaqtStartingTime = "",
+            nextWaqtName = "",
+            currentWaqtName = "",
+            nextWaqtNameTracker = "",
+            nextWaqtTime = "",
+            timeLeft = ""
+        )
         var curMillis = Date().time
         val temp = TimeFormtter.getDateStringFromMilliSecondsIn12HrFormat(curMillis)
         curMillis = TimeFormtter.milliSecondsFromTimeString(temp)
@@ -228,7 +235,14 @@ class PrayerTimeCalculator(mContext: Context) {
 
         allWaqtOverForTOday = false
 
-        val upCommingPrayer = UpCommingPrayer()
+        val upCommingPrayer = UpCommingPrayer(
+            currentWaqtStartingTime = "",
+            nextWaqtName = "",
+            currentWaqtName = "",
+            nextWaqtNameTracker = "",
+            nextWaqtTime = "",
+            timeLeft = ""
+        )
         var curMillis = Date().time
         val temp = TimeFormtter.getDateStringFromMilliSecondsIn12HrFormat(curMillis)
         curMillis = TimeFormtter.milliSecondsFromTimeString(temp)

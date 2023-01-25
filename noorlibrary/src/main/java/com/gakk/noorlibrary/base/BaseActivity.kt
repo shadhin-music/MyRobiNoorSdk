@@ -13,6 +13,7 @@ import android.view.View.VISIBLE
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,11 +23,9 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.*
 import com.gakk.noorlibrary.ui.adapter.DivisionAdapter
 import com.gakk.noorlibrary.ui.adapter.DivisionCallbackFunc
 import com.gakk.noorlibrary.ui.adapter.SurahListAdapter
@@ -556,8 +555,7 @@ open class BaseActivity : AppCompatActivity() {
         divisionCallbackFunc: DivisionCallbackFunc? = null
     ) {
 
-        var binding: LayoutRozaDivisionListBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
+        var binding: View = LayoutInflater.from(this).inflate(
             R.layout.layout_roza_division_list,
             null,
             false
@@ -566,10 +564,10 @@ open class BaseActivity : AppCompatActivity() {
 
         // val divisions = resources.getStringArray(R.array.bd_divisions).toList()
         val adapter = divisions?.let { DivisionAdapter(it) }
-        binding.rvDistricts.adapter = adapter
+        binding.findViewById<RecyclerView>(R.id.rvDistricts).adapter = adapter
         adapter?.divisionCallbackFunc = divisionCallbackFunc
 
-        val dialogView: View = binding.root
+        val dialogView: View = binding
         val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         customDialog.setView(dialogView)
 
@@ -581,8 +579,8 @@ open class BaseActivity : AppCompatActivity() {
         alertDialog.window?.setGravity(Gravity.CENTER)
         alertDialog.setCancelable(false)
         alertDialog.show()
-        binding.tvDivision.setText("")
-        binding.btnDismiss.handleClickEvent {
+        binding.findViewById<TextView>(R.id.tvDivision).setText("")
+        binding.findViewById<View>(R.id.btnDismiss).handleClickEvent {
             alertDialog.dismiss()
         }
     }

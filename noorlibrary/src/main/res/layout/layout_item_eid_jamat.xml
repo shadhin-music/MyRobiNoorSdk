@@ -1,91 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/standard_margin"
+    android:layout_marginTop="@dimen/small_spacing"
+    android:layout_marginEnd="@dimen/standard_margin">
 
-<!--    <data>-->
-
-<!--        <variable-->
-<!--            name="literature"-->
-<!--            type="com.gakk.noorlibrary.model.literature.Literature" />-->
-<!--    </data>-->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        style="@style/CardViewStyleNoElevation"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standard_margin"
-        android:layout_marginEnd="@dimen/standard_margin"
-        android:layout_marginTop="@dimen/small_spacing">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            style="@style/CardViewStyleNoElevation"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:paddingTop="@dimen/small_spacing"
+            android:paddingBottom="@dimen/small_spacing">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgMosque"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:src="@drawable/mosque_eid_jamat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleMosque"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:maxLines="2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/txt_color_black"
+                android:textFontWeight="400"
+                app:layout_constraintBottom_toBottomOf="@id/imgMosque"
+                app:layout_constraintEnd_toStartOf="@id/ivDirection"
+                app:layout_constraintStart_toEndOf="@+id/imgMosque"
+                app:layout_constraintTop_toTopOf="@+id/imgMosque"
+                tools:text="বায়তুল মোকাররম" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDirection"
+                android:layout_width="@dimen/size_24"
+                android:layout_height="@dimen/size_24"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_baseline_location_on_24"
+                app:layout_constraintBottom_toBottomOf="@id/titleMosque"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/titleMosque" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLocationMosque"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
                 android:paddingBottom="@dimen/small_spacing"
-                android:paddingTop="@dimen/small_spacing"
-               >
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/ash"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/titleMosque"
+                app:layout_constraintStart_toStartOf="@+id/titleMosque"
+                app:layout_constraintTop_toBottomOf="@+id/ivDirection"
+                tools:text="ঢাকায় বায়তুল মোকাররম জাতীয় মসজিদে সকাল ৭টায় প্রথম জামাতে ইমামতি করবেন সিনিয়র পেশ ইমাম হাফেজ মুফতি মাওলানা মিজানুর রহমান। এরপর সকাল ৮টা, সকাল ৯টা, ১০টা এবং বেলা পৌনে ১১টায় আরও চারটি জামাত হবে।"
+                tools:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgMosque"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:src="@drawable/mosque_eid_jamat"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/titleMosque"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:layout_marginEnd="@dimen/margin_10"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif"
-                    android:maxLines="2"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/txt_color_black"
-                    android:textFontWeight="400"
-                    app:layout_constraintBottom_toBottomOf="@id/imgMosque"
-                    app:layout_constraintEnd_toStartOf="@id/ivDirection"
-                    app:layout_constraintStart_toEndOf="@+id/imgMosque"
-                    app:layout_constraintTop_toTopOf="@+id/imgMosque"
-                    tools:text="বায়তুল মোকাররম" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivDirection"
-                    android:layout_width="@dimen/size_24"
-                    android:layout_height="@dimen/size_24"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_baseline_location_on_24"
-                    app:layout_constraintBottom_toBottomOf="@id/titleMosque"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/titleMosque" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvLocationMosque"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/ash"
-                    android:visibility="gone"
-                    android:paddingBottom="@dimen/small_spacing"
-                    app:layout_constraintEnd_toEndOf="@id/titleMosque"
-                    app:layout_constraintStart_toStartOf="@+id/titleMosque"
-                    app:layout_constraintTop_toBottomOf="@+id/ivDirection"
-                    tools:text="ঢাকায় বায়তুল মোকাররম জাতীয় মসজিদে সকাল ৭টায় প্রথম জামাতে ইমামতি করবেন সিনিয়র পেশ ইমাম হাফেজ মুফতি মাওলানা মিজানুর রহমান। এরপর সকাল ৮টা, সকাল ৯টা, ১০টা এবং বেলা পৌনে ১১টায় আরও চারটি জামাত হবে।"
-                    tools:visibility="visible" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,75 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/small_spacing"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/small_spacing"
+    app:cardElevation="0dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false">
 
-    <data>
-
-        <variable
-            name="serial"
-            type="java.lang.String" />
-
-        <variable
-            name="item"
-            type="com.gakk.noorlibrary.model.islamicName.IslamicName" />
-
-    </data>
-
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_spacing"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/small_spacing"
-        app:cardElevation="0dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="false">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/standard_margin"
+        android:paddingTop="@dimen/margin_12"
+        android:paddingEnd="@dimen/standard_margin"
+        android:paddingBottom="@dimen/margin_12">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/standard_margin"
-            android:paddingTop="@dimen/margin_12"
-            android:paddingEnd="@dimen/standard_margin"
-            android:paddingBottom="@dimen/margin_12">
+            android:layout_weight="1.5"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:maxLines="4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/txt_color"
+            tools:text="112" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:maxLines="4"
-                android:text="@{serial}"
-                android:gravity="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/txt_color"
-                android:fontFamily="sans-serif"
-                tools:text="112" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="@{item.name.trim()}"
-                android:fontFamily="sans-serif-medium"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                tools:text="Ismail Hossan \n aik" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="Ismail Hossan \n aik" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:text="@{item.meaning.trim()}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black_secondary"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:gravity="center"
-                tools:text="Meaning of the name" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="@{item.meaning.trim()}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/black_secondary"
+            android:textStyle="normal"
+            tools:text="Meaning of the name" />
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</layout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

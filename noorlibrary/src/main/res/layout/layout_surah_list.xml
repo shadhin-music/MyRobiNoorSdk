@@ -1,68 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg">
+
+    <ImageButton
+        android:id="@+id/btnDismiss"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:padding="@dimen/margin_12"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/surah_list"
+        android:textColor="@color/txt_color_black"
+        android:textFontWeight="400"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDismiss" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSurahList"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
         android:background="@color/bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/margin_12"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNormal" />
 
-        <ImageButton
-            android:id="@+id/btnDismiss"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:padding="@dimen/margin_12"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_close"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSelectSurah"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:background="@drawable/bg_rectangle_green"
+        android:text="@string/select_item"
+        android:textColor="@color/white"
+        android:textFontWeight="400"
+        android:textSize="@dimen/margin_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvSurahList" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewNormal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/surah_list"
-            android:textColor="@color/txt_color_black"
-            android:textFontWeight="400"
-            android:textSize="20dp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnDismiss" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSurahList"
-            android:layout_width="0dp"
-            android:background="@color/bg"
-            android:layout_height="300dp"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/margin_12"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNormal" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSelectSurah"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginTop="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:layout_marginBottom="@dimen/standard_margin"
-            android:background="@drawable/bg_rectangle_green"
-            android:text="@string/select_item"
-            android:textColor="@color/white"
-            android:textFontWeight="400"
-            android:textSize="@dimen/margin_12"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvSurahList" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>

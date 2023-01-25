@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/bg"
     android:paddingTop="@dimen/margin_4"
-    android:paddingBottom="@dimen/margin_4"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:paddingBottom="@dimen/margin_4">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
@@ -14,11 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:clickable="false"
+        android:fontFamily="sans-serif"
         android:text="প্রিয় ইসলামিক ভিডিও"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@color/txt_color_black"
         android:textFontWeight="400"
-        android:fontFamily="sans-serif"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnMore"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,12 +29,11 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:clickable="false"
-        android:visibility="gone"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_chevron_right_v2"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.cardview.widget.CardView
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_ifter_sehri"
     style="@style/CardViewStyleNoElevation"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/card_ifter_sehri">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,10 +26,10 @@
             android:id="@+id/imageAlarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margin_10"
             android:layout_marginStart="@dimen/small_spacing"
             android:layout_marginTop="@dimen/margin_12"
             android:layout_marginEnd="@dimen/small_spacing"
+            android:padding="@dimen/margin_10"
             android:src="@drawable/ic_alarm_on"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,10 +39,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_spacing"
+            android:fontFamily="sans-serif"
             android:text="@string/last_sehri_time_today"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/txt_color_black"
-            android:fontFamily="sans-serif"
             android:textFontWeight="400"
             app:layout_constraintStart_toStartOf="@+id/imgSehriOrIfter"
             app:layout_constraintTop_toBottomOf="@+id/imgSehriOrIfter" />
@@ -53,12 +53,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="@dimen/standard_margin"
+            android:fontFamily="sans-serif"
             android:text="ভোর ০৫:১১ মিনিট"
             android:textAlignment="textStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/colorPrimary"
             android:textFontWeight="400"
-            android:fontFamily="sans-serif"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/imgSehriOrIfter"
@@ -66,4 +66,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
-</layout>

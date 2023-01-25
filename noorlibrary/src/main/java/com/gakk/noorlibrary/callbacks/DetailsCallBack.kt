@@ -4,7 +4,6 @@ import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.base.DialogType
-import com.gakk.noorlibrary.databinding.LayoutRozaPrimaryHeaderBinding
 import com.gakk.noorlibrary.ui.adapter.DivisionCallbackFunc
 import com.gakk.noorlibrary.ui.adapter.SurahListAdapter
 import com.gakk.noorlibrary.ui.fragments.PageReloadCallBack
