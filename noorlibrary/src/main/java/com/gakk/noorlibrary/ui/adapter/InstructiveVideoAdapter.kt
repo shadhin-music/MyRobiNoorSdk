@@ -1,11 +1,18 @@
 package com.gakk.noorlibrary.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.databinding.LayoutItemInstructiveVideoBinding
@@ -20,17 +27,21 @@ internal class InstructiveVideoAdapter(
 ) :
     ListAdapter<Data, RecyclerView.ViewHolder>(diffUtil) {
     val mDetailsCallBack = detailsCallBack
+    inner class ViewHolder(layoutView:View) :
+        RecyclerView.ViewHolder(layoutView) {
+        var view: View = layoutView
 
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolder: RecyclerView.ViewHolder
-        val binding: LayoutItemInstructiveVideoBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+//        val viewHolder(layoutView:View): RecyclerView.ViewHolder(lay)
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.layout_item_instructive_video,
             parent,
             false
         )
 
-        viewHolder = InstructiveVideoOldViewHolder(binding)
+      val  viewHolder = InstructiveVideoOldViewHolder(binding)
 
 
         return viewHolder
@@ -45,16 +56,16 @@ internal class InstructiveVideoAdapter(
     }
 
 
-    inner class InstructiveVideoOldViewHolder(private val binding: LayoutItemInstructiveVideoBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class InstructiveVideoOldViewHolder(layoutView:View) :
+        RecyclerView.ViewHolder(layoutView) {
         init {
-            binding.root.resizeView(
+            layoutView.resizeView(
                 ViewDimension.HalfScreenWidthMargin,
                 mDetailsCallBack.getScreenWith(),
-                binding.root.context
+                layoutView.context
             )
-            binding.root
-            binding.root.handleClickEvent {
+
+           layoutView.handleClickEvent {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     getItem(position)
@@ -64,7 +75,16 @@ internal class InstructiveVideoAdapter(
         }
 
         fun bind(listLiterature: Data) {
-            binding.video = listLiterature
+            val textView: AppCompatTextView = itemView.findViewById(R.id.duration)
+            textView.text = listLiterature.durationFormatted
+            val textView2: AppCompatTextView = itemView.findViewById(R.id.title)
+            textView2.text = listLiterature.contenTtitle
+            val imgBg = itemView.findViewById<AppCompatImageView>(R.id.img)
+            Glide.with(itemView.context).load(listLiterature.fullImageUrl.replace("<size>", "400")).into(imgBg)
+            Log.e("TAG","DATA: "+  listLiterature.fullImageUrl)
+            val progressBar = itemView.findViewById<ProgressBar>(R.id.progressBar)
+            progressBar.visibility = View.GONE
+            //binding.video = listLiterature
         }
     }
 

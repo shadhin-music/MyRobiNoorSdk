@@ -2,9 +2,16 @@ package com.gakk.noorlibrary.ui.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.databinding.LayoutVideoBinding
@@ -42,27 +49,27 @@ class IslamicVideoOrPlayListAdapter(
         }
     }
 
-    inner class VideoOrPlayListViewHolder : RecyclerView.ViewHolder {
+    inner class VideoOrPlayListViewHolder(layoutView:View) : RecyclerView.ViewHolder(layoutView) {
 
-        var videoBinding: LayoutVideoBinding? = null
+        var view: View = layoutView
 
-        constructor(binding: LayoutVideoBinding) : super(binding.root) {
-            videoBinding = binding
-        }
-
-        var playListBinding: LayoutVideoPlaylistBinding? = null
-
-        constructor(binding: LayoutVideoPlaylistBinding) : super(binding.root) {
-            playListBinding = binding
-        }
+//        constructor(binding: LayoutVideoBinding) : super(binding.root) {
+//            videoBinding = binding
+//        }
+//
+//        var playListBinding: LayoutVideoPlaylistBinding? = null
+//
+//        constructor(binding: LayoutVideoPlaylistBinding) : super(binding.root) {
+//            playListBinding = binding
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoOrPlayListViewHolder {
 
         when (viewType) {
             VIDEO -> {
-                var binding: LayoutVideoBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
+                var binding: View =
+                    LayoutInflater.from(parent.context).inflate(
                     R.layout.layout_video,
                     parent,
                     false
@@ -70,13 +77,13 @@ class IslamicVideoOrPlayListAdapter(
                 return VideoOrPlayListViewHolder(binding)
             }
             else -> {
-                var binding: LayoutVideoPlaylistBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
+                var binding2: View =
+                    LayoutInflater.from(parent.context).inflate(
                     R.layout.layout_video_playlist,
                     parent,
                     false
                 )
-                return VideoOrPlayListViewHolder(binding)
+                return VideoOrPlayListViewHolder(binding2)
             }
         }
 
@@ -85,28 +92,41 @@ class IslamicVideoOrPlayListAdapter(
     override fun onBindViewHolder(holder: VideoOrPlayListViewHolder, position: Int) {
         var videoData: com.gakk.noorlibrary.model.video.category.Data? = null
         var playListData: com.gakk.noorlibrary.model.subcategory.Data? = null
-        holder.videoBinding?.let { root ->
+
             mVideoList?.let {
-                root.video = it.get(position)
+               // video = it.get(position)
                 videoData = it.get(position)
             }
-
-            holder.videoBinding?.root?.handleClickEvent {
+       val imgThumb:AppCompatImageView = holder.itemView.findViewById(R.id.imgThumb)
+        val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.GONE
+        Glide.with(holder.itemView.context).load(videoData?.fullImageUrl?.replace("<size>", "1280")).into(imgThumb)
+        val textView: AppCompatTextView =  holder.itemView.findViewById(R.id.tvTitle)
+        textView.text = videoData?.contenTtitle
+        val textView2: AppCompatTextView =  holder.itemView.findViewById(R.id.tvOtherInfo)
+        textView2.text = videoData?.miniSummary
+        val constraint :ConstraintLayout = holder.view.findViewById(R.id.constraint)
+        constraint.handleClickEvent {
 
                 val intent =
-                    Intent(holder.videoBinding?.root?.context, VideoPlayerHomeActivity::class.java)
+                    Intent(holder.itemView.context, VideoPlayerHomeActivity::class.java)
                 intent.putExtra(VIDEO_CAT_ID, mCatId)
                 intent.putExtra(VIDEO_SUBCAT_ID, mSubCatId)
                 intent.putExtra(VIDEO_DATA, videoData)
-                holder.videoBinding?.root?.context!!.startActivity(intent)
+                holder.itemView.context!!.startActivity(intent)
             }
-        }
-        holder.playListBinding?.let { root ->
+
+//        holder.playListBinding?.let { root ->
             mPlayList?.let {
-                root.playList = it.get(position)
+               // root.playList = it.get(position)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.visibility = View.GONE
                 playListData = it.get(position)
+                val imgThumb:AppCompatImageView = holder.itemView.findViewById(R.id.imgThumb)
+
+                Glide.with(holder.itemView.context).load(playListData?.fullImageUrl).into(imgThumb)
             }
-        }
+       // }
     }
 
     override fun getItemCount(): Int {

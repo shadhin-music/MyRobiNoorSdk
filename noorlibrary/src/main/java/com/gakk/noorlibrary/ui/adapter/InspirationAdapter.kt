@@ -6,7 +6,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -32,16 +37,16 @@ internal class InspirationAdapter(
     RecyclerView.Adapter<InspirationAdapter.ViewHolder>() {
 
 
-    inner class ViewHolder(binding: LayoutItemInspirationBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        var inspirationBinding: LayoutItemInspirationBinding? = binding
+    inner class ViewHolder(layoutView:View) :
+        RecyclerView.ViewHolder(layoutView) {
+        var view: View = layoutView
 
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: LayoutItemInspirationBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.layout_item_inspiration,
             parent,
             false
@@ -51,10 +56,16 @@ internal class InspirationAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val list = imageList[position]
-        holder.inspirationBinding?.item = list
+       // holder.inspirationBinding?.item = list
+        val imgBg = holder.view.findViewById<AppCompatImageView>(R.id.img)
+        val image = list.contentBaseUrl+"/"+list.imageUrl
+        Glide.with(holder.view.context).load(image).into(imgBg)
+        val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.GONE
 
-        holder.inspirationBinding?.rlShare?.handleClickEvent {
-          Glide.with(holder.inspirationBinding?.rlShare?.context!!).asBitmap().load(list.fullImageUrl)
+        val rlShare = holder.view.findViewById<RelativeLayout>(R.id.rlShare)
+        rlShare?.handleClickEvent {
+          Glide.with(rlShare?.context!!).asBitmap().load(list.fullImageUrl)
               .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
               .listener(object :RequestListener<Bitmap>{
                   override fun onLoadFailed(
@@ -75,8 +86,8 @@ internal class InspirationAdapter(
                   ): Boolean {
                       val i = Intent(Intent.ACTION_SEND)
                       i.type = "image/*"
-                      i.putExtra(Intent.EXTRA_STREAM, resource?.let { getLocalBitmapUri(it, holder.inspirationBinding?.rlShare?.context!!) })
-                      holder.inspirationBinding?.rlShare?.context!!.startActivity(Intent.createChooser(i, "Share Image"))
+                      i.putExtra(Intent.EXTRA_STREAM, resource?.let { getLocalBitmapUri(it,rlShare?.context!!) })
+                    rlShare?.context!!.startActivity(Intent.createChooser(i, "Share Image"))
                       return false
                   }
 
