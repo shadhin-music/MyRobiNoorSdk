@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.data.rest.api
 
+import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.youtube.YoutubeApiService
 import com.gakk.noorlibrary.util.FuskaIntercept
 import com.google.gson.GsonBuilder
@@ -40,14 +41,14 @@ class RetrofitBuilder {
                     .readTimeout(CONNECTION_TIME_OUT, TimeUnit.SECONDS)
                     .retryOnConnectionFailure(true)
                     .addInterceptor(FuskaIntercept())
-                .addInterceptor(OAuthInterceptor("Bearer", "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1ZmZiZjM4NDgxNzI4ZThjNzdjZGRkNGQiLCJVc2VySWQiOiI1ZmZiZjM4NDgxNzI4ZThjNzdjZGRkNGQiLCJVc2VyTmFtZSI6Ijg4MDE2NzIyMTk5OTIiLCJJbWFnZSI6InByb2ZpbGUvODg4Nl84ODAxNjcyMjE5OTkyLmpwZWciLCJNc2lzZG4iOiI4ODAxNjcyMjE5OTkyIiwicm9sZSI6WyJhZG1pbiIsInVzZXIiXSwibmJmIjoxNjc0NTYxMzk2LCJleHAiOjE5ODk5MjEzOTYsImlhdCI6MTY3NDU2MTM5NiwiaXNzIjoibG9sbGlwb3AiLCJhdWQiOiJsb2xsaXBvcCJ9.QjiY2fLXAhVjK9WlVFc6WStK1fpGyF5I4Q2Jn-9V068AKcPF3LcGryBNpfuD03CLKrh268GA5aHPO0yL_eUh2A"))
-                   /* .addInterceptor(
+                  // .addInterceptor(OAuthInterceptor("Bearer", "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1ZmZiZjM4NDgxNzI4ZThjNzdjZGRkNGQiLCJVc2VySWQiOiI1ZmZiZjM4NDgxNzI4ZThjNzdjZGRkNGQiLCJVc2VyTmFtZSI6Ijg4MDE2NzIyMTk5OTIiLCJJbWFnZSI6InByb2ZpbGUvODg4Nl84ODAxNjcyMjE5OTkyLmpwZWciLCJNc2lzZG4iOiI4ODAxNjcyMjE5OTkyIiwicm9sZSI6WyJhZG1pbiIsInVzZXIiXSwibmJmIjoxNjc0NTYxMzk2LCJleHAiOjE5ODk5MjEzOTYsImlhdCI6MTY3NDU2MTM5NiwiaXNzIjoibG9sbGlwb3AiLCJhdWQiOiJsb2xsaXBvcCJ9.QjiY2fLXAhVjK9WlVFc6WStK1fpGyF5I4Q2Jn-9V068AKcPF3LcGryBNpfuD03CLKrh268GA5aHPO0yL_eUh2A"))
+                    .addInterceptor(
                         OAuthInterceptor(
                             "Bearer",
-                            AppPreference.cachedUser?.token ?: ""
+                            AppPreference.userToken?: ""
                         )
 
-                    )*/
+                    )
                 return httpBuilder.build()
 
             }

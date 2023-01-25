@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.data.rest.api
 
 import com.gakk.noorlibrary.model.CommonApiResponse
+import com.gakk.noorlibrary.model.auth.AuthResponse
 import com.gakk.noorlibrary.model.billboard.BillboardResponse
 import com.gakk.noorlibrary.model.hajjpackage.HajjPackageEntryResponse
 import com.gakk.noorlibrary.model.hajjpackage.HajjPackageRegistrationResponse
@@ -414,4 +415,8 @@ interface ApiService {
     suspend fun UmrahPaymentStatus(
         @Body param: RequestBody
     ): UmrahHajjRegResponse
+
+    @FormUrlEncoded
+    @POST("account/RobiLogin")
+    suspend fun login(@Field("payload") payload:String):AuthResponse
 }

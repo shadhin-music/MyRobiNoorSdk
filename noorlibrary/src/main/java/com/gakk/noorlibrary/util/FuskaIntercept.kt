@@ -19,9 +19,6 @@ class FuskaIntercept : Interceptor {
         buffer.write((decryptStr?:"").toByteArray())
         val newBody = buffer.asResponseBody(responseBody?.contentType(),responseBody?.contentLength()?:0L)
 
-        Log.i("FuskaIntercept", "encryptString: $encryptString")
-        Log.i("FuskaIntercept", "decryptStr: $decryptStr")
-
         return response.newBuilder()
             .body(newBody)
             .build()

@@ -122,6 +122,7 @@ object AppPreference {
         get() = preferences.getString(SET_NUMBER.first, SET_NUMBER.second)
         set(value) = preferences.edit { it.putString(SET_NUMBER.first, value) }
 
+    var userToken:String?=null
 
     var cachedUser: Data?
         set(value) {
