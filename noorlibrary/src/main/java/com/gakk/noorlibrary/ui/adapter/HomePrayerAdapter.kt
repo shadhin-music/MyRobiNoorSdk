@@ -1,9 +1,15 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
 import com.gakk.noorlibrary.databinding.RowListItemDuaBinding
@@ -25,8 +31,8 @@ internal class HomePrayerAdapter(
         mCallBack = callback
     }
 
-    inner class ViewHolder(binding: RowListItemDuaBinding) : RecyclerView.ViewHolder(binding.root) {
-        var prayerBinding: RowListItemDuaBinding? = binding
+    inner class ViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
+         var view: View = layoutView
 
         init {
 
@@ -35,8 +41,8 @@ internal class HomePrayerAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: RowListItemDuaBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.row_list_item_dua,
             parent,
             false
@@ -46,10 +52,19 @@ internal class HomePrayerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val duaItem = duaList[position]
-        holder.prayerBinding?.dua = duaItem
-        holder.prayerBinding?.contentbaseurl = contentBaseUrl
+       val imgBg = holder.view.findViewById<AppCompatImageView>(R.id.imgBg)
+        val image = contentBaseUrl+"/"+duaItem.imageUrl
+        Glide.with(holder.view.context).load(image).into(imgBg)
+        val tvTitleDua = holder.view.findViewById<AppCompatTextView>(R.id.tvTitleDua)
+        tvTitleDua.text= duaItem.contentName
+        val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.GONE
 
-        holder.prayerBinding?.rlShare?.handleClickEvent {
+        val rlShare = holder.view.findViewById<RelativeLayout>(R.id.rlShare)
+       // holder.prayerBinding?.dua = duaItem
+
+
+        rlShare?.handleClickEvent {
             homeCellItemControl.shareImage(contentBaseUrl+"/"+duaItem.imageUrl)
         }
     }
