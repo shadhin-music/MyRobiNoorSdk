@@ -2,17 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
 
-        <variable
-            name="video"
-            type="com.gakk.noorlibrary.model.video.category.Data" />
-
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="160dp"
@@ -35,11 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:fullImageUrl="@{video.fullImageUrl}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/place_holder_16_9_ratio"
-                app:attachedProgressBar="@{progressBar}"
-                app:placeHolderDimension="@{constant.PLACE_HOLDER_16_9}" />
+                />
 
             <ImageView
                 android:layout_width="48dp"
@@ -61,7 +49,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_4"
-            android:text="@{video.contenTtitle}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/txt_color_black"
             android:textFontWeight="400"
@@ -75,7 +62,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_4"
-            android:text="@{video.miniSummary}"
             android:textColor="@color/disabled_color"
             android:textFontWeight="400"
             android:fontFamily="sans-serif"

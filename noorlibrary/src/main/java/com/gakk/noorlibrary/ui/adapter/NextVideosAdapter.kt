@@ -1,9 +1,14 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.databinding.LayoutItemNextVideoBinding
 import com.gakk.noorlibrary.model.video.category.Data
@@ -16,15 +21,15 @@ internal class NextVideosAdapter(
 ) :
     RecyclerView.Adapter<NextVideosAdapter.ViewHolder>() {
 
-    inner class ViewHolder(binding: LayoutItemNextVideoBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        var videoBinding: LayoutItemNextVideoBinding? = binding
+    inner class ViewHolder(binding: View) :
+        RecyclerView.ViewHolder(binding) {
+        var videoBinding = binding
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: LayoutItemNextVideoBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.layout_item_next_video,
             parent,
             false
@@ -33,7 +38,15 @@ internal class NextVideosAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.videoBinding?.video = videoList[position]
+      val video = videoList[position]
+        val image = holder.itemView.findViewById<AppCompatImageView>(R.id.imgThumb)
+        Glide.with(holder.itemView.context).load(video.fullImageUrl).into(image)
+        val progressBar =holder.itemView.findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.GONE
+        val tvTitle = holder.itemView.findViewById<AppCompatTextView>(R.id.tvTitle)
+        tvTitle.text = video.contenTtitle
+        val tvText = holder.itemView.findViewById<AppCompatTextView>(R.id.tvOtherInfo)
+        tvText.text = video.miniSummary
         holder.itemView.handleClickEvent {
             calback.setData(videoList[position])
         }
