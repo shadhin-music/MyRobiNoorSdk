@@ -4,9 +4,12 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -73,12 +76,12 @@ internal class SurahDetailsAdapter(
 
     inner class SurahDetailsViewHolder : RecyclerView.ViewHolder {
 
-        var headerBinding: LayoutSurahDetailsHeaderBinding? = null
+        var headerBinding: View? = null
 
-        constructor(binding: LayoutSurahDetailsHeaderBinding) : super(binding.root) {
+        constructor(binding: View , layoutSurahDetailsHeaderBinding:String = "") : super(binding) {
             headerBinding = binding
 
-            headerBinding?.surahBasicInfoContainer?.let {
+            headerBinding?.findViewById<View>(R.id.surahBasicInfoContainer)?.let {
 
                 it.handleClickEvent {
                     mDetailsCallBack?.showDialogWithActionAndParam(
@@ -90,12 +93,12 @@ internal class SurahDetailsAdapter(
                 }
             }
 
-            headerBinding?.CLPlay?.handleClickEvent {
+            headerBinding?.findViewById<View>(R.id.CLPlay)?.handleClickEvent {
                 mPlayPauseFavControl.handlePlayPuase(mSurahDetails!!.id)
 
             }
 
-            headerBinding?.CLFavourite?.handleClickEvent {
+            headerBinding?.findViewById<View>(R.id.CLFavourite)?.handleClickEvent {
                 mPlayPauseFavControl.handleFavAction()
             }
 
@@ -103,18 +106,18 @@ internal class SurahDetailsAdapter(
         }
 
 
-        var ayahBinding: LayoutSurahDetailsAyahBinding? = null
+        var ayahBinding: View? = null
         var tag: Int? = null
 
-        constructor(binding: LayoutSurahDetailsAyahBinding) : super(binding.root) {
+        constructor(binding: View, LayoutSurahDetailsAyahBinding:Int = 0) : super(binding) {
             ayahBinding = binding
-            ayahBinding?.btnMore?.let {
+            ayahBinding?.findViewById<View>(R.id.btnMore)?.let {
 
                 it.handleClickEvent {
                     mDetailsCallBack?.showDialogWithActionAndParam(
                         dialogType = DialogType.AyahActionListDialog,
-                        numberAyah = binding.tvAyahNum.text.toString(),
-                        textAyah = binding.tvAyaNative.text.toString()
+                        numberAyah = binding.findViewById<TextView>(R.id.tvAyahNum).text.toString(),
+                        textAyah = binding.findViewById<TextView>(R.id.tvAyaNative).text.toString()
                     )
                 }
             }
@@ -130,51 +133,49 @@ internal class SurahDetailsAdapter(
             }
         }
 
-        var footerBinding: LayoutFooterBinding? = null
+        var footerBinding: View? = null
 
-        constructor(binding: LayoutFooterBinding) : super(binding.root) {
+        constructor(binding: View, layoutFooterBinding: Float) : super(binding) {
             footerBinding = binding
-
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurahDetailsViewHolder {
         return when (viewType) {
             CELL_HEADER -> {
-                val binding: LayoutSurahDetailsHeaderBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
+                val view = LayoutInflater.from(parent.context).inflate(
                     R.layout.layout_surah_details_header,
                     parent,
                     false
                 )
-                SurahDetailsViewHolder(binding)
+
+                SurahDetailsViewHolder(view,"")
             }
             CELL_AYAH_FOOTER -> {
-                val binding: LayoutFooterBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_footer,
+
+               val viewx =  LayoutInflater.from(parent.context).inflate(R.layout.layout_footer,
                     parent,
-                    false
-                )
-                SurahDetailsViewHolder(binding)
+                    false)
+                SurahDetailsViewHolder(viewx,0.0f)
             }
             else -> {
-                val binding: LayoutSurahDetailsAyahBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
+                val binding: View =  LayoutInflater.from(parent.context).inflate(
                     R.layout.layout_surah_details_ayah,
                     parent,
                     false
                 )
-                SurahDetailsViewHolder(binding)
+                SurahDetailsViewHolder(binding,0)
             }
         }
     }
 
     override fun onBindViewHolder(holder: SurahDetailsViewHolder, position: Int) {
 
-        holder?.headerBinding?.let { layout ->
-            layout.surah = mSurahDetails
+        holder.headerBinding?.let { layout ->
+            //layout.surah = mSurahDetails
 
+            layout.findViewById<TextView>(R.id.tvSurahName).text = mSurahDetails?.name
+            layout.findViewById<TextView>(R.id.tvBanglaNamePlusAyaCountPlusLocation).text = mSurahDetails?.surahBasicInfo
             when (mSurahDetails?.origin?.trim()) {
                 "Meccan", "মাক্কী" -> {
                     val item = ImageFromOnline("bg_makkah.png")
@@ -207,7 +208,7 @@ internal class SurahDetailsAdapter(
                             })
                             .error(R.drawable.place_holder_2_3_ratio)
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                            .into(holder?.headerBinding?.imgBgLocation!!)
+                            .into(holder.headerBinding?.findViewById(R.id.imgBgLocation)!!)
                     }
 
                 }
@@ -242,13 +243,13 @@ internal class SurahDetailsAdapter(
                             })
                             .error(R.drawable.place_holder_2_3_ratio)
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                            .into(holder?.headerBinding?.imgBgLocation!!)
+                            .into(holder?.headerBinding?.findViewById(R.id.imgBgLocation)!!)
                     }
 
                 }
             }
 
-            layout?.root?.let {
+            layout?.let {
                 it.tag = mSurahDetails?.id ?: "-1"
                 Log.i("TAG_UPDATE", mSurahDetails?.id ?: "-1")
             }
@@ -257,27 +258,27 @@ internal class SurahDetailsAdapter(
 
 
             mSurahDetails?.let {
-                layout.btnPlayPause.setImageResource(R.drawable.ic_play_filled_enabled)
-                layout.textViewNormal4.setText(layout.root.context.resources.getText(R.string.play_it))
+                layout.findViewById<ImageView>(R.id.btnPlayPause).setImageResource(R.drawable.ic_play_filled_enabled)
+                layout.findViewById<TextView>(R.id.textViewNormal4).setText(layout.context.resources.getText(R.string.play_it))
                 when (AudioPlayerService.isCurrentSurahPlaying(it.id)) {
                     true -> {
-                        layout.btnPlayPause.setImageResource(R.drawable.ic_pause_filled_enabled)
-                        layout.textViewNormal4.setText(layout.root.context.resources.getText(R.string.pause_it))
+                        layout.findViewById<ImageView>(R.id.btnPlayPause).setImageResource(R.drawable.ic_pause_filled_enabled)
+                        layout.findViewById<TextView>(R.id.textViewNormal4).setText(layout.context.resources.getText(R.string.pause_it))
                     }
                     false -> {
-                        layout.btnPlayPause.setImageResource(R.drawable.ic_play_filled_enabled)
-                        layout.textViewNormal4.setText(layout.root.context.resources.getText(R.string.play_it))
+                        layout.findViewById<ImageView>(R.id.btnPlayPause).setImageResource(R.drawable.ic_play_filled_enabled)
+                        layout.findViewById<TextView>(R.id.textViewNormal4).setText(layout.context.resources.getText(R.string.play_it))
                     }
                 }
 
                 when (it.isSurahFavByThisUser) {
                     true -> {
-                        layout.btnFav.setImageResource(R.drawable.ic_favorite_filled)
-                        layout.textViewNormal5.setTextColor(layout.root.context.resources.getColor(R.color.colorPrimary))
+                        layout.findViewById<ImageView>(R.id.btnFav).setImageResource(R.drawable.ic_favorite_filled)
+                        layout.findViewById<TextView>(R.id.textViewNormal5).setTextColor(layout.context.resources.getColor(R.color.colorPrimary))
                     }
                     false -> {
-                        layout.btnFav.setImageResource(R.drawable.ic_favorite)
-                        layout.textViewNormal5.setTextColor(layout.root.context.resources.getColor(R.color.txt_color_black))
+                        layout.findViewById<ImageView>(R.id.btnFav).setImageResource(R.drawable.ic_favorite)
+                        layout.findViewById<TextView>(R.id.textViewNormal5).setTextColor(layout.context.resources.getColor(R.color.txt_color_black))
                     }
                 }
             }
@@ -286,7 +287,10 @@ internal class SurahDetailsAdapter(
         }
         holder?.ayahBinding?.let {
             mAyahList?.let { list ->
-                it.ayat = list.get(position - 1)
+                val daa = list.get(position - 1)
+                it.findViewById<TextView>(R.id.tvAyahNum).text = daa.ayahNumber
+                it.findViewById<TextView>(R.id.tvAyaArabic).text = daa.textInArabic
+                it.findViewById<TextView>(R.id.tvAyaNative).text = daa.text
             }
             fontControlSurahDetail.updateFontSizeForAyahBinding(it)
         }
@@ -294,9 +298,9 @@ internal class SurahDetailsAdapter(
             when (mPagingViewCallBack?.hasMoreData()) {
                 true -> {
                     mPagingViewCallBack?.loadNextPage()
-                    it.root.visibility = VISIBLE
+                    it.visibility = VISIBLE
                 }
-                else -> it.root.visibility = GONE
+                else -> it.visibility = GONE
             }
         }
 
@@ -343,7 +347,7 @@ internal class SurahDetailsAdapter(
 
 class SurahDetailAyahLayoutFontControl {
 
-    private var ayahLayoutMap: HashMap<Int, LayoutSurahDetailsAyahBinding?>
+    private var ayahLayoutMap: HashMap<Int, View?>
     private var ayaFontSizeOffSet: Int = 0
 
     init {
@@ -361,18 +365,18 @@ class SurahDetailAyahLayoutFontControl {
         }
     }
 
-    fun updateFontSizeForAyahBinding(binding: LayoutSurahDetailsAyahBinding) {
+    fun updateFontSizeForAyahBinding(binding: View) {
 
-        binding?.tvAyahNum?.let {
+        binding?.findViewById<TextView>(R.id.tvAyahNum)?.let {
             it.setTextSize(TypedValue.COMPLEX_UNIT_SP, (16.0f + getCurrentAyaOffset()))
         }
-        binding?.tvAyaArabic?.let {
+        binding?.findViewById<TextView>(R.id.tvAyaArabic)?.let {
             it.setTextSize(TypedValue.COMPLEX_UNIT_SP, (16.0f + getCurrentAyaOffset()))
         }
-        binding?.tvAyaNative?.let {
+        binding?.findViewById<TextView>(R.id.tvAyaNative)?.let {
             it.setTextSize(TypedValue.COMPLEX_UNIT_SP, (14.0f + getCurrentAyaOffset()))
         }
-        binding?.tvAyaTranslation?.let {
+        binding?.findViewById<TextView>(R.id.tvAyaTranslation)?.let {
             it.setTextSize(TypedValue.COMPLEX_UNIT_SP, (14.0f + getCurrentAyaOffset()))
         }
     }
