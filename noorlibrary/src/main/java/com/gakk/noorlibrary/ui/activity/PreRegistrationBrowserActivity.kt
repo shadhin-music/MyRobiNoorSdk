@@ -101,7 +101,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
             viewModelHajj = ViewModelProvider(
                 this@PreRegistrationBrowserActivity,
-                HajjViewModel.FACTORY(repository)
+                HajjViewModel.FACTORY(this@PreRegistrationBrowserActivity.repository)
             ).get(HajjViewModel::class.java)
 
 

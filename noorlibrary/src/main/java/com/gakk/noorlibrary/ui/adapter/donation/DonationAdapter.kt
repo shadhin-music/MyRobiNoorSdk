@@ -7,12 +7,12 @@ import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
-import androidx.databinding.DataBindingUtil
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.databinding.LayoutItemDonationBinding
+
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.FragmentProvider
 import com.gakk.noorlibrary.util.PAGE_DONATE_ZAKAT

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.exoplayer2.*
@@ -17,7 +16,6 @@ import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseActivity
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.ActivityKafelaPlayerBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.youtube.YoutubeVideoDetails
 import com.gakk.noorlibrary.util.PodViewModelFactory

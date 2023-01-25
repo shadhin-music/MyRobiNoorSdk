@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.core.content.FileProvider
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -23,8 +22,6 @@ import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.*
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
-import com.gakk.noorlibrary.databinding.ActivityDetailsBinding
-import com.gakk.noorlibrary.databinding.LayoutRozaPrimaryHeaderBinding
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.ui.adapter.DivisionCallbackFunc
 import com.gakk.noorlibrary.ui.adapter.SurahListAdapter
@@ -213,7 +210,7 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
     override fun showDialogWithActionAndParam(
         dialogType: DialogType,
         surahListAdapter: SurahListAdapter?,
-        binding: LayoutRozaPrimaryHeaderBinding?,
+        binding: View?,
         actionWithSingleParam: ((String) -> Unit)?,
         actionOneWithNoParameter: (() -> Unit)?,
         actionTwoWithNoParameter: (() -> Unit)?,

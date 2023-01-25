@@ -3,7 +3,7 @@ package com.gakk.noorlibrary.ui.adapter.base
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
+
 
 internal class BaseAdapter<T>: RecyclerView.Adapter<BaseViewHolder<T>>() {
     var listOfItems:MutableList<T> = mutableListOf()
