@@ -2,9 +2,13 @@ package com.gakk.noorlibrary.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
@@ -13,6 +17,7 @@ import com.gakk.noorlibrary.databinding.LayoutFullPlayerHeaderBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.util.setImageFromUrl
 
 
 const val HEADER = 0
@@ -25,78 +30,93 @@ internal class FullPlayerAdapter(surahList: MutableList<Data>, clickAction: (Int
     var mSurahList: MutableList<Data> = surahList
     var mClickAction = clickAction
 
-    inner class FullPlayerViewHolder : RecyclerView.ViewHolder {
+    inner class FullPlayerViewHolder(layoutId: Int, layoutView: View) : RecyclerView.ViewHolder(layoutView) {
 
-        var headerBinding: LayoutFullPlayerHeaderBinding? = null
-
-        @SuppressLint("MissingPermission")
-        constructor(binding: LayoutFullPlayerHeaderBinding) : super(binding.root) {
-            headerBinding = binding
-        }
-
-        var normalContentBinding: LayoutFullPlayerContentBinding? = null
-
-        constructor(binding: LayoutFullPlayerContentBinding) : super(binding.root) {
-            normalContentBinding = binding
-
-        }
+        var view: View = layoutView
+        val layoutTag = layoutId
 
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FullPlayerViewHolder {
+        lateinit var view:View
+
+
         return when (viewType) {
             HEADER -> {
-                val binding: LayoutFullPlayerHeaderBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_full_player_header,
-                    parent,
-                    false
-                )
-                FullPlayerViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_full_player_header,parent,false)
+
+                FullPlayerViewHolder(HEADER,view)
             }
 
             else -> {
-                val binding: LayoutFullPlayerContentBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_full_player_content,
-                    parent,
-                    false
-                )
-                FullPlayerViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_full_player_content,parent,false)
+
+                FullPlayerViewHolder(3,view)
             }
         }
 
     }
 
     override fun onBindViewHolder(holder: FullPlayerViewHolder, position: Int) {
-        holder?.headerBinding?.let {
-            it.surah = mSurahList.get(0)
-            it.item = ImageFromOnline("bg_quran.png")
-        }
-        holder?.normalContentBinding?.let {
-            var pos = position - 1
-            it.surah = mSurahList.get(pos)
 
-            it.root?.handleClickEvent {
-                mClickAction(pos, mSurahList!!.get(pos)!!.id!!)
+        when(holder.layoutTag)
+        {
+            HEADER ->
+            {
+                val surah = mSurahList[0]
+                val item = ImageFromOnline("bg_quran.png")
+                val ivTop = holder.view.findViewById<ImageView>(R.id.ivTop)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                val tvSurahTitle = holder.view.findViewById<AppCompatTextView>(R.id.tvSurahTitle)
+                val  tvAyahTxt = holder.view.findViewById<AppCompatTextView>(R.id.tvAyahTxt)
+
+                setImageFromUrl(ivTop,item.fullImageUrl,progressBar)
+                tvSurahTitle.text = surah.name
+                tvAyahTxt.text = surah.ayahCountWithPrefix
             }
 
-            it?.let {
-                when (pos) {
-                    0 -> {
-                        it.scrim.visibility = VISIBLE
-                        it.number.setTextColor(it.root.context.resources.getColor(R.color.colorPrimary))
-                        it.title.setTextColor(it.root.context.resources.getColor(R.color.colorPrimary))
-                    }
-                    else -> {
-                        it.scrim.visibility = GONE
-                        it.number.setTextColor(it.root.context.resources.getColor(R.color.txt_color_black))
-                        it.title.setTextColor(it.root.context.resources.getColor(R.color.txt_color_black))
+            else ->
+            {
+                val number = holder.view.findViewById<AppCompatTextView>(R.id.number)
+                val title = holder.view.findViewById<AppCompatTextView>(R.id.title)
+                val nameAyasLoc = holder.view.findViewById<AppCompatTextView>(R.id.nameAyasLoc)
+                val favourite = holder.view.findViewById<AppCompatTextView>(R.id.favourite)
+                val scrim = holder.view.findViewById<View>(R.id.scrim)
+
+                var pos = position - 1
+                val surah = mSurahList.get(pos)
+
+                holder.view?.handleClickEvent {
+                    mClickAction(pos, mSurahList!!.get(pos)!!.id!!)
+                }
+
+                title.text = surah.name
+                nameAyasLoc.text = surah.surahBasicInfo
+                favourite.text = surah.durationLocalised
+
+
+                holder.view?.let {
+                    when (pos) {
+                        0 -> {
+                            scrim.visibility = VISIBLE
+                            number.setTextColor(holder.view.context.resources.getColor(R.color.colorPrimary))
+                            title.setTextColor(holder.view.context.resources.getColor(R.color.colorPrimary))
+                        }
+                        else -> {
+                            scrim.visibility = GONE
+                            number.setTextColor(holder.view.context.resources.getColor(R.color.txt_color_black))
+                            title.setTextColor(holder.view.context.resources.getColor(R.color.txt_color_black))
+                        }
                     }
                 }
+
+
             }
         }
+
     }
 
     override fun getItemCount(): Int {

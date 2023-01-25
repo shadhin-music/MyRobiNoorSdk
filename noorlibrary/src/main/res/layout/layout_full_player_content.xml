@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-        <variable
-            name="surah"
-            type="com.gakk.noorlibrary.model.quran.surah.Data" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="@color/bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,7 +25,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/standard_margin"
-                    android:text="@{surah.surahNumber}"
                     android:textColor="@color/txt_color_black"
                     android:textFontWeight="400"
                     android:fontFamily="sans-serif-medium"
@@ -47,7 +39,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/standard_margin"
                     android:layout_marginTop="@dimen/small_spacing"
-                    android:text="@{surah.name}"
                     android:textColor="@color/txt_color_black"
                     android:textFontWeight="400"
                     android:fontFamily="sans-serif"
@@ -61,7 +52,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="@dimen/small_spacing"
-                    android:text="@{surah.surahBasicInfo}"
                     android:textColor="@color/disabled_color"
                     android:textFontWeight="400"
                     android:textSize="12sp"
@@ -76,7 +66,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/standard_margin"
-                    android:text="@{surah.durationLocalised}"
                     android:textColor="@color/black_secondary"
                     android:textFontWeight="400"
                     android:textSize="14sp"
@@ -105,4 +94,3 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cardView3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

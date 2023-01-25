@@ -6,19 +6,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.gakk.noorlibrary.R;
-import com.gakk.noorlibrary.databinding.CommentPaginationProgBinding;
-import com.gakk.noorlibrary.databinding.LayoutChildCommentItemBinding;
 import com.gakk.noorlibrary.model.podcast.CommentListResponse;
 import com.gakk.noorlibrary.ui.activity.podcast.ItemClickListener;
+import com.gakk.noorlibrary.util.CircleImageView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +46,7 @@ public class CommentPagingAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,8 +58,8 @@ public class CommentPagingAdapter extends RecyclerView.Adapter<RecyclerView.View
                 viewHolder = getViewHolder(parent, inflater);
                 break;
             case LOADING:
-                CommentPaginationProgBinding binding = DataBindingUtil.inflate(inflater, R.layout.comment_pagination_prog, parent, false);
-                viewHolder = new LoadingVH(binding);
+                View view = inflater.inflate(R.layout.comment_pagination_prog,parent,false);
+                viewHolder = new LoadingVH(view);
                 break;
         }
         return viewHolder;
@@ -69,16 +72,18 @@ public class CommentPagingAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
-        LayoutChildCommentItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_child_comment_item, parent, false);
-        return new ViewHolder(binding);
+
+        View view = inflater.inflate(R.layout.layout_child_comment_item,parent,false);
+
+        return new ViewHolder(view);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        LayoutChildCommentItemBinding binding;
+        View binding;
 
-        public ViewHolder(LayoutChildCommentItemBinding binding) {
-            super(binding.getRoot());
+        public ViewHolder(View binding) {
+            super(binding);
             this.binding = binding;
         }
 
@@ -91,13 +96,24 @@ public class CommentPagingAdapter extends RecyclerView.Adapter<RecyclerView.View
                 final ViewHolder holder = (ViewHolder) mainHolder;
 
                 CommentListResponse.Data data = categoryContentsList.get(position);
-                holder.binding.setModel(data);
+
+                //view
+
+                AppCompatTextView user_name = holder.binding.findViewById(R.id.user_name);
+                CircleImageView user_icon = holder.binding.findViewById(R.id.user_icon);
+                AppCompatTextView comment_times = holder.binding.findViewById(R.id.comment_times);
+                ConstraintLayout llLike = holder.binding.findViewById(R.id.llLike);
+                AppCompatImageView ivLike = holder.binding.findViewById(R.id.ivLike);
+                AppCompatTextView like = holder.binding.findViewById(R.id.like);
+
+                user_name.setText(data.getUserName());
+
 
                 Glide.with(context.getApplicationContext())
                         .load(CONTENT_BASE_URL + data.getImageUrl())
                         .apply(new RequestOptions().placeholder(R.drawable.ic_profile_default).error(R.drawable.ic_profile_default)
                                 .diskCacheStrategy(DiskCacheStrategy.DATA)).dontAnimate()
-                        .into(holder.binding.userIcon);
+                        .into(user_icon);
 
                 String strDate = data.getCreatedOn();
 
@@ -106,47 +122,54 @@ public class CommentPagingAdapter extends RecyclerView.Adapter<RecyclerView.View
                     Date date = dateFormat2.parse(strDate);
                     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
                     if (date != null) {
-                        holder.binding.commentTimes.setText(sdf.format(date));
+                        comment_times.setText(sdf.format(date));
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
 
-                holder.binding.llLike.setOnClickListener(v -> {
+                llLike.setOnClickListener(v -> {
                     if (data.getCommentLike()) {
                         return;
                     }
-                    holder.binding.ivLike.setClickable(false);
-                    holder.binding.ivLike.setColorFilter(context.getResources().getColor(R.color.colorPrimary));
+                    ivLike.setClickable(false);
+                    ivLike.setColorFilter(context.getResources().getColor(R.color.colorPrimary));
                     data.setCommentLike(true);
-                    holder.binding.like.setText(String.valueOf(data.getTotalCommentLike() + 1));
-                    holder.binding.like.setText("Liked" + "(" + (data.getTotalCommentLike() + 1) + ")");
+                    like.setText(String.valueOf(data.getTotalCommentLike() + 1));
+                    like.setText("Liked" + "(" + (data.getTotalCommentLike() + 1) + ")");
                     data.setTotalCommentLike(data.getTotalCommentLike() + 1);
                     clickListener.onLikeButtonClicked(data.getCommentId(), false, data.getCurrentPage());
                 });
 
                 if (data.getCommentLike()) {
-                    holder.binding.llLike.setClickable(false);
-                    holder.binding.ivLike.setColorFilter(context.getResources().getColor(R.color.colorPrimary));
-                    holder.binding.like.setText("Liked" + "(" + data.getTotalCommentLike() + ")");
+                    llLike.setClickable(false);
+                    ivLike.setColorFilter(context.getResources().getColor(R.color.colorPrimary));
+                    like.setText("Liked" + "(" + data.getTotalCommentLike() + ")");
                 } else {
-                    holder.binding.ivLike.setColorFilter(context.getResources().getColor(R.color.ash));
-                    holder.binding.llLike.setClickable(true);
-                    holder.binding.like.setText("Like" + "(" + data.getTotalCommentLike() + ")");
+                    ivLike.setColorFilter(context.getResources().getColor(R.color.ash));
+                    llLike.setClickable(true);
+                    like.setText("Like" + "(" + data.getTotalCommentLike() + ")");
                 }
 
                 break;
 
             case LOADING:
-                final LoadingVH vh = (LoadingVH) mainHolder;
-                vh.binding.moreBtn.setVisibility(View.VISIBLE);
-                vh.binding.progressBar.setVisibility(View.GONE);
 
-                vh.binding.moreBtn.setOnClickListener(v -> {
+                final LoadingVH vh = (LoadingVH) mainHolder;
+
+                //view
+                AppCompatTextView more_btn = vh.binding.findViewById(R.id.more_btn);
+                ProgressBar progressBar = vh.binding.findViewById(R.id.progressBar);
+
+                more_btn.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+
+
+                more_btn.setOnClickListener(v -> {
                     clickListener.onMoreButtonClicked();
-                    vh.binding.moreBtn.setVisibility(View.GONE);
-                    vh.binding.progressBar.setVisibility(View.VISIBLE);
+                    more_btn.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
                 });
                 break;
         }
@@ -154,10 +177,10 @@ public class CommentPagingAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     protected static class LoadingVH extends RecyclerView.ViewHolder {
-        CommentPaginationProgBinding binding;
+        View binding;
 
-        LoadingVH(CommentPaginationProgBinding binding) {
-            super(binding.getRoot());
+        LoadingVH(View binding) {
+            super(binding);
             this.binding = binding;
         }
 
