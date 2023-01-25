@@ -2,10 +2,15 @@ package com.gakk.noorlibrary.ui.adapter.ijtema
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
@@ -46,56 +51,29 @@ internal class IjtemaAdapter(
         ijtemaItemCount = literatureList.size
     }
 
-    inner class IjtemaViewHolder : RecyclerView.ViewHolder {
-        var listBinding: LayoutHorizontalListV2Binding? = null
+    inner class IjtemaViewHolder (layoutView: View): RecyclerView.ViewHolder(layoutView) {
+        var view: View = layoutView
 
-        constructor(binding: LayoutHorizontalListV2Binding) : super(binding.root) {
-            listBinding = binding
-        }
-
-        var bindinglive: ItemIjtemaLiveBinding? = null
-
-        constructor(itemView: ItemIjtemaLiveBinding) : super(itemView.root) {
-            bindinglive = itemView
-        }
-
-        var bindingIjtema: ItemIjtemaBinding? = null
-
-        constructor(itemView: ItemIjtemaBinding) : super(itemView.root) {
-            bindingIjtema = itemView
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IjtemaViewHolder {
         when (viewType) {
             ITEM_VIDEO -> {
-                val binding: LayoutHorizontalListV2Binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_horizontal_list_v2,
-                    parent,
-                    false
-                )
-                return IjtemaViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_horizontal_list_v2,parent,false)
+                return IjtemaViewHolder(view)
+
             }
 
             ITEM_LIVE -> {
-                val binding: ItemIjtemaLiveBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.item_ijtema_live,
-                    parent,
-                    false
-                )
-                return IjtemaViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.item_ijtema_live,parent,false)
+                return IjtemaViewHolder(view)
+
             }
 
             else -> {
-                val binding: ItemIjtemaBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.item_ijtema,
-                    parent,
-                    false
-                )
-                return IjtemaViewHolder(binding)
+                val  view = LayoutInflater.from(parent.context).inflate(R.layout.item_ijtema,parent,false)
+                return IjtemaViewHolder(view)
+
             }
         }
     }
@@ -104,15 +82,15 @@ internal class IjtemaAdapter(
 
         when (holder.itemViewType) {
             ITEM_VIDEO -> {
-
-                holder.listBinding?.rvHorizontalList?.layoutManager =
+               val rvHorizontalList = holder.view.findViewById<RecyclerView>(R.id.rvHorizontalList)
+                rvHorizontalList?.layoutManager =
                     LinearLayoutManager(
-                        holder.listBinding?.root?.context,
+                       holder.itemView.context,
                         LinearLayoutManager.HORIZONTAL,
                         false
                     )
 
-                holder.listBinding?.rvHorizontalList?.adapter =
+             rvHorizontalList?.adapter =
                     IslamicVideoOrPlayListAdapter(
                         videoList = videoList,
                         detailsCallBack = mDetailsCallBack,
@@ -122,15 +100,20 @@ internal class IjtemaAdapter(
             }
 
             ITEM_LIVE -> {
-                holder.bindinglive?.item = ImageFromOnline("btn_live_ijtema.png")
-                holder.bindinglive?.clIjtema?.handleClickEvent {
+                val  clIjtema: ConstraintLayout = holder.itemView.findViewById(R.id.clIjtema)
+                val imageView = holder.view.findViewById<AppCompatImageView>(R.id.appCompatImageView6)
+                val item = ImageFromOnline("btn_live_ijtema.png")
+                Glide.with(holder.itemView.context).load(item.fullImageUrl).into(imageView)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.visibility = View.GONE
+              clIjtema?.handleClickEvent {
 
                     if (BaseApplication.IJTEMA_LIVE_VIDEO_ID?.isEmpty() == true) {
                         mIjtemaControl.showDialog()
                     } else {
-                        holder.bindinglive?.clIjtema?.context?.startActivity(
+                      clIjtema?.context?.startActivity(
                             Intent(
-                                holder.bindinglive?.clIjtema?.context,
+                            clIjtema?.context,
                                 YoutubePlayerActivity::class.java
                             ).apply {
                                 putExtra(IS_IJTEMA_LIVE_VIDEO, true)
@@ -143,13 +126,13 @@ internal class IjtemaAdapter(
                 val listItem = literatureList.get(position - 2)
                 val serial = (position - 2) + 1
 
-                holder.bindingIjtema?.literature = listItem
-                holder.bindingIjtema?.number?.text =
-                    TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(serial).toString())
-
-                holder.bindingIjtema?.root?.handleClickEvent {
-                    mItemClickCallBack?.goToListeratureDetailsFragment(position - 2, false)
-                }
+//                holder.bindingIjtema?.literature = listItem
+//                holder.bindingIjtema?.number?.text =
+//                    TimeFormtter.getNumberByLocale(TimeFormtter.getNumber(serial).toString())
+//
+//                holder.bindingIjtema?.root?.handleClickEvent {
+//                    mItemClickCallBack?.goToListeratureDetailsFragment(position - 2, false)
+//                }
             }
 
             else -> {
