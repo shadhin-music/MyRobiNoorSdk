@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="dua"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
-    </data>
+<!--        <variable-->
+<!--            name="dua"-->
+<!--            type="com.gakk.noorlibrary.model.literature.Literature" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -42,7 +42,6 @@
                     android:layout_marginStart="@dimen/standard_margin"
                     android:layout_marginEnd="@dimen/small_spacing"
                     android:fontFamily="sans-serif-medium"
-                    android:text="@{dua.title}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/txt_color_black"
                     android:textFontWeight="400"
@@ -69,7 +68,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/standard_margin"
                     android:layout_marginEnd="@dimen/standard_margin"
-                    android:text="@{dua.textInArabic}"
                     android:textAlignment="textStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/txt_color_black"
@@ -87,7 +85,6 @@
                     android:layout_marginTop="@dimen/small_spacing"
                     android:layout_marginEnd="@dimen/standard_margin"
                     android:fontFamily="sans-serif"
-                    android:text="@{dua.text}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/txt_color_black"
                     android:textFontWeight="400"
@@ -104,7 +101,6 @@
                     android:layout_marginTop="@dimen/small_spacing"
                     android:layout_marginEnd="@dimen/standard_margin"
                     android:fontFamily="sans-serif"
-                    android:text="@{dua.pronunciation}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/txt_color_black"
                     android:textFontWeight="400"

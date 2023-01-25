@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="item"
-            type="com.gakk.noorlibrary.model.ImageFromOnline" />
-    </data>
+<!--        <variable-->
+<!--            name="item"-->
+<!--            type="com.gakk.noorlibrary.model.ImageFromOnline" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -87,9 +87,7 @@
             android:layout_width="144dp"
             android:layout_height="80dp"
             android:background="@null"
-            android:imageUrl="@{item.fullImageUrl}"
             android:scaleType="centerCrop"
-            app:attachedProgressBar="@{progressBar}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
