@@ -2,16 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-        <variable
-            name="playList"
-            type="com.gakk.noorlibrary.model.subcategory.Data" />
 
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@color/bg"
         android:padding="@dimen/margin_4"
@@ -34,9 +25,6 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:scaleType="centerCrop"
-                android:fullImageUrl="@{playList.fullImageUrl}"
-                app:attachedProgressBar="@{progressBar}"
-                app:placeHolderDimension="@{constant.PLACE_HOLDER_1_1}"
                 android:src="@drawable/place_holder_1_1_ratio" />
 
             <ProgressBar

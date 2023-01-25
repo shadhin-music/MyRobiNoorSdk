@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-        <variable
-            name="ayat"
-            type="com.gakk.noorlibrary.model.quran.ayah.Data" />
-    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -17,7 +12,7 @@
         android:id="@+id/tvAyahNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@{ayat.ayahNumber}"
+
         android:textColor="@color/txt_color_black"
         android:textFontWeight="400"
         android:fontFamily="sans-serif"
@@ -30,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@{ayat.textInArabic}"
+
         android:textAlignment="textStart"
         android:textFontWeight="700"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -43,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@{ayat.text}"
+
         android:fontFamily="sans-serif"
         android:textAlignment="textStart"
         android:textFontWeight="400"
@@ -79,4 +74,3 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

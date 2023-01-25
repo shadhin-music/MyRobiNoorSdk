@@ -14,15 +14,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.databinding.LayoutMarkerDetailsDialogBinding
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 
@@ -304,13 +304,14 @@ internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
         val details = requireContext().resources.getStringArray(R.array.hajjDetailsText)
 
         val dialog = Dialog(requireActivity(), R.style.DialogSlideAnim)
-        val dialogBinding: LayoutMarkerDetailsDialogBinding =
-            DataBindingUtil.inflate(
-                LayoutInflater.from(requireContext()), R.layout.layout_marker_details_dialog,
-                null, false
-            )
-        dialog.setContentView(dialogBinding.root)
+
+        val view = layoutInflater.inflate(R.layout.layout_marker_details_dialog, null)
+        dialog.setContentView(view)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val icClose = view.findViewById<ImageView>(R.id.ic_close)
+        val hajjDayTitle = view.findViewById<AppCompatTextView>(R.id.hajjDayTitle)
+        val hajjDetails = view.findViewById<AppCompatTextView>(R.id.hajjDetails)
 
         val window = dialog.window
         if (window != null) {
@@ -320,10 +321,10 @@ internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
             )
             window.setGravity(Gravity.BOTTOM)
         }
-        dialogBinding.icClose.setOnClickListener { dialog.dismiss() }
+        icClose.setOnClickListener { dialog.dismiss() }
 
-        dialogBinding.hajjDayTitle.text = trackerTitles[tag]
-        dialogBinding.hajjDetails.text = details[tag]
+        hajjDayTitle.text = trackerTitles[tag]
+        hajjDetails.text = details[tag]
 
         dialog.show()
     }

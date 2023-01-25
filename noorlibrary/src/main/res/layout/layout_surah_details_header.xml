@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <variable
-            name="surah"
-            type="com.gakk.noorlibrary.model.quran.surahDetail.Data" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:background="@color/bg">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="1dp"
+    android:background="@color/bg">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -36,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/standard_margin"
                     android:clickable="false"
-                    android:text="@{surah.name}"
+
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/txt_color_black"
                     android:fontFamily="sans-serif"
@@ -65,7 +57,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="@dimen/small_spacing"
                     android:clickable="false"
-                    android:text="@{surah.surahBasicInfo}"
+                    tools:text="@{surah.surahBasicInfo}"
                     android:textColor="@color/disabled_color"
                     android:textFontWeight="400"
                     android:fontFamily="sans-serif"
@@ -182,4 +174,3 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</layout>

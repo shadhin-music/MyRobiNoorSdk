@@ -3,16 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
 
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-        <variable
-            name="item"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
-    </data>
 
     <androidx.cardview.widget.CardView
         style="@style/CardViewStyle"
@@ -29,15 +20,13 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:background="@null"
-                android:fullImageUrl="@{item.contentBaseUrl+'/'+item.imageUrl}"
                 android:scaleType="fitXY"
                 android:src="@drawable/place_holder_2_3_ratio"
-                app:attachedProgressBar="@{progressBar}"
                 app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:placeHolderDimension="@{constant.PLACE_HOLDER_2_3}">
+               >
 
             </androidx.appcompat.widget.AppCompatImageView>
 

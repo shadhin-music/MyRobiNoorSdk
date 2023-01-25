@@ -7,7 +7,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +22,6 @@ import com.gakk.noorlibrary.callbacks.PagingViewCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentLiteratureCategoryListBinding
 import com.gakk.noorlibrary.ui.adapter.LiteratureCategoryAdapter
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
@@ -40,8 +40,10 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
 
     private lateinit var model: LiteratureViewModel
     private lateinit var repository: RestRepository
-
-    private lateinit var binding: FragmentLiteratureCategoryListBinding
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var rvLiteratureCategories: RecyclerView
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var btnRetry: AppCompatButton
 
     private var adapter: LiteratureCategoryAdapter? = null
 
@@ -63,16 +65,16 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
-        binding = DataBindingUtil.inflate(
-            inflater,
+        val view = inflater.inflate(
             R.layout.fragment_literature_category_list,
-            container,
-            false
+            container, false
         )
-
-        return binding.root
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvLiteratureCategories = view.findViewById(R.id.rvLiteratureCategories)
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
+        return view
     }
 
 
@@ -95,7 +97,7 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
 
                 when (it.status) {
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
 
                         when (pageNo) {
                             1 -> {
@@ -105,8 +107,8 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
                                     this@LiteratureCategoryListFragment,
                                     catId = mCatId!!
                                 )
-                                binding.rvLiteratureCategories.adapter = adapter
-                                binding.rvLiteratureCategories.layoutManager =
+                                rvLiteratureCategories.adapter = adapter
+                                rvLiteratureCategories.layoutManager =
                                     when (mCatId) {
                                         R.string.namaz_rules_cat_id.getLocalisedTextFromResId(), R.string.event_cateogry_id.getLocalisedTextFromResId() -> {
                                             LinearLayoutManager(context)
@@ -139,22 +141,20 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
                             }
 
                         }
-
-                        binding.progressLayout.root.visibility = GONE
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
+                       progressLayout.visibility = GONE
 
 
                     }
                     Status.LOADING -> {
-                        binding.noInternetLayout.root.visibility = GONE
+                       noInternetLayout.visibility = GONE
                         if (pageNo == 1) {
-                            binding.progressLayout.root.visibility = VISIBLE
+                            progressLayout.visibility = VISIBLE
                         }
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
-                        binding.noInternetLayout.root.visibility = VISIBLE
-
+                        progressLayout.visibility = GONE
+                        noInternetLayout.visibility = VISIBLE
                     }
                 }
             })
@@ -162,7 +162,7 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
             initPagingProperties()
             loadData()
 
-            binding.noInternetLayout.btnRetry.handleClickEvent {
+           btnRetry.handleClickEvent {
                 loadData()
             }
 

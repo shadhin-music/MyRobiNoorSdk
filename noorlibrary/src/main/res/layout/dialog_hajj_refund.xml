@@ -1,82 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="30dp">
 
-    <data>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgChecked"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_checked_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </data>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleThank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:fontFamily="sans-serif"
+        android:text="আবেদন গ্রহণ করা হয়েছে"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/txt_color_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgChecked" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDesRefund"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:fontFamily="sans-serif"
+        android:justificationMode="inter_word"
+        android:paddingBottom="@dimen/margin_10"
+        android:text="খুব শীঘ্রই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/ash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleThank" />
+
+    <RelativeLayout
+        android:id="@+id/rlBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgChecked"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_checked_primary"
-            android:layout_marginTop="@dimen/standard_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:background="@drawable/border_rounded_green"
+        android:gravity="center"
+        android:padding="@dimen/standard_margin"
+        app:layout_constraintTop_toBottomOf="@id/tvDesRefund">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitleThank"
+            android:id="@+id/textViewNormal5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/standard_margin"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/small_spacing"
+            android:clickable="false"
             android:fontFamily="sans-serif"
-            android:textStyle="bold"
-            android:text="আবেদন গ্রহণ করা হয়েছে"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/txt_color_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgChecked" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDesRefund"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:fontFamily="sans-serif"
-            android:justificationMode="inter_word"
-            android:paddingBottom="@dimen/margin_10"
-            android:text="খুব শীঘ্রই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/ash"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitleThank" />
-
-        <RelativeLayout
-            android:id="@+id/rlBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginTop="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:background="@drawable/border_rounded_green"
-            android:gravity="center"
-            android:padding="@dimen/standard_margin"
-            app:layout_constraintTop_toBottomOf="@id/tvDesRefund">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewNormal5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/small_spacing"
-                android:clickable="false"
-                android:text="ঠিক আছে"
-                android:fontFamily="sans-serif"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/colorPrimary" />
-        </RelativeLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+            android:text="ঠিক আছে"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimary" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

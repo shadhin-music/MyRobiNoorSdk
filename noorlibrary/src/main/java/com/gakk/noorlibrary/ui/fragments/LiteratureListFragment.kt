@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.ui.fragments
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +9,10 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,12 +20,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.*
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
-import com.gakk.noorlibrary.databinding.FragmentLiteratureListBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.activity.DetailsActivity
@@ -68,10 +78,6 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
     @Transient
     private var showHeaderImageMiladunnobi: Boolean? = false
 
-
-    @Transient
-    private lateinit var binding: FragmentLiteratureListBinding
-
     @Transient
     private var literatureListAdapter: LiteratureListAdapter? = null
 
@@ -89,6 +95,28 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
 
     @Transient
     private var clickedIndex = -1
+
+    @Transient
+    private lateinit var layoutNewCalculation: ConstraintLayout
+
+    @Transient
+    private lateinit var cardMiladunnanbi: CardView
+
+    @Transient
+    private lateinit var noInternetLayout: ConstraintLayout
+
+    @Transient
+    private lateinit var progressLayout: ConstraintLayout
+
+    @Transient
+    private lateinit var rvLiteratureList: RecyclerView
+
+    @Transient
+    private lateinit var btnRetry: AppCompatButton
+
+    @Transient
+    private lateinit var ivHeaderMiladunnanbi: AppCompatImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,15 +138,20 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
         savedInstanceState: Bundle?
     ): View? {
 
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_literature_list,
-                container,
-                false
-            )
+        val view = inflater.inflate(
+            R.layout.fragment_literature_list,
+            container, false
+        )
 
-        return binding.root
+        layoutNewCalculation = view.findViewById(R.id.layoutNewCalculation)
+        cardMiladunnanbi = view.findViewById(R.id.cardMiladunnanbi)
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        rvLiteratureList = view.findViewById(R.id.rvLiteratureList)
+        ivHeaderMiladunnanbi = view.findViewById(R.id.ivHeaderMiladunnanbi)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -134,14 +167,43 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
 
 
             if (showCalculateBtn == true) {
-                binding.layoutNewCalculation.visibility = VISIBLE
+                layoutNewCalculation.visibility = VISIBLE
             }
 
             if (showHeaderImageMiladunnobi == true) {
 
-                binding.item = ImageFromOnline("miladunnobi_header.png")
-                binding.cardMiladunnanbi.visibility = VISIBLE
-                binding.cardMiladunnanbi.handleClickEvent {
+                val item = ImageFromOnline("miladunnobi_header.png")
+
+                Noor.appContext?.let {
+                    Glide.with(it)
+                        .load(item.fullImageUrl)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                return false
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                return false
+                            }
+
+                        })
+                        .error(R.drawable.place_holder_16_9_ratio)
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .into(ivHeaderMiladunnanbi)
+                }
+                cardMiladunnanbi.visibility = VISIBLE
+                cardMiladunnanbi.handleClickEvent {
                     val fragment = FragmentProvider.getFragmentByName(
                         PAGE_BIOGRAPHY,
                         detailsActivityCallBack = mDetailsCallBack
@@ -150,7 +212,7 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
                 }
             }
 
-            binding.layoutNewCalculation.handleClickEvent {
+            layoutNewCalculation.handleClickEvent {
                 Intent(context, DetailsActivity::class.java).apply {
                     this.putExtra(PAGE_NAME, PAGE_JAKAT_NEW_CALCULATION)
                     startActivity(this)
@@ -169,9 +231,9 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
             model.literatureListData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.noInternetLayout.root.visibility = GONE
+                        noInternetLayout.visibility = GONE
                         if (pageNo == 1) {
-                            binding.progressLayout.root.visibility = VISIBLE
+                            progressLayout.visibility = VISIBLE
                         }
 
                     }
@@ -189,10 +251,10 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
                                     this@LiteratureListFragment
                                 )
 
-                                binding.rvLiteratureList.adapter = literatureListAdapter
+                                rvLiteratureList.adapter = literatureListAdapter
                                 when (mCatId) {
                                     R.string.animation_cat_id.getLocalisedTextFromResId(), R.string.wallpaper_cat_id.getLocalisedTextFromResId() -> {
-                                        binding.rvLiteratureList.layoutManager = GridLayoutManager(
+                                        rvLiteratureList.layoutManager = GridLayoutManager(
                                             context,
                                             2,
                                             RecyclerView.VERTICAL,
@@ -200,7 +262,7 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
                                         )
                                     }
                                     else -> {
-                                        binding.rvLiteratureList.layoutManager =
+                                        rvLiteratureList.layoutManager =
                                             LinearLayoutManager(context)
                                     }
                                 }
@@ -226,12 +288,12 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
                             }
                         }
 
-                        binding.progressLayout.root.visibility = GONE
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
+                        progressLayout.visibility = GONE
                     }
                     Status.ERROR -> {
-                        binding.noInternetLayout.root.visibility = VISIBLE
-                        binding.progressLayout.root.visibility = GONE
+                        noInternetLayout.visibility = VISIBLE
+                        progressLayout.visibility = GONE
                     }
                 }
             })
@@ -239,7 +301,7 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
             model.favOrUnFavData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = GONE
+                        progressLayout.visibility = GONE
                         when (it.data?.data) {
                             true -> {
                                 literatureListAdapter?.removeItemAtPosition(clickedIndex)
@@ -249,16 +311,15 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
                         }
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = GONE
-                        // mDetailsCallBack?.sh
+                        progressLayout.visibility = GONE
                     }
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = VISIBLE
+                        progressLayout.visibility = VISIBLE
                     }
                 }
             })
 
-            binding.noInternetLayout.btnRetry.handleClickEvent {
+            btnRetry.handleClickEvent {
                 loadData()
             }
 

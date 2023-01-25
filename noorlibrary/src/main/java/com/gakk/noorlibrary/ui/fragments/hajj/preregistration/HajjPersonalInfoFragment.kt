@@ -9,17 +9,21 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.FragmentHajjPersonalInfoBinding
 import com.gakk.noorlibrary.model.hajjpackage.PersonalInfoItem
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.PreregistrationViewModel
@@ -31,7 +35,6 @@ import java.util.*
 internal class HajjPersonalInfoFragment : Fragment() {
 
     private var mCallback: DetailsCallBack? = null
-    private lateinit var binding: FragmentHajjPersonalInfoBinding
     private var year: Int = 0
     private var date: Int = 0
     private var month: Int = 0
@@ -57,9 +60,9 @@ internal class HajjPersonalInfoFragment : Fragment() {
                 file = bitmap?.let { ImageHelper.getFileFromBitmap(it) }
 
                 if (certificateType == 0) {
-                    binding.tvUploadFileNid.setText(fileName)
+                    tvUploadFileNid.setText(fileName)
                 } else {
-                    binding.tvUploadFileBirthCer.setText(fileName)
+                    tvUploadFileBirthCer.setText(fileName)
                 }
 
             }
@@ -77,9 +80,9 @@ internal class HajjPersonalInfoFragment : Fragment() {
 
                 file = bitmap?.let { ImageHelper.getFileFromBitmap(it) }
                 if (certificateType == 0) {
-                    binding.tvUploadFileNid.setText(fileName)
+                    tvUploadFileNid.setText(fileName)
                 } else {
-                    binding.tvUploadFileBirthCer.setText(fileName)
+                    tvUploadFileBirthCer.setText(fileName)
                 }
             }
         }
@@ -90,6 +93,30 @@ internal class HajjPersonalInfoFragment : Fragment() {
     private lateinit var docNumber: String
     private lateinit var nameGuardian: String
     private lateinit var maritalStatus: String
+    private lateinit var tvUploadFileNid: AppCompatTextView
+    private lateinit var tvUploadFileBirthCer: AppCompatTextView
+    private lateinit var btnNext: AppCompatButton
+    private lateinit var etYourName: AppCompatEditText
+    private lateinit var tvDOB: AppCompatTextView
+    private lateinit var radionId: RadioButton
+    private lateinit var etNid: AppCompatEditText
+    private lateinit var radioBirthCertificate: RadioButton
+    private lateinit var etBirthCertificate: AppCompatEditText
+    private lateinit var radionIdMarried: RadioButton
+    private lateinit var etHusbandName: AppCompatEditText
+    private lateinit var radioUnMarried: RadioButton
+    private lateinit var etFatherName: AppCompatEditText
+    private lateinit var radioMale: RadioButton
+    private lateinit var radioFemale: RadioButton
+    private lateinit var layoutDOB: ConstraintLayout
+    private lateinit var imgUploadNid: ImageView
+    private lateinit var imgUploadBirthCer: ImageView
+    private lateinit var radioGroupNid: RadioGroup
+    private lateinit var clNid: ConstraintLayout
+    private lateinit var clBirthCertificate: ConstraintLayout
+    private lateinit var radioGroupMarried: RadioGroup
+    private lateinit var clHusbandName: ConstraintLayout
+    private lateinit var clFatherName: ConstraintLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,14 +130,37 @@ internal class HajjPersonalInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(
-            inflater,
+        val view = inflater.inflate(
             R.layout.fragment_hajj_personal_info,
-            container,
-            false
+            container, false
         )
 
-        return binding.root
+        tvUploadFileNid = view.findViewById(R.id.tvUploadFileNid)
+        tvUploadFileBirthCer = view.findViewById(R.id.tvUploadFileBirthCer)
+        btnNext = view.findViewById(R.id.btnNext)
+        etYourName = view.findViewById(R.id.etYourName)
+        tvDOB = view.findViewById(R.id.tvDOB)
+        radionId = view.findViewById(R.id.radionId)
+        etNid = view.findViewById(R.id.etNid)
+        radioBirthCertificate = view.findViewById(R.id.radioBirthCertificate)
+        etBirthCertificate = view.findViewById(R.id.etBirthCertificate)
+        radionIdMarried = view.findViewById(R.id.radionIdMarried)
+        etHusbandName = view.findViewById(R.id.etHusbandName)
+        radioUnMarried = view.findViewById(R.id.radioUnMarried)
+        etFatherName = view.findViewById(R.id.etFatherName)
+        radioMale = view.findViewById(R.id.radioMale)
+        radioFemale = view.findViewById(R.id.radioFemale)
+        layoutDOB = view.findViewById(R.id.layoutDOB)
+        imgUploadNid = view.findViewById(R.id.imgUploadNid)
+        imgUploadBirthCer = view.findViewById(R.id.imgUploadBirthCer)
+        radioGroupNid = view.findViewById(R.id.radio_group_nid)
+        clNid = view.findViewById(R.id.clNid)
+        clBirthCertificate = view.findViewById(R.id.clBirthCertificate)
+        radioGroupMarried = view.findViewById(R.id.radio_group_married)
+        clHusbandName = view.findViewById(R.id.clHusbandName)
+        clFatherName = view.findViewById(R.id.clFatherName)
+
+        return view
 
     }
 
@@ -119,31 +169,31 @@ internal class HajjPersonalInfoFragment : Fragment() {
 
 
         viewModel = ViewModelProvider(requireActivity())[PreregistrationViewModel::class.java]
-        binding.btnNext.handleClickEvent {
+        btnNext.handleClickEvent {
 
 
-            val name = binding.etYourName.text.toString()
-            val dob = binding.tvDOB.text.toString()
+            val name = etYourName.text.toString()
+            val dob = tvDOB.text.toString()
 
-            if (binding.radionId.isChecked) {
+            if (radionId.isChecked) {
                 docType = "NID"
-                docNumber = binding.etNid.text.toString()
-            } else if (binding.radioBirthCertificate.isChecked) {
+                docNumber = etNid.text.toString()
+            } else if (radioBirthCertificate.isChecked) {
                 docType = "BC"
-                docNumber = binding.etBirthCertificate.text.toString()
+                docNumber = etBirthCertificate.text.toString()
             }
 
-            if (binding.radionIdMarried.isChecked) {
-                nameGuardian = binding.etHusbandName.text.toString()
+            if (radionIdMarried.isChecked) {
+                nameGuardian = etHusbandName.text.toString()
                 maritalStatus = "Married"
-            } else if (binding.radioUnMarried.isChecked) {
-                nameGuardian = binding.etFatherName.text.toString()
+            } else if (radioUnMarried.isChecked) {
+                nameGuardian = etFatherName.text.toString()
                 maritalStatus = "UnMarried"
             }
 
-            if (binding.radioMale.isChecked) {
+            if (radioMale.isChecked) {
                 gender = "Male"
-            } else if (binding.radioFemale.isChecked) {
+            } else if (radioFemale.isChecked) {
                 gender = "Female"
             }
 
@@ -158,9 +208,9 @@ internal class HajjPersonalInfoFragment : Fragment() {
             }
 
             if (docNumber.isEmpty()) {
-                if (binding.radionId.isChecked) {
+                if (radionId.isChecked) {
                     mCallback?.showToastMessage(getString(R.string.txt_error_nid))
-                } else if (binding.radioBirthCertificate.isChecked) {
+                } else if (radioBirthCertificate.isChecked) {
                     mCallback?.showToastMessage(getString(R.string.txt_error_bc))
                 }
 
@@ -168,31 +218,31 @@ internal class HajjPersonalInfoFragment : Fragment() {
             }
 
 
-            if (binding.radionId.isChecked && (docNumber.length < 10 || docNumber.length > 16)) {
+            if (radionId.isChecked && (docNumber.length < 10 || docNumber.length > 16)) {
                 mCallback?.showToastMessage(getString(R.string.txt_error_valid_nid_number))
                 return@handleClickEvent
             }
 
-            if (binding.radioBirthCertificate.isChecked && (docNumber.length != 17)) {
+            if (radioBirthCertificate.isChecked && (docNumber.length != 17)) {
                 mCallback?.showToastMessage(getString(R.string.txt_error_valid_bc_number))
                 return@handleClickEvent
             }
 
-            if (binding.radionId.isChecked && file == null) {
+            if (radionId.isChecked && file == null) {
                 mCallback?.showToastMessage(getString(R.string.txt_error_file_nid))
                 return@handleClickEvent
             }
 
-            if (binding.radioBirthCertificate.isChecked && file == null) {
+            if (radioBirthCertificate.isChecked && file == null) {
                 mCallback?.showToastMessage(getString(R.string.txt_error_file_bc))
                 return@handleClickEvent
             }
 
             if (nameGuardian.isEmpty()) {
 
-                if (binding.radionIdMarried.isChecked) {
+                if (radionIdMarried.isChecked) {
                     mCallback?.showToastMessage("স্বামী/স্ত্রী এর নাম লিখুন")
-                } else if (binding.radioUnMarried.isChecked) {
+                } else if (radioUnMarried.isChecked) {
                     mCallback?.showToastMessage("পিতার নাম লিখুন")
                 }
                 return@handleClickEvent
@@ -210,11 +260,11 @@ internal class HajjPersonalInfoFragment : Fragment() {
 
         currentCalender()
 
-        binding.layoutDOB.handleClickEvent {
+        layoutDOB.handleClickEvent {
             datePickerDialogPopUp()
         }
 
-        binding.imgUploadNid.handleClickEvent {
+        imgUploadNid.handleClickEvent {
 
             certificateType = 0
 
@@ -225,7 +275,7 @@ internal class HajjPersonalInfoFragment : Fragment() {
             )
         }
 
-        binding.imgUploadBirthCer.handleClickEvent {
+        imgUploadBirthCer.handleClickEvent {
             certificateType = 1
             mCallback?.showDialogWithActionAndParam(
                 DialogType.ImagePickOptionDialog,
@@ -234,45 +284,34 @@ internal class HajjPersonalInfoFragment : Fragment() {
             )
         }
 
-        binding.radioGroupGender.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.radioMale -> {
-
-                }
-
-                else -> {
-
-                }
-            }
-        }
-        binding.radioGroupNid.setOnCheckedChangeListener { group, checkedId ->
+        radioGroupNid.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radionId -> {
 
-                    binding.clNid.visibility = View.VISIBLE
-                    binding.clBirthCertificate.visibility = View.GONE
+                    clNid.visibility = View.VISIBLE
+                    clBirthCertificate.visibility = View.GONE
                 }
 
                 else -> {
 
-                    binding.clNid.visibility = View.GONE
-                    binding.clBirthCertificate.visibility = View.VISIBLE
+                    clNid.visibility = View.GONE
+                    clBirthCertificate.visibility = View.VISIBLE
                 }
             }
         }
 
-        binding.radioGroupMarried.setOnCheckedChangeListener { group, checkedId ->
+        radioGroupMarried.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radionIdMarried -> {
 
-                    binding.clHusbandName.visibility = View.VISIBLE
-                    binding.clFatherName.visibility = View.GONE
+                    clHusbandName.visibility = View.VISIBLE
+                    clFatherName.visibility = View.GONE
                 }
 
                 else -> {
 
-                    binding.clHusbandName.visibility = View.GONE
-                    binding.clFatherName.visibility = View.VISIBLE
+                    clHusbandName.visibility = View.GONE
+                    clFatherName.visibility = View.VISIBLE
                 }
             }
         }
@@ -308,7 +347,7 @@ internal class HajjPersonalInfoFragment : Fragment() {
             val txt = "" + (month + 1) + "-" + date.toString() + "-" + year
             when (Util.checkSelectedDate(dateFormat.format(mCalendar.time))) {
                 true -> {
-                    binding.tvDOB.text = txt
+                    tvDOB.text = txt
                 }
                 false -> {
                     mCallback?.showToastMessage(getString(R.string.txt_error_correct_dob))
@@ -344,7 +383,6 @@ internal class HajjPersonalInfoFragment : Fragment() {
     private var performGalaryAction: () -> Unit = {
         selectImageFromGalleryResult.launch("image/*")
     }
-
 }
 
 

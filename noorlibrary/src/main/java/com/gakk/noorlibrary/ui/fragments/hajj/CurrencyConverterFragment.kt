@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.DialogCountryListBinding
 import com.gakk.noorlibrary.model.currency.CurrencyModel
 import com.gakk.noorlibrary.model.currency.CurrentCurrencyModel
 import com.gakk.noorlibrary.ui.adapter.CountryListAdapter
@@ -235,14 +235,12 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
     private fun showSelectedNameInDialog(dataList: List<CurrencyModel>, selection: SELECTION) {
         val customDialog =
             MaterialAlertDialogBuilder(requireActivity(), R.style.MaterialAlertDialog_rounded)
-        val dialogBinding: DialogCountryListBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(requireActivity()),
-            R.layout.dialog_country_list,
-            null,
-            false
-        )
 
-        dialogBinding.countryList.apply {
+        val dialogView: View = layoutInflater.inflate(R.layout.dialog_country_list, null)
+        val btnDismiss = dialogView.findViewById<ImageButton>(R.id.btnDismiss)
+        val countryList = dialogView.findViewById<RecyclerView>(R.id.countryList)
+
+        countryList.apply {
             adapter = CountryListAdapter(
                 if (selection == SELECTION.FROM) {
                     fromCountry
@@ -254,7 +252,7 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
             ).apply { submitList(dataList) }
         }
 
-        val dialogView: View = dialogBinding.root
+
         customDialog.setView(dialogView)
 
         alertDialog = customDialog.show()
@@ -267,7 +265,7 @@ internal class CurrencyConverterFragment : Fragment(), CountryListAdapter.OnItem
         alertDialog?.setCancelable(false)
         alertDialog?.show()
 
-        dialogBinding.btnDismiss.handleClickEvent {
+        btnDismiss.handleClickEvent {
             alertDialog?.dismiss()
         }
     }

@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.ItemLiveVideosBinding
 import com.gakk.noorlibrary.model.podcast.LiveVideosResponse
 import com.gakk.noorlibrary.ui.activity.DetailsActivity
 import com.gakk.noorlibrary.ui.activity.podcast.ItemClickListener

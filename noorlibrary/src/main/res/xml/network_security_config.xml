@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
+
+   <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">27.131.15.19</domain>
         <domain includeSubdomains="true">43.240.103.34</domain>
         <domain includeSubdomains="true">27.131.15.12</domain>
@@ -38,5 +39,12 @@
         <domain includeSubdomains="true">noorsawab.com</domain>
         <domain includeSubdomains="true">wdp.joycalls.com</domain>
 
+        <base-config >
+             <trust-anchors>
+                  <certificates src="system" />
+                  <certificates src="user" overridePins="true" />
+             </trust-anchors>
+        </base-config>
     </domain-config>
+
 </network-security-config>

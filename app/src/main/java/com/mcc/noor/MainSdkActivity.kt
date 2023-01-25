@@ -1,6 +1,8 @@
 package com.mcc.noor
 
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.util.handleClickEvent
@@ -17,7 +19,15 @@ class MainSdkActivity : AppCompatActivity() {
 
 
         binding.btnHome.handleClickEvent {
-            Noor.openNoor(this,"019838838")
+
+            val number = findViewById<EditText>(R.id.phone_number).text.trim().toString()
+            if(number.isNotEmpty()){
+                Noor.openNoor(this,number)
+            }else{
+                Toast.makeText(this,"Enter number",Toast.LENGTH_SHORT).show()
+            }
+
+
         }
 
     }

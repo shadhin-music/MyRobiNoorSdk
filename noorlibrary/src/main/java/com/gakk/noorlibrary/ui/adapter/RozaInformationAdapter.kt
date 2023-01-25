@@ -232,7 +232,7 @@ internal class RozaInformationAdapter(
 
                 holder.primaryHeaderBinding?.let {
 
-                    it.item = ImageFromOnline("bg_ramadan.png")
+               //     it.item = ImageFromOnline("bg_ramadan.png")
 
                     it.tvTitle.setText(R.string.today_sehri_iftar_robi)
 
@@ -568,7 +568,7 @@ internal class RozaInformationAdapter(
                         }
 
                         var literature = it.get(pos)
-                        binding.dua = literature
+                       // binding.dua = literature
 
 
                         holder.duaBinding?.btnToggleCollapse?.handleClickEvent {

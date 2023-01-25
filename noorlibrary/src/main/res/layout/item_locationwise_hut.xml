@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="model"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_spacing">
@@ -39,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="@{model.title}"
+
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/txt_color_black"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,11 +40,11 @@
                 tools:text="গাবতলী পশুর হাট" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_4"
                 android:fontFamily="sans-serif"
-                android:text="@{model.text}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:textColor="@color/ash"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,4 +62,3 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/ivHutIcon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

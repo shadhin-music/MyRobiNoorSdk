@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.FragmentBiographySliderBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.PLACE_HOLDER_1_1
 import com.gakk.noorlibrary.util.setImageFromUrl

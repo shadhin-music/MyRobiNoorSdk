@@ -1,101 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg"
+    android:clickable="true"
+    android:elevation="@dimen/small_spacing"
+    android:paddingLeft="@dimen/double_margin"
+    android:paddingTop="@dimen/margin_20"
+    android:paddingRight="@dimen/double_margin"
+    android:paddingBottom="@dimen/margin_20">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:clickable="true"
-        android:background="@color/bg"
-        android:paddingLeft="@dimen/double_margin"
-        android:paddingRight="@dimen/double_margin"
-        android:paddingTop="@dimen/margin_20"
-        android:paddingBottom="@dimen/margin_20"
-        android:elevation="@dimen/small_spacing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:id="@+id/layoutPrevActionContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutPrevActionContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/btnPrevContent"
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:scaleType="centerCrop"
-                android:background="@null"
-                android:clickable="false"
-                android:src="@drawable/selector_prev_content"
-                app:layout_constraintBottom_toBottomOf="@+id/tvPrevContent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvPrevContent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPrevContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_spacing"
-                android:text="@string/previous_content"
-                android:textColor="@color/colorPrimary"
-                android:textFontWeight="400"
-                android:clickable="false"
-                android:fontFamily="sans-serif"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnPrevContent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/appCompatImageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/btnPrevContent"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
             android:background="@null"
-            android:src="@drawable/ic_vertical_line"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="false"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_prev_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPrevContent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvPrevContent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrevContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_spacing"
+            android:clickable="false"
+            android:fontFamily="sans-serif"
+            android:text="@string/previous_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimary"
+            android:textFontWeight="400"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnPrevContent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/nextActionContent"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_vertical_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nextActionContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNextContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_spacing"
+            android:fontFamily="sans-serif"
+            android:text="@string/next_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimary"
+            android:textFontWeight="400"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnNextContent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btnNextContent"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_next_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvNextContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/small_spacing"
-                android:text="@string/next_content"
-                android:textColor="@color/colorPrimary"
-                android:textFontWeight="400"
-                android:fontFamily="sans-serif"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnNextContent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/btnNextContent"
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:scaleType="centerCrop"
-                android:background="@null"
-                android:src="@drawable/selector_next_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

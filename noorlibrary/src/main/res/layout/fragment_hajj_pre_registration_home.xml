@@ -1,107 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:clickable="true">
 
-        <variable
-            name="item"
-            type="com.gakk.noorlibrary.model.ImageFromOnline" />
-    </data>
+    <ImageView
+        android:id="@+id/hajjImage"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="@dimen/small_spacing" />
 
-    <RelativeLayout
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/hajjImage"
+        android:layout_alignBottom="@id/hajjImage"
+        android:layout_centerHorizontal="true" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPreReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hajjImage"
+        android:layout_marginStart="@dimen/double_margin"
+        android:layout_marginTop="@dimen/double_margin"
+        android:layout_marginEnd="@dimen/double_margin"
+        android:fontFamily="sans-serif"
+        android:text="@string/hajj_pre_registration"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/margin_20"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPreRegDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPreReg"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/small_spacing"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:fontFamily="sans-serif"
+        android:text="হজ্জ এর জন্য প্রথম ধাপ হল প্রাক-নিবন্ধন"
+        android:textAlignment="center" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnHajjPreReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPreRegDesc"
+        android:layout_marginStart="@dimen/double_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/double_margin"
+        android:background="@drawable/bg_call"
+        android:paddingTop="@dimen/small_spacing"
+        android:paddingBottom="@dimen/small_spacing"
+        android:text="@string/do_hajj_pre_reg"
+        android:textAlignment="center"
+        android:textColor="@color/white" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_others_cat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnHajjPreReg"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/standard_margin"
+        android:paddingTop="@dimen/small_spacing"
+        android:paddingEnd="@dimen/standard_margin"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <include
+        android:id="@+id/noInternetLayout"
+        layout="@layout/layout_no_internet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg"
-        android:clickable="true">
+        android:layout_below="@+id/hajjImage"
+        android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/hajjImage"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="@dimen/small_spacing"
-            android:imageUrl="@{item.fullImageUrl}"
-            app:attachedProgressBar="@{progressBar}" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/hajjImage"
-            android:layout_alignBottom="@id/hajjImage"
-            android:layout_centerHorizontal="true" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPreReg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/hajjImage"
-            android:layout_marginStart="@dimen/double_margin"
-            android:layout_marginTop="@dimen/double_margin"
-            android:layout_marginEnd="@dimen/double_margin"
-            android:fontFamily="sans-serif"
-            android:textStyle="bold"
-            android:text="@string/hajj_pre_registration"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/margin_20" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPreRegDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvPreReg"
-            android:layout_marginStart="@dimen/standard_margin"
-            android:layout_marginTop="@dimen/small_spacing"
-            android:layout_marginEnd="@dimen/standard_margin"
-            android:fontFamily="sans-serif"
-            android:text="হজ্জ এর জন্য প্রথম ধাপ হল প্রাক-নিবন্ধন"
-            android:textAlignment="center" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnHajjPreReg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvPreRegDesc"
-            android:layout_marginStart="@dimen/double_margin"
-            android:layout_marginTop="@dimen/standard_margin"
-            android:layout_marginEnd="@dimen/double_margin"
-            android:background="@drawable/bg_call"
-            android:text="@string/do_hajj_pre_reg"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:paddingTop="@dimen/small_spacing"
-            android:paddingBottom="@dimen/small_spacing"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_others_cat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnHajjPreReg"
-            android:clipToPadding="false"
-            android:paddingStart="@dimen/standard_margin"
-            android:paddingTop="@dimen/small_spacing"
-            android:paddingEnd="@dimen/standard_margin"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        <include
-            android:id="@+id/noInternetLayout"
-            layout="@layout/layout_no_internet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/hajjImage"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/progressLayout"
-            layout="@layout/layout_circular_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hajjImage"
-            android:layout_centerHorizontal="true"
-            android:visibility="gone" />
+    <include
+        android:id="@+id/progressLayout"
+        layout="@layout/layout_circular_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hajjImage"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
 
 
-    </RelativeLayout>
-
-</layout>
+</RelativeLayout>

@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="placeinfo"
-            type="com.gakk.noorlibrary.model.nearby.PlaceInfo" />
-    </data>
+<!--        <variable-->
+<!--            name="placeinfo"-->
+<!--            type="com.gakk.noorlibrary.model.nearby.PlaceInfo" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -46,7 +46,6 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="@dimen/margin_10"
                     android:maxLines="2"
-                    android:text="@{placeinfo.name}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/txt_color_black"
                     android:fontFamily="sans-serif"
@@ -60,7 +59,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="@{placeinfo.address}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/ash"
                     android:textFontWeight="400"
