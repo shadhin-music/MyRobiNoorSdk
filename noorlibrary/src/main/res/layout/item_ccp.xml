@@ -1,83 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="data"
-            type="com.gakk.noorlibrary.extralib.country_code_picker.CCPmodel" />
-
-    </data>
-
-
-    <LinearLayout
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
 
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+            <ImageView
+                android:id="@+id/ic_flag"
+                android:layout_width="@dimen/size_24"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/default_content_des"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_my_flag"
+                 />
 
-        <ImageView
-            android:id="@+id/ic_flag"
-            android:layout_width="@dimen/size_24"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:layout_gravity="center"
-            android:contentDescription="@string/default_content_des"
-            android:imageUrl="@{data.fullImageUrl}"
-            app:attachedProgressBar="@{progressBar}"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_my_flag" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="36dp"
-            android:layout_gravity="center"
-            android:layout_height="36dp"
-            android:visibility="gone"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
 
 
-    </FrameLayout>
+        </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="7">
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7">
 
-        <TextView
-            android:id="@+id/country_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{data.countryName}"
-            android:layout_gravity="left|center_vertical"
-            android:textColor="@color/black"
-            android:layout_marginStart="@dimen/small_spacing"
-            android:layout_marginTop="@dimen/standard_margin"
-            android:layout_marginBottom="@dimen/standard_margin"/>
-    </FrameLayout>
+            <TextView
+                android:id="@+id/country_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="@dimen/small_spacing"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginBottom="@dimen/standard_margin"
+                android:textColor="@color/black" />
+        </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
 
-        <TextView
-            android:id="@+id/country_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{data.dialCode}"
-            android:maxLines="1"
-            android:layout_gravity="right|center_vertical"
-            android:textColor="@color/black"
-            android:layout_marginTop="@dimen/standard_margin"
-            android:layout_marginBottom="@dimen/standard_margin"/>
-    </FrameLayout>
+            <TextView
+                android:id="@+id/country_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginBottom="@dimen/standard_margin"
+                android:maxLines="1"
+                android:textColor="@color/black" />
+        </FrameLayout>
 
-</LinearLayout>
-</layout>
+    </LinearLayout>

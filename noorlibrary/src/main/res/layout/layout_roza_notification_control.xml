@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-        <variable
-            name="isChecked"
-            type="Boolean" />
-    </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:background="@color/bg"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/bg">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvActionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard_margin"
+        android:clickable="false"
+        android:fontFamily="sans-serif"
         android:text="@string/sehri_alert"
-        android:textSize="@dimen/margin_14"
         android:textColor="@color/txt_color_black"
         android:textFontWeight="400"
-        android:fontFamily="sans-serif"
-        android:clickable="false"
+        android:textSize="@dimen/margin_14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,12 +24,11 @@
         android:id="@+id/checkboxActionIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="false"
         android:layout_marginTop="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/standard_margin"
         android:layout_marginBottom="@dimen/standard_margin"
         android:button="@drawable/selector_notification"
-        android:checked="@{isChecked}"
+        android:clickable="false"
         android:minWidth="0dp"
         android:minHeight="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,4 +36,3 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

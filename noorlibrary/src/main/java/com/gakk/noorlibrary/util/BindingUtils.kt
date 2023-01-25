@@ -8,7 +8,6 @@ import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatButton
-import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -17,15 +16,14 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
 import java.util.*
 
-@BindingAdapter("android:imageResId")
+
 fun setImageViewResource(imageView: ImageView, resource: Int) {
     imageView.setImageResource(resource)
 }
 
-@BindingAdapter("android:fullImageUrl", "app:attachedProgressBar", "app:placeHolderDimension")
+
 fun setImageFromUrl(
     imageView: ImageView,
     url: String? = null,
@@ -71,7 +69,6 @@ fun setImageFromUrl(
 }
 
 
-@BindingAdapter("android:squarefullImageUrl", "app:attachedProgressBar", "app:placeHolderDimension")
 fun setSqureImageFromUrl(
     imageView: ImageView,
     url: String? = null,
@@ -117,7 +114,7 @@ fun setSqureImageFromUrl(
     }
 }
 
-@BindingAdapter("android:imageUrl", "app:attachedProgressBar")
+
 fun setImageFromUrl(imageView: ImageView, url: String?, progressBar: ProgressBar) {
 
     if (!url.isNullOrEmpty()) {
@@ -157,7 +154,7 @@ fun setImageFromUrl(imageView: ImageView, url: String?, progressBar: ProgressBar
     }
 }
 
-@BindingAdapter("android:imageUrlNoProgress")
+
 fun setImageFromUrlNoProgress(imageView: ImageView, url: String?) {
 
     if (!url.isNullOrEmpty()) {
@@ -195,7 +192,6 @@ fun setImageFromUrlNoProgress(imageView: ImageView, url: String?) {
     }
 }
 
-@BindingAdapter("android:patchImageFullUrl")
 fun setPatchImageFromUrl(imageView: ImageView, url: String?) {
 
     if (!url.isNullOrEmpty()) {
@@ -243,7 +239,6 @@ private fun getPlaceHolder(dimen: String): Int {
 
 }
 
-@BindingAdapter("imageBackground")
 fun AppCompatButton.imageBackground(data: com.gakk.noorlibrary.model.hajjpackage.HajjPreRegistrationListResponse.Data?) {
     if (data != null) {
         this.setBackgroundResource(data.imageResource)

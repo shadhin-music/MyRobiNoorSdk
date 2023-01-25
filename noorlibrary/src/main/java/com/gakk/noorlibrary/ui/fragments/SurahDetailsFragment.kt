@@ -27,7 +27,6 @@ import com.gakk.noorlibrary.audioPlayer.AudioManager
 import com.gakk.noorlibrary.callbacks.*
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.LayoutSurahDetailsHeaderBinding
 import com.gakk.noorlibrary.model.quran.surahDetail.Data
 import com.gakk.noorlibrary.service.AudioPlayerService
 import com.gakk.noorlibrary.ui.adapter.SurahDetailsAdapter
