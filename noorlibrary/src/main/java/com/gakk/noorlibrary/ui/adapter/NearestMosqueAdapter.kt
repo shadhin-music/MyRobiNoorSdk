@@ -1,7 +1,9 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -31,19 +33,21 @@ internal class NearestMosqueAdapter(
         placeInfoList = list
     }
 
-    inner class MosqueViewHolder(itemView: RowItemNearestMosqueBinding) :
-        RecyclerView.ViewHolder(itemView.root) {
+    inner class MosqueViewHolder(itemView:View) :
+        RecyclerView.ViewHolder(itemView) {
 
-        var bindingMosqueHList: RowItemNearestMosqueBinding? = itemView
+        var view = itemView
 
         fun bind(placeInfo: PlaceInfo, onItemClick: MapItemClickListener) {
             if (categoryType == PAGE_NEAREST_MOSQUE) {
-                bindingMosqueHList?.imgMosque?.setImageResource(R.drawable.ic_mosque)
-            } else {
-                bindingMosqueHList?.imgMosque?.setImageResource(R.drawable.ic_restaurant)
+//                bindingMosqueHList?.imgMosque?.setImageResource(R.drawable.ic_mosque)
+               val  titleMosque:AppCompatTextView = itemView.findViewById(R.id.titleMosque)
+                titleMosque.text =placeInfo.name
+               val tvLocationMosque:AppCompatTextView = itemView.findViewById(R.id.tvLocationMosque)
+                tvLocationMosque.text = placeInfo.address
             }
 
-            bindingMosqueHList?.root?.handleClickEvent {
+           itemView.handleClickEvent {
                 onItemClick.let { click ->
                     click?.invoke(placeInfo)
                 }
@@ -54,23 +58,23 @@ internal class NearestMosqueAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MosqueViewHolder {
 
-        val binding: ViewDataBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.row_item_nearest_mosque,
             parent,
             false
         )
 
-        return MosqueViewHolder(binding as RowItemNearestMosqueBinding)
+        return MosqueViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MosqueViewHolder, position: Int) {
 
-        holder.bindingMosqueHList?.let { binding ->
+        holder.itemView?.let { binding ->
             placeInfoList?.let {
                 val placeInfo = it[position]
                 placeInfo.let { pi ->
-                    binding.placeinfo = pi
+                   // binding.placeinfo = pi
                     holder.bind(pi, onItemClick)
                 }
             }

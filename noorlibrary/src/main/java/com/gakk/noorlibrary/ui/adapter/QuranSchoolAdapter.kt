@@ -1,13 +1,17 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.LayoutQuranSchoolBinding
 import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.util.handleClickEvent
 
@@ -15,17 +19,21 @@ internal class QuranSchoolAdapter(
     private val listener: OnItemClickListener
 ) :
     ListAdapter<Data, RecyclerView.ViewHolder>(diffUtil) {
+    inner class ViewHolder(layoutView:View) :
+        RecyclerView.ViewHolder(layoutView) {
+        var view: View = layoutView
 
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolder: RecyclerView.ViewHolder
-        val binding: LayoutQuranSchoolBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.layout_quran_school,
             parent,
             false
         )
 
-        viewHolder = QuranSchoolOldViewHolder(binding)
+         val viewHolder = QuranSchoolOldViewHolder(binding)
 
         return viewHolder
     }
@@ -39,10 +47,10 @@ internal class QuranSchoolAdapter(
     }
 
 
-    inner class QuranSchoolOldViewHolder(private val binding: LayoutQuranSchoolBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class QuranSchoolOldViewHolder(private val binding: View) :
+        RecyclerView.ViewHolder(binding) {
         init {
-            binding.root.handleClickEvent {
+            binding.handleClickEvent {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     getItem(position)
@@ -52,7 +60,13 @@ internal class QuranSchoolAdapter(
         }
 
         fun bind(listLiterature: Data) {
-            binding.item = listLiterature
+           val  title :AppCompatTextView = itemView.findViewById(R.id.title)
+            title.text = listLiterature.contenTtitle
+            val scholars_img: ImageView = itemView.findViewById(R.id.scholars_img)
+            Glide.with(itemView.context).load(listLiterature.fullImageUrl.replace("<size>", "1280")).into(scholars_img)
+            val progressBar = itemView.findViewById<ProgressBar>(R.id.progressBar)
+            progressBar.visibility = View.GONE
+            //binding = listLiterature
         }
     }
 

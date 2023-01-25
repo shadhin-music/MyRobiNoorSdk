@@ -2,21 +2,22 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-        <variable
-            name="video"
-            type="com.gakk.noorlibrary.model.video.category.Data" />
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="video"-->
+<!--            type="com.gakk.noorlibrary.model.video.category.Data" />-->
 
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
+<!--        <variable-->
+<!--            name="constant"-->
+<!--            type="com.gakk.noorlibrary.util.ConstantsKt" />-->
 
-    </data>
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg"
+        android:id="@+id/constraint"
         android:padding="@dimen/margin_4">
 
         <androidx.cardview.widget.CardView
@@ -34,10 +35,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:fullImageUrl="@{video.fullImageUrl}"
+
                 android:scaleType="centerCrop"
-                app:attachedProgressBar="@{progressBar}"
-                app:placeHolderDimension="@{constant.PLACE_HOLDER_16_9}"
+
                 android:src="@drawable/place_holder_16_9_ratio" />
 
             <ImageView
@@ -60,7 +60,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_4"
-            android:text="@{video.contenTtitle}"
             android:textColor="@color/txt_color_black"
             android:textFontWeight="400"
             android:fontFamily="sans-serif"
@@ -74,7 +73,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_4"
-            android:text="@{video.miniSummary}"
             android:textColor="@color/disabled_color"
             android:textFontWeight="400"
             android:textSize="@dimen/margin_12"

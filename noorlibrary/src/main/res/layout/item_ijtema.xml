@@ -3,12 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
 
-        <variable
-            name="literature"
-            type="com.gakk.noorlibrary.model.literature.Literature" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,7 +51,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/standard_margin"
                     android:layout_marginEnd="@dimen/standard_margin"
-                    android:text="@{literature.title}"
                     android:textColor="@color/txt_color_black"
                     android:textFontWeight="400"
                     android:textSize="@dimen/margin_14"
