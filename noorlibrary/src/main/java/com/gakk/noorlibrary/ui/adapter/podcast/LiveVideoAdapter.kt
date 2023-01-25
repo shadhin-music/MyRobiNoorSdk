@@ -2,7 +2,11 @@ package com.gakk.noorlibrary.ui.adapter.podcast
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
@@ -18,26 +22,33 @@ internal class LiveVideoAdapter(
 ) :
     RecyclerView.Adapter<LiveVideoAdapter.ViewHolder>() {
 
-    inner class ViewHolder(binding: ItemLiveVideosBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        var itemLiveVideosBinding: ItemLiveVideosBinding? = binding
-
+    inner class ViewHolder(binding: View) :
+        RecyclerView.ViewHolder(binding) {
+        var view: View = binding
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemLiveVideosBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_live_videos,
-            parent,
-            false
-        )
-        return ViewHolder(binding)
+
+       val view = LayoutInflater.from(parent.context).inflate(R.layout.item_live_videos,parent,false)
+
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val listItem = videoList?.get(position)
-        holder.itemLiveVideosBinding?.item = listItem
+
+       val item = listItem
+
+        val scholars_img = holder.view.findViewById<ImageView>(R.id.scholars_img)
+        val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+        val title = holder.view.findViewById<AppCompatTextView>(R.id.title)
+        val description = holder.view.findViewById<AppCompatTextView>(R.id.description)
+
+        title.text = item?.title
+        description.text = item?.text
+
+        setImageFromUrl(scholars_img,item?.fullImageUrl,progressBar,PLACE_HOLDER_16_9)
 
         holder.itemView.handleClickEvent {
             if (Util.checkSub()) {

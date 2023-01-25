@@ -24,7 +24,7 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
         mDeleteOperation = deleteOperation
     }
 
-    inner class ViewHolder(layoutId: Int, layoutView: View,) :
+    inner class ViewHolder(layoutId: Int, layoutView: View) :
         RecyclerView.ViewHolder(layoutView) {
 
          var view: View = layoutView
