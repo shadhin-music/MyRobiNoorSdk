@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="category"
-            type="com.gakk.noorlibrary.model.subcategory.Data" />
-
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg"
@@ -44,14 +32,11 @@
                     android:layout_marginTop="@dimen/standard_margin"
                     android:layout_marginBottom="@dimen/standard_margin"
                     android:background="@null"
-                    android:fullImageUrl="@{category.fullImageUrl}"
                     android:scaleType="centerCrop"
                     android:src="@drawable/place_holder_1_1_ratio"
-                    app:attachedProgressBar="@{progressBar}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:placeHolderDimension="@{constant.PLACE_HOLDER_1_1}" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -70,7 +55,6 @@
                     android:layout_marginTop="@dimen/small_spacing"
                     android:layout_marginEnd="@dimen/standard_margin"
                     android:layout_marginBottom="@dimen/small_spacing"
-                    android:text="@{category.name}"
                     android:textColor="@color/txt_color_black"
                     android:textFontWeight="400"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -87,4 +71,3 @@
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

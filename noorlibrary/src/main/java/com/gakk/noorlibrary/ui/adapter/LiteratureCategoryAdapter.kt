@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
-import com.gakk.noorlibrary.databinding.LayoutCategoryLiteratureBinding
-import com.gakk.noorlibrary.databinding.LayoutCategoryNamazRulesCommonBinding
-import com.gakk.noorlibrary.databinding.LayoutCategoryNamazRulesMaleFemaleInstructionBinding
-import com.gakk.noorlibrary.databinding.LayoutFooterBinding
 import com.gakk.noorlibrary.model.subcategory.Data
 import com.gakk.noorlibrary.util.*
 
@@ -30,6 +29,7 @@ internal class LiteratureCategoryAdapter(
     val CATEGORY_DUA = 1
     val CATEGORY_NAMAZ_RULES_MALE_FEMALE_INSTRUCTION = 2
     val CATEGORY_NAMAZ_RULES_COMMON = 3
+    val CATEGORY_OTHER = 4
 
 
     val mCatId = catId
@@ -40,97 +40,103 @@ internal class LiteratureCategoryAdapter(
     val mViewControl = ViewHolderControl()
 
 
-    inner class LiteratureCategoryViewHolder : RecyclerView.ViewHolder {
+    inner class LiteratureCategoryViewHolder
+        (layoutId: Int, layoutView: View) : RecyclerView.ViewHolder(layoutView) {
 
-        var duaCategoryBining: LayoutCategoryLiteratureBinding? = null
+        val view:View = layoutView
+        val layoutTag = layoutId
 
-        constructor(binding: LayoutCategoryLiteratureBinding) : super(binding.root) {
-            duaCategoryBining = binding
-            duaCategoryBining?.root?.let {
-                it.resizeView(
-                    ViewDimension.HalfScreenWidth,
-                    mDetailsCallBack.getScreenWith(),
-                    it.context
-                )
+        init {
 
-                it.handleClickEvent {
-                    val category = mCategoryList.get(adapterPosition)
-                    val fragment = FragmentProvider.getFragmentByName(
-                        name = PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY,
-                        detailsActivityCallBack = mDetailsCallBack,
-                        catId = category.category,
-                        subCatId = category.id,
-                        isFav = false,
-                        /*pageTitle = category.name*/
-                    )
-                    //val fragment=literatureLIstFragmentProvider.getLiteratureListFragment(mLcId!!,"0",mDetailsCallBack)
-                    mDetailsCallBack.addFragmentToStackAndShow(fragment!!)
+            when(layoutId)
+            {
+                CATEGORY_DUA ->
+                {
+                    view.let {
+                        it.resizeView(
+                            ViewDimension.HalfScreenWidth,
+                            mDetailsCallBack.getScreenWith(),
+                            it.context
+                        )
+
+                        it.handleClickEvent {
+                            val category = mCategoryList.get(adapterPosition)
+                            val fragment = FragmentProvider.getFragmentByName(
+                                name = PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY,
+                                detailsActivityCallBack = mDetailsCallBack,
+                                catId = category.category,
+                                subCatId = category.id,
+                                isFav = false,
+                                /*pageTitle = category.name*/
+                            )
+                            //val fragment=literatureLIstFragmentProvider.getLiteratureListFragment(mLcId!!,"0",mDetailsCallBack)
+                            mDetailsCallBack.addFragmentToStackAndShow(fragment!!)
+                        }
+                    }
                 }
+
+                CATEGORY_NAMAZ_RULES_MALE_FEMALE_INSTRUCTION ->
+                {
+                    view?.let {
+
+                        val layoutVisualForMen = view.findViewById<CardView>(R.id.layoutVisualForMen)
+                        val layoutVisualForWomen = view.findViewById<CardView>(R.id.layoutVisualForWomen)
+                        val imgThumbnail = view.findViewById<ImageView>(R.id.imgThumbnail)
+                        val tvSubTitle = view.findViewById<AppCompatTextView>(R.id.tvSubTitle)
+
+
+                        if (mCatId.equals(R.string.namaz_rules_cat_id.getLocalisedTextFromResId())) {
+                            layoutVisualForMen.visibility = View.VISIBLE
+                            layoutVisualForWomen.visibility = View.VISIBLE
+                        }
+
+
+                        imgThumbnail.setImageResource(R.drawable.ic_women_praying)
+                        tvSubTitle.setText(R.string.for_women)
+
+                        layoutVisualForMen.handleClickEvent {
+                            val fragment = FragmentProvider.getFragmentByName(
+                                PAGE_NAMAZ_VISUAL, detailsActivityCallBack = mDetailsCallBack,
+                                catName = CAT_MEN
+                            )
+                            mDetailsCallBack?.addFragmentToStackAndShow(fragment!!)
+                        }
+
+                        layoutVisualForWomen.handleClickEvent {
+                            val fragment = FragmentProvider.getFragmentByName(
+                                PAGE_NAMAZ_VISUAL, detailsActivityCallBack = mDetailsCallBack,
+                                catName = CAT_WOMEN
+                            )
+                            mDetailsCallBack.addFragmentToStackAndShow(fragment!!)
+                        }
+                    }
+                }
+
+                CATEGORY_NAMAZ_RULES_COMMON ->
+                {
+                    view.let {
+
+                        it.handleClickEvent {
+                            val category = mCategoryList.get(adapterPosition - 1)
+                            val fragment = FragmentProvider.getFragmentByName(
+                                name = PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY,
+                                detailsActivityCallBack = mDetailsCallBack,
+                                catId = category.category,
+                                subCatId = category.id,
+                                isFav = false,
+                                /*pageTitle = category.name*/
+                            )
+                            //val fragment=literatureLIstFragmentProvider.getLiteratureListFragment(mLcId!!,"0",mDetailsCallBack)
+                            mDetailsCallBack.addFragmentToStackAndShow(fragment!!)
+                        }
+                    }
+                }
+
+
             }
         }
 
-        var categoryNamazRulesMaleFemaleInstructionBinding: LayoutCategoryNamazRulesMaleFemaleInstructionBinding? =
-            null
 
-        constructor(binding: LayoutCategoryNamazRulesMaleFemaleInstructionBinding) : super(binding.root) {
-            categoryNamazRulesMaleFemaleInstructionBinding = binding
-            categoryNamazRulesMaleFemaleInstructionBinding?.let {
-
-                if (mCatId.equals(R.string.namaz_rules_cat_id.getLocalisedTextFromResId())) {
-                    it.layoutVisualForMen.root.visibility = View.VISIBLE
-                    it.layoutVisualForWomen.root.visibility = View.VISIBLE
-                }
-
-
-                it.layoutVisualForWomen.imgThumbnail.setImageResource(R.drawable.ic_women_praying)
-                it.layoutVisualForWomen.tvSubTitle.setText(R.string.for_women)
-
-                it.layoutVisualForMen.root.handleClickEvent {
-                    val fragment = FragmentProvider.getFragmentByName(
-                        PAGE_NAMAZ_VISUAL, detailsActivityCallBack = mDetailsCallBack,
-                        catName = CAT_MEN
-                    )
-                    mDetailsCallBack?.addFragmentToStackAndShow(fragment!!)
-                }
-
-                it.layoutVisualForWomen.root.handleClickEvent {
-                    val fragment = FragmentProvider.getFragmentByName(
-                        PAGE_NAMAZ_VISUAL, detailsActivityCallBack = mDetailsCallBack,
-                        catName = CAT_WOMEN
-                    )
-                    mDetailsCallBack?.addFragmentToStackAndShow(fragment!!)
-                }
-            }
-        }
-
-        var categoryNamazRulesCommonBinding: LayoutCategoryNamazRulesCommonBinding? = null
-
-        constructor(binding: LayoutCategoryNamazRulesCommonBinding) : super(binding.root) {
-            categoryNamazRulesCommonBinding = binding
-            categoryNamazRulesCommonBinding?.root?.let {
-
-                it.handleClickEvent {
-                    val category = mCategoryList.get(adapterPosition - 1)
-                    val fragment = FragmentProvider.getFragmentByName(
-                        name = PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY,
-                        detailsActivityCallBack = mDetailsCallBack,
-                        catId = category.category,
-                        subCatId = category.id,
-                        isFav = false,
-                        /*pageTitle = category.name*/
-                    )
-                    //val fragment=literatureLIstFragmentProvider.getLiteratureListFragment(mLcId!!,"0",mDetailsCallBack)
-                    mDetailsCallBack.addFragmentToStackAndShow(fragment!!)
-                }
-            }
-        }
-
-
-        var footerBinding: LayoutFooterBinding? = null
-
-        constructor(binding: LayoutFooterBinding) : super(binding.root) {
-            footerBinding = binding
-        }
     }
 
     override fun onCreateViewHolder(
@@ -138,47 +144,37 @@ internal class LiteratureCategoryAdapter(
         viewType: Int
     ): LiteratureCategoryViewHolder {
 
+        lateinit var view:View
+
+
         when (viewType) {
             CATEGORY_DUA -> {
-                val binding: LayoutCategoryLiteratureBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_category_literature,
-                    parent,
-                    false
-                )
-                return LiteratureCategoryViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_category_literature,parent,false)
+
+                return LiteratureCategoryViewHolder(CATEGORY_DUA,view)
             }
 
             CATEGORY_NAMAZ_RULES_MALE_FEMALE_INSTRUCTION -> {
-                val binding: LayoutCategoryNamazRulesMaleFemaleInstructionBinding =
-                    DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.layout_category_namaz_rules_male_female_instruction,
-                        parent,
-                        false
-                    )
-                return LiteratureCategoryViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_category_namaz_rules_male_female_instruction,parent,false)
+
+                return LiteratureCategoryViewHolder(CATEGORY_NAMAZ_RULES_MALE_FEMALE_INSTRUCTION,view)
             }
 
             CATEGORY_NAMAZ_RULES_COMMON -> {
-                val binding: LayoutCategoryNamazRulesCommonBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_category_namaz_rules_common,
-                    parent,
-                    false
-                )
-                return LiteratureCategoryViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_category_namaz_rules_common,parent,false)
+
+                return LiteratureCategoryViewHolder(CATEGORY_NAMAZ_RULES_COMMON,view)
             }
 
 
             else -> {
-                val binding: LayoutFooterBinding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_footer,
-                    parent,
-                    false
-                )
-                return LiteratureCategoryViewHolder(binding)
+
+                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_footer,parent,false)
+
+                return LiteratureCategoryViewHolder(CATEGORY_OTHER,view)
             }
 
         }
@@ -187,26 +183,46 @@ internal class LiteratureCategoryAdapter(
 
     override fun onBindViewHolder(holder: LiteratureCategoryViewHolder, position: Int) {
 
+        when(holder.layoutTag) {
+            CATEGORY_NAMAZ_RULES_COMMON -> {
+                val category = mCategoryList[position - 1]
 
-        holder.categoryNamazRulesCommonBinding?.let {
-            it.category = mCategoryList.get(position - 1)
-        }
-        holder.duaCategoryBining?.let {
-            it.category = mCategoryList.get(position)
-        }
+                val imgContent = holder.view.findViewById<CircleImageView>(R.id.imgContent)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                val tvTitle = holder.view.findViewById<AppCompatTextView>(R.id.tvTitle)
+
+                setImageFromUrl(imgContent, category.fullImageUrl, progressBar, PLACE_HOLDER_1_1)
 
 
+            }
 
-        holder.footerBinding?.let {
-            Log.e("HIDE_FOOTER", " Footer pos $position")
-            when (mPagingViewCallBack.hasMoreData()) {
-                true -> mPagingViewCallBack.loadNextPage()
-                false -> {
-                    it.root.visibility = GONE
-                    it.root.layoutParams.height = 0
+            CATEGORY_DUA -> {
+
+                val category = mCategoryList.get(position)
+
+                val imgContent = holder.view.findViewById<CircleImageView>(R.id.imgContent)
+                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
+                val tvTitle = holder.view.findViewById<AppCompatTextView>(R.id.tvTitle)
+                val tvCount = holder.view.findViewById<AppCompatTextView>(R.id.tvCount)
+
+                setImageFromUrl(imgContent,category.fullImageUrl,progressBar,PLACE_HOLDER_1_1)
+                tvTitle.text = category.name
+                tvCount.text = category.duaCountFormatted
+            }
+
+            CATEGORY_OTHER ->
+            {
+                when (mPagingViewCallBack.hasMoreData()) {
+                    true -> mPagingViewCallBack.loadNextPage()
+                    false -> {
+                        holder.view.visibility = GONE
+                        holder.view.layoutParams.height = 0
+                    }
                 }
             }
         }
+
+
     }
 
     override fun getItemViewType(position: Int): Int {

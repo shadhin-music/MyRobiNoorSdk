@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-        <variable
-            name="category"
-            type="com.gakk.noorlibrary.model.subcategory.Data" />
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="@color/bg"
         android:padding="@dimen/margin_4"
         android:layout_width="match_parent"
@@ -37,9 +26,6 @@
                     android:layout_marginStart="@dimen/margin_12"
                     android:layout_marginTop="@dimen/margin_12"
                     android:scaleType="centerCrop"
-                    android:fullImageUrl="@{category.fullImageUrl}"
-                    app:attachedProgressBar="@{progressBar}"
-                    app:placeHolderDimension="@{constant.PLACE_HOLDER_1_1}"
                     android:src="@drawable/place_holder_1_1_ratio"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_spacing"
                     android:layout_marginEnd="@dimen/margin_12"
-                    android:text="@{category.name}"
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:textColor="@color/txt_color_black"
@@ -76,7 +61,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_12"
                     android:layout_marginBottom="@dimen/margin_12"
-                    android:text="@{category.duaCountFormatted}"
                     android:textColor="@color/disabled_color"
                     android:fontFamily="sans-serif"
                     android:textFontWeight="300"
@@ -90,5 +74,3 @@
 
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
