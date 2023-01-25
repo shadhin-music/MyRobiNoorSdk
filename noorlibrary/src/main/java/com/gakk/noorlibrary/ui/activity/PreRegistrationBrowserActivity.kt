@@ -4,25 +4,25 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.databinding.ActivitySubscriptionBrowserBinding
-import com.gakk.noorlibrary.databinding.DialogHajjRefundBinding
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HajjViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mcc.noor.ui.fragments.payment.PaymentResource
 import kotlinx.coroutines.launch
 
@@ -51,7 +51,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
         }
 
 
-        if(trackongNo == null || paymentTag == null) {
+        if (trackongNo == null || paymentTag == null) {
             finish()
             return
         }
@@ -81,7 +81,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 Log.e("onPageFinished", url)
                 if (url.contains("SSLPaySuccessCallBack")) {
                     trackongNo.let {
-                        viewModelHajj.updatePaymentStatus(it,paymentTag.toString())
+                        viewModelHajj.updatePaymentStatus(it, paymentTag.toString())
                     }
                 } else if (url.contains("SSLPayFailCallBack")) {
                     showPaymentStatusDialog(0)
@@ -109,10 +109,8 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
         viewModelHajj.paymentStatus.observe(this@PreRegistrationBrowserActivity) {
 
-            when(it)
-            {
-                is PaymentResource.Error ->
-                {
+            when (it) {
+                is PaymentResource.Error -> {
                     showPaymentStatusDialog(0)
                     binding.progressBar.visibility = View.GONE
                 }
@@ -123,8 +121,8 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
         }
     }
-    private fun paymentSuccess()
-    {
+
+    private fun paymentSuccess() {
         showPaymentStatusDialog(1)
 
         binding.progressBar.visibility = View.GONE
@@ -136,15 +134,17 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 this,
                 R.style.MaterialAlertDialog_rounded
             )
-        val bindingDialog: DialogHajjRefundBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
-            R.layout.dialog_hajj_refund,
-            null,
-            false
-        )
 
-        val dialogView: View = bindingDialog.root
+        val view = layoutInflater.inflate(R.layout.dialog_hajj_refund, null)
+
+        val dialogView: View = view
         customDialog.setView(dialogView)
+
+        val imgChecked = view.findViewById<AppCompatImageView>(R.id.imgChecked)
+        val tvTitleThank = view.findViewById<AppCompatTextView>(R.id.tvTitleThank)
+        val tvDesRefund = view.findViewById<AppCompatTextView>(R.id.tvDesRefund)
+        val textViewNormal5 = view.findViewById<AppCompatTextView>(R.id.textViewNormal5)
+        val rlBtn = view.findViewById<RelativeLayout>(R.id.rlBtn)
 
         val alertDialog = customDialog.show()
         alertDialog.window?.setLayout(
@@ -157,16 +157,16 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
         alertDialog.show()
 
         if (status == 0) {
-            bindingDialog.imgChecked.setImageResource(R.drawable.ic_failed)
-            bindingDialog.tvTitleThank.setText("দুঃখিত মুহতারাম!")
-            bindingDialog.tvDesRefund.setText("আপনার পেমেন্ট সফল হয়নি। অনুগ্রহ করে আবার চেষ্টা করুন অথবা আমাদের সাথে যোগাযোগ করুন।")
-            bindingDialog.textViewNormal5.setText("আবার চেষ্টা করুন")
+            imgChecked.setImageResource(R.drawable.ic_failed)
+            tvTitleThank.setText("দুঃখিত মুহতারাম!")
+            tvDesRefund.setText("আপনার পেমেন্ট সফল হয়নি। অনুগ্রহ করে আবার চেষ্টা করুন অথবা আমাদের সাথে যোগাযোগ করুন।")
+            textViewNormal5.setText("আবার চেষ্টা করুন")
         } else {
-            bindingDialog.tvTitleThank.setText("ধন্যবাদ মুহতারাম!")
-            bindingDialog.tvDesRefund.setText("আপনার পেমেন্ট সম্পন্ন হয়েছে। খুব শীঘ্রই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।")
+            tvTitleThank.setText("ধন্যবাদ মুহতারাম!")
+            tvDesRefund.setText("আপনার পেমেন্ট সম্পন্ন হয়েছে। খুব শীঘ্রই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।")
         }
 
-        bindingDialog.rlBtn.handleClickEvent {
+        rlBtn.handleClickEvent {
             alertDialog.dismiss()
             finish()
         }

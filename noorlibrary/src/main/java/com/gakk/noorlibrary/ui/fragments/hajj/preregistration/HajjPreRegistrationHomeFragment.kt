@@ -1,15 +1,25 @@
 package com.gakk.noorlibrary.ui.fragments.hajj.preregistration
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.rest.Status
@@ -33,6 +43,8 @@ internal class HajjPreRegistrationFragment : Fragment() {
     private lateinit var btnHajjPreReg: AppCompatButton
     private lateinit var progressLayout: ConstraintLayout
     private lateinit var rvOthersCat: RecyclerView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var hajjImage: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +66,8 @@ internal class HajjPreRegistrationFragment : Fragment() {
         btnHajjPreReg = view.findViewById(R.id.btnHajjPreReg)
         progressLayout = view.findViewById(R.id.progressLayout)
         rvOthersCat = view.findViewById(R.id.rv_others_cat)
+        progressBar = view.findViewById(R.id.progressBar)
+        hajjImage = view.findViewById(R.id.hajjImage)
 
         return view
     }
@@ -64,6 +78,37 @@ internal class HajjPreRegistrationFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[PreregistrationViewModel::class.java]
 
         val item = ImageFromOnline("ic_hajj_header_image.png")
+
+        Noor.appContext?.let {
+            Glide.with(it)
+                .load(item.fullImageUrl)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                })
+                .error(R.drawable.place_holder_16_9_ratio)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(hajjImage)
+        }
 
         lifecycleScope.launch {
             val job = launch {

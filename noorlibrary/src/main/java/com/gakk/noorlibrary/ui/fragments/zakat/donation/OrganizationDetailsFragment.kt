@@ -10,7 +10,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -21,7 +20,6 @@ import com.bumptech.glide.request.target.Target
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.databinding.FragmentOrganizationDetailsBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.FragmentProvider
 import com.gakk.noorlibrary.util.PAGE_DONATION
