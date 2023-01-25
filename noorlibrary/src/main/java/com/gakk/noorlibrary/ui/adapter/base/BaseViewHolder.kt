@@ -1,13 +1,13 @@
 package com.gakk.noorlibrary.ui.adapter.base
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 
 internal class BaseViewHolder<T> internal constructor(
-    private val binding: ViewBinding,
-    private val experssion: (T, Int, ViewBinding) -> Unit
-) : RecyclerView.ViewHolder(binding.root) {
+    private val view: View,
+    private val experssion: (T, Int, View) -> Unit
+) : RecyclerView.ViewHolder(view) {
     fun bind(item: T, position: Int) {
-        experssion(item, position, binding)
+        experssion(item, position, view)
     }
 }
