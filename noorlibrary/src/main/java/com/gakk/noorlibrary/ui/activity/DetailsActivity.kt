@@ -5,8 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.View.*
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
@@ -42,14 +45,14 @@ import java.util.*
 
 internal class DetailsActivity : BaseActivity(), DetailsCallBack {
 
-    private var binding: ActivityDetailsBinding? = null
+    //private var binding: ActivityDetailsBinding? = null
     private lateinit var mPage: String
     private var mFrament: Fragment? = null
     private lateinit var mFragmentStack: Stack<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_details)
+        setContentView(R.layout.activity_details)
 
         setStatusColor(R.color.bg)
         setStatusbarTextDark()
@@ -67,7 +70,7 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             )
 
             PAGE_LITERATURE_DETAILS -> {
-                binding?.toolBar?.title?.setText(getString(R.string.cat_hadith))
+                findViewById<TextView>(R.id.title)?.setText(getString(R.string.cat_hadith))
                 val index = intent.getIntExtra(SELECTED_INDEX, 0)
                 val literatureListWrapper =
                     intent.getSerializableExtra(LITERATURE_LIST_CALL_BACK) as LiteratureListWrapper
@@ -185,16 +188,16 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             addFragmentToStackAndShow(it)
         }
 
-        binding?.toolBar?.btnBack?.handleClickEvent {
+        findViewById<View>(R.id.btnBack)?.handleClickEvent {
             handleNavigationUpAction()
         }
 
-        binding?.toolBar?.btnCustomActionOne?.handleClickEvent {
+        findViewById<View>(R.id.btnCustomActionOne)?.handleClickEvent {
 
         }
 
-        binding?.toolBar?.btnCustomActionTwo?.handleClickEvent {
-            when (binding?.toolBar?.btnCustomActionTwo?.tag) {
+        findViewById<View>(R.id.btnCustomActionTwo)?.handleClickEvent {
+            when (findViewById<View>(R.id.btnCustomActionTwo)?.tag) {
                 MORE -> showDialogWithActionAndParam(dialogType = DialogType.SurahActionListDialog)
                 NOTFICATION -> showDialogWithActionAndParam(dialogType = DialogType.RozaNotificationSettingDialog)
             }
@@ -203,7 +206,7 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
     }
 
     override fun setToolBarTitle(title: String?) {
-        binding?.toolBar?.title?.setText(title)
+        findViewById<TextView>(R.id.title)?.setText(title)
     }
 
 
@@ -249,17 +252,17 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
     override fun setOrUpdateActionButtonTag(tag: String, buttonType: ActionButtonType) {
         when (buttonType) {
             ActionButtonType.TypeOne -> {
-                binding?.toolBar?.btnCustomActionOne?.tag = tag
-                binding?.toolBar?.btnCustomActionOne?.let { updateButtonIconBasedOnTag(it) }
+                findViewById<View>(R.id.btnCustomActionOne).tag = tag
+                findViewById<ImageButton>(R.id.btnCustomActionOne)?.let { updateButtonIconBasedOnTag(it) }
             }
             ActionButtonType.TypeTwo -> {
-                binding?.toolBar?.btnCustomActionTwo?.tag = tag
-                binding?.toolBar?.btnCustomActionTwo?.let { updateButtonIconBasedOnTag(it) }
+                findViewById<View>(R.id.btnCustomActionTwo)?.tag = tag
+                findViewById<ImageButton>(R.id.btnCustomActionTwo)?.let { updateButtonIconBasedOnTag(it) }
             }
 
             ActionButtonType.TypeThree -> {
-                binding?.toolBar?.btnCustomActionThree?.tag = tag
-                binding?.toolBar?.btnCustomActionThree?.let { updateButtonIconBasedOnTag(it) }
+                findViewById<View>(R.id.btnCustomActionThree)?.tag = tag
+                findViewById<ImageButton>(R.id.btnCustomActionThree)?.let { updateButtonIconBasedOnTag(it) }
             }
 
         }
@@ -268,9 +271,9 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
     override fun setActionOfActionButton(action: () -> Unit, actionButtonType: ActionButtonType) {
         when (actionButtonType) {
 
-            ActionButtonType.TypeOne -> binding?.toolBar?.btnCustomActionOne?.handleClickEvent { action() }
-            ActionButtonType.TypeTwo -> binding?.toolBar?.btnCustomActionTwo?.handleClickEvent { action() }
-            ActionButtonType.TypeThree -> binding?.toolBar?.btnCustomActionThree?.handleClickEvent { action() }
+            ActionButtonType.TypeOne -> findViewById<View>(R.id.btnCustomActionOne)?.handleClickEvent { action() }
+            ActionButtonType.TypeTwo -> findViewById<View>(R.id.btnCustomActionTwo)?.handleClickEvent { action() }
+            ActionButtonType.TypeThree -> findViewById<View>(R.id.btnCustomActionThree)?.handleClickEvent { action() }
 
         }
 
@@ -441,20 +444,20 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             ActionButtonType.TypeOne -> {
                 when (isVisible) {
                     true -> {
-                        binding?.toolBar?.btnCustomActionOne?.visibility = VISIBLE
+                        findViewById<View>(R.id.btnCustomActionOne)?.visibility = VISIBLE
                     }
                     false -> {
-                        binding?.toolBar?.btnCustomActionOne?.visibility = GONE
+                        findViewById<View>(R.id.btnCustomActionOne)?.visibility = GONE
                     }
                 }
             }
             ActionButtonType.TypeTwo -> {
                 when (isVisible) {
                     true -> {
-                        binding?.toolBar?.btnCustomActionTwo?.visibility = VISIBLE
+                        findViewById<View>(R.id.btnCustomActionTwo)?.visibility = VISIBLE
                     }
                     false -> {
-                        binding?.toolBar?.btnCustomActionTwo?.visibility = GONE
+                        findViewById<View>(R.id.btnCustomActionTwo)?.visibility = GONE
                     }
                 }
             }
@@ -462,15 +465,15 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             ActionButtonType.TypeThree -> {
                 when (isVisible) {
                     true -> {
-                        binding?.toolBar?.btnCustomActionThree?.visibility = VISIBLE
+                        findViewById<View>(R.id.btnCustomActionThree)?.visibility = VISIBLE
                     }
                     false -> {
-                        binding?.toolBar?.btnCustomActionThree?.visibility = GONE
+                        findViewById<View>(R.id.btnCustomActionThree)?.visibility = GONE
                     }
                 }
 
                 if (buttonRes != null) {
-                    binding?.toolBar?.btnCustomActionThree?.setImageResource(buttonRes)
+                    findViewById<ImageView>(R.id.btnCustomActionThree)?.setImageResource(buttonRes)
                 }
 
             }
@@ -478,14 +481,14 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             null -> {
                 when (isVisible) {
                     true -> {
-                        binding?.toolBar?.btnCustomActionOne?.visibility = VISIBLE
-                        binding?.toolBar?.btnCustomActionTwo?.visibility = VISIBLE
-                        binding?.toolBar?.btnCustomActionThree?.visibility = VISIBLE
+                        findViewById<View>(R.id.btnCustomActionOne)?.visibility = VISIBLE
+                        findViewById<View>(R.id.btnCustomActionTwo)?.visibility = VISIBLE
+                        findViewById<View>(R.id.btnCustomActionThree)?.visibility = VISIBLE
                     }
                     false -> {
-                        binding?.toolBar?.btnCustomActionOne?.visibility = GONE
-                        binding?.toolBar?.btnCustomActionTwo?.visibility = GONE
-                        binding?.toolBar?.btnCustomActionThree?.visibility = GONE
+                        findViewById<View>(R.id.btnCustomActionOne)?.visibility = GONE
+                        findViewById<View>(R.id.btnCustomActionTwo)?.visibility = GONE
+                        findViewById<View>(R.id.btnCustomActionThree)?.visibility = GONE
                     }
                 }
             }
