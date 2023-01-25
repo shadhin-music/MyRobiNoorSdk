@@ -191,6 +191,8 @@ internal class LiteratureCategoryAdapter(
                 val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
                 val tvTitle = holder.view.findViewById<AppCompatTextView>(R.id.tvTitle)
 
+                tvTitle.text = category.name
+
                 setImageFromUrl(imgContent, category.fullImageUrl, progressBar, PLACE_HOLDER_1_1)
 
 
