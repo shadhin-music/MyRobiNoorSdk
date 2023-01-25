@@ -5,13 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.FragmentMapBinding
 import com.gakk.noorlibrary.util.PAGE_AMBULANCE
 import com.gakk.noorlibrary.util.PAGE_NEAREST_MOSQUE
 import com.google.android.gms.maps.*
@@ -29,7 +27,6 @@ internal class MapFragment : Fragment(), OnMapReadyCallback {
     private var mMap: GoogleMap? = null
     private lateinit var mCallback: DetailsCallBack
     private var mDistanceControl: DistanceControl? = null
-    private lateinit var binding: FragmentMapBinding
     private var categoryType = PAGE_NEAREST_MOSQUE
     var markerList: Array<MarkerOptions>? = null
 
@@ -68,11 +65,12 @@ internal class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_map,
+            container, false
+        )
 
-
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
