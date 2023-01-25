@@ -5,20 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.LinearInterpolator
 import androidx.annotation.Keep
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
 import com.gakk.noorlibrary.databinding.*
-import com.gakk.noorlibrary.extralib.cardstackview.*
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.home.Data
 import com.gakk.noorlibrary.ui.activity.KafelaPlayerActivity
@@ -32,16 +29,13 @@ import com.gakk.noorlibrary.util.*
 @Keep
 class HomeFragmentAdapter(
     homeList: MutableList<Data>,
-    allahNameslist: List<com.gakk.noorlibrary.model.names.Data>,
     callback: MainCallback,
     billBoardCallback: BillboardItemControl,
     prayerTimeCalculator: PrayerTimeCalculator,
-    homeCellItemControl: HomeCellItemControl,
-    cardStackListener: CardStackListener
+    homeCellItemControl: HomeCellItemControl
 ) : RecyclerView.Adapter<HomeFragmentAdapter.HomeFragmentViewHolder>() {
 
     private val homeList: List<Data>
-    private val allahNameslist: List<com.gakk.noorlibrary.model.names.Data>
     private val mCallBack: MainCallback
     private val mBillBoardCallback: BillboardItemControl
     private val fragmentList = ArrayList<Fragment>()
@@ -50,23 +44,14 @@ class HomeFragmentAdapter(
     private val mPrayerTimeCalculator: PrayerTimeCalculator
     private val mHomeCellItemControl: HomeCellItemControl
     private var personalTrackerPos = -1
-    private val mstackListener: CardStackListener
-    private var allahNameLayoutPos = -1
-    private var latyoutAllahNameBinding: LayoutItemAllahNameBinding? = null
-    private var latyoutTasbihHomeBinding: LayoutItemTahbihHomeBinding? = null
-    var mcardStackLayoutManager: CardStackLayoutManager? = null
-    private lateinit var cardAdapter: CardStackAdapter
     var sound = true
-
 
     init {
         this.homeList = homeList.sortedBy { it.order }
-        this.allahNameslist = allahNameslist
         mCallBack = callback
         mBillBoardCallback = billBoardCallback
         mPrayerTimeCalculator = prayerTimeCalculator
         mHomeCellItemControl = homeCellItemControl
-        mstackListener = cardStackListener
     }
 
     inner class HomeFragmentViewHolder : RecyclerView.ViewHolder {
@@ -164,13 +149,6 @@ class HomeFragmentAdapter(
         }
 
 
-        var bindingScholarVideo: LayoutItemScholarVideoBinding? = null
-
-        constructor(itemView: LayoutItemScholarVideoBinding) : super(itemView.root) {
-            bindingScholarVideo = itemView
-        }
-
-
         var bindingIslamPiller: LayoutItemIslamPillerBinding? = null
 
         constructor(itemView: LayoutItemIslamPillerBinding) : super(itemView.root) {
@@ -181,43 +159,6 @@ class HomeFragmentAdapter(
 
         constructor(itemView: LayoutItemLearnQuranBinding) : super(itemView.root) {
             bindingLearnQuran = itemView
-        }
-
-        var bindingAllahNameBinding: LayoutItemAllahNameBinding? = null
-
-        constructor(itemView: LayoutItemAllahNameBinding) : super(itemView.root) {
-            bindingAllahNameBinding = itemView
-            mcardStackLayoutManager = CardStackLayoutManager(
-                bindingAllahNameBinding?.cardStackView?.context,
-                mstackListener
-            )
-            mcardStackLayoutManager?.setStackFrom(StackFrom.Top)
-            mcardStackLayoutManager?.setVisibleCount(3)
-            mcardStackLayoutManager?.setTranslationInterval(20.0f)
-            mcardStackLayoutManager?.setScaleInterval(0.95f)
-            mcardStackLayoutManager?.setSwipeThreshold(0.3f)
-            mcardStackLayoutManager?.setMaxDegree(70.0f)
-            mcardStackLayoutManager?.setDirections(Direction.FREEDOM)
-            mcardStackLayoutManager?.setCanScrollHorizontal(true)
-            mcardStackLayoutManager?.setCanScrollVertical(true)
-            mcardStackLayoutManager?.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
-            mcardStackLayoutManager?.setOverlayInterpolator(LinearInterpolator())
-            bindingAllahNameBinding?.cardStackView?.layoutManager = mcardStackLayoutManager
-            bindingAllahNameBinding?.cardStackView?.itemAnimator.apply {
-                if (this is DefaultItemAnimator) {
-                    supportsChangeAnimations = false
-                }
-            }
-
-
-        }
-
-        var bindingTasbihHome: LayoutItemTahbihHomeBinding? = null
-
-        constructor(itemView: LayoutItemTahbihHomeBinding) : super(itemView.root) {
-            bindingTasbihHome = itemView
-
-            bindingTasbihHome?.progressBarCircle?.progress = 0
         }
     }
 
@@ -230,14 +171,10 @@ class HomeFragmentAdapter(
         private const val CELL_ISLSMIC_INSPIRATION = 4
         private const val CELL_HAJJ = 5
         private const val CELL_ROMJAN_AMOL = 6
-        private const val CELL_SCHOLAR_VIDEO = 7
         private const val CELL_NAMAZ_VISUAL = 8
         private const val CELL_ISLAM_PILLER = 9
         private const val CELL_LEARN_QURAN = 10
         private const val CELL_NEAREST_MOSQUE = 11
-        private const val CELL_NAMES_ALLAH = 12
-        private const val CELL_TASBIH = 13
-        private const val CELL_NATIVE_AD = 14
         private const val CELL_EMPTY = -1
     }
 
@@ -374,7 +311,6 @@ class HomeFragmentAdapter(
             it.hajj = list.items?.get(0)
 
             holder.bindingHajj?.cardBanner!!.handleClickEvent {
-                //adViewModel.adClickCount()
                 list.about.let { it1 ->
                     it1?.let { it2 ->
                         if (it2.equals(PAGE_ISLAMIC_EVENT)) {
@@ -528,64 +464,6 @@ class HomeFragmentAdapter(
             it.rvIslamPiller.adapter =
                 IslamPillerAdapter(list.contentBaseUrl!!, list.items!!, mCallBack)
         }
-
-        holder.bindingAllahNameBinding?.let {
-            latyoutAllahNameBinding = it
-            allahNameLayoutPos = holder.adapterPosition
-            it.data = list
-            cardAdapter = CardStackAdapter(allahNameslist)
-            it.cardStackView.adapter = cardAdapter
-
-            holder.bindingAllahNameBinding?.ivPlay?.handleClickEvent {
-
-                mHomeCellItemControl.playPauseBtnClick()
-            }
-
-            holder.bindingAllahNameBinding?.ivReload?.handleClickEvent {
-
-                mHomeCellItemControl.reloadBtnClick()
-            }
-
-            holder.bindingAllahNameBinding?.ivSound?.handleClickEvent {
-                if (sound) {
-                    sound = false
-                    holder.bindingAllahNameBinding?.ivSound?.setImageResource(R.drawable.ic_volume_off)
-                    mHomeCellItemControl.soundonOffClick(true)
-                } else {
-                    sound = true
-                    holder.bindingAllahNameBinding?.ivSound?.setImageResource(R.drawable.ic_volume)
-                    mHomeCellItemControl.soundonOffClick(false)
-                }
-            }
-
-            holder.bindingAllahNameBinding?.rlLearnMore?.handleClickEvent {
-                mCallBack.openDetailsActivityWithPageName(
-                    PAGE_99_NAMES_ALLAH
-                )
-            }
-
-        }
-
-        holder.bindingTasbihHome?.let {
-
-            latyoutTasbihHomeBinding = it
-
-            it.tvTimes.text = "/" + it.tvTimes.context.getString(R.string.text_thirty_three)
-            it.tvCount.text = it.tvCount.context.getString(R.string.text_zero)
-
-            it.tasbihCountIV.handleClickEvent {
-                mHomeCellItemControl.tasbihButtonClick()
-            }
-
-            it.onOffSoundIV.handleClickEvent {
-                mHomeCellItemControl.tasbihSoundButtonClick()
-            }
-
-            it.resetAllBtn.handleClickEvent {
-                mHomeCellItemControl.tasbihResetButtonClick()
-            }
-        }
-
     }
 
 
@@ -613,9 +491,6 @@ class HomeFragmentAdapter(
                 PATCH_TYPE_ROMJAN_AMOL -> {
                     CELL_ROMJAN_AMOL
                 }
-                PATCH_TYPE_SCHOLAR_VIDEO -> {
-                    CELL_SCHOLAR_VIDEO
-                }
 
                 PATCH_TYPE_ISLAM_PILLER -> {
                     CELL_ISLAM_PILLER
@@ -626,13 +501,7 @@ class HomeFragmentAdapter(
                 PATCH_TYPE_NEAREST_MOSQUE -> {
                     CELL_NEAREST_MOSQUE
                 }
-                PATCH_TYPE_NAMES_ALLAH -> {
-                    CELL_NAMES_ALLAH
-                }
 
-                PATCH_TYPE_AD -> {
-                    CELL_NATIVE_AD
-                }
                 else -> {
                     CELL_EMPTY
                 }
@@ -737,16 +606,6 @@ class HomeFragmentAdapter(
                 return HomeFragmentViewHolder(binding as LayoutItemRomjanAmolBinding)
             }
 
-            CELL_SCHOLAR_VIDEO -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_item_scholar_video,
-                    parent,
-                    false
-                )
-                return HomeFragmentViewHolder(binding as LayoutItemScholarVideoBinding)
-            }
-
             CELL_NAMAZ_VISUAL -> {
                 binding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -777,70 +636,14 @@ class HomeFragmentAdapter(
                 return HomeFragmentViewHolder(binding as LayoutItemLearnQuranBinding)
             }
 
-            CELL_NAMES_ALLAH -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_item_allah_name,
-                    parent,
-                    false
-                )
-                return HomeFragmentViewHolder(binding as LayoutItemAllahNameBinding)
-            }
-
             else -> throw IllegalStateException("Illegal view type")
         }
 
     }
 
-    fun updateAllNameLayoutPlayPauseButton(isPlaying: Boolean) {
-        when (isPlaying) {
-            true -> {
-                latyoutAllahNameBinding?.ivPlay?.setImageResource(R.drawable.ic_pause_round)
-            }
-            false -> {
-                latyoutAllahNameBinding?.ivPlay?.setImageResource(R.drawable.ic_play_round)
-            }
-        }
-    }
-
-    fun updateTasbihCount(count: Int, userSelectCount: Int) {
-        latyoutTasbihHomeBinding?.tvCount?.setText(
-            TimeFormtter.getNumberByLocale(
-                TimeFormtter.getNumber(count)!!
-            )
-        )
-
-        latyoutTasbihHomeBinding?.progressBarCircle?.max = userSelectCount
-        latyoutTasbihHomeBinding?.progressBarCircle?.progress = count
-    }
-
-    fun resetTasbihItemCount() {
-        latyoutTasbihHomeBinding?.tvCount?.text =
-            latyoutTasbihHomeBinding?.tvCount?.context?.getString(R.string.text_zero)
-
-        latyoutTasbihHomeBinding?.progressBarCircle?.progress = 0
-    }
-
-    fun updateTasbihLayoutSoundButton(sound: Boolean) {
-        when (sound) {
-            true -> {
-                latyoutTasbihHomeBinding?.onOffSoundIV?.setImageResource(R.drawable.ic_btn_sound_off)
-            }
-            false -> {
-                latyoutTasbihHomeBinding?.onOffSoundIV?.setImageResource(R.drawable.ic_btn_sound)
-            }
-        }
-    }
-
     fun invalidatePersonalTracker() {
         if (personalTrackerPos != -1) {
             notifyItemChanged(personalTrackerPos)
-        }
-    }
-
-    fun invalidateNamesCell() {
-        if (allahNameLayoutPos != -1) {
-            notifyItemChanged(allahNameLayoutPos)
         }
     }
 }

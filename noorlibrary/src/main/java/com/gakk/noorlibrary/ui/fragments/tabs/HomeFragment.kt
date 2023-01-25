@@ -1,11 +1,11 @@
 package com.gakk.noorlibrary.ui.fragments.tabs
 
 import android.graphics.Bitmap
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,10 +16,7 @@ import com.gakk.noorlibrary.callbacks.MainCallback
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.DialogTasbihResetBinding
 import com.gakk.noorlibrary.databinding.FragmentHomeBinding
-import com.gakk.noorlibrary.extralib.cardstackview.CardStackListener
-import com.gakk.noorlibrary.extralib.cardstackview.Direction
 import com.gakk.noorlibrary.model.UpCommingPrayer
 import com.gakk.noorlibrary.model.billboard.Data
 import com.gakk.noorlibrary.model.tracker.SalahStatus
@@ -28,18 +25,13 @@ import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HomeViewModel
 import com.gakk.noorlibrary.viewModel.NinetyNineNamesOfAllahViewModel
 import com.gakk.noorlibrary.viewModel.TrackerViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.Serializable
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl,
-    CardStackListener {
+internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl{
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mCallback: MainCallback
@@ -57,20 +49,8 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     private lateinit var adapter: HomeFragmentAdapter
     var prayerDataList: List<com.gakk.noorlibrary.model.tracker.Data>? = null
     private lateinit var upCommingPrayer: UpCommingPrayer
-    private var mAllahNamesList: List<com.gakk.noorlibrary.model.names.Data> = mutableListOf()
-    private lateinit var playerControl: MediaPlayerControl
-    private var mSelectedIndex: Int = 0
-    private lateinit var mNameInfo: com.gakk.noorlibrary.model.names.Data
-    private var soundOff = false
-    private var localcount = 0
     private var totalCount = 0
-    private var userSelectCount = 33
-    private var sound: Boolean = true
-    private var mFlag1 = 0
-    private lateinit var mp: MediaPlayer
-    var selectedItem = "0"
     private lateinit var dua: Array<String>
-    private var duaIndex: Array<String> = arrayOf("0", "1", "2", "3", "4", "5", "6", "7")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +71,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-
         return binding.root
     }
 
@@ -102,9 +81,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         setPrayerWaqt()
 
         lifecycleScope.launch {
-
-            playerControl = MediaPlayerControl()
-            mp = MediaPlayer.create(context, R.raw.second)
 
             dua =
                 context?.resources?.getStringArray(R.array.tasbih_duas) as Array<String>
@@ -160,7 +136,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                     when (it.data?.status) {
                         200 -> {
                             biilboradList = it.data.data
-                            modelAllahNames.loadNamesOfAllah()
+                            model.getHomeData()
                         }
                         else -> {
                             binding.noDataLayout.root.visibility = View.VISIBLE
@@ -180,21 +156,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
             }
         }
 
-        modelAllahNames.nineNamesOfAllahData.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.LOADING -> {
-
-                }
-                Status.SUCCESS -> {
-                    mAllahNamesList = it.data?.data!!
-                    model.getHomeData()
-                }
-
-                Status.ERROR -> {
-
-                }
-            }
-        }
         model.homeResponse.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
@@ -213,11 +174,10 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
                             adapter = HomeFragmentAdapter(
                                 homeList,
-                                mAllahNamesList,
+
                                 mCallback,
                                 this@HomeFragment,
                                 prayerTimeCalculator,
-                                this@HomeFragment,
                                 this@HomeFragment
                             )
 
@@ -479,53 +439,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         }
     }
 
-    override fun playPauseBtnClick() {
-        playerControl.handlePlayPauseClick()
-    }
-
-    override fun reloadBtnClick() {
-        mSelectedIndex = 0
-        // adapter.reload()
-        adapter.invalidateNamesCell()
-    }
-
-    override fun soundonOffClick(off: Boolean) {
-        soundOff = off
-    }
-
-    override fun tasbihButtonClick() {
-        localcount++
-
-        if (localcount > userSelectCount) {
-            localcount = 0
-            Toast.makeText(context, getString(R.string.count_complete), Toast.LENGTH_LONG)
-                .show()
-        } else {
-            adapter.updateTasbihCount(localcount, userSelectCount)
-            AppPreference.saveTashbihCount(
-                AppPreference.loadTashbihCount(selectedItem) + 1,
-                selectedItem
-            )
-            if (totalCount >= 0) {
-                totalCount++
-            } else {
-                totalCount = 1
-            }
-        }
-        AppPreference.totalCount = totalCount
-        handleSoundTasbih()
-    }
-
-    override fun tasbihSoundButtonClick() {
-        soundButtonClickTasbih()
-    }
-
-    override fun tasbihResetButtonClick() {
-        showResetDialog()
-    }
-
-    override fun getTasbihCount() = localcount
-    override fun getTasbihTimes() = userSelectCount
     override fun shareBitMap(bitmap: Bitmap?) {
         val uri = bitmap?.saveToInternalStorage(requireContext())
 
@@ -535,39 +448,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     override fun shareImage(imageUrl: String) {
         lifecycleScope.launch {
             getBitmapFromUrlX(imageUrl, activity)
-        }
-    }
-
-    fun handleSoundTasbih() {
-        if (sound) {
-            if (mFlag1 != 0) {
-                try {
-                    if (mp.isPlaying()) {
-                        mp.stop()
-                        mp.release()
-                        mp = MediaPlayer.create(context, R.raw.second)
-                    }
-                    mp.start()
-                    if (sound) {
-                        mp.start()
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            } else {
-                mp.start()
-            }
-        }
-        mFlag1 = 1
-    }
-
-    fun soundButtonClickTasbih() {
-        if (sound) {
-            sound = false
-            adapter.updateTasbihLayoutSoundButton(true)
-        } else {
-            sound = true
-            adapter.updateTasbihLayoutSoundButton(false)
         }
     }
 
@@ -610,190 +490,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         return salahMap
     }
 
-    override fun onCardDragging(direction: Direction?, ratio: Float) {
-        Log.d("CardStackView", "onCardDragging: d = ${direction?.name}, r = $ratio")
-    }
-
-    override fun onCardSwiped(direction: Direction?) {
-        mSelectedIndex++
-        playerControl.pause()
-        //playerControl.killMediaPlayer()
-        loadData()
-    }
-
-    override fun onCardRewound() {
-        Log.d("CardStackView", "onCardRewound")
-    }
-
-    override fun onCardCanceled() {
-        Log.d("CardStackView", "onCardCanceled:")
-    }
-
-    override fun onCardAppeared(view: View?, position: Int) {
-        Log.d("CardStackView", "onCardAppeared: ($position)")
-    }
-
-    override fun onCardDisappeared(view: View?, position: Int) {
-        Log.d("CardStackView", "onCardDisappeared: ($position)")
-    }
-
-    fun loadData() {
-        lifecycleScope.launch {
-
-
-            if (mSelectedIndex == 99) {
-                mSelectedIndex = 0
-            }
-            if (playerControl == null) {
-                playerControl = MediaPlayerControl()
-            } else {
-                playerControl.killMediaPlayer()
-            }
-            launch {
-                delay(50)
-                playerControl.handlePlayPauseClick()
-            }
-        }
-    }
-
-    inner class MediaPlayerControl {
-        private var mPlayer: MediaPlayer? = null
-        private var isPlaying = false
-
-        init {
-            isPlaying = false
-        }
-
-        fun handlePlayPauseClick() {
-            when (isPlaying) {
-                true -> pause()
-                else -> play()
-            }
-        }
-
-        fun play() {
-
-            lifecycleScope.launch(Dispatchers.IO) {
-                mNameInfo = mAllahNamesList.get(mSelectedIndex)
-                isPlaying = true
-                mPlayer = MediaPlayer()
-                withContext(Dispatchers.Main) {
-                    adapter.updateAllNameLayoutPlayPauseButton(true)
-                    mPlayer?.setOnCompletionListener {
-
-                        adapter.updateAllNameLayoutPlayPauseButton(false)
-                        isPlaying = false
-                    }
-
-                    mPlayer?.setDataSource(mNameInfo.contentBaseUrl + "/" + mNameInfo.contentUrl)
-                    mPlayer?.prepare()
-                    mPlayer?.start()
-
-
-                    when (soundOff) {
-                        true -> {
-                            mPlayer?.setVolume(0F, 0F)
-                        }
-
-                        false -> {
-                            mPlayer?.setVolume(1F, 1F)
-                        }
-                    }
-                }
-
-
-            }
-
-
-        }
-
-        fun pause() {
-
-            lifecycleScope.launch(Dispatchers.IO) {
-                isPlaying = false
-                withContext(Dispatchers.Main) {
-                    adapter.updateAllNameLayoutPlayPauseButton(false)
-                }
-                mPlayer?.stop()
-            }
-
-        }
-
-        fun killMediaPlayer() {
-            try {
-                mPlayer?.reset()
-                mPlayer?.release()
-                mPlayer = null
-                isPlaying = false
-            } catch (e: Exception) {
-
-            }
-        }
-    }
-
-    fun showResetDialog() {
-        val customDialog =
-            MaterialAlertDialogBuilder(
-                requireActivity(),
-                R.style.MaterialAlertDialog_rounded
-            )
-        val binding: DialogTasbihResetBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(requireActivity()),
-            R.layout.dialog_tasbih_reset,
-            null,
-            false
-        )
-
-
-        val dialogView: View = binding.root
-        customDialog.setView(dialogView)
-
-        val alertDialog = customDialog.show()
-        alertDialog.window?.setLayout(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-
-        alertDialog.window?.setGravity(Gravity.CENTER)
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-
-        binding.imgClose.handleClickEvent {
-            alertDialog.dismiss()
-        }
-
-        binding.btnTotalCount.handleClickEvent {
-            resetTotalCount()
-            alertDialog.dismiss()
-        }
-
-        binding.btnCurrentCount.handleClickEvent {
-            resetCurrentCount()
-            alertDialog.dismiss()
-        }
-    }
-
-
-    fun resetTotalCount() {
-        AppPreference.cleartotalCount()
-        clearHistory(duaIndex)
-        adapter.resetTasbihItemCount()
-        localcount = 0
-        totalCount = 0
-    }
-
-    fun resetCurrentCount() {
-        localcount = 0
-        adapter.resetTasbihItemCount()
-    }
-
-    private fun clearHistory(ars: Array<String>) {
-        for (ar in ars) {
-            AppPreference.clearHistoryCount(ar)
-        }
-
-    }
-
     override fun onResume() {
         super.onResume()
         totalCount = AppPreference.totalCount
@@ -808,14 +504,6 @@ interface BillboardItemControl : Serializable {
 interface HomeCellItemControl : Serializable {
     fun btnClick()
     fun switchClick(isChecked: Boolean, switchName: String)
-    fun playPauseBtnClick()
-    fun reloadBtnClick()
-    fun soundonOffClick(off: Boolean)
-    fun tasbihButtonClick()
-    fun tasbihSoundButtonClick()
-    fun tasbihResetButtonClick()
-    fun getTasbihCount(): Int
-    fun getTasbihTimes(): Int
     fun shareBitMap(bitmap: Bitmap?)
     fun shareImage(imageUrl: String)
 }
