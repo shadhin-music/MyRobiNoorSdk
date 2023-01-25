@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -30,7 +31,7 @@ internal class SubscriptionFragment : Fragment() {
 
     private lateinit var progressLayout:ProgressBar
     private lateinit var ivShapeSubWeekly:ImageView
-    private lateinit var btnSubscribeWeekly:TextView
+    //private lateinit var btnSubscribeWeekly:TextView
     private lateinit var tvAmount:TextView
 
     private lateinit var tvFifteenService:TextView
@@ -50,7 +51,8 @@ internal class SubscriptionFragment : Fragment() {
     private lateinit var ivShapeSubMonthly:ImageView
     private lateinit var btnSubscribeMonthly:TextView
     private lateinit var btnSubscribeFifteen:TextView
-    private lateinit var btnSubscribeDaily:View
+    private lateinit var btnSubscribeDaily: AppCompatButton
+    private lateinit var btnSubscribeWeekly: AppCompatButton
     private lateinit var ivBg:ImageView
 
     private var mCallback: DetailsCallBack? = null
@@ -58,6 +60,7 @@ internal class SubscriptionFragment : Fragment() {
     private lateinit var model: SubscriptionViewModel
     private lateinit var subscriptionId: String
     private var isCelcom: Boolean? = null
+
 
     companion object {
 
@@ -125,7 +128,7 @@ internal class SubscriptionFragment : Fragment() {
                         when (it.data?.regStatus) {
                             "1AK" -> {
                                 AppPreference.subWeekly = true
-                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeDaily.visibility = View.GONE
                                 btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
                                 btnSubscribeWeekly.setTextColor(Color.WHITE)
                                 tvAmount.setTextColor(
@@ -167,11 +170,12 @@ internal class SubscriptionFragment : Fragment() {
                     }
                     Status.SUCCESS -> {
                         progressLayout.visibility = View.GONE
-                        Log.e("Sub", "Weekly" + it.data)
+
                         when (it.data) {
                             "1AK" -> {
+                                Log.e("Sub", "Weekly" + it.data)
                                 AppPreference.subWeekly = true
-                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_shape_sub_disable)
                                 btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
                                 btnSubscribeWeekly.setTextColor(Color.WHITE)
                                 tvAmount.setTextColor(
@@ -633,7 +637,7 @@ internal class SubscriptionFragment : Fragment() {
         */
         progressLayout = view.findViewById(R.id.progressLayout)
         ivShapeSubWeekly    = view.findViewById(R.id.ivShapeSubWeekly)
-        btnSubscribeWeekly  = view.findViewById(R.id.btnSubscribeWeekly)
+       // btnSubscribeWeekly  = view.findViewById(R.id.btnSubscribeWeekly)
         tvAmount    = view.findViewById(R.id.tvAmount)
         tvFifteenService    = view.findViewById(R.id.tvFifteenService)
         tvAmountFifteen = view.findViewById(R.id.tvAmountFifteen)
@@ -653,6 +657,7 @@ internal class SubscriptionFragment : Fragment() {
         btnSubscribeMonthly = view.findViewById(R.id.btnSubscribeMonthly)
         btnSubscribeFifteen   = view.findViewById(R.id.btnSubscribeFifteen)
         btnSubscribeDaily   = view.findViewById(R.id.btnSubscribeDaily)
+        btnSubscribeWeekly = view.findViewById(R.id.btnSubscribeWeekly)
         ivBg   = view.findViewById(R.id.ivBg)
 
 
