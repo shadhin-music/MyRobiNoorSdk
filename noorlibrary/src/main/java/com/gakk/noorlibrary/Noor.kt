@@ -14,10 +14,7 @@ import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.VIDEO_PLAYER_NOTIFICATION_CHANNEL_DESC
 import com.gakk.noorlibrary.util.VIDEO_PLAYER_NOTIFICATION_CHANNEL_ID
 import com.gakk.noorlibrary.util.VIDEO_PLAYER_NOTIFICATION_CHANNEL_NAME
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @Keep
 object Noor {
@@ -35,12 +32,15 @@ object Noor {
         createNotificationChannel()
         scope.launch {
             val token = RepositoryProvider.getRepository().login(msisdn)
-            if(token!=null){
-                val intent = Intent(context, MainActivity::class.java)
-                context.startActivity(intent)
-            }else{
-                Toast.makeText(context,"Authentication Error", Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                if (token != null) {
+                    val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+                }
             }
+
         }
     }
 
