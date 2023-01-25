@@ -4,19 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.FragmentLiteratureHomeBinding
 import com.gakk.noorlibrary.model.zakat.ZakatDataModel
 import com.gakk.noorlibrary.ui.adapter.LiteratureListFragmentPagerAdapter
 import com.gakk.noorlibrary.ui.adapter.ZakatListAdapter
 import com.gakk.noorlibrary.util.LiteratureType
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
-import com.gakk.noorlibrary.util.setApplicationLanguage
+import com.gakk.noorlibrary.views.CustomTabLayout
 
 
 private const val ARG_LITERATURE_TYPE = "literatureType"
@@ -24,8 +21,9 @@ private const val ARG_LITERATURE_TYPE = "literatureType"
 internal class LiteratureHomeFragment : Fragment() {
     private var mDetailsCallBack: DetailsCallBack? = null
     private var mLiteratureType: LiteratureType? = null
+    private lateinit var pager: ViewPager
+    private lateinit var tabLayout: CustomTabLayout
 
-    private lateinit var binding: FragmentLiteratureHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +37,15 @@ internal class LiteratureHomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_literature_home, container, false)
+        val view = inflater.inflate(
+            R.layout.fragment_literature_home,
+            container, false
+        )
 
-        return binding.root
+        pager = view.findViewById(R.id.pager)
+        tabLayout = view.findViewById(R.id.tab_layout)
+        return view
 
     }
 
@@ -82,15 +83,15 @@ internal class LiteratureHomeFragment : Fragment() {
         }
 
 
-        binding.pager.adapter = LiteratureListFragmentPagerAdapter(
+        pager.adapter = LiteratureListFragmentPagerAdapter(
             fragmentManager = childFragmentManager,
             pageTitles = mPageTitles,
             detailsCallBack = mDetailsCallBack,
             catId = catId,
             literatureType = mLiteratureType!!
         )
-        binding.tabLayout.setupWithViewPager(binding.pager)
-        ZakatCalculationObserver.attatchViewPager(binding.pager)
+        tabLayout.setupWithViewPager(pager)
+        ZakatCalculationObserver.attatchViewPager(pager)
 
 
         updateToolbarForThisFragment()

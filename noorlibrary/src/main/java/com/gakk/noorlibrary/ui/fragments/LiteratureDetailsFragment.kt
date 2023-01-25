@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +7,9 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageButton
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,9 +19,7 @@ import com.gakk.noorlibrary.callbacks.*
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
-import com.gakk.noorlibrary.databinding.FragmentLiteratureDetailsBinding
 import com.gakk.noorlibrary.model.literature.Literature
-import com.gakk.noorlibrary.util.DownloadProgressControl
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
 import com.gakk.noorlibrary.util.handleClickEvent
@@ -33,7 +32,8 @@ private const val ARG_CURRENT_PAGE_NO = "currentPageNo"
 private const val ARG_IS_FAV_LIST = "isFavList"
 
 
-internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallBack, ToolbarControlCallBack {
+internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallBack,
+    ToolbarControlCallBack {
 
     private var mDetailsCallback: DetailsCallBack? = null
     private var literatureListWrapper: LiteratureListWrapper? = null
@@ -47,6 +47,19 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
     private lateinit var repository: RestRepository
     private var mFavButtonClicked = false
     var literature: Literature? = null
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var layoutTextContainer: ConstraintLayout
+    private lateinit var tvDesArabic: AppCompatTextView
+    private lateinit var tvMeaning: AppCompatTextView
+    private lateinit var prevNextPanel: ConstraintLayout
+    private lateinit var btnPrevContent: ImageButton
+    private lateinit var tvPrevContent: AppCompatTextView
+    private lateinit var btnNextContent: ImageButton
+    private lateinit var tvNextContent: AppCompatTextView
+    private lateinit var layoutPrevActionContent: ConstraintLayout
+    private lateinit var nextActionContent: ConstraintLayout
+    private lateinit var tvTitle: AppCompatTextView
+    private lateinit var tvDes: AppCompatTextView
 
 
     private var favOrUnFavAction: () -> Unit = {
@@ -59,10 +72,6 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
         )
     }
 
-
-    private lateinit var binding: FragmentLiteratureDetailsBinding
-
-    private var downloadStatusContol = DownloadStatusControl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,14 +92,25 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(
-            inflater,
+        val view = inflater.inflate(
             R.layout.fragment_literature_details,
-            container,
-            false
+            container, false
         )
+        progressLayout = view.findViewById(R.id.progressLayout)
+        layoutTextContainer = view.findViewById(R.id.layoutTextContainer)
+        tvDesArabic = view.findViewById(R.id.tvDesArabic)
+        tvMeaning = view.findViewById(R.id.tvMeaning)
+        prevNextPanel = view.findViewById(R.id.prevNextPanel)
+        tvTitle = view.findViewById(R.id.tvTitle)
+        tvDes = view.findViewById(R.id.tvDes)
+        btnPrevContent = prevNextPanel.findViewById(R.id.btnPrevContent)
+        tvPrevContent = prevNextPanel.findViewById(R.id.tvPrevContent)
+        btnNextContent = prevNextPanel.findViewById(R.id.btnNextContent)
+        tvNextContent = prevNextPanel.findViewById(R.id.tvNextContent)
+        layoutPrevActionContent = prevNextPanel.findViewById(R.id.layoutPrevActionContent)
+        nextActionContent = prevNextPanel.findViewById(R.id.nextActionContent)
 
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,12 +134,12 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
             model.literatureListData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
 
                     }
                     Status.SUCCESS -> {
 
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         when (it.data?.data) {
                             null -> {
                                 mHasMoreData = false
@@ -136,14 +156,14 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
                     }
                     Status.ERROR -> {
                         mDetailsCallback?.showToastMessage(resources.getString(R.string.error_message))
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                     }
                 }
             })
             model.favOrUnFavData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
                         Log.e("favOrUnFavData", "LOADING")
                     }
                     Status.SUCCESS -> {
@@ -153,7 +173,7 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
                                 Log.e("favOrUnFavData", "SUCCESS")
                             }
                             else -> {
-                                binding.progressLayout.root.visibility = View.GONE
+                                progressLayout.visibility = View.GONE
                                 mDetailsCallback?.showToastMessage(getString(R.string.api_error_msg))
                             }
                         }
@@ -161,7 +181,7 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
                     }
                     Status.ERROR -> {
                         mDetailsCallback?.showToastMessage(resources.getString(R.string.error_message))
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         Log.e("favOrUnFavData", "ERROR")
                     }
                 }
@@ -169,11 +189,11 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
             model.isFavData.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
 
                     }
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         mIsSelectedLiteratureFav = it.data?.data
 
                         if (mFavButtonClicked) {
@@ -200,7 +220,7 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
                     }
                     Status.ERROR -> {
                         mDetailsCallback?.showToastMessage(resources.getString(R.string.error_message))
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                     }
                 }
             }
@@ -230,9 +250,7 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
         setUpPrevNextControlState()
         loadFavStatus()
         updateToolbarForThisFragment()
-        hideAllContentContainers()
-        setVisibilityOfContainers()
-        updateDownloadStatusForDownloadables()
+
     }
 
     override fun loadFavStatus() {
@@ -258,52 +276,28 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
         mDetailsCallback?.setActionOfActionButton(favOrUnFavAction, ActionButtonType.TypeOne)
     }
 
-    fun hideAllContentContainers() {
-        binding.layoutTextContainer.visibility = GONE
-        binding.layoutDownloadableContainer.visibility = GONE
-    }
-
-    fun setVisibilityOfContainers() {
-        literature?.let {
-            when (it.category) {
-                R.string.wallpaper_cat_id.getLocalisedTextFromResId(), R.string.animation_cat_id.getLocalisedTextFromResId() -> {
-                    binding.layoutDownloadableContainer.visibility = VISIBLE
-                }
-                else -> binding.layoutTextContainer.visibility = VISIBLE
-            }
-        }
-    }
-
-    fun updateDownloadStatusForDownloadables() {
-        literature?.let {
-            when (it.category) {
-                R.string.wallpaper_cat_id.getLocalisedTextFromResId(), R.string.animation_cat_id.getLocalisedTextFromResId() -> {
-                    downloadStatusContol.setTag(it.id!!, binding)
-                }
-                else -> {
-                }
-            }
-        }
-    }
 
     fun populateUIWithSelectedData() {
         literature = mLiteratureList?.get(mSelectedIndex!!)
-        binding.tvDesArabic.visibility = GONE
+        tvDesArabic.visibility = GONE
         literature?.textInArabic?.let {
             if (it.isNotEmpty()) {
                 Log.i("ACCESSED...", "$it.length")
-                binding.tvDesArabic.visibility = VISIBLE
+                tvDesArabic.visibility = VISIBLE
             }
         }
 
-        binding.tvMeaning.visibility = GONE
+        tvMeaning.visibility = GONE
         literature?.pronunciation?.let {
             if (it.isNotEmpty()) {
                 Log.i("ACCESSED...", "$it.length")
-                binding.tvMeaning.visibility = VISIBLE
+                tvMeaning.visibility = VISIBLE
             }
         }
-        binding.literature = literature
+       // val literature = literature
+        tvTitle.text = literature?.title
+        tvDesArabic.text = literature?.textInArabic
+        tvDes.text = literature?.text
     }
 
     override fun setUpPrevNextControlState() {
@@ -317,8 +311,8 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
         mSelectedIndex?.let {
             when (it > 0) {
                 true -> {
-                    binding.prevNextPanel.btnPrevContent.isEnabled = true
-                    binding.prevNextPanel.tvPrevContent.setTextColor(
+                    btnPrevContent.isEnabled = true
+                    tvPrevContent.setTextColor(
                         requireContext().resources.getColor(
                             R.color.colorPrimary
                         )
@@ -326,8 +320,8 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
                 }
                 false -> {
 
-                    binding.prevNextPanel.btnPrevContent.isEnabled = false
-                    binding.prevNextPanel.tvPrevContent.setTextColor(
+                    btnPrevContent.isEnabled = false
+                    tvPrevContent.setTextColor(
                         requireContext().resources.getColor(
                             R.color.disabled_color
                         )
@@ -343,16 +337,16 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
             Log.e("indexselected", "${it}")
             when (it >= mLiteratureList!!.size - 1 && !mHasMoreData) {
                 true -> {
-                    binding.prevNextPanel.btnNextContent.isEnabled = false
-                    binding.prevNextPanel.tvNextContent.setTextColor(
+                    btnNextContent.isEnabled = false
+                    tvNextContent.setTextColor(
                         requireContext().resources.getColor(
                             R.color.disabled_color
                         )
                     )
                 }
                 false -> {
-                    binding.prevNextPanel.btnNextContent.isEnabled = true
-                    binding.prevNextPanel.tvNextContent.setTextColor(
+                    btnNextContent.isEnabled = true
+                    tvNextContent.setTextColor(
                         requireContext().resources.getColor(
                             R.color.colorPrimary
                         )
@@ -363,7 +357,7 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
     }
 
     override fun setPrevControlClickEvent() {
-        binding.prevNextPanel.layoutPrevActionContent.handleClickEvent {
+        layoutPrevActionContent.handleClickEvent {
             mSelectedIndex?.let {
                 when (it > 0) {
                     true -> {
@@ -378,7 +372,7 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
     }
 
     override fun setNextControlClickEvent() {
-        binding.prevNextPanel.nextActionContent.handleClickEvent {
+        nextActionContent.handleClickEvent {
             mSelectedIndex?.let {
                 when (it > mLiteratureList!!.size && !mHasMoreData) {
                     true -> {/*Do nothing*/
@@ -390,7 +384,7 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
                         } else {
                             if (mHasMoreData) {
                                 mCurrentPageNo = mCurrentPageNo!! + 1
-                                //var literature=mLiteratureList!!.get(0)
+
                                 when (mIsFavList) {
                                     true -> model.loadFavouriteLiteratureListBySubCategory(
                                         literature?.category!!,
@@ -455,17 +449,6 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
             }
     }
 
-    inner class DownloadStatusControl {
-        var downloadTag: String? = null
-        fun setTag(tag: String, binding: FragmentLiteratureDetailsBinding) {
-            if (downloadTag != null) {
-                DownloadProgressControl.removeLayoutFromMap(downloadTag!!, binding)
-            }
-            downloadTag = tag
-            DownloadProgressControl.addLayoutToMapAndUpdate(downloadTag!!, binding)
-
-        }
-    }
 }
 
 private interface PrevNextPanelControlCallBack {

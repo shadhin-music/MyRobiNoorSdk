@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -19,7 +20,6 @@ import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
-import com.gakk.noorlibrary.databinding.LayoutLiteratureBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.video.category.Data
@@ -173,12 +173,11 @@ internal class QurbaniHomeFragment : Fragment() {
                     val mAdapter = BaseAdapter<Literature>()
                     val literatureList = it.data?.data ?: mutableListOf()
                     mAdapter.listOfItems = literatureList
-                    mAdapter.expressionViewHolderBinding = { eachItem, positionItem, viewBinding ->
+                    mAdapter.expressionViewHolderBinding = { eachItem, positionItem, view ->
 
-                        val view = viewBinding as LayoutLiteratureBinding
-                        val literature = eachItem
-                        view.tvTitle.text = literature.title
-                        view.root.setOnClickListener {
+                        // val view = viewBinding as LayoutLiteratureBinding
+                        view.findViewById<TextView>(R.id.tvTitle).text = eachItem.title
+                        view.setOnClickListener {
                             val qurbaniDiscussTitle = eachItem.title?.trim()?.replace(" ", "")
 
                             if (qurbaniDiscussTitle.equals("কুরবানিবিষয়কআলোচনা")) {
@@ -212,12 +211,8 @@ internal class QurbaniHomeFragment : Fragment() {
                     }
 
                     mAdapter.expressionOnCreateViewHolder = { viewGroup ->
-
-                        LayoutLiteratureBinding.inflate(
-                            LayoutInflater.from(viewGroup.context),
-                            viewGroup,
-                            false
-                        )
+                        LayoutInflater.from(viewGroup.context)
+                            .inflate(R.layout.layout_literature,viewGroup,false)
                     }
 
                     rvLiteratureList.adapter = mAdapter

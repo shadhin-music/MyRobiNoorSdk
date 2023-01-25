@@ -9,38 +9,36 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.gakk.noorlibrary.R
+import com.gakk.noorlibrary.base.BaseActivity
+import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
+import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.model.hajjtracker.HajjSharingListResponse
+import com.gakk.noorlibrary.service.DataUpdate
+import com.gakk.noorlibrary.service.HajjLocationShareService
+import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.HajjViewModel
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.gakk.noorlibrary.BuildConfig
-import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseActivity
-import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.data.rest.Status
-import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.DialogHajjLocationTrackRequestBinding
-import com.gakk.noorlibrary.databinding.FragmentHajjTrackerBinding
-import com.gakk.noorlibrary.model.hajjtracker.HajjSharingListResponse
-import com.gakk.noorlibrary.service.DataUpdate
-import com.gakk.noorlibrary.service.HajjLocationShareService
-import com.gakk.noorlibrary.util.*
-import com.gakk.noorlibrary.viewModel.HajjViewModel
 import kotlinx.coroutines.launch
 
 
-internal class HajjTrackerActivity : BaseActivity(), OnMapReadyCallback, BottomSheetDisplay, DataUpdate {
+internal class HajjTrackerActivity : BaseActivity(), OnMapReadyCallback, BottomSheetDisplay,
+    DataUpdate {
 
     private var mMap: GoogleMap? = null
     private lateinit var model: HajjViewModel
@@ -281,15 +279,12 @@ internal class HajjTrackerActivity : BaseActivity(), OnMapReadyCallback, BottomS
                 this,
                 R.style.MaterialAlertDialog_rounded
             )
-        val binding: DialogHajjLocationTrackRequestBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
+
+        val dialogView: View = layoutInflater.inflate(
             R.layout.dialog_hajj_location_track_request,
-            null,
-            false
+            null
         )
 
-
-        val dialogView: View = binding.root
         customDialog.setView(dialogView)
 
         val alertDialog = customDialog.show()
@@ -302,13 +297,16 @@ internal class HajjTrackerActivity : BaseActivity(), OnMapReadyCallback, BottomS
         alertDialog.setCancelable(false)
         alertDialog.show()
 
+        val tvTitleTrack: AppCompatTextView = dialogView.findViewById(R.id.tvTitleTrack)
+        val btnDecline: AppCompatButton = dialogView.findViewById(R.id.btnDecline)
+        val btnAccept: AppCompatButton = dialogView.findViewById(R.id.btnAccept)
 
-        binding.tvTitleTrack.setText("$userName wants to share location")
-        binding.btnDecline.handleClickEvent {
+        tvTitleTrack.setText("$userName wants to share location")
+        btnDecline.handleClickEvent {
             alertDialog.dismiss()
         }
 
-        binding.btnAccept.handleClickEvent {
+        btnAccept.handleClickEvent {
             if (segment.equals(NOTIFICATION_SEGMENT_VALUE)) {
                 sharerPhone?.let { model.locationTrackRequestFromTracker(it, "") }
             } else {

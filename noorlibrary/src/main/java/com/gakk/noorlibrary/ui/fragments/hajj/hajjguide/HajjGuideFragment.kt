@@ -6,16 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.FragmentHajjTrackerBinding
 import com.gakk.noorlibrary.util.CustomMapTileProvider
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

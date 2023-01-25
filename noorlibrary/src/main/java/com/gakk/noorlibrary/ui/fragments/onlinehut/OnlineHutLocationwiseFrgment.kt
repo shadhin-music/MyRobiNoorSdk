@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -123,11 +124,15 @@ internal class OnlineHutLocationwiseFrgment : Fragment() {
                     val mAdapter = BaseAdapter<Literature>()
                     val literatureList = it.data?.data ?: mutableListOf()
                     mAdapter.listOfItems = literatureList
-                    mAdapter.expressionViewHolderBinding = { eachItem, positionItem, viewBinding ->
+                    mAdapter.expressionViewHolderBinding = { eachItem, positionItem, view ->
 
-                        val view = viewBinding as ItemLocationwiseHutBinding
-                        view.model = eachItem
-                        view.root.setOnClickListener {
+                      //  val view = viewBinding as ItemLocationwiseHutBinding
+                        //view.model = eachItem
+                        view.findViewById<TextView>(R.id.tvNameHut).text = eachItem.title
+                        view.findViewById<TextView>(R.id.tvDetails).text = eachItem.text
+
+
+                        view.setOnClickListener {
                             if (PermissionManager.isLocationPermissionGiven(requireContext())) {
                                 openLocationInMap(
                                     eachItem.latitude?.toDouble()!!,
@@ -147,12 +152,8 @@ internal class OnlineHutLocationwiseFrgment : Fragment() {
                     }
 
                     mAdapter.expressionOnCreateViewHolder = { viewGroup ->
-
-                        ItemLocationwiseHutBinding.inflate(
-                            LayoutInflater.from(viewGroup.context),
-                            viewGroup,
-                            false
-                        )
+                        LayoutInflater.from(viewGroup.context)
+                            .inflate(R.layout.item_locationwise_hut,viewGroup,false)
                     }
 
                     rvPreregistration.adapter = mAdapter

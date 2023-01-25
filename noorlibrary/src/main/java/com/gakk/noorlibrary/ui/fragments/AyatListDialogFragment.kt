@@ -31,7 +31,7 @@ internal class AyatListDialogFragment : BottomSheetDialogFragment(), SurahDetail
 
     private var mSurahId: String? = null
     private var mDetailsCallBack: DetailsCallBack? = null
-    private lateinit var binding:FragmentAyatListDialogBinding
+   // private lateinit var binding:FragmentAyatListDialogBinding
     private lateinit var adapter: SurahDetailsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +46,7 @@ internal class AyatListDialogFragment : BottomSheetDialogFragment(), SurahDetail
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_ayat_list_dialog, container, false)
-
-        return binding.root
+        return inflater.inflate( R.layout.fragment_ayat_list_dialog, container, false)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

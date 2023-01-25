@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.ui.adapter.TrackerPagerAdapter
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.views.CustomTabLayout
 
 /**

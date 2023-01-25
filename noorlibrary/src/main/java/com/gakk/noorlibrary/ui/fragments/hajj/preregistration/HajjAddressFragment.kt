@@ -9,7 +9,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +18,10 @@ import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.hajjpackage.PersonalInfoItem
 import com.gakk.noorlibrary.model.hajjpackage.PreRegisteredUserInfo
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.RepositoryProvider
+import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.util.isBangladeshiPhoneNumber
+import com.gakk.noorlibrary.util.isEmailValid
 import com.gakk.noorlibrary.viewModel.HajjViewModel
 import com.gakk.noorlibrary.viewModel.PreregistrationViewModel
 import kotlinx.coroutines.launch

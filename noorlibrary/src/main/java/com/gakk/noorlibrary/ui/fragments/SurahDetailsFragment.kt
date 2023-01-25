@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,7 +8,9 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.appcompat.widget.AppCompatTextView
@@ -684,9 +687,10 @@ interface PlayPauseFavControl {
     fun handleFavAction()
 }
 
+@SuppressLint("StaticFieldLeak")
 object SurahDetailsHeaderPlayStatControl {
-    var surahDetailsBinding: LayoutSurahDetailsHeaderBinding? = null
-    fun attatchHeaderLayout(binding: LayoutSurahDetailsHeaderBinding) {
+    var surahDetailsBinding: View? = null
+    fun attatchHeaderLayout(binding: View) {
         surahDetailsBinding = binding
     }
 
@@ -694,17 +698,18 @@ object SurahDetailsHeaderPlayStatControl {
         surahDetailsBinding = null
     }
 
+    @SuppressLint("StaticFieldLeak")
     fun updatePlayStat() {
         surahDetailsBinding?.let {
-            when (AudioPlayerService.isCurrentSurahPlaying(it.root.tag.toString())) {
+            when (AudioPlayerService.isCurrentSurahPlaying(it.tag.toString())) {
                 true -> {
-                    it?.btnPlayPause?.setImageResource(R.drawable.ic_pause_filled_enabled)
-                    it?.textViewNormal4?.setText(it?.root?.context?.resources?.getText(R.string.pause_it))
+                    it?.findViewById<ImageView>(R.id.btnPlayPause)?.setImageResource(R.drawable.ic_pause_filled_enabled)
+                    it?.findViewById<TextView>(R.id.textViewNormal4)?.setText(it?.context?.resources?.getText(R.string.pause_it))
                 }
                 false -> {
-                    it?.btnPlayPause?.setImageResource(R.drawable.ic_play_filled_enabled)
-                    it?.textViewNormal4?.setText(
-                        surahDetailsBinding?.root?.context?.resources?.getText(
+                    it?.findViewById<ImageView>(R.id.btnPlayPause)?.setImageResource(R.drawable.ic_play_filled_enabled)
+                    it?.findViewById<TextView>(R.id.textViewNormal4)?.setText(
+                        surahDetailsBinding?.context?.resources?.getText(
                             R.string.play_it
                         )
                     )
