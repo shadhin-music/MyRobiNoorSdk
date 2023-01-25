@@ -6,17 +6,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.FragmentHomeBinding
 import com.gakk.noorlibrary.model.UpCommingPrayer
 import com.gakk.noorlibrary.model.billboard.Data
 import com.gakk.noorlibrary.model.tracker.SalahStatus
@@ -33,7 +34,6 @@ import java.util.*
 
 internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl{
 
-    private lateinit var binding: FragmentHomeBinding
     private lateinit var mCallback: MainCallback
     private lateinit var repository: RestRepository
     private lateinit var model: HomeViewModel
@@ -52,6 +52,14 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     private var totalCount = 0
     private lateinit var dua: Array<String>
 
+    //view
+
+    private lateinit var homeRecycle:RecyclerView
+    private lateinit var progressLayout:ConstraintLayout
+    private lateinit var noInternetLayout:ConstraintLayout
+    private lateinit var noDataLayout:ConstraintLayout
+    private lateinit var btnRetry:AppCompatButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mCallback = (requireActivity() as MainCallback)
@@ -69,9 +77,23 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        return binding.root
+        val view = inflater.inflate(
+            R.layout.fragment_home,
+            container, false
+        )
+        initView(view)
+
+        return view
+    }
+
+    private fun initView(view:View)
+    {
+        homeRecycle = view.findViewById(R.id.homeRecycle)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        noDataLayout = view.findViewById(R.id.noDataLayout)
+        btnRetry = view.findViewById(R.id.btnRetry)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -115,10 +137,10 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
             if (isNetworkConnected(requireContext())) {
                 model.getBillboradData()
             } else {
-                binding.noInternetLayout.root.visibility = View.VISIBLE
+                noInternetLayout.visibility = View.VISIBLE
             }
 
-            binding.noInternetLayout.btnRetry.handleClickEvent {
+            btnRetry.handleClickEvent {
                 model.getBillboradData()
             }
         }
@@ -128,8 +150,8 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         model.billboardResponse.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
-                    binding.noInternetLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.VISIBLE
+                    noInternetLayout.visibility = View.GONE
                 }
                 Status.SUCCESS -> {
                     Log.e("homeerror", "${it}")
@@ -139,19 +161,19 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                             model.getHomeData()
                         }
                         else -> {
-                            binding.noDataLayout.root.visibility = View.VISIBLE
+                            noDataLayout.visibility = View.VISIBLE
                         }
                     }
 
-                    if (binding.noInternetLayout.root.isVisible) {
-                        binding.noInternetLayout.root.visibility = View.GONE
+                    if (noInternetLayout.isVisible) {
+                        noInternetLayout.visibility = View.GONE
                     }
 
                 }
                 Status.ERROR -> {
                     Log.e("homeerror", "${it.message}")
-                    binding.progressLayout.root.visibility = View.GONE
-                    binding.noInternetLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.GONE
+                    noInternetLayout.visibility = View.VISIBLE
                 }
             }
         }
@@ -172,6 +194,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                             homeList =
                                 it.data.data as MutableList<com.gakk.noorlibrary.model.home.Data>
 
+
                             adapter = HomeFragmentAdapter(
                                 homeList,
 
@@ -181,7 +204,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                                 this@HomeFragment
                             )
 
-                            binding.homeRecycle.adapter = adapter
+                            homeRecycle.adapter = adapter
                             adapter.nextWaqt = upCommingPrayer.nextWaqtNameTracker
 
                             modelTracker.loadAllPrayerData(
@@ -191,14 +214,14 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
                         }
                         STATUS_NO_DATA -> {
-                            binding.noDataLayout.root.visibility = View.VISIBLE
+                            noDataLayout.visibility = View.VISIBLE
                         }
                     }
 
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }
@@ -280,7 +303,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     override fun btnClick() {
         val statusSalah = getSalahStatus(upCommingPrayer.currentWaqtName)
 
-        when (prayerDataList?.count() ?: 0 == 0) {
+        when ((prayerDataList?.count() ?: 0) == 0) {
 
             true -> {
                 val salahStatus = SalahStatus(
@@ -317,7 +340,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
     override fun switchClick(isChecked: Boolean, switchName: String) {
 
-        when (prayerDataList?.count() ?: 0 == 0) {
+        when ((prayerDataList?.count() ?: 0) == 0) {
 
             true -> {
                 var salahStatus: SalahStatus? = null
