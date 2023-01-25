@@ -1,8 +1,13 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
@@ -23,15 +28,15 @@ internal class PreregistrationListAdapter(
 ) :
     RecyclerView.Adapter<PreregistrationListAdapter.ViewHolder>() {
 
-    inner class ViewHolder(binding: ItemListPreRegistrationsBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        var listBinding: ItemListPreRegistrationsBinding? = binding
+    inner class ViewHolder(binding: View) :
+        RecyclerView.ViewHolder(binding) {
+        var listBinding= binding
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemListPreRegistrationsBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.item_list_pre_registrations,
             parent,
             false
@@ -42,21 +47,37 @@ internal class PreregistrationListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val listItem = preRegList.get(position)
 
-        holder.listBinding?.item = listItem
-        holder.listBinding?.serial = TimeFormtter.getNumberByLocale((position + 1).toString())
+//        holder.listBinding?.item = listItem
+        val serialNo :AppCompatTextView = holder.itemView.findViewById(R.id.appCompatTextView)
 
-        holder.listBinding?.executePendingBindings()
-
-        holder.listBinding?.constraintLayout8?.handleClickEvent {
-            holder.listBinding?.constraintLayout8?.context?.copyToClipboard(listItem.trackingNo!!)
+        val title :AppCompatTextView = holder.itemView.findViewById(R.id.appCompatTextView2)
+        title.text = listItem.name
+        val address :AppCompatTextView = holder.itemView.findViewById(R.id.appCompatTextView3)
+        address.text = listItem.permanentAddress
+        val trackingNo :AppCompatTextView = holder.itemView.findViewById(R.id.appCompatTextView6)
+        trackingNo.text = listItem.trackingNo
+        val docNo :AppCompatTextView = holder.itemView.findViewById(R.id.appCompatTextView9)
+        docNo.text = listItem.docNumber
+        val phnNo :AppCompatTextView = holder.itemView.findViewById(R.id.appCompatTextView12)
+        phnNo.text = listItem.phoneNumber
+        val preRegistrationNo :AppCompatTextView = holder.itemView.findViewById(R.id.appCompatTextView15)
+        preRegistrationNo.text = (listItem.preRegistrationNo ?:"Pending").toString()
+        val status :AppCompatTextView = holder.itemView.findViewById(R.id.appCompatTextView18)
+         status.text = listItem.status
+        val serial = TimeFormtter.getNumberByLocale((position + 1).toString())
+        serialNo.text = R.string.text_pre_reg.toString()+ serial
+//        holder.listBinding?.executePendingBindings()
+    val constraintLayout8 :ConstraintLayout = holder.itemView.findViewById(R.id.constraintLayout8)
+      constraintLayout8?.handleClickEvent {
+            constraintLayout8?.context?.copyToClipboard(listItem.trackingNo!!)
             Toast.makeText(
-                holder.listBinding?.constraintLayout8?.context,
+               constraintLayout8?.context,
                 "Copied to clipboard!",
                 Toast.LENGTH_LONG
             ).show()
         }
-
-        holder.listBinding?.btnRefundRequest?.handleClickEvent {
+        val btnRefundRequest :AppCompatButton = holder.itemView.findViewById(R.id.btnRefundRequest)
+         btnRefundRequest?.handleClickEvent {
 
             if (listItem.status.equals(STATUS_PENDING)) {
                 paymentControl.gotoPaymentPage(listItem.trackingNo, listItem.name, listItem.email)
