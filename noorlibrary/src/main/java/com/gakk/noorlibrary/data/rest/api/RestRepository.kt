@@ -6,6 +6,7 @@ import androidx.annotation.Keep
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.model.CommonApiResponse
 import com.gakk.noorlibrary.model.UserLocation
+import com.gakk.noorlibrary.model.auth.AuthPayload
 import com.gakk.noorlibrary.model.billboard.BillboardResponse
 import com.gakk.noorlibrary.model.currency.CurrentCurrencyModel
 import com.gakk.noorlibrary.model.hajjpackage.*
@@ -45,10 +46,7 @@ import com.gakk.noorlibrary.model.tracker.ramadan.AllRamadanDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.add.PostRamadanDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.add.RamadanAddModel
 import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
-import com.gakk.noorlibrary.util.DONATION_CHANNEL
-import com.gakk.noorlibrary.util.ImageHelper
-import com.gakk.noorlibrary.util.NAGAD_PUSER
-import com.gakk.noorlibrary.util.SSL_PUSER
+import com.gakk.noorlibrary.util.*
 import com.google.gson.Gson
 import com.mcc.noor.model.umrah_hajj.*
 import kotlinx.coroutines.Dispatchers
@@ -66,7 +64,8 @@ class RestRepository(
     private val subApiServiceRobi: ApiService,
     private val dataApiService: ApiService,
     private val subApiServiceNagad: ApiService,
-    private val subApiServiceSsl: ApiService
+    private val subApiServiceSsl: ApiService,
+    private val authService: ApiService
 ) {
 
 
@@ -313,6 +312,7 @@ class RestRepository(
     suspend fun getAllRamadanData(fromMonth: String, toMonth: String): AllRamadanDataResponse {
         return contentApiService.getAllRamadanData(fromMonth, toMonth)
     }
+
 
     suspend fun addRamadanData(
         createdOn: String,
@@ -631,6 +631,16 @@ class RestRepository(
         val JSON = "application/json; charset=utf-8".toMediaType()
         val body = JSONObject(Gson().toJson(data)).toString().toRequestBody(JSON)
         return contentApiService.UmrahPaymentStatus(body)
+    }
+
+    suspend fun login(phoneNumber: String): String? {
+        kotlin.runCatching { Gson().toJson(AuthPayload(phoneNumber)) }.getOrNull()
+            ?.let { jsonString ->
+                val response = safeApiCall { authService.login(jsonString) }
+                AppPreference.userToken = response?.data?.data?.token
+                AppPreference.userNumber = phoneNumber
+            }
+        return AppPreference.userToken
     }
 
 }

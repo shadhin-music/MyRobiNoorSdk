@@ -16,6 +16,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -26,6 +27,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseActivity
 import com.gakk.noorlibrary.base.BaseApplication
@@ -48,12 +50,17 @@ import com.gakk.noorlibrary.ui.fragments.tabs.HomeFragment
 import com.gakk.noorlibrary.ui.fragments.tabs.MoreFragment
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import java.io.Serializable
 
 internal class MainActivity : BaseActivity(), MainCallback {
-    private lateinit var binding: ActivityMainNoorSdkBinding
+    //private lateinit var binding: ActivityMainNoorSdkBinding
+    private lateinit var ivLogoHome:ImageView
+    private lateinit var pager: ViewPager2
+    private lateinit var bottomNav: BottomNavigationView
+
     private val fragmentList = ArrayList<Fragment>()
     private lateinit var model: QuranViewModel
     private lateinit var modelSubscription: SubscriptionViewModel
@@ -80,13 +87,12 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
         mainCallback = this
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_noor_sdk)
-
+        setContentView(R.layout.activity_main_noor_sdk)
+        setupUi()
 
         setStatusColor(R.color.colorPrimaryDark)
 
-        binding.ivLogoHome.setImageResource(R.drawable.ic_noor_yellow_robi)
-
+        ivLogoHome.setImageResource(R.drawable.ic_noor_yellow_robi)
 
 
         setSlider()
@@ -343,6 +349,12 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
     }
 
+    private fun setupUi() {
+        ivLogoHome  = findViewById(R.id.ivLogoHome)
+        pager = findViewById(R.id.pager)
+        bottomNav = findViewById(R.id.bottomNav)
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -393,8 +405,8 @@ internal class MainActivity : BaseActivity(), MainCallback {
     private fun setSlider() {
 
         val adapter = SliderAdapter(this)
-        binding.pager.adapter = adapter
-        binding.pager.isUserInputEnabled = false
+        pager.adapter = adapter
+        pager.isUserInputEnabled = false
 
         fragmentList.addAll(
             listOf(
@@ -408,14 +420,14 @@ internal class MainActivity : BaseActivity(), MainCallback {
         adapter.setFragmentList(fragmentList)
 
 
-        binding.bottomNav.setOnItemSelectedListener {
+        bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.tab_home -> {
-                    binding.pager.currentItem = 0
+                    pager.currentItem = 0
                     return@setOnItemSelectedListener true
                 }
                 R.id.tab_my_robi -> {
-                    binding.pager.currentItem = 1
+                    pager.currentItem = 1
                     return@setOnItemSelectedListener true
                 }
 

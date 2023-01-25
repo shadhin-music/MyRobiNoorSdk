@@ -28,6 +28,10 @@ class RepositoryProvider {
                 subApiServiceSsl = RetrofitBuilder.getApiService(
                     BASE_URL_SUBSCRIPTION_SSL,
                     false
+                ),
+                authService = RetrofitBuilder.getApiService(
+                    BASE_URL_SECURITY_CONTENT,
+                    false
                 )
             )
         }
