@@ -14,13 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.LocationHelper
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.LayoutRozaPrimaryHeaderBinding
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
 import com.gakk.noorlibrary.ui.adapter.roja.RozaInformationAdapter
 import com.gakk.noorlibrary.ui.fragments.DivisionSelectionCallback

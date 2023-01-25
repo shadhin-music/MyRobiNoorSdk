@@ -12,7 +12,6 @@ import android.widget.RadioGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
@@ -23,7 +22,7 @@ import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.UmrahHajjViewModel
 import com.google.gson.Gson
 import com.mcc.noor.model.umrah_hajj.UmrahHajjPersonalPostModel
-import com.mcc.noor.ui.fragments.payment.PaymentFragment
+import com.gakk.noorlibrary.ui.fragments.payment.PaymentFragment
 import kotlinx.coroutines.launch
 
 private const val ARG_PACKAGE_ID = "umrahHajjPackID"
