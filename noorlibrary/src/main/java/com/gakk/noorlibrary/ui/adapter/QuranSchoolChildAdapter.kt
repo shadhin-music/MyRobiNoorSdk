@@ -1,11 +1,17 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.databinding.LayoutQuranSchoolOldChildItemBinding
 import com.gakk.noorlibrary.model.quranSchool.QuranSchoolModel
@@ -25,15 +31,15 @@ internal class QuranSchoolChildAdapter(
     private val VIEW_TYPE_LIVE_CONTENT = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolder: RecyclerView.ViewHolder
-        val binding: LayoutQuranSchoolOldChildItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.layout_quran_school_old_child_item,
             parent,
             false
         )
 
-        viewHolder = QuranSchoolChildOldViewHolder(binding)
+      val  viewHolder = QuranSchoolChildOldViewHolder(binding)
 
         return viewHolder
     }
@@ -47,10 +53,10 @@ internal class QuranSchoolChildAdapter(
     }
 
 
-    inner class QuranSchoolChildOldViewHolder(private val binding: LayoutQuranSchoolOldChildItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class QuranSchoolChildOldViewHolder(private val binding: View) :
+        RecyclerView.ViewHolder(binding) {
         init {
-            binding.root.handleClickEvent {
+            binding.handleClickEvent {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
@@ -60,16 +66,28 @@ internal class QuranSchoolChildAdapter(
         }
 
         fun bind(quranSchoolModel: QuranSchoolModel) {
+            val scholars_img:ImageView = binding.findViewById(R.id.scholars_img)
+            val image = quranSchoolModel.contentBaseUrl+"/"+quranSchoolModel.imageUrl
+            Glide.with(binding.context).load(image).into(scholars_img)
+            val progressBar = binding.findViewById<ProgressBar>(R.id.progressBar)
+           val dateTv = binding.findViewById<AppCompatTextView>(R.id.date_tv)
+              dateTv.text = quranSchoolModel.liveOn
+            val title = binding.findViewById<AppCompatTextView>(R.id.title)
+            title.text= quranSchoolModel.title
+          val  iconLive:AppCompatImageView =binding.findViewById(R.id.icon_live)
+           val description = binding.findViewById<AppCompatTextView>(R.id.description)
+            description.text = quranSchoolModel.about ?:quranSchoolModel.scholarName
+            progressBar.visibility = View.GONE
             if (quranSchoolModel.isLive == true) {
-                binding.iconLive.show()
-                binding.dateTv.hide()
-                binding.description.hide()
+               iconLive.show()
+            dateTv.hide()
+             description.hide()
             } else {
-                binding.iconLive.hide()
-                binding.dateTv.show()
-                binding.description.show()
+               iconLive.hide()
+               dateTv.show()
+                description.show()
             }
-            binding.item = quranSchoolModel
+            //binding.item = quranSchoolModel
         }
     }
 
