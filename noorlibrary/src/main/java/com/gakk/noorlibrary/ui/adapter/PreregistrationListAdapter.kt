@@ -8,11 +8,11 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
+
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.databinding.ItemListPreRegistrationsBinding
+
 import com.gakk.noorlibrary.model.hajjpackage.HajjPreRegistrationListResponse
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.PaymentControl
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.RefundRequestFragment

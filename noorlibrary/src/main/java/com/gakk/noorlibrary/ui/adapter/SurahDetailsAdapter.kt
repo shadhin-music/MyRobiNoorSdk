@@ -10,7 +10,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -24,9 +24,7 @@ import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
 import com.gakk.noorlibrary.callbacks.SurahDetailsCallBack
-import com.gakk.noorlibrary.databinding.LayoutFooterBinding
-import com.gakk.noorlibrary.databinding.LayoutSurahDetailsAyahBinding
-import com.gakk.noorlibrary.databinding.LayoutSurahDetailsHeaderBinding
+
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.quran.surahDetail.Data
 import com.gakk.noorlibrary.service.AudioPlayerService

@@ -7,13 +7,13 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
+
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.LayoutQuranSchoolOldChildItemBinding
+
 import com.gakk.noorlibrary.model.quranSchool.QuranSchoolModel
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.hide
