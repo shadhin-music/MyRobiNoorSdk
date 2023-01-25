@@ -25,12 +25,17 @@ import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.SUB_CAT_ID_UNDEFINED
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import com.gakk.noorlibrary.viewModel.PodcastViewModel
+import com.google.android.exoplayer2.ui.PlayerView
 import kotlinx.coroutines.launch
 
 
 internal class KafelaPlayerActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityKafelaPlayerBinding
+
+    private lateinit var progressLayout:View
+    private lateinit var videoView: PlayerView
+    private lateinit var bufferProgress: View
+
     private var player: ExoPlayer? = null
     private lateinit var model: PodcastViewModel
     private lateinit var repository: RestRepository
@@ -40,9 +45,8 @@ internal class KafelaPlayerActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_kafela_player)
-
-        Log.e("onCreate", "Called")
+       setContentView( R.layout.activity_kafela_player)
+        setupUi()
 
         lifecycleScope.launch() {
             val job = launch() {
@@ -71,22 +75,28 @@ internal class KafelaPlayerActivity : BaseActivity() {
 
     }
 
+    private fun setupUi() {
+        progressLayout = findViewById(R.id.progressLayout)
+        videoView = findViewById(R.id.videoView)
+        bufferProgress= findViewById(R.id.bufferProgress)
+    }
+
     private fun subscribeObserver() {
         modelLiterature.literatureListData.observe(this) {
             when (it.status) {
                 Status.LOADING -> {
-                    binding.progressLayout.root.visibility = View.VISIBLE
+                    progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
                     literatureList = it.data?.data ?: mutableListOf()
                     Log.e("listsize", "ss" + literatureList.size)
                     handleYoutubeAndNormalVideo(literatureList.get(0).refUrl!!)
 
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
 
                 Status.ERROR -> {
-                    binding.progressLayout.root.visibility = View.GONE
+                    progressLayout.visibility = View.GONE
                 }
             }
         }
@@ -126,7 +136,7 @@ internal class KafelaPlayerActivity : BaseActivity() {
 
     private fun playVideo(videoUrl: String?, audioUrl: String?) {
         val toggleOrientationButton: AppCompatImageButton =
-            binding.videoView.findViewById(R.id.toggleOrientationButton)
+            videoView.findViewById(R.id.toggleOrientationButton)
         toggleOrientationButton.visibility = View.GONE
 
         if (player == null) {
@@ -154,11 +164,11 @@ internal class KafelaPlayerActivity : BaseActivity() {
         player?.setMediaSource(mergeMediaSource, 1000L)
         player?.playWhenReady = true
         player?.prepare()
-        (binding.videoView.getVideoSurfaceView() as SphericalGLSurfaceView).setDefaultStereoMode(C.STEREO_MODE_TOP_BOTTOM)
-        binding.videoView.player = player
+        (videoView.getVideoSurfaceView() as SphericalGLSurfaceView).setDefaultStereoMode(C.STEREO_MODE_TOP_BOTTOM)
+        videoView.player = player
         player?.addListener(playbackStatus)
 
-        binding.videoView.onResume()
+        videoView.onResume()
     }
 
     private val playbackStatus: Player.Listener = object : Player.Listener {
@@ -184,13 +194,13 @@ internal class KafelaPlayerActivity : BaseActivity() {
     }
 
     private fun showBuffering() {
-        binding.bufferProgress.visibility = View.VISIBLE
-        binding.videoView.useController = false
+        bufferProgress.visibility = View.VISIBLE
+        videoView.useController = false
     }
 
     private fun hideBuffering() {
-        binding.bufferProgress.visibility = View.GONE
-        binding.videoView.useController = true
+        bufferProgress.visibility = View.GONE
+        videoView.useController = true
     }
 
     override fun onPause() {
