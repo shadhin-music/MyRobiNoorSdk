@@ -299,7 +299,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_4"
                     android:fontFamily="@font/notosansbengali_regular"
-                    android:text='@{item.preRegistrationNo != null ? item.preRegistrationNo : "Pending"}'
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/txt_color_black"
                     app:layout_constraintEnd_toEndOf="parent"

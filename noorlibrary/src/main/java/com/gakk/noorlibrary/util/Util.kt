@@ -15,9 +15,7 @@ import android.net.ConnectivityManager
 import android.provider.Settings
 import android.util.Base64
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.RelativeLayout
 import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.prefs.AppPreference
@@ -72,21 +70,12 @@ object Util {
     }
 
     fun checkSub(): Boolean {
-        return true
-        /*  if (AppPreference.subWeekly || AppPreference.subMonthly || AppPreference.subWeeklySoftBundle
-              || AppPreference.subMonthlySoftBundle || AppPreference.subMonthlySoftBundleRobi ||
-              AppPreference.subWeeklySoftBundleRobi || AppPreference.subSoftBundleRobi ||
-              AppPreference.subSoftBundleRamadanRobi || AppPreference.subSoftBundleSevenDaysRobi ||
-              AppPreference.subSoftBundleFifteenDaysRobi || AppPreference.subYearly
-              || AppPreference.subMonthlyGpay
-              || AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad
-              || AppPreference.subYearlyNagad
-              || AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl
-              || AppPreference.subYearlySsl || AppPreference.subQuran
-          ) {
-              return true
-          }
-          return false*/
+
+        if (AppPreference.subWeekly || AppPreference.subMonthly
+        ) {
+            return true
+        }
+        return false
     }
 
     fun checkSelectedDate(selectedDate: String?): Boolean {
@@ -262,10 +251,11 @@ fun getDay(date: Date?): Int {
     return cal[Calendar.DAY_OF_MONTH]
 }
 
- fun getBitmapFromView(ctx: Context, view: View): Bitmap? {
+fun getBitmapFromView(ctx: Context, view: View): Bitmap? {
     view.layoutParams = FrameLayout.LayoutParams(
         FrameLayout.LayoutParams.MATCH_PARENT,
-        FrameLayout.LayoutParams.MATCH_PARENT)
+        FrameLayout.LayoutParams.MATCH_PARENT
+    )
 
     val dm = ctx.resources.displayMetrics
     view.measure(

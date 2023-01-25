@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
 import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.FragmentMoreBinding
 import com.gakk.noorlibrary.model.BottomSheetItem
 import com.gakk.noorlibrary.ui.activity.DetailsActivity
 import com.gakk.noorlibrary.ui.adapter.BottomSheetAdapter
@@ -21,9 +22,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack {
-    private lateinit var binding: FragmentMoreBinding
+
     private lateinit var dialog: BottomSheetDialog
     private lateinit var mCallback: MainCallback
+    private lateinit var rvCategory: RecyclerView
+    private lateinit var imgDrag: AppCompatImageView
+    private lateinit var layoutProfile: ConstraintLayout
+    private lateinit var layoutSubscribeCon: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,28 +47,33 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
+        val view = inflater.inflate(
+            R.layout.fragment_more,
+            container, false
+        )
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_more, container, false)
+        rvCategory = view.findViewById(R.id.rvCategory)
+        imgDrag = view.findViewById(R.id.imgDrag)
+        layoutProfile = view.findViewById(R.id.layoutProfile)
+        layoutSubscribeCon = view.findViewById(R.id.layoutSubscribeCon)
 
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val menuList = getBottomSheetItemList()
-        binding.rvCategory.adapter = BottomSheetAdapter(menuList, mCallback, this)
+        rvCategory.adapter = BottomSheetAdapter(menuList, mCallback, this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.imgDrag.handleClickEvent {
+        imgDrag.handleClickEvent {
             dialog.dismiss()
         }
 
 
-        binding.layoutProfile.handleClickEvent {
+        layoutProfile.handleClickEvent {
             dialog.dismiss()
             Intent(context, DetailsActivity::class.java).apply {
                 this.putExtra(PAGE_NAME, PAGE_PROFILE)
@@ -71,7 +81,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             }
         }
 
-        binding.layoutSubscribeCon.handleClickEvent {
+        layoutSubscribeCon.handleClickEvent {
             dialog.dismiss()
 
             if (isNetworkConnected(requireContext())) {
@@ -189,13 +199,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             BottomSheetItem(
                 R.drawable.ic_cat_qurbani,
                 getString(R.string.cat_qurbani)
-            )
-        )
-
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_compass,
-                getString(R.string.cat_compass)
             )
         )
 

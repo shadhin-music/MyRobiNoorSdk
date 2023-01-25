@@ -86,8 +86,8 @@ internal class SubscriptionFragment : Fragment() {
                 SUBSCRIPTION_ID_FIFTEENDAYS
             )
 
-            model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_WEEKLY_ROBI)
-            model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_MONTHLY_ROBI)
+           /* model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_WEEKLY_ROBI)
+            model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_MONTHLY_ROBI)*/
 
             model.weeklySubInfo.observe(viewLifecycleOwner) {
                 when (it.status) {
