@@ -8,11 +8,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.*
+import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -47,12 +54,12 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.DefaultTimeBar
+import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
 internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
-    private lateinit var binding: ActivityPodcastBinding
     private lateinit var repository: RestRepository
     private lateinit var model: PodcastViewModel
     private var player: ExoPlayer? = null
@@ -97,12 +104,35 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
         //binding.controlView.setVisibility(GONE);
     }
 
+    // view
+    private lateinit var cardLiveCollapse:RelativeLayout
+    private lateinit var tvLiveVideos:AppCompatTextView
+    private lateinit var rvLiveVideos:RecyclerView
+    private lateinit var cardLive:CardView
+    private lateinit var imgNoInternet:ImageView
+    private lateinit var llNoLiveVideos:LinearLayout
+    private lateinit var ivOverlay:AppCompatImageView
+    private lateinit var tvCount:AppCompatTextView
+    private lateinit var tvCountCollapse : AppCompatTextView
+    private lateinit var comment_root:RelativeLayout
+    private lateinit var commentLayout:ConstraintLayout
+    private lateinit var comment_ed:AppCompatTextView
+    private lateinit var comment_rv:RecyclerView
+    private lateinit var ivComment:ImageView
+    private lateinit var playerLayout:FrameLayout
+    private lateinit var playerView:PlayerView
+    private lateinit var videoView:RelativeLayout
+    private lateinit var bufferProgress:ProgressBar
+    private lateinit var videoTitle:TextView
+    private lateinit var tvSpeaker:AppCompatTextView
+    private lateinit var progressBar:ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_podcast)
+        setContentView(R.layout.activity_podcast)
         this.setStatusColor(R.color.black1)
 
         intent.let {
@@ -129,14 +159,14 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
             // val categoryId: String
             if (subCategoryId.equals("6243e1b0807cf5d3bb259b19")) {
-                binding.cardLiveCollapse.visibility = View.GONE
-                binding.tvLiveVideos.setText("ভিডিও সমূহ")
+                cardLiveCollapse.visibility = View.GONE
+                tvLiveVideos.setText("ভিডিও সমূহ")
                 categoryId = "62457f53577c4a348361ded2"
 
 
             } else {
-                binding.cardLiveCollapse.visibility = View.VISIBLE
-                binding.tvLiveVideos.setText("Live Videos")
+                cardLiveCollapse.visibility = View.VISIBLE
+                tvLiveVideos.setText("Live Videos")
                 categoryId = "62457f6b577c4a348361ded3"
             }
 
@@ -165,12 +195,13 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
                     when (it.data?.status) {
                         STATUS_SUCCESS -> {
-                            val liveVideos = it.data?.data
-                            binding.rvLiveVideos.adapter = LiveVideoAdapter(liveVideos, this)
+                            val liveVideos = it.data.data
+                            rvLiveVideos.adapter = LiveVideoAdapter(liveVideos, this)
                         }
                         STATUS_NO_DATA -> {
-                            binding.itemNoData = ImageFromOnline("bg_no_data.png")
-                            binding.llNoLiveVideos.visibility = View.VISIBLE
+                            val itemNoData = ImageFromOnline("bg_no_data.png")
+                            setImageFromUrlNoProgress(imgNoInternet,itemNoData.fullImageUrl)
+                            llNoLiveVideos.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -193,7 +224,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
                     Log.e("YLActivity", ":SUCCESS ")
                     when (it.data?.status) {
                         STATUS_SUCCESS -> {
-                            val liveData = it.data?.data?.get(0)
+                            val liveData = it.data.data?.get(0)
                             liveData.let {
                                 liveData?.textInArabic.let {
                                     liveMessage =
@@ -202,27 +233,31 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
                             }
                             categoryId = liveData?.category!!
-                            textContentId = liveData?.id!!
+                            textContentId = liveData.id!!
 
-                            binding.item = liveData
+                            val item = liveData
+                            videoTitle.text =item.title
+                            tvSpeaker.text = item.text
+                            setImageFromUrl(ivOverlay,item.fullImageUrl,progressBar)
+
                             if (subCategoryId.equals("6243e1ca807cf5d3bb259b1a")) {
                                 showAndHandleCommentSection()
                             }
-                            if (liveData?.refUrl.isNullOrEmpty()) {
+                            if (liveData.refUrl.isNullOrEmpty()) {
                                 if (subCategoryId.equals("6243e1b0807cf5d3bb259b19")) {
-                                    binding.cardLiveCollapse.visibility = View.GONE
+                                    cardLiveCollapse.visibility = View.GONE
                                 } else {
-                                    binding.cardLive.visibility = View.GONE
-                                    binding.cardLiveCollapse.visibility = View.VISIBLE
+                                    cardLive.visibility = View.GONE
+                                    cardLiveCollapse.visibility = View.VISIBLE
                                 }
 
                                 showNoLiveDialog(liveMessage)
-                                binding.ivOverlay.visibility = View.VISIBLE
+                                ivOverlay.visibility = View.VISIBLE
 
-                                liveData?.imageUrl.let {
+                                liveData.imageUrl.let {
                                     Noor.appContext?.let {
                                         Glide.with(it)
-                                            .load(liveData?.contentBaseUrl + "/" + liveData?.imageUrl)
+                                            .load(liveData.contentBaseUrl + "/" + liveData.imageUrl)
                                             .listener(object : RequestListener<Drawable> {
                                                 override fun onLoadFailed(
                                                     e: GlideException?,
@@ -248,27 +283,27 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
                                             })
                                             .error(R.drawable.place_holder_16_9_ratio)
                                             .diskCacheStrategy(DiskCacheStrategy.DATA)
-                                            .into(binding.ivOverlay)
+                                            .into(ivOverlay)
                                     }
 
                                 }
 
                             } else {
                                 if (subCategoryId.equals("6243e1b0807cf5d3bb259b19")) {
-                                    binding.cardLiveCollapse.visibility = View.GONE
+                                    cardLiveCollapse.visibility = View.GONE
                                 } else {
-                                    binding.cardLive.visibility = View.VISIBLE
-                                    binding.commentRoot.visibility = View.VISIBLE
-                                    binding.rvLiveVideos.visibility = View.GONE
-                                    binding.tvLiveVideos.visibility = View.GONE
-                                    binding.cardLiveCollapse.visibility = View.GONE
+                                    cardLive.visibility = View.VISIBLE
+                                    comment_root.visibility = View.VISIBLE
+                                    rvLiveVideos.visibility = View.GONE
+                                    tvLiveVideos.visibility = View.GONE
+                                    cardLiveCollapse.visibility = View.GONE
                                 }
 
-                                binding.ivOverlay.visibility = View.GONE
+                                ivOverlay.visibility = View.GONE
                                 if (subCategoryId.equals("6243e1b0807cf5d3bb259b19")) {
-                                    setLiveData(liveData = liveData!!, false)
+                                    setLiveData(liveData = liveData, false)
                                 } else {
-                                    setLiveData(liveData = liveData!!, true)
+                                    setLiveData(liveData = liveData, true)
                                 }
                             }
                         }
@@ -296,8 +331,8 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
                 Status.SUCCESS -> {
                     Log.e("commentListData", ":SUCCESS ");
 
-                    binding.tvCount.text = it.data?.totalRecords.toString()
-                    binding.tvCountCollapse.text = it.data?.totalRecords.toString()
+                    tvCount.text = it.data?.totalRecords.toString()
+                    tvCountCollapse.text = it.data?.totalRecords.toString()
                     Log.e(
                         "base_api: refreshed %s",
                         upPos.toString() + " " + currentPage + " " + notifyOnly + " " + notifyPage + " " + it.data?.data?.size
@@ -330,7 +365,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
                 Status.SUCCESS -> {
                     Log.e("postComment", ":SUCCESS ")
-                    binding.commentLayout.commentEd.setText("")
+                    comment_ed.setText("")
                     resetPaging()
                     showAndHandleCommentSection()
                 }
@@ -360,10 +395,14 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
     }
 
     private fun setLiveData(liveData: LiveVideosResponse.Data, isYoutube: Boolean) {
-        if (binding.ivOverlay.isVisible) {
-            binding.ivOverlay.visibility = View.GONE
+        if (ivOverlay.isVisible) {
+            ivOverlay.visibility = View.GONE
         }
-        binding.item = liveData
+        val item = liveData
+        videoTitle.text =item.title
+        tvSpeaker.text = item.text
+        setImageFromUrl(ivOverlay,item.fullImageUrl,progressBar)
+
         val id = liveData.refUrl
         handleYoutubeAndNormalVideo(id!!, isYoutube)
         categoryId = "622f0159803daefd93291ba3"
@@ -372,40 +411,62 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
     private fun setupUi() {
 
-        fullscreenToggleButton = binding.playerView.findViewById(R.id.toggleOrientationButton)
-        backButton = binding.playerView.findViewById(R.id.backButton)
+        cardLiveCollapse = findViewById(R.id.cardLiveCollapse)
+        tvLiveVideos = findViewById(R.id.tvLiveVideos)
+        imgNoInternet = findViewById(R.id.imgNoInternet)
+        llNoLiveVideos = findViewById(R.id.llNoLiveVideos)
+        cardLive = findViewById(R.id.cardLive)
+        ivOverlay = findViewById(R.id.ivOverlay)
+        rvLiveVideos = findViewById(R.id.rvLiveVideos)
+        tvCount = findViewById(R.id.tvCount)
+        tvCountCollapse =findViewById(R.id.tvCountCollapse)
+        comment_root = findViewById(R.id.comment_root)
+        commentLayout = findViewById(R.id.commentLayout)
+        comment_ed = findViewById(R.id.comment_ed)
+        ivComment = findViewById(R.id.ivComment)
+        playerLayout = findViewById(R.id.playerLayout)
+        playerView = findViewById(R.id.playerView)
+        videoView = findViewById(R.id.videoView)
+        bufferProgress = findViewById(R.id.bufferProgress)
+        videoTitle = findViewById(R.id.videoTitle)
+        tvSpeaker = findViewById(R.id.tvSpeaker)
+        progressBar = findViewById(R.id.progressBar)
+
+
+        fullscreenToggleButton = findViewById(R.id.toggleOrientationButton)
+        backButton = findViewById(R.id.backButton)
         fullscreenToggleButton.setOnClickListener({ view: View? -> toggleOrientation() })
         backButton.setOnClickListener({ view: View? -> onBackPressed() })
         configOrientation(resources.configuration.orientation)
 
-        binding.cardLiveCollapse.handleClickEvent {
-            binding.cardLive.visibility = View.VISIBLE
-            binding.commentRoot.visibility = View.VISIBLE
-            binding.rvLiveVideos.visibility = View.GONE
-            binding.tvLiveVideos.visibility = View.GONE
-            binding.cardLiveCollapse.visibility = View.GONE
+        cardLiveCollapse.handleClickEvent {
+            cardLive.visibility = View.VISIBLE
+            comment_root.visibility = View.VISIBLE
+            rvLiveVideos.visibility = View.GONE
+            tvLiveVideos.visibility = View.GONE
+            cardLiveCollapse.visibility = View.GONE
 
-            if (binding.llNoLiveVideos.isVisible) {
-                binding.llNoLiveVideos.visibility = View.GONE
+            if (llNoLiveVideos.isVisible) {
+                llNoLiveVideos.visibility = View.GONE
             }
         }
 
-        binding.cardLive.handleClickEvent {
-            binding.cardLive.visibility = View.GONE
-            binding.commentRoot.visibility = View.GONE
-            binding.rvLiveVideos.visibility = View.VISIBLE
-            binding.tvLiveVideos.visibility = View.VISIBLE
-            binding.cardLiveCollapse.visibility = View.VISIBLE
+        cardLive.handleClickEvent {
+            cardLive.visibility = View.GONE
+            comment_root.visibility = View.GONE
+            rvLiveVideos.visibility = View.VISIBLE
+            tvLiveVideos.visibility = View.VISIBLE
+            cardLiveCollapse.visibility = View.VISIBLE
         }
     }
 
     private fun showAndHandleCommentSection() {
-        binding.commentLayout.commentRv.invalidate()
+        comment_rv.invalidate()
         commentBaseAdapter = null
         linearLayoutManager = null
 
-        binding.commentLayout.ivComment.handleClickEvent {
-            val message = binding.commentLayout.commentEd.text.toString()
+        ivComment.handleClickEvent {
+            val message = comment_ed.text.toString()
             if (message.isEmpty()) {
                 Toast.makeText(this, "Please write your question!", Toast.LENGTH_LONG).show()
             } else {
@@ -418,10 +479,9 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
             com.gakk.noorlibrary.ui.adapter.podcast.CommentPagingAdapter(this, this)
         linearLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         commentBaseAdapter!!.clearAll()
-        binding.commentLayout.commentRv.layoutManager = linearLayoutManager
-
-        binding.commentLayout.commentRv.adapter = commentBaseAdapter
-        binding.commentLayout.commentRv.isNestedScrollingEnabled = true
+        comment_rv.layoutManager = linearLayoutManager
+        comment_rv.adapter = commentBaseAdapter
+        comment_rv.isNestedScrollingEnabled = true
 
 
         model.loadCommentList(categoryId, textContentId, 1)
@@ -433,9 +493,9 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
             if (data != null) {
                 val commentDataList: List<CommentListResponse.Data?>? = data.data
                 if (data.totalRecords!! < 20) {
-                    val params = binding.commentLayout.commentRv.layoutParams
+                    val params = comment_rv.layoutParams
                     params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    binding.commentLayout.commentRv.layoutParams = params
+                    comment_rv.layoutParams = params
                 }
                 TOTAL_PAGES = data.totalPage!!
                 PER_PAGE = commentDataList?.size!!
@@ -512,7 +572,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
             RelativeLayout.LayoutParams.MATCH_PARENT,
             RelativeLayout.LayoutParams.MATCH_PARENT
         )
-        binding.playerLayout.layoutParams = layoutParams
+        playerLayout.layoutParams = layoutParams
     }
 
     private fun preparePortraitUI() {
@@ -528,19 +588,18 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
         val height = calculateVideoHeight(displayWidth, videoWidth, videoHeight)
         val layoutParams =
             RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height)
-        binding.playerLayout.layoutParams = layoutParams
+        playerLayout.layoutParams = layoutParams
     }
 
 
     private fun handleYoutubeAndNormalVideo(url: String, isYoutube: Boolean) {
 
-        val exoProgressBar = binding.playerView.findViewById<DefaultTimeBar>(R.id.exo_progress)
-        val liveIcon = binding.playerView.findViewById<AppCompatImageView>(R.id.noor_live)
-        val liveText = binding.playerView.findViewById<AppCompatTextView>(R.id.tvLive)
-        val videoDurationText =
-            binding.playerView.findViewById<AppCompatTextView>(R.id.exo_position)
+        val exoProgressBar = findViewById<DefaultTimeBar>(R.id.exo_progress)
+        val liveIcon = findViewById<AppCompatImageView>(R.id.noor_live)
+        val liveText = findViewById<AppCompatTextView>(R.id.tvLive)
+        val videoDurationText = findViewById<AppCompatTextView>(R.id.exo_position)
         val totalDurationText =
-            binding.playerView.findViewById<AppCompatTextView>(R.id.exo_duration)
+            findViewById<AppCompatTextView>(R.id.exo_duration)
 
         if (isYoutube) {
             model.fetchYoutubeVideo(url, true)?.observe(
@@ -611,10 +670,10 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
                 .build()
         )
         player?.prepare()
-        binding.playerView.player = player
+        playerView.player = player
         player?.setPlayWhenReady(true)
         player?.addListener(playbackStatus)
-        binding.videoView.setOnClickListener {
+        videoView.setOnClickListener {
             try {
                 hideControlHandler.removeCallbacks(hideControlRunnable)
             } catch (e: Exception) {
@@ -646,13 +705,13 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
     }
 
     private fun showBuffering() {
-        binding.bufferProgress.visibility = View.VISIBLE
-        binding.playerView.useController = false
+        bufferProgress.visibility = View.VISIBLE
+        playerView.useController = false
     }
 
     private fun hideBuffering() {
-        binding.bufferProgress.visibility = View.GONE
-        binding.playerView.useController = true
+        bufferProgress.visibility = View.GONE
+        playerView.useController = true
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -663,7 +722,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
 
     private fun gestureSetup() {
-        playerOnScaleGestureListener = PlayerOnScaleGestureListener(binding.playerView, this)
+        playerOnScaleGestureListener = PlayerOnScaleGestureListener(playerView, this)
         scaleGestureDetector = ScaleGestureDetector(this, playerOnScaleGestureListener)
     }
 

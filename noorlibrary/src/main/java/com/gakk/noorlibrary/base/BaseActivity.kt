@@ -11,10 +11,19 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.WindowManager
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.databinding.*
@@ -53,7 +62,7 @@ open class BaseActivity : AppCompatActivity() {
     fun showDialogWithParamByType(
         dilogType: DialogType,
         surahListAdapter: SurahListAdapter? = null,
-        binding: LayoutRozaPrimaryHeaderBinding? = null,
+        binding: View? = null,
         actionWithSingleParam: ((String) -> Unit)? = null,
         actionOneWithNoParameter: (() -> Unit)? = null,
         actionTwoWithNoParameter: (() -> Unit)? = null,
@@ -99,21 +108,24 @@ open class BaseActivity : AppCompatActivity() {
 
     fun showZakatInfoDialog(title: String?, description: String?) {
 
-        val binding: LayoutInfoShowBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
-            R.layout.layout_info_show,
-            null,
-            false
+        val view = LayoutInflater.from(this).inflate(
+            R.layout.layout_info_show, null,false
         )
-        val dialogView: View = binding.root
+
+        val dialogView: View = view
         val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         customDialog.setView(dialogView)
-        binding.tvTitleInfo.text = title
-        binding.tvDescription.text = description
+
+        val tvTitleInfo = dialogView.findViewById<AppCompatTextView>(R.id.tvTitleInfo)
+        val tvDescription = dialogView.findViewById<AppCompatTextView>(R.id.tvDescription)
+        val imgClose = dialogView.findViewById<AppCompatImageView>(R.id.imgClose)
+
+        tvTitleInfo.text = title
+        tvDescription.text = description
 
         alertDialog = customDialog.show()
 
-        binding.imgClose.handleClickEvent { alertDialog.dismiss() }
+        imgClose.handleClickEvent { alertDialog.dismiss() }
         alertDialog.window?.setLayout(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT
@@ -124,13 +136,12 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun showSurahListDialog(adapter: SurahListAdapter?, pageReloadCallBack: PageReloadCallBack) {
-        var binding: LayoutSurahListBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
-            R.layout.layout_surah_list,
-            null,
-            false
+
+        val view = LayoutInflater.from(this).inflate(
+            R.layout.layout_surah_list, null,false
         )
-        val dialogView: View = binding.root
+
+        val dialogView: View = view
         val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         customDialog.setView(dialogView)
 
@@ -142,23 +153,28 @@ open class BaseActivity : AppCompatActivity() {
         alertDialog.window?.setGravity(Gravity.CENTER)
         alertDialog.setCancelable(false)
 
-        binding.rvSurahList.adapter = adapter
-        binding.rvSurahList.setDivider(R.drawable.recycler_view_divider)
+        val rvSurahList = view.findViewById<RecyclerView>(R.id.rvSurahList)
 
-        setSurahListDiaLogViewsClickEvents(binding, pageReloadCallBack, adapter)
+        rvSurahList.adapter = adapter
+        rvSurahList.setDivider(R.drawable.recycler_view_divider)
+
+        setSurahListDiaLogViewsClickEvents(view, pageReloadCallBack, adapter)
     }
 
 
     private fun setSurahListDiaLogViewsClickEvents(
-        binding: LayoutSurahListBinding,
+        binding: View,
         pageReloadCallBack: PageReloadCallBack,
         adapter: SurahListAdapter?
     ) {
 
-        binding.btnDismiss.handleClickEvent {
+        val btnDismiss = binding.findViewById<ImageButton>(R.id.btnDismiss)
+        val btnSelectSurah = binding.findViewById<AppCompatButton>(R.id.btnSelectSurah)
+
+        btnDismiss.handleClickEvent {
             alertDialog.dismiss()
         }
-        binding.btnSelectSurah.handleClickEvent {
+        btnSelectSurah.handleClickEvent {
             alertDialog.dismiss()
             var selectedId = adapter?.getViewHolderSelectionControl()?.getSelectedId()
             SurahListControl.updateSelectedIndex(selectedId!!)
@@ -168,13 +184,13 @@ open class BaseActivity : AppCompatActivity() {
 
     fun showImagePickOptioneDialog(actionCamera: (() -> Unit)?, actionGalley: (() -> Unit)?) {
 
-        val binding: LayoutPhotoOptionBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
-            R.layout.layout_photo_option,
-            null,
-            false
+
+        val view = LayoutInflater.from(this).inflate(
+            R.layout.layout_photo_option, null,false
         )
-        val dialogView: View = binding.root
+
+
+        val dialogView: View = view
         val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         customDialog.setView(dialogView)
 
@@ -187,7 +203,7 @@ open class BaseActivity : AppCompatActivity() {
         alertDialog.setCancelable(true)
 
         setImagePickDialogViewClickEvents(
-            binding,
+            view,
             actionCamera = actionCamera,
             actionGalley = actionGalley
         )
@@ -196,15 +212,19 @@ open class BaseActivity : AppCompatActivity() {
 
 
     fun setImagePickDialogViewClickEvents(
-        binding: LayoutPhotoOptionBinding,
+        binding: View,
         actionCamera: (() -> Unit)?,
         actionGalley: (() -> Unit)?
     ) {
-        binding.btnCamera.handleClickEvent {
+
+        val btnCamera = binding.findViewById<AppCompatImageButton>(R.id.btnCamera)
+        val btnGallery = binding.findViewById<ImageButton>(R.id.btnGallery)
+
+        btnCamera.handleClickEvent {
             actionCamera?.invoke()
             alertDialog.dismiss()
         }
-        binding.btnGallery.handleClickEvent {
+        btnGallery.handleClickEvent {
             actionGalley?.invoke()
             alertDialog.dismiss()
         }
@@ -215,13 +235,12 @@ open class BaseActivity : AppCompatActivity() {
         numberAyah: String? = null,
         textAyah: String? = null
     ) {
-        var binding: LayoutSurahOrAyahActionListBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
-            R.layout.layout_surah_or_ayah_action_list,
-            null,
-            false
+
+        val view = LayoutInflater.from(this).inflate(
+            R.layout.layout_surah_or_ayah_action_list, null,false
         )
-        val dialogView: View = binding.root
+
+        val dialogView: View = view
         val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         customDialog.setView(dialogView)
 
@@ -234,12 +253,17 @@ open class BaseActivity : AppCompatActivity() {
         alertDialog.window?.setGravity(Gravity.CENTER)
         alertDialog.setCancelable(false)
 
+        val tvSurahNameOrAyahTxt = view.findViewById<AppCompatTextView>(R.id.tvSurahNameOrAyahTxt)
+        val tvSurahOrAyahNumber = view.findViewById<AppCompatTextView>(R.id.tvSurahOrAyahNumber)
+        val layoutCopyAction = view.findViewById<ConstraintLayout>(R.id.layoutCopyAction)
+        val layoutShareAction = view.findViewById<ConstraintLayout>(R.id.layoutShareAction)
+
         if (dilogType == DialogType.AyahActionListDialog) {
-            binding.tvSurahNameOrAyahTxt.setText(resources.getText(R.string.ayah))
-            binding.tvSurahOrAyahNumber.setText(numberAyah)
+            tvSurahNameOrAyahTxt.setText(resources.getText(R.string.ayah))
+            tvSurahOrAyahNumber.setText(numberAyah)
         }
 
-        binding.layoutCopyAction.root.handleClickEvent {
+        layoutCopyAction.handleClickEvent {
             if (textAyah != null) {
                 this.copyToClipboard(textAyah)
                 Toast.makeText(this, "Copied to clipboard!", Toast.LENGTH_LONG).show()
@@ -247,7 +271,7 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
 
-        binding.layoutShareAction.root.handleClickEvent {
+        layoutShareAction.handleClickEvent {
             val shareText: String = textAyah!!
             val sendIntent = Intent()
             sendIntent.action = "android.intent.action.SEND"
@@ -261,30 +285,31 @@ open class BaseActivity : AppCompatActivity() {
 
         setUpActionLayouts(
             layoutType = ActionLayoutType.CopyActionLayout,
-            binding = binding,
+            binding = view,
             dilogType = dilogType
         )
         setUpActionLayouts(
             layoutType = ActionLayoutType.ShareActionLayout,
-            binding = binding,
+            binding = view,
             dilogType = dilogType
         )
         setUpActionLayouts(
             layoutType = ActionLayoutType.FavouriteActionLayout,
-            binding = binding,
+            binding = view,
             dilogType = dilogType
         )
         setUpActionLayouts(
             layoutType = ActionLayoutType.PlayActionLayout,
-            binding = binding,
+            binding = view,
             dilogType = dilogType
         )
-        setSurahOrAyahActionViewsClickEvents(binding)
+        setSurahOrAyahActionViewsClickEvents(view)
     }
 
 
-    fun setSurahOrAyahActionViewsClickEvents(binding: LayoutSurahOrAyahActionListBinding) {
-        binding.btnDismiss.handleClickEvent {
+    fun setSurahOrAyahActionViewsClickEvents(binding: View) {
+
+        binding.findViewById<ImageButton>(R.id.btnDismiss).handleClickEvent {
             alertDialog.dismiss()
         }
     }
@@ -292,60 +317,78 @@ open class BaseActivity : AppCompatActivity() {
     private fun setUpActionLayouts(
         dilogType: DialogType,
         layoutType: ActionLayoutType,
-        binding: LayoutSurahOrAyahActionListBinding
+        binding: View
     ) {
 
         when (layoutType) {
             ActionLayoutType.CopyActionLayout -> {
-                binding.layoutCopyAction.btnAction.setImageResource(R.drawable.ic_copy)
+                val btnAction = binding.findViewById<ImageView>(R.id.btnAction)
+                btnAction.setImageResource(R.drawable.ic_copy)
                 when (dilogType) {
                     DialogType.SurahActionListDialog -> {
-                        binding.layoutCopyAction.tvActionName.setText(resources.getString(R.string.copy_surah))
+                        val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+                        tvActionName.setText(resources.getString(R.string.copy_surah))
                     }
                     DialogType.AyahActionListDialog -> {
-                        binding.layoutCopyAction.tvActionName.setText(resources.getString(R.string.copy_ayah))
+                        val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+                        tvActionName.setText(resources.getString(R.string.copy_ayah))
                     }
                     else -> {}
                 }
 
             }
             ActionLayoutType.ShareActionLayout -> {
-                binding.layoutShareAction.btnAction.setImageResource(R.drawable.ic_share)
-                binding.layoutShareAction.tvActionName.setText(resources.getString(R.string.share))
+
+                val btnAction = binding.findViewById<ImageButton>(R.id.btnAction)
+                val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+
+                btnAction.setImageResource(R.drawable.ic_share)
+                tvActionName.setText(resources.getString(R.string.share))
             }
             ActionLayoutType.FavouriteActionLayout -> {
-                binding.layoutFavAction.btnAction.setImageResource(R.drawable.ic_favorite)
-                binding.layoutFavAction.tvActionName.setText(resources.getString(R.string.favourite))
+                val btnAction = binding.findViewById<ImageButton>(R.id.btnAction)
+                val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+
+                btnAction.setImageResource(R.drawable.ic_favorite)
+                tvActionName.setText(resources.getString(R.string.favourite))
             }
             ActionLayoutType.PlayActionLayout -> {
-                binding.layoutPlayAudioAction.btnAction.setImageResource(R.drawable.ic_play_no_bg)
-                binding.layoutPlayAudioAction.tvActionName.setText(resources.getString(R.string.play_audio))
+                val btnAction = binding.findViewById<ImageButton>(R.id.btnAction)
+                val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+
+                btnAction.setImageResource(R.drawable.ic_play_no_bg)
+                tvActionName.setText(resources.getString(R.string.play_audio))
             }
         }
 
         when (dilogType) {
             DialogType.SurahActionListDialog -> {
-                binding.layoutFavAction.root.visibility = VISIBLE
-                binding.layoutPlayAudioAction.root.visibility = VISIBLE
+                val layoutFavAction = binding.findViewById<ConstraintLayout>(R.id.layoutFavAction)
+                val layoutPlayAudioAction = binding.findViewById<ConstraintLayout>(R.id.layoutPlayAudioAction)
+
+                layoutFavAction.visibility = VISIBLE
+                layoutPlayAudioAction.visibility = VISIBLE
             }
             DialogType.AyahActionListDialog -> {
-                binding.layoutFavAction.root.visibility = GONE
-                binding.layoutPlayAudioAction.root.visibility = GONE
+                val layoutFavAction = binding.findViewById<ConstraintLayout>(R.id.layoutFavAction)
+                val layoutPlayAudioAction = binding.findViewById<ConstraintLayout>(R.id.layoutPlayAudioAction)
+
+                layoutFavAction.visibility = GONE
+                layoutPlayAudioAction.visibility = GONE
             }
             else -> {}
         }
     }
 
     fun showDownloadDialog(action: (() -> Unit)?) {
-        var binding: LayoutConfirmationDialogBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
-            R.layout.layout_confirmation_dialog,
-            null,
-            false
+
+
+        val view = LayoutInflater.from(this).inflate(
+            R.layout.layout_confirmation_dialog, null,false
         )
 
 
-        val dialogView: View = binding.root
+        val dialogView: View = view
         val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         customDialog.setView(dialogView)
 
@@ -358,27 +401,27 @@ open class BaseActivity : AppCompatActivity() {
         alertDialog.setCancelable(false)
         alertDialog.show()
 
-        binding.btnYes.handleClickEvent {
+        val btnYes = view.findViewById<AppCompatButton>(R.id.btnYes)
+
+        btnYes.handleClickEvent {
             action?.invoke()
             alertDialog.dismiss()
         }
+        val btnNo = view.findViewById<AppCompatButton>(R.id.btnNo)
 
-        binding.btnNo.handleClickEvent {
+        btnNo.handleClickEvent {
             alertDialog.dismiss()
         }
     }
 
     fun showRozaNotificationSettingAlert() {
 
-        var binding: LayoutRozaNotificationSettingsBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
-            R.layout.layout_roza_notification_settings,
-            null,
-            false
+        val view = LayoutInflater.from(this).inflate(
+            R.layout.layout_roza_notification_settings, null,false
         )
 
 
-        val dialogView: View = binding.root
+        val dialogView: View = view
         val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         customDialog.setView(dialogView)
 
@@ -391,92 +434,123 @@ open class BaseActivity : AppCompatActivity() {
         alertDialog.setCancelable(false)
         alertDialog.show()
 
-        binding.btnDismiss.handleClickEvent {
+        val btnDismiss = view.findViewById<ImageButton>(R.id.btnDismiss)
+
+        btnDismiss.handleClickEvent {
             alertDialog.dismiss()
         }
-        setUpRozaNotificationControls(binding)
+        setUpRozaNotificationControls(view)
     }
 
-    fun setUpRozaNotificationControls(binding: LayoutRozaNotificationSettingsBinding) {
+    fun setUpRozaNotificationControls(binding: View) {
 
-        binding.layoutSehriAlertControl.let {
-            it.tvActionName.setText(R.string.sehri_alert)
-            it.checkboxActionIcon.setButtonDrawable(R.drawable.selector_notification)
-            it.root.handleClickEvent {
-                when (it.checkboxActionIcon.isChecked) {
+        val layoutSehriAlertControl = binding.findViewById<ConstraintLayout>(R.id.layoutSehriAlertControl)
+
+        layoutSehriAlertControl.let {
+
+            val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+            val checkboxActionIcon = binding.findViewById<AppCompatCheckBox>(R.id.checkboxActionIcon)
+            tvActionName.setText(R.string.sehri_alert)
+            checkboxActionIcon.setButtonDrawable(R.drawable.selector_notification)
+
+            it.handleClickEvent {
+
+
+                when (checkboxActionIcon.isChecked) {
                     true -> {
-                        it.checkboxActionIcon.isChecked = false
+                        checkboxActionIcon.isChecked = false
                         AppPreference.sehriAlertOn = false
                     }
                     false -> {
-                        it.checkboxActionIcon.isChecked = true
+                        checkboxActionIcon.isChecked = true
                         AppPreference.sehriAlertOn = true
                         AppPreference.nitificationflag = true
                     }
                 }
             }
-            it.isChecked = AppPreference.sehriAlertOn
+
+
+            checkboxActionIcon.isChecked = AppPreference.sehriAlertOn
+
         }
 
-        binding.layoutIfterAlertControl.let {
-            it.tvActionName.setText(R.string.ifter_alert)
-            it.checkboxActionIcon.setButtonDrawable(R.drawable.selector_notification)
-            it.root.handleClickEvent {
-                when (it.checkboxActionIcon.isChecked) {
+        val layoutIfterAlertControl = binding.findViewById<ConstraintLayout>(R.id.layoutIfterAlertControl)
+
+        val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+        val checkboxActionIcon = binding.findViewById<AppCompatCheckBox>(R.id.checkboxActionIcon)
+
+
+        layoutIfterAlertControl.let {
+            tvActionName.setText(R.string.ifter_alert)
+            checkboxActionIcon.setButtonDrawable(R.drawable.selector_notification)
+            it.handleClickEvent {
+                when (checkboxActionIcon.isChecked) {
                     true -> {
-                        it.checkboxActionIcon.isChecked = false
+                        checkboxActionIcon.isChecked = false
                         AppPreference.ifterAlertOn = false
                     }
                     false -> {
-                        it.checkboxActionIcon.isChecked = true
+                        checkboxActionIcon.isChecked = true
                         AppPreference.ifterAlertOn = true
                         AppPreference.nitificationflag = true
                     }
                 }
             }
-            it.isChecked = AppPreference.ifterAlertOn
+
+            checkboxActionIcon.isChecked = AppPreference.ifterAlertOn
+
         }
 
-        binding.layoutNotificationSoundControl.let {
-            it.tvActionName.setText(R.string.notification_sound)
-            it.checkboxActionIcon.setButtonDrawable(R.drawable.selector_check_box)
-            it.root.handleClickEvent {
-                when (it.checkboxActionIcon.isChecked) {
+        val layoutNotificationSoundControl = binding.findViewById<ConstraintLayout>(R.id.layoutNotificationSoundControl)
+
+
+
+        layoutNotificationSoundControl.let {
+            tvActionName.setText(R.string.notification_sound)
+            checkboxActionIcon.setButtonDrawable(R.drawable.selector_check_box)
+            it.handleClickEvent {
+                when (checkboxActionIcon.isChecked) {
                     true -> {
-                        it.checkboxActionIcon.isChecked = false
+                        checkboxActionIcon.isChecked = false
                         AppPreference.sehriOrifterAlertSoundOn = false
                     }
                     false -> {
-                        it.checkboxActionIcon.isChecked = true
+                        checkboxActionIcon.isChecked = true
                         AppPreference.sehriOrifterAlertSoundOn = true
                     }
                 }
             }
-            it.isChecked = AppPreference.sehriOrifterAlertSoundOn
+
+            checkboxActionIcon.isChecked = AppPreference.sehriOrifterAlertSoundOn
+
         }
 
-        binding.layoutNotificationVibrationControl.let {
-            it.tvActionName.setText(R.string.notification_vibration)
-            it.checkboxActionIcon.setButtonDrawable(R.drawable.selector_check_box)
-            it.root.handleClickEvent {
-                when (it.checkboxActionIcon.isChecked) {
+        val layoutNotificationVibrationControl = binding.findViewById<ConstraintLayout>(R.id.layoutNotificationVibrationControl)
+
+        layoutNotificationVibrationControl.let {
+            tvActionName.setText(R.string.notification_vibration)
+            checkboxActionIcon.setButtonDrawable(R.drawable.selector_check_box)
+            it.handleClickEvent {
+                when (checkboxActionIcon.isChecked) {
                     true -> {
-                        it.checkboxActionIcon.isChecked = false
+                        checkboxActionIcon.isChecked = false
                         AppPreference.sehriOrifterAlertVibrationOn = false
 
                     }
                     false -> {
-                        it.checkboxActionIcon.isChecked = true
+                        checkboxActionIcon.isChecked = true
                         AppPreference.sehriOrifterAlertVibrationOn = true
                     }
                 }
             }
-            it.isChecked = AppPreference.sehriOrifterAlertVibrationOn
+
+            checkboxActionIcon.isChecked = AppPreference.sehriOrifterAlertVibrationOn
+
         }
     }
 
     fun showDivisionListDialog(
-        rozaHeaderBinding: LayoutRozaPrimaryHeaderBinding?,
+        rozaHeaderBinding: View?,
         divisions: List<String>? = resources.getStringArray(R.array.bd_divisions)
             .toList(),
         divisionCallbackFunc: DivisionCallbackFunc? = null

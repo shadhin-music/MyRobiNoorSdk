@@ -1,15 +1,21 @@
 package com.gakk.noorlibrary.extralib.country_code_picker
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.databinding.ItemCcpBinding
 import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.util.setImageFromUrl
+import org.w3c.dom.Text
 import kotlin.collections.ArrayList
 
 
@@ -20,16 +26,24 @@ class ccpAdapter(
 
     var ccp_filter: ArrayList<CCPmodel> = ccpList
 
-    inner class ViewHolder(private val binding: ItemCcpBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: View) :
+        RecyclerView.ViewHolder(binding) {
 
         fun bind(ccp_model: CCPmodel, position: Int) {
             binding.apply {
 
-                val context = binding.root.context
-                data = ccp_model
+                val ic_flag = this.findViewById<ImageView>(R.id.ic_flag)
+                val progressBar = this.findViewById<ProgressBar>(R.id.progressBar)
+                val country_name = this.findViewById<TextView>(R.id.country_name)
+                val country_code = this.findViewById<TextView>(R.id.country_code)
+                val data = ccp_model
 
-                root.handleClickEvent {
+                setImageFromUrl(ic_flag,data.fullImageUrl,progressBar)
+
+                country_name.text = data.countryName
+                country_code.text = data.dialCode
+
+                this.handleClickEvent {
                     onItemClickListener?.onItemClick(position, ccp_filter)
                 }
             }
@@ -52,13 +66,10 @@ class ccpAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemCcpBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_ccp,
-            parent,
-            false
-        )
-        return ViewHolder(binding)
+
+       val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ccp,parent,false)
+
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
