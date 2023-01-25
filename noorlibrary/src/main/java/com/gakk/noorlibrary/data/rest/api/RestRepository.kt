@@ -638,6 +638,7 @@ class RestRepository(
             ?.let { jsonString ->
                 val response = safeApiCall { authService.login(jsonString) }
                 AppPreference.userToken = response?.data?.data?.token
+                AppPreference.userNumber = phoneNumber
             }
         return AppPreference.userToken
     }
