@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="data"
-            type="com.gakk.noorlibrary.model.home.Data" />
-
-        <variable
-            name="ayat"
-            type="com.gakk.noorlibrary.model.home.Item" />
-
-        <variable
-            name="constant"
-            type="com.gakk.noorlibrary.util.ConstantsKt" />
-
-        <variable
-            name="item"
-            type="com.gakk.noorlibrary.model.ImageFromOnline" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_spacing">
@@ -46,7 +26,6 @@
                 android:layout_height="@dimen/size_24"
                 android:layout_centerVertical="true"
                 android:adjustViewBounds="true"
-                android:patchImageFullUrl="@{data.fullImageUrl}"
                 android:scaleType="fitXY"
                 tools:src="@drawable/ic_romjan_amol" />
 
@@ -57,7 +36,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/small_spacing"
                 android:layout_toEndOf="@+id/imgAyat"
-                android:text="@{data.patchName}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/txt_color_title"
                 android:fontFamily="sans-serif-medium"
@@ -106,8 +84,6 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:adjustViewBounds="true"
-                            android:imageUrl="@{item.fullImageUrl}"
-                            app:attachedProgressBar="@{progressBar}"
                             android:scaleType="centerCrop"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="h,1:0.5608974"
@@ -128,13 +104,13 @@
                         </ProgressBar>
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/ayattext"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_12"
                             android:layout_marginEnd="@dimen/margin_12"
                             android:fontFamily="@font/notosansbengali_regular"
                             android:justificationMode="inter_word"
-                            android:text="@{ayat.text}"
                             android:textAlignment="center"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                             android:textColor="@color/white"
@@ -219,4 +195,3 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>

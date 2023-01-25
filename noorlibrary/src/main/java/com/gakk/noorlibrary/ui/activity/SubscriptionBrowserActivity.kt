@@ -7,6 +7,7 @@ import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,16 +19,21 @@ import com.gakk.noorlibrary.util.*
 
 internal class SubscriptionBrowserActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySubscriptionBrowserBinding
+  //  private lateinit var binding: ActivitySubscriptionBrowserBinding
+    private lateinit var webview:WebView
+    private lateinit var progressBar:View
+    private lateinit var toolBar:TextView
+    private lateinit var btnBack:View
     private var isRobi: Boolean? = null
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_subscription_browser)
+        setContentView(R.layout.activity_subscription_browser)
+        setupUi()
 
-        binding.toolBar.btnBack.handleClickEvent { finish() }
+        btnBack.handleClickEvent { finish() }
 
         val url: String?
         val subscriptionId: String?
@@ -38,7 +44,7 @@ internal class SubscriptionBrowserActivity : AppCompatActivity() {
             isPaymentNagad = intent.getBooleanExtra(PAYMENT_METHOD_TAG, false)
         }
 
-        binding.toolBar.title.setText(R.string.page_title_subscription)
+        toolBar.setText(R.string.page_title_subscription)
 
         if (isPaymentNagad) {
             url = intent.getStringExtra(PAYMENT_URL_TAG)
@@ -48,17 +54,17 @@ internal class SubscriptionBrowserActivity : AppCompatActivity() {
         }
 
 
-        binding.webview.settings.javaScriptEnabled = true
-        binding.webview.settings.domStorageEnabled = true
-        binding.webview.settings.useWideViewPort = true
-        binding.webview.settings.loadWithOverviewMode = true
-        binding.progressBar.visibility = View.VISIBLE
+        webview.settings.javaScriptEnabled = true
+        webview.settings.domStorageEnabled = true
+        webview.settings.useWideViewPort = true
+        webview.settings.loadWithOverviewMode = true
+       progressBar.visibility = View.VISIBLE
 
         if (url != null) {
-            binding.webview.loadUrl(url)
+            webview.loadUrl(url)
         }
 
-        binding.webview.setWebViewClient(object : WebViewClient() {
+        webview.setWebViewClient(object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
                 request: WebResourceRequest
@@ -67,7 +73,7 @@ internal class SubscriptionBrowserActivity : AppCompatActivity() {
             }
 
             override fun onPageFinished(view: WebView, url: String) {
-                binding.progressBar.visibility = View.GONE
+               progressBar.visibility = View.GONE
                 Log.e("onPageFinished", url)
                 if (url.contains("isDoubleConfrim")) {
                     val chargeStatus: String? = getQueryMap(url)?.get("isDoubleConfrim")
@@ -99,6 +105,13 @@ internal class SubscriptionBrowserActivity : AppCompatActivity() {
         })
 
 
+    }
+
+    private fun setupUi() {
+        webview = findViewById(R.id.webview)
+        progressBar = findViewById(R.id.progressBar)
+        toolBar = findViewById(R.id.toolBar)
+        btnBack = findViewById(R.id.btnBack)
     }
 
     fun getQueryMap(query: String): Map<String, String>? {

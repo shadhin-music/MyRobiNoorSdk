@@ -7,24 +7,26 @@ import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
+import com.gakk.noorlibrary.R
+import com.gakk.noorlibrary.base.BaseApplication
+import com.gakk.noorlibrary.util.IS_IJTEMA_LIVE_VIDEO
+import com.gakk.noorlibrary.util.Util.parseAndGetKey
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
-import com.gakk.noorlibrary.databinding.ActivityCommonYoutubePlayerBinding
-import com.gakk.noorlibrary.util.IS_IJTEMA_LIVE_VIDEO
-import com.gakk.noorlibrary.util.Util.parseAndGetKey
+import com.google.android.youtube.player.YouTubePlayerView
 
 internal class YoutubePlayerActivity : YouTubeBaseActivity() {
 
-    private lateinit var binding: ActivityCommonYoutubePlayerBinding
+    private lateinit var youtubePlayerView: YouTubePlayerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_common_youtube_player)
+
+        setContentView(R.layout.activity_common_youtube_player)
+
+        youtubePlayerView = findViewById(R.id.youtube_player_view)
 
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -50,7 +52,7 @@ internal class YoutubePlayerActivity : YouTubeBaseActivity() {
     }
 
     private fun initPlayer(id: String) {
-        binding.youtubePlayerView.initialize(
+        youtubePlayerView.initialize(
             parseAndGetKey(),
             object : YouTubePlayer.OnInitializedListener {
                 override fun onInitializationSuccess(
