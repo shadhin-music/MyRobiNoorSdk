@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -31,7 +31,6 @@ import com.gakk.noorlibrary.data.LocationHelper
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.DialogNamazerDakBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.UpCommingPrayer
 import com.gakk.noorlibrary.model.literature.Literature
@@ -301,12 +300,12 @@ internal class NamazTimingFragment : Fragment() {
         val customDialog = MaterialAlertDialogBuilder(
             requireActivity(), R.style.MaterialAlertDialog_rounded
         )
-        val binding: DialogNamazerDakBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(requireActivity()), R.layout.dialog_namazer_dak, null, false
+        val binding: View = LayoutInflater.from(requireActivity()).inflate(
+             R.layout.dialog_namazer_dak, null, false
         )
 
 
-        val dialogView: View = binding.root
+        val dialogView: View = binding
         customDialog.setView(dialogView)
 
         val alertDialog = customDialog.show()
@@ -320,7 +319,10 @@ internal class NamazTimingFragment : Fragment() {
 
             if (i.title?.trim().equals(waqtName)) {
 
-                binding.literature = i
+                kotlin.runCatching {
+                    setImageFromUrl(view?.findViewById<ImageView>(R.id.ivNamazDak)!!,
+                        i.fullImageUrl,view?.findViewById<ProgressBar>(R.id.progressBar)!!)
+                }
                 shareItem = i
                 break
             }
@@ -331,14 +333,65 @@ internal class NamazTimingFragment : Fragment() {
         alertDialog.setCancelable(true)
         alertDialog.show()
 
-        binding.imgClose.handleClickEvent {
+        binding.findViewById<View>(R.id.imgClose).handleClickEvent {
             alertDialog.dismiss()
         }
 
-        binding.btnShare.handleClickEvent {
+        binding.findViewById<View>(R.id.btnShare).handleClickEvent {
             getBitmapFromUrl(shareItem?.fullImageUrl!!)
 
             alertDialog.dismiss()
+        }
+    }
+    fun getPlaceHolder(dimen: String): Int {
+        when (dimen) {
+            PLACE_HOLDER_16_9 -> return R.drawable.place_holder_16_9_ratio
+            PLACE_HOLDER_1_1 -> return R.drawable.place_holder_1_1_ratio
+            PLACE_HOLDER_2_3 -> return R.drawable.place_holder_2_3_ratio
+            else -> return R.drawable.place_holder_4_3_ratio
+        }
+    }
+    fun setImageFromUrl(
+        imageView: ImageView,
+        url: String? = null,
+        progressBar: ProgressBar,
+        dimen: String
+    ) {
+        url?.let {
+            progressBar.visibility = View.VISIBLE
+            val placeHolder = getPlaceHolder(dimen)
+
+            Noor.appContext?.let {
+                Glide.with(it)
+                    .load(url.replace("<size>", "1280"))
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            progressBar.visibility = View.GONE
+
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            progressBar.visibility = View.GONE
+                            return false
+                        }
+
+                    })
+                    .error(placeHolder)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .into(imageView)
+            }
         }
     }
 

@@ -7,11 +7,9 @@ import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.RowItemHajjUserBinding
 import com.gakk.noorlibrary.model.hajjtracker.HajjSharingListResponse
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjtracker.BottomSheetDisplay
 import com.gakk.noorlibrary.util.CircleImageView

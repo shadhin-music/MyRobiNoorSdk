@@ -5,9 +5,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,8 +18,6 @@ import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.DialogSubscriptionBinding
-import com.gakk.noorlibrary.databinding.FragmentSubscriptionBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.ui.activity.SubscriptionBrowserActivity
 import com.gakk.noorlibrary.util.*
@@ -27,7 +27,32 @@ import kotlinx.coroutines.launch
 
 internal class SubscriptionFragment : Fragment() {
 
-    private lateinit var binding: FragmentSubscriptionBinding
+
+    private lateinit var progressLayout:ProgressBar
+    private lateinit var ivShapeSubWeekly:ImageView
+    private lateinit var btnSubscribeWeekly:TextView
+    private lateinit var tvAmount:TextView
+
+    private lateinit var tvFifteenService:TextView
+    private lateinit var tvAmountFifteen:TextView
+    private lateinit var tvSevenService:TextView
+    private lateinit var tvAmountWeekly:TextView
+    private lateinit var tvMonthlyService:TextView
+    private lateinit var tvAmountMonthly:TextView
+    private lateinit var tvTitleSub:TextView
+    private lateinit var tvDesSub:TextView
+    private lateinit var tvDailyService:TextView
+    private lateinit var tvContentMonthly:TextView
+
+
+    private lateinit var tvContent:TextView
+    private lateinit var tvContentSeven:TextView
+    private lateinit var ivShapeSubMonthly:ImageView
+    private lateinit var btnSubscribeMonthly:TextView
+    private lateinit var btnSubscribeFifteen:TextView
+    private lateinit var btnSubscribeDaily:View
+    private lateinit var ivBg:ImageView
+
     private var mCallback: DetailsCallBack? = null
     private lateinit var repository: RestRepository
     private lateinit var model: SubscriptionViewModel
@@ -44,6 +69,7 @@ internal class SubscriptionFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         mCallback = requireActivity() as DetailsCallBack
     }
 
@@ -53,19 +79,17 @@ internal class SubscriptionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_subscription, container, false)
-
-        return binding.root
+        return inflater.inflate( R.layout.fragment_subscription, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         isCelcom = false
+        setupUi(view)
         initViewRobi()
 
-        binding.item = ImageFromOnline("ic_bg_sub.png")
+        setImageFromUrlNoProgress(ivBg,ImageFromOnline("ic_bg_sub.png").fullImageUrl)
 
         lifecycleScope.launch {
 
@@ -92,44 +116,44 @@ internal class SubscriptionFragment : Fragment() {
             model.weeklySubInfo.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
                         Log.e("Sub", "loading")
                     }
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         Log.e("Sub", "Weekly" + it.data)
                         when (it.data?.regStatus) {
                             "1AK" -> {
                                 AppPreference.subWeekly = true
-                                binding.ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                binding.btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
-                                binding.btnSubscribeWeekly.setTextColor(Color.WHITE)
-                                binding.tvAmount.setTextColor(
+                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
+                                btnSubscribeWeekly.setTextColor(Color.WHITE)
+                                tvAmount.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
                                     )
                                 )
-                                binding.tvContent.setTextColor(
+                                tvContent.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
                                     )
                                 )
-                                binding.btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
                             }
                             else -> {
                                 AppPreference.subWeekly = false
-                                binding.ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
-                                binding.btnSubscribeWeekly.setText(getString(R.string.txt_sub))
-                                binding.btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
+                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
+                                btnSubscribeWeekly.setText(getString(R.string.txt_sub))
+                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
                             }
 
                         }
 
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         Log.e("Sub", "Error" + it.message)
                     }
                 }
@@ -138,44 +162,44 @@ internal class SubscriptionFragment : Fragment() {
             model.weeklySubInfoRobi.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
-                        binding.progressLayout.root.visibility = View.VISIBLE
+                        progressLayout.visibility = View.VISIBLE
                         Log.e("Sub", "loading")
                     }
                     Status.SUCCESS -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         Log.e("Sub", "Weekly" + it.data)
                         when (it.data) {
                             "1AK" -> {
                                 AppPreference.subWeekly = true
-                                binding.ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                binding.btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
-                                binding.btnSubscribeWeekly.setTextColor(Color.WHITE)
-                                binding.tvAmount.setTextColor(
+                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
+                                btnSubscribeWeekly.setTextColor(Color.WHITE)
+                                tvAmount.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
                                     )
                                 )
-                                binding.tvContent.setTextColor(
+                                tvContent.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
                                     )
                                 )
-                                binding.btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
                             }
                             else -> {
                                 AppPreference.subWeekly = false
-                                binding.ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
-                                binding.btnSubscribeWeekly.setText(getString(R.string.txt_sub))
-                                binding.btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
+                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
+                                btnSubscribeWeekly.setText(getString(R.string.txt_sub))
+                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
                             }
 
                         }
 
                     }
                     Status.ERROR -> {
-                        binding.progressLayout.root.visibility = View.GONE
+                        progressLayout.visibility = View.GONE
                         Log.e("Sub", "Error" + it.message)
                     }
                 }
@@ -191,29 +215,29 @@ internal class SubscriptionFragment : Fragment() {
                             "1AK" -> {
 
                                 AppPreference.subMonthly = true
-                                binding.ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                binding.btnSubscribeMonthly.setText(getString(R.string.txt_unsub))
-                                binding.btnSubscribeMonthly.setTextColor(Color.WHITE)
-                                binding.tvAmountMonthly.setTextColor(
+                                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeMonthly.setText(getString(R.string.txt_unsub))
+                                btnSubscribeMonthly.setTextColor(Color.WHITE)
+                                tvAmountMonthly.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
                                     )
                                 )
-                                binding.tvContent.setTextColor(
+                                tvContent.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
                                     )
                                 )
-                                binding.btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
                             }
                             else -> {
                                 AppPreference.subMonthly = false
-                                binding.ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
-                                binding.btnSubscribeMonthly.setText(getString(R.string.txt_sub))
+                                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
+                                btnSubscribeMonthly.setText(getString(R.string.txt_sub))
 
-                                binding.btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
+                                btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
                             }
                         }
 
@@ -235,29 +259,29 @@ internal class SubscriptionFragment : Fragment() {
                             "1AK" -> {
 
                                 AppPreference.subMonthly = true
-                                binding.ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                binding.btnSubscribeMonthly.setText(getString(R.string.txt_unsub))
-                                binding.btnSubscribeMonthly.setTextColor(Color.WHITE)
-                                binding.tvAmountMonthly.setTextColor(
+                                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeMonthly.setText(getString(R.string.txt_unsub))
+                                btnSubscribeMonthly.setTextColor(Color.WHITE)
+                                tvAmountMonthly.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
                                     )
                                 )
-                                binding.tvContent.setTextColor(
+                                tvContent.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
                                     )
                                 )
-                                binding.btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
                             }
                             else -> {
                                 AppPreference.subMonthly = false
-                                binding.ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
-                                binding.btnSubscribeMonthly.setText(getString(R.string.txt_sub))
+                                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
+                                btnSubscribeMonthly.setText(getString(R.string.txt_sub))
 
-                                binding.btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
+                                btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
                             }
                         }
 
@@ -287,31 +311,28 @@ internal class SubscriptionFragment : Fragment() {
                                     "1AK" -> {
 
                                         AppPreference.subWeeklyRobi = true
-                                        binding.ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                        binding.btnSubscribeWeekly.text =
-                                            getString(R.string.txt_unsub)
-                                        binding.btnSubscribeWeekly.setTextColor(Color.WHITE)
-                                        binding.tvAmountWeekly.setTextColor(
+                                        ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                        btnSubscribeWeekly.text = getString(R.string.txt_unsub)
+                                        btnSubscribeWeekly.setTextColor(Color.WHITE)
+                                        tvAmountWeekly.setTextColor(
                                             ContextCompat.getColor(
                                                 requireContext(),
                                                 R.color.txt_color_title
                                             )
                                         )
-                                        binding.tvContentSeven.setTextColor(
+                                        tvContentSeven.setTextColor(
                                             ContextCompat.getColor(
                                                 requireContext(),
                                                 R.color.txt_color_title
                                             )
                                         )
-                                        binding.btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                        btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
                                     }
                                     else -> {
                                         AppPreference.subWeeklyRobi = false
-                                        binding.ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
-                                        binding.btnSubscribeWeekly.text =
-                                            getString(R.string.txt_sub)
-
-                                        binding.btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
+                                        ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
+                                        btnSubscribeWeekly.text = getString(R.string.txt_sub)
+                                        btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
                                     }
                                 }
                             }
@@ -323,31 +344,29 @@ internal class SubscriptionFragment : Fragment() {
                                     "1AK" -> {
 
                                         AppPreference.subMonthlyRobi = true
-                                        binding.ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                        binding.btnSubscribeMonthly.text =
-                                            getString(R.string.txt_unsub)
-                                        binding.btnSubscribeMonthly.setTextColor(Color.WHITE)
-                                        binding.tvAmountMonthly.setTextColor(
+                                        ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                        btnSubscribeMonthly.text = getString(R.string.txt_unsub)
+                                        btnSubscribeMonthly.setTextColor(Color.WHITE)
+                                        tvAmountMonthly.setTextColor(
                                             ContextCompat.getColor(
                                                 requireContext(),
                                                 R.color.txt_color_title
                                             )
                                         )
-                                        binding.tvContentMonthly.setTextColor(
+                                        tvContentMonthly.setTextColor(
                                             ContextCompat.getColor(
                                                 requireContext(),
                                                 R.color.txt_color_title
                                             )
                                         )
-                                        binding.btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                        btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
                                     }
                                     else -> {
                                         AppPreference.subMonthlyRobi = false
-                                        binding.ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
-                                        binding.btnSubscribeMonthly.text =
-                                            getString(R.string.txt_sub)
+                                        ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
+                                        btnSubscribeMonthly.text = getString(R.string.txt_sub)
 
-                                        binding.btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
+                                        btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
                                     }
                                 }
 
@@ -428,7 +447,7 @@ internal class SubscriptionFragment : Fragment() {
                 }
             }
 
-            binding.btnSubscribeDaily.handleClickEvent {
+            btnSubscribeDaily.handleClickEvent {
 
                 if (AppPreference.subYearly) {
                     mCallback?.showToastMessage("You are Already subscribed")
@@ -470,7 +489,7 @@ internal class SubscriptionFragment : Fragment() {
             }
 
 
-            binding.btnSubscribeWeekly.handleClickEvent {
+            btnSubscribeWeekly.handleClickEvent {
 
 
                 if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
@@ -507,7 +526,7 @@ internal class SubscriptionFragment : Fragment() {
 
 
 
-            binding.btnSubscribeMonthly.handleClickEvent {
+            btnSubscribeMonthly.handleClickEvent {
 
                 if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
                     mCallback?.showToastMessage("You are Already subscribed")
@@ -544,7 +563,7 @@ internal class SubscriptionFragment : Fragment() {
             }
 
 
-            binding.btnSubscribeFifteen.handleClickEvent {
+            btnSubscribeFifteen.handleClickEvent {
 
                 if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
                     mCallback?.showToastMessage("You are Already subscribed")
@@ -588,6 +607,57 @@ internal class SubscriptionFragment : Fragment() {
         }
     }
 
+    private fun setupUi(view: View) {
+
+
+        /*ivShapeSubWeekly
+        btnSubscribeWeekly
+        tvAmount
+        tvFifteenService
+        tvAmountFifteen
+        tvSevenService
+        tvAmountWeekly
+        tvMonthlyService
+        tvAmountMonthly
+        tvTitleSub
+        tvDesSub
+        tvDailyService
+        tvContentMonthly
+
+        tvContent
+        tvContentSeven
+        ivShapeSubMonthly
+        btnSubscribeMonthly
+        btnSubscribeFifteen
+
+        */
+        progressLayout = view.findViewById(R.id.progressLayout)
+        ivShapeSubWeekly    = view.findViewById(R.id.ivShapeSubWeekly)
+        btnSubscribeWeekly  = view.findViewById(R.id.btnSubscribeWeekly)
+        tvAmount    = view.findViewById(R.id.tvAmount)
+        tvFifteenService    = view.findViewById(R.id.tvFifteenService)
+        tvAmountFifteen = view.findViewById(R.id.tvAmountFifteen)
+        tvSevenService  = view.findViewById(R.id.tvSevenService)
+        tvAmountWeekly  = view.findViewById(R.id.tvAmountWeekly)
+        tvMonthlyService    = view.findViewById(R.id.tvMonthlyService)
+        tvAmountMonthly = view.findViewById(R.id.tvAmountMonthly)
+        tvTitleSub  = view.findViewById(R.id.tvTitleSub)
+        tvDesSub    = view.findViewById(R.id.tvDesSub)
+        tvDailyService  = view.findViewById(R.id.tvDailyService)
+        tvContentMonthly    = view.findViewById(R.id.tvContentMonthly)
+
+
+        tvContent  = view.findViewById(R.id.tvContent)
+        tvContentSeven = view.findViewById(R.id.tvContentSeven)
+        ivShapeSubMonthly  = view.findViewById(R.id.ivShapeSubMonthly)
+        btnSubscribeMonthly = view.findViewById(R.id.btnSubscribeMonthly)
+        btnSubscribeFifteen   = view.findViewById(R.id.btnSubscribeFifteen)
+        btnSubscribeDaily   = view.findViewById(R.id.btnSubscribeDaily)
+        ivBg   = view.findViewById(R.id.ivBg)
+
+
+    }
+
     private fun checkMSISDN(output: String) {
 
         if (output.isEmpty() && output.equals(TAG_COULD_NOT_TRACK_DATA, false)) {
@@ -621,20 +691,20 @@ internal class SubscriptionFragment : Fragment() {
 
 
     private fun initViewRobi() {
-        binding.tvTitleSub.setText(getString(R.string.sub_title_robi))
-        binding.tvDesSub.setText(getString(R.string.sub_des_robi))
+        tvTitleSub.setText(getString(R.string.sub_title_robi))
+        tvDesSub.setText(getString(R.string.sub_des_robi))
 
-        binding.tvDailyService.setText(getString(R.string.txt_daily_service))
-        binding.tvAmount.setText(getString(R.string.txt_amount_robi))
+        tvDailyService.setText(getString(R.string.txt_daily_service))
+        tvAmount.setText(getString(R.string.txt_amount_robi))
 
-        binding.tvFifteenService.text = getString(R.string.txt_fifteen_day_service)
-        binding.tvAmountFifteen.text = getString(R.string.txt_amount_fifteen_robi)
+        tvFifteenService.text = getString(R.string.txt_fifteen_day_service)
+        tvAmountFifteen.text = getString(R.string.txt_amount_fifteen_robi)
 
-        binding.tvSevenService.text = getString(R.string.txt_seven_day_service)
-        binding.tvAmountWeekly.text = getString(R.string.txt_amount_seven_robi)
+        tvSevenService.text = getString(R.string.txt_seven_day_service)
+        tvAmountWeekly.text = getString(R.string.txt_amount_seven_robi)
 
-        binding.tvMonthlyService.text = getString(R.string.txt_thirty_day_service)
-        binding.tvAmountMonthly.text = getString(R.string.txt_amount_thirty_robi)
+        tvMonthlyService.text = getString(R.string.txt_thirty_day_service)
+        tvAmountMonthly.text = getString(R.string.txt_amount_thirty_robi)
     }
 
     override fun onResume() {
@@ -661,15 +731,14 @@ internal class SubscriptionFragment : Fragment() {
                 requireActivity(),
                 R.style.MaterialAlertDialog_rounded
             )
-        val binding: DialogSubscriptionBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(requireActivity()),
+        val binding: View = LayoutInflater.from(requireActivity()).inflate(
             R.layout.dialog_subscription,
             null,
             false
         )
 
 
-        val dialogView: View = binding.root
+        val dialogView: View = binding
         customDialog.setView(dialogView)
 
         val alertDialog = customDialog.show()
@@ -681,30 +750,30 @@ internal class SubscriptionFragment : Fragment() {
         if (planName.equals(PLAN_NAME_WEEKLY)) {
             when (AppPreference.subWeekly) {
                 true -> {
-                    binding.btnSub.setText(getString(R.string.txt_unsub))
-                    binding.icon.setImageResource(R.drawable.ic_close_rounded)
+                    binding.findViewById<TextView>(R.id.btnSub).setText(getString(R.string.txt_unsub))
+                    binding.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_close_rounded)
                 }
                 else -> {
-                    binding.btnSub.setText(getString(R.string.txt_sub))
-                    binding.icon.setImageResource(R.drawable.ic_premium)
+                    binding.findViewById<TextView>(R.id.btnSub).setText(getString(R.string.txt_sub))
+                    binding.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_premium)
                 }
             }
         } else {
             when (AppPreference.subMonthly) {
                 true -> {
-                    binding.btnSub.setText(getString(R.string.txt_unsub))
-                    binding.icon.setImageResource(R.drawable.ic_close_rounded)
+                    binding.findViewById<TextView>(R.id.btnSub).setText(getString(R.string.txt_unsub))
+                    binding.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_close_rounded)
                 }
                 else -> {
-                    binding.btnSub.setText(getString(R.string.txt_sub))
-                    binding.icon.setImageResource(R.drawable.ic_premium)
+                    binding.findViewById<TextView>(R.id.btnSub).setText(getString(R.string.txt_sub))
+                    binding.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_premium)
                 }
             }
         }
 
 
-        binding.tvTitle.setText(title)
-        binding.tvDes.setText(descrption)
+        binding.findViewById<TextView>(R.id.tvTitle).setText(title)
+        binding.findViewById<TextView>(R.id.tvDes).setText(descrption)
 
 
 
@@ -712,11 +781,11 @@ internal class SubscriptionFragment : Fragment() {
         alertDialog.setCancelable(false)
         alertDialog.show()
 
-        binding.imgClose.handleClickEvent {
+        binding.findViewById<View>(R.id.imgClose).handleClickEvent {
             alertDialog.dismiss()
         }
 
-        binding.btnSub.handleClickEvent {
+        binding.findViewById<View>(R.id.btnSub).handleClickEvent {
 
             if (planName.equals(PLAN_NAME_WEEKLY)) {
                 if (AppPreference.subMonthly) {

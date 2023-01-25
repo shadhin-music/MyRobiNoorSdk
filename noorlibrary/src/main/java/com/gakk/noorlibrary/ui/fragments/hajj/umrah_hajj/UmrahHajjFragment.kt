@@ -21,7 +21,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.UmrahHajjViewModel
 import com.mcc.noor.model.umrah_hajj.UmrahHajjData
-import com.mcc.noor.ui.adapter.umrahhajj.UmrahPackAdapter
+import com.gakk.noorlibrary.ui.adapter.umrahhajj.UmrahPackAdapter
 import kotlinx.coroutines.launch
 
 

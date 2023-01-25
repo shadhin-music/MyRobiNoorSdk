@@ -1,25 +1,16 @@
 package com.gakk.noorlibrary.ui.fragments
 
-import android.app.Activity
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.DisplayMetrics
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.SurahDetailsCallBack
-import com.gakk.noorlibrary.databinding.FragmentAyatListDialogBinding
-import com.gakk.noorlibrary.ui.adapter.BottomSheetAdapter
 import com.gakk.noorlibrary.ui.adapter.SurahDetailsAdapter
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 private const val ARG_SURAH_ID = "surahId"
@@ -31,7 +22,7 @@ internal class AyatListDialogFragment : BottomSheetDialogFragment(), SurahDetail
 
     private var mSurahId: String? = null
     private var mDetailsCallBack: DetailsCallBack? = null
-   // private lateinit var binding:FragmentAyatListDialogBinding
+
     private lateinit var adapter: SurahDetailsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

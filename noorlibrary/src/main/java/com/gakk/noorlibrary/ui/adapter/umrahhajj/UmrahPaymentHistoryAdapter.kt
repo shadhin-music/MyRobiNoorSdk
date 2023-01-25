@@ -1,6 +1,5 @@
-package com.mcc.noor.ui.adapter.umrahhajj
+package com.gakk.noorlibrary.ui.adapter.umrahhajj
 
-import android.content.res.ColorStateList
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.mcc.noor.model.umrah_hajj.UmrahHajjRegData
-import org.w3c.dom.Text
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*

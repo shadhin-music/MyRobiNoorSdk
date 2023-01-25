@@ -1,4 +1,4 @@
-package com.mcc.noor.ui.adapter.umrahhajj
+package com.gakk.noorlibrary.ui.adapter.umrahhajj
 
 import android.view.LayoutInflater
 import android.view.View
