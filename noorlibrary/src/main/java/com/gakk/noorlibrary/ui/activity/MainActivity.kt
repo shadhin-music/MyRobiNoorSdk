@@ -43,7 +43,6 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.model.quranSchool.Scholar
 import com.gakk.noorlibrary.ui.adapter.SliderAdapter
-import com.gakk.noorlibrary.ui.fragments.CompassFragment
 import com.gakk.noorlibrary.ui.fragments.LiteratureHomeFragment
 import com.gakk.noorlibrary.ui.fragments.tabs.HomeFragment
 import com.gakk.noorlibrary.ui.fragments.tabs.MoreFragment
@@ -402,8 +401,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 HomeFragment.newInstance(),
                 LiteratureHomeFragment.newInstance(
                     literatureType = LiteratureType.Hadis
-                ),
-                CompassFragment(),
+                )
             )
         )
 
@@ -421,10 +419,10 @@ internal class MainActivity : BaseActivity(), MainCallback {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.tab_compass -> {
+               /* R.id.tab_compass -> {
                     binding.pager.currentItem = 2
                     return@setOnItemSelectedListener true
-                }
+                }*/
                 R.id.tab_more -> {
                     if (moreFragment != null) {
                         return@setOnItemSelectedListener false

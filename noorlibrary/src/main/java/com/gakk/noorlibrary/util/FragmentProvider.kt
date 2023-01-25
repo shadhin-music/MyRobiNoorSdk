@@ -82,7 +82,7 @@ object FragmentProvider {
             PAGE_NEAREST_MOSQUE_MAP -> MapFragment.newInstance(
                 mosqueCallBack!!
             )
-            PAGE_QIBLA_COMPASS -> CompassFragment.newInstance()
+
             PAGE_DUA -> when (Util.checkSub()) {
                 true -> {
                     LiteratureHomeFragment.newInstance(
@@ -176,7 +176,6 @@ object FragmentProvider {
             )
             PAGE_BIOGRAPHY -> BiographyFragment.newInstance()
 
-            PAGE_COMPASS -> CompassFragment.newInstance()
 
             PAGE_JAKAT -> when (Util.checkSub()) {
                 true -> {
@@ -225,18 +224,6 @@ object FragmentProvider {
 
             PAGE_HAJJ_HOME ->
                 HajjHomeFragment.newInstance()
-
-            PAGE_TASBIH ->
-                when (Util.checkSub()) {
-                    true -> {
-                        TasbihFragment.newInstance(
-                            selectedLiteratureIndex!!, currentPageNo!!, itemCount!!, times!!
-                        )
-                    }
-                    else -> {
-                        SubscriptionFragment.newInstance()
-                    }
-                }
 
             PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
 

@@ -22,7 +22,6 @@ import com.gakk.noorlibrary.extralib.cardstackview.*
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.home.Data
 import com.gakk.noorlibrary.ui.activity.KafelaPlayerActivity
-import com.gakk.noorlibrary.ui.fragments.CountControl
 import com.gakk.noorlibrary.ui.fragments.NamazTimingFragment
 import com.gakk.noorlibrary.ui.fragments.billboard.BillboardQuranFragment
 import com.gakk.noorlibrary.ui.fragments.tabs.BillboardItemControl
@@ -38,8 +37,7 @@ class HomeFragmentAdapter(
     billBoardCallback: BillboardItemControl,
     prayerTimeCalculator: PrayerTimeCalculator,
     homeCellItemControl: HomeCellItemControl,
-    cardStackListener: CardStackListener,
-    countControl: CountControl
+    cardStackListener: CardStackListener
 ) : RecyclerView.Adapter<HomeFragmentAdapter.HomeFragmentViewHolder>() {
 
     private val homeList: List<Data>
@@ -59,8 +57,6 @@ class HomeFragmentAdapter(
     var mcardStackLayoutManager: CardStackLayoutManager? = null
     private lateinit var cardAdapter: CardStackAdapter
     var sound = true
-    private val mcountControl: CountControl
-    private lateinit var tasbihAdapter: TasbihAdapter
 
 
     init {
@@ -71,7 +67,6 @@ class HomeFragmentAdapter(
         mPrayerTimeCalculator = prayerTimeCalculator
         mHomeCellItemControl = homeCellItemControl
         mstackListener = cardStackListener
-        mcountControl = countControl
     }
 
     inner class HomeFragmentViewHolder : RecyclerView.ViewHolder {
@@ -436,7 +431,6 @@ class HomeFragmentAdapter(
 
             }
             holder.bindingPersonalTracker?.rlNotYet?.handleClickEvent {
-                // adViewModel.adClickCount()
                 it.rlNotYet.visibility = View.GONE
                 it.rlPrayed.visibility = View.GONE
                 holder.bindingPersonalTracker?.cardImgTracker?.visibility = View.GONE
@@ -444,7 +438,6 @@ class HomeFragmentAdapter(
             }
 
             holder.bindingPersonalTracker?.rlPrayed?.handleClickEvent {
-                //  adViewModel.adClickCount()
                 mHomeCellItemControl.btnClick()
                 it.rlNotYet.visibility = View.GONE
                 it.rlPrayed.visibility = View.GONE
@@ -580,27 +573,8 @@ class HomeFragmentAdapter(
             it.tvTimes.text = "/" + it.tvTimes.context.getString(R.string.text_thirty_three)
             it.tvCount.text = it.tvCount.context.getString(R.string.text_zero)
 
-            it.item = ImageFromOnline("tasbih_bg_home.png")
-
-            it.data = list
-            val dua =
-                holder.bindingTasbihHome?.rvTasbihItem?.context?.resources?.getStringArray(R.array.tasbih_duas) as Array<String>
-            tasbihAdapter = TasbihAdapter(dua, mcountControl, 0, 0)
-            holder.bindingTasbihHome?.rvTasbihItem?.adapter = tasbihAdapter
-
             it.tasbihCountIV.handleClickEvent {
                 mHomeCellItemControl.tasbihButtonClick()
-            }
-
-            it.rlLearnMore.handleClickEvent {
-
-                mCallBack.openDetailsActivityWithPageName(
-                    pageName = PAGE_TASBIH,
-                    selectedIndex = tasbihAdapter.getViewClickedIndex(),
-                    currentPageNo = tasbihAdapter.getButtonClickedIndex(),
-                    itemCount = mHomeCellItemControl.getTasbihCount(),
-                    times = mHomeCellItemControl.getTasbihTimes(),
-                )
             }
 
             it.onOffSoundIV.handleClickEvent {
@@ -608,23 +582,10 @@ class HomeFragmentAdapter(
             }
 
             it.resetAllBtn.handleClickEvent {
-                //adViewModel.adClickCount()
                 mHomeCellItemControl.tasbihResetButtonClick()
             }
         }
 
-    }
-
-    fun getPatchIndexByPatchId(id: String): Int {
-        return 2
-//        var i=-1
-//        homeList?.forEachIndexed { index, data ->
-//            if(data.patchId==id){
-//                i=index
-//                return@forEachIndexed
-//            }
-//        }
-//        return i
     }
 
 
@@ -668,9 +629,7 @@ class HomeFragmentAdapter(
                 PATCH_TYPE_NAMES_ALLAH -> {
                     CELL_NAMES_ALLAH
                 }
-                PATCH_TYPE_TASBIH -> {
-                    CELL_TASBIH
-                }
+
                 PATCH_TYPE_AD -> {
                     CELL_NATIVE_AD
                 }
@@ -828,43 +787,10 @@ class HomeFragmentAdapter(
                 return HomeFragmentViewHolder(binding as LayoutItemAllahNameBinding)
             }
 
-            CELL_TASBIH -> {
-                binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.layout_item_tahbih_home,
-                    parent,
-                    false
-                )
-                return HomeFragmentViewHolder(binding as LayoutItemTahbihHomeBinding)
-            }
-
             else -> throw IllegalStateException("Illegal view type")
         }
 
     }
-
-    /* fun getItemCountCard(): Int {
-         return cardAdapter.itemCount
-     }
-
-     fun paginate() {
-         val old = cardAdapter.getItems()
-         val new = old.plus(allahNameslist)
-         val callback = SpotDiffCallback(old, new)
-         val result = DiffUtil.calculateDiff(callback)
-         cardAdapter.setItems(new)
-         result.dispatchUpdatesTo(cardAdapter)
-     }
-
-     fun reload() {
-         val old = cardAdapter.getItems()
-         val new = allahNameslist
-         val callback = SpotDiffCallback(old, new)
-         val result = DiffUtil.calculateDiff(callback)
-         cardAdapter.setItems(new)
-         result.dispatchUpdatesTo(cardAdapter)
-         cardAdapter.notifyDataSetChanged()
-     }*/
 
     fun updateAllNameLayoutPlayPauseButton(isPlaying: Boolean) {
         when (isPlaying) {
@@ -886,17 +812,6 @@ class HomeFragmentAdapter(
 
         latyoutTasbihHomeBinding?.progressBarCircle?.max = userSelectCount
         latyoutTasbihHomeBinding?.progressBarCircle?.progress = count
-    }
-
-    fun updateTasbihItemCount(count: Int) {
-
-        latyoutTasbihHomeBinding?.tvTimes?.text =
-            "/" + TimeFormtter.getNumberByLocale(count.toString()) + " " +
-                    latyoutTasbihHomeBinding?.tvTimes?.context?.getString(R.string.txt_times)
-        latyoutTasbihHomeBinding?.tvCount?.text =
-            latyoutTasbihHomeBinding?.tvCount?.context?.getString(R.string.text_zero)
-
-        latyoutTasbihHomeBinding?.progressBarCircle?.progress = 0
     }
 
     fun resetTasbihItemCount() {
