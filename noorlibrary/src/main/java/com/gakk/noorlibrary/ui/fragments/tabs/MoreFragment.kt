@@ -208,13 +208,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         bottomSheetItems.add(
             BottomSheetItem(
-                R.drawable.ic_cat_tasbih,
-                getString(R.string.cat_tasbih)
-            )
-        )
-
-        bottomSheetItems.add(
-            BottomSheetItem(
                 R.drawable.ic_cat_tracker,
                 getString(R.string.cat_tracker)
             )
@@ -250,12 +243,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                 )
             )
 
-            bottomSheetItems.add(
-                BottomSheetItem(
-                    R.drawable.ic_cat_instructive_video,
-                    getString(R.string.cat_instructive_video)
-                )
-            )
 
             bottomSheetItems.add(
                 BottomSheetItem(

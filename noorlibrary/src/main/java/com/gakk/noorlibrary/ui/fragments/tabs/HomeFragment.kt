@@ -20,12 +20,10 @@ import com.gakk.noorlibrary.databinding.DialogTasbihResetBinding
 import com.gakk.noorlibrary.databinding.FragmentHomeBinding
 import com.gakk.noorlibrary.extralib.cardstackview.CardStackListener
 import com.gakk.noorlibrary.extralib.cardstackview.Direction
-import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.UpCommingPrayer
 import com.gakk.noorlibrary.model.billboard.Data
 import com.gakk.noorlibrary.model.tracker.SalahStatus
 import com.gakk.noorlibrary.ui.adapter.HomeFragmentAdapter
-import com.gakk.noorlibrary.ui.fragments.CountControl
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HomeViewModel
 import com.gakk.noorlibrary.viewModel.NinetyNineNamesOfAllahViewModel
@@ -40,8 +38,8 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl, CardStackListener,
-    CountControl {
+internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl,
+    CardStackListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mCallback: MainCallback
@@ -158,7 +156,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                     binding.noInternetLayout.root.visibility = View.GONE
                 }
                 Status.SUCCESS -> {
-                    Log.e("homeerror","${it}")
+                    Log.e("homeerror", "${it}")
                     when (it.data?.status) {
                         200 -> {
                             biilboradList = it.data.data
@@ -175,7 +173,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
                 }
                 Status.ERROR -> {
-                    Log.e("homeerror","${it.message}")
+                    Log.e("homeerror", "${it.message}")
                     binding.progressLayout.root.visibility = View.GONE
                     binding.noInternetLayout.root.visibility = View.VISIBLE
                 }
@@ -220,8 +218,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                                 this@HomeFragment,
                                 prayerTimeCalculator,
                                 this@HomeFragment,
-                                this@HomeFragment,
-                                this
+                                this@HomeFragment
                             )
 
                             binding.homeRecycle.adapter = adapter
@@ -234,7 +231,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
                         }
                         STATUS_NO_DATA -> {
-                           // binding.noDataLayout.item = ImageFromOnline("bg_no_data.png")
                             binding.noDataLayout.root.visibility = View.VISIBLE
                         }
                     }
@@ -489,7 +485,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
     override fun reloadBtnClick() {
         mSelectedIndex = 0
-       // adapter.reload()
+        // adapter.reload()
         adapter.invalidateNamesCell()
     }
 
@@ -735,19 +731,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         }
     }
 
-    override fun getUserCount(count: Int) {
-        localcount = 0
-        userSelectCount = count
-
-        adapter.updateTasbihItemCount(count)
-    }
-
-    override fun getSelectedItem(name: String) {
-        selectedItem = name
-        // adapter.updateTasbihSelectedItemCount(selectedItem)
-    }
-
-
     fun showResetDialog() {
         val customDialog =
             MaterialAlertDialogBuilder(
@@ -813,24 +796,8 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
     override fun onResume() {
         super.onResume()
-        // DeepLinkActionObserver.addSubscriber(this)
         totalCount = AppPreference.totalCount
     }
-
-    /*override fun scrollToPatch(id: String) {
-        if(isAllPatchLoaded){
-            scrollablePatchId=id
-            val pos=adapter.getPatchIndexByPatchId(scrollablePatchId!!)
-            if(pos!=-1){
-                Log.e("ScrollPos=","->$pos")
-                binding.homeRecycle.scrollToPosition(pos)
-               // scrollablePatchId=null
-            }
-        }else{
-            scrollablePatchId=id
-        }
-
-    }*/
 }
 
 interface BillboardItemControl : Serializable {

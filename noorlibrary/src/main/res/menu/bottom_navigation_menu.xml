@@ -8,10 +8,10 @@
         android:id="@+id/tab_my_robi"
         android:icon="@drawable/ic_my_robi_tab"
         android:title="@string/cat_hadith" />
-    <item
+    <!--<item
         android:id="@+id/tab_compass"
         android:icon="@drawable/ic_compass_tab"
-        android:title="@string/tab_compass" />
+        android:title="@string/tab_compass" />-->
     <item
         android:id="@+id/tab_more"
         android:icon="@drawable/ic_more_tab"
