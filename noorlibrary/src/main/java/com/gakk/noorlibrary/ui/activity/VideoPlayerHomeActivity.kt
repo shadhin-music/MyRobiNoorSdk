@@ -12,34 +12,33 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.util.Util
+import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseActivity
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.databinding.ActivityVideoPlayerHomeBinding
 import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.ui.adapter.NextVideosAdapter
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.VideoViewModel
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.util.Util
 import kotlinx.coroutines.launch
 
 
 internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
 
-    private lateinit var binding: ActivityVideoPlayerHomeBinding
     private var player: ExoPlayer? = null
     private lateinit var playerControlView: ConstraintLayout
     private lateinit var tvVideoTitle: TextView
@@ -58,19 +57,31 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
     private lateinit var repository: RestRepository
     private lateinit var adapter: NextVideosAdapter
     private lateinit var videoModel: VideoViewModel
+    private lateinit var toolBar: ConstraintLayout
+    private lateinit var title: AppCompatTextView
+    private lateinit var btnBack: ImageButton
+    private lateinit var rvVideoList: RecyclerView
+    private lateinit var videoView: PlayerView
+    private lateinit var layoutParent: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_video_player_home)
+        setContentView(R.layout.activity_video_player_home)
+
+        toolBar = findViewById(R.id.toolBar)
+        title = toolBar.findViewById(R.id.title)
+        btnBack = toolBar.findViewById(R.id.btnBack)
+
+        rvVideoList = findViewById(R.id.rvVideoList)
+        videoView = findViewById(R.id.videoView)
+        layoutParent = findViewById(R.id.layoutParent)
 
         setStatusColor(R.color.bg)
         setStatusbarTextDark()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        binding.toolBar.title.setText(getString(R.string.app_name))
-        // binding.toolBar.btnCustomActionTwo.setImageResource(R.drawable.ic_share)
-        //  binding.toolBar.btnCustomActionTwo.visibility = View.VISIBLE
+        title.setText(getString(R.string.app_name))
 
 
         intent.let {
@@ -79,8 +90,7 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
             mVideoSubCatId = intent.getStringExtra(VIDEO_SUBCAT_ID)!!
         }
 
-
-        binding.toolBar.btnBack.handleClickEvent { finish() }
+        btnBack.handleClickEvent { finish() }
 
         lifecycleScope.launch {
 
@@ -100,7 +110,7 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
                     Status.SUCCESS -> {
                         Log.e("videodata", "" + it.data?.data?.size)
                         adapter = NextVideosAdapter(it.data?.data!!, this@VideoPlayerHomeActivity)
-                        binding.rvVideoList.adapter = adapter
+                        rvVideoList.adapter = adapter
                     }
                     Status.LOADING -> {
                         Log.e("videodata", "Loading")
@@ -167,7 +177,7 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
         player = ExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
-                binding.videoView.player = exoPlayer
+                videoView.player = exoPlayer
 
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.addListener(object : Player.Listener {
@@ -211,7 +221,7 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
         playerControlView = findViewById(R.id.playerControlView)!!
         tvVideoTitle = playerControlView.findViewById(R.id.tvVideoTitle)
         btnShare = playerControlView.findViewById(R.id.btnShare)
-        toggleOrientationButton = binding.videoView.findViewById(R.id.toggleOrientationButton)
+        toggleOrientationButton = videoView.findViewById(R.id.toggleOrientationButton)
 
 
         toggleOrientationButton.handleClickEvent {
@@ -238,7 +248,7 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
 
     private fun prepareLandscapeUI() {
         toggleOrientationButton.setImageResource(R.drawable.ic_baseline_fullscreen_exit_24)
-        val layoutParams = binding.videoView.layoutParams as ConstraintLayout.LayoutParams
+        val layoutParams = videoView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
         layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT
         hideSystemUI()
@@ -246,16 +256,16 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
 
     private fun preparePortraitUI() {
         toggleOrientationButton.setImageResource(R.drawable.ic_baseline_fullscreen_24)
-        val layoutParams = binding.videoView.layoutParams as ConstraintLayout.LayoutParams
+        val layoutParams = videoView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.width = 0
         layoutParams.height = 0
         showSystemUI()
     }
 
     private fun hideSystemUI() {
-        binding.toolBar.root.visibility = GONE
+        toolBar.visibility = GONE
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, binding.layoutParent).let { controller ->
+        WindowInsetsControllerCompat(window, layoutParent).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
             controller.systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
@@ -263,16 +273,16 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
     }
 
     private fun showSystemUI() {
-        binding.toolBar.root.visibility = VISIBLE
+        toolBar.visibility = VISIBLE
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowInsetsControllerCompat(
             window,
-            binding.layoutParent
+            layoutParent
         ).show(WindowInsetsCompat.Type.systemBars())
     }
 
     override fun setData(data: Data) {
-        binding.video = data
+        val  video = data
         tvVideoTitle.setText(data.contenTtitle)
 
         player?.seekTo(currentWindow, playbackPosition)
