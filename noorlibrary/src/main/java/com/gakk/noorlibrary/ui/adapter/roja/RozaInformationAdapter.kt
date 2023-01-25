@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.adapter.roja
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
@@ -14,19 +13,17 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
-import com.gakk.noorlibrary.databinding.*
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
 import com.gakk.noorlibrary.roza.CalenderUtil
 import com.gakk.noorlibrary.ui.fragments.DivisionSelectionCallback
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.TimeFormtter
+import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.views.TextViewNormalArabic
 import com.github.eltohamy.materialhijricalendarview.CalendarDay
 import com.google.android.material.tabs.TabLayout

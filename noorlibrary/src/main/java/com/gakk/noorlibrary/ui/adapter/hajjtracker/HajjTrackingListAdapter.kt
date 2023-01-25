@@ -7,8 +7,6 @@ import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
@@ -16,9 +14,7 @@ import com.gakk.noorlibrary.model.hajjtracker.HajjTrackingListResponse
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjtracker.BottomSheetDisplay
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjtracker.TrackerListControl
 import com.gakk.noorlibrary.util.CircleImageView
-import com.gakk.noorlibrary.util.VideoDiffCallback
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.videoNewList
 
 internal class HajjTrackingListAdapter(
     val sharingList: List<HajjTrackingListResponse.Data>?,

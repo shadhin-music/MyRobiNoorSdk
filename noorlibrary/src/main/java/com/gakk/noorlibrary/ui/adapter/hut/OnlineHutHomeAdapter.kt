@@ -6,19 +6,15 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
-
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.fragments.onlinehut.OnlineHutLocationwiseFrgment
 import com.gakk.noorlibrary.util.CITY_NAME_NORTH
 import com.gakk.noorlibrary.util.CITY_NAME_SOUTH
-import com.gakk.noorlibrary.util.CircleImageView
 import com.gakk.noorlibrary.util.handleClickEvent
 
 internal class OnlineHutHomeAdapter(
