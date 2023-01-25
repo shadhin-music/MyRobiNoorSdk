@@ -3,12 +3,13 @@ package com.gakk.noorlibrary.ui.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
-import com.gakk.noorlibrary.databinding.LayoutMenuItemBinding
 import com.gakk.noorlibrary.model.BottomSheetItem
 import com.gakk.noorlibrary.ui.activity.YoutubePlayerActivity
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjtracker.HajjTrackerActivity
@@ -32,21 +33,21 @@ internal class BottomSheetAdapter(
 
     }
 
-    inner class BottomSheetViewHolder : RecyclerView.ViewHolder {
-        var menuBinding: LayoutMenuItemBinding? = null
+    inner class BottomSheetViewHolder// open youtube player activity direct if live video menu is selected
+        (binding: View) : RecyclerView.ViewHolder(binding) {
 
-        constructor(binding: LayoutMenuItemBinding) : super(binding.root) {
-            menuBinding = binding
-            menuBinding?.root?.let {
+        init {
+            binding.let {
                 it.resizeView(
                     ViewDimension.OneFourthScreenWidth,
                     mCallBack.getScreenWith(),
                     it.context
                 )
+
                 it.handleClickEvent {
                     val title = FragmentDestinationMap.getDestinationFragmentName(
                         bottomSheetItemList.get(adapterPosition).title,
-                        menuBinding?.tvMenuItemText?.context!!
+                        it.context!!
                     )
                     if (title == PAGE_LIVE_VIDEO) {
                         // open youtube player activity direct if live video menu is selected
@@ -74,22 +75,23 @@ internal class BottomSheetAdapter(
                     mMoreFragmentCallBack.dismissMoreFragment()
                 }
             }
-
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomSheetViewHolder {
-        val binding: LayoutMenuItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.layout_menu_item,
-            parent,
-            false
-        )
-        return BottomSheetViewHolder(binding)
+
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.layout_menu_item, parent, false)
+        return BottomSheetViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: BottomSheetViewHolder, position: Int) {
-        holder.menuBinding?.bottomSheetItem = bottomSheetItemList[position]
+        val bottomSheetItem = bottomSheetItemList[position]
+
+        val title = holder.itemView.findViewById<AppCompatTextView>(R.id.tv_menu_item_text)
+        val image = holder.itemView.findViewById<AppCompatImageButton>(R.id.btn_menu_item_image)
+        title.text = bottomSheetItem.title
+        image.setImageResource(bottomSheetItem.resId)
     }
 
     override fun getItemCount(): Int {

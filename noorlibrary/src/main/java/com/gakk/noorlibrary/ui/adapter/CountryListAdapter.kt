@@ -7,13 +7,11 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.RowCountryItemBinding
 import com.gakk.noorlibrary.model.currency.CurrencyModel
 import com.gakk.noorlibrary.ui.fragments.hajj.CurrencyConverterFragment
 import com.gakk.noorlibrary.util.handleClickEvent

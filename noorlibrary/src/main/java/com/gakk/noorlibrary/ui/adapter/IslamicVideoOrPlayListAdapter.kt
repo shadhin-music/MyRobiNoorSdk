@@ -7,15 +7,11 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.databinding.LayoutVideoBinding
-import com.gakk.noorlibrary.databinding.LayoutVideoPlaylistBinding
 import com.gakk.noorlibrary.ui.activity.VideoPlayerHomeActivity
 import com.gakk.noorlibrary.util.VIDEO_CAT_ID
 import com.gakk.noorlibrary.util.VIDEO_DATA
@@ -53,15 +49,6 @@ class IslamicVideoOrPlayListAdapter(
 
         var view: View = layoutView
 
-//        constructor(binding: LayoutVideoBinding) : super(binding.root) {
-//            videoBinding = binding
-//        }
-//
-//        var playListBinding: LayoutVideoPlaylistBinding? = null
-//
-//        constructor(binding: LayoutVideoPlaylistBinding) : super(binding.root) {
-//            playListBinding = binding
-//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoOrPlayListViewHolder {

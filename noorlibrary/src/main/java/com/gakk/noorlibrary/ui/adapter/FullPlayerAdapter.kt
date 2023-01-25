@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -9,11 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.LayoutFullPlayerContentBinding
-import com.gakk.noorlibrary.databinding.LayoutFullPlayerHeaderBinding
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.util.handleClickEvent

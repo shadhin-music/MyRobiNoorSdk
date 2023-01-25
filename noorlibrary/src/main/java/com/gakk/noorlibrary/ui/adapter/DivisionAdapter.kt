@@ -3,16 +3,13 @@ package com.gakk.noorlibrary.ui.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.databinding.LayoutRozaDivisionBinding
-import com.gakk.noorlibrary.databinding.RowListItemDuaBinding
-import com.gakk.noorlibrary.util.Util
 import com.gakk.noorlibrary.util.handleClickEvent
 
 

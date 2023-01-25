@@ -5,12 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
-import com.gakk.noorlibrary.databinding.RowListItemIslamPillerBinding
 import com.gakk.noorlibrary.model.home.Item
 import com.gakk.noorlibrary.util.*
 
@@ -24,7 +22,6 @@ class IslamPillerAdapter(
     inner class ViewHolder(binding: View) :
         RecyclerView.ViewHolder(binding) {
             var view = binding
-        //var islamPillerBinding: RowListItemIslamPillerBinding? = binding
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

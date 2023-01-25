@@ -11,9 +11,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -23,8 +21,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
-import com.gakk.noorlibrary.databinding.LayoutItemInspirationBinding
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.handleClickEvent
 import java.io.File
@@ -56,7 +52,7 @@ internal class InspirationAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val list = imageList[position]
-       // holder.inspirationBinding?.item = list
+
         val imgBg = holder.view.findViewById<AppCompatImageView>(R.id.img)
         val image = list.contentBaseUrl+"/"+list.imageUrl
         Glide.with(holder.view.context).load(image).into(imgBg)

@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -16,7 +15,6 @@ import com.gakk.noorlibrary.callbacks.FavUnFavCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
-
 import com.gakk.noorlibrary.ui.fragments.LiteratureItemClickCallBack
 import com.gakk.noorlibrary.util.*
 

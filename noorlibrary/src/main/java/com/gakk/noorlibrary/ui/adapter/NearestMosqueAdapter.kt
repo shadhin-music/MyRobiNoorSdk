@@ -4,12 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.databinding.RowItemNearestMosqueBinding
 import com.gakk.noorlibrary.model.nearby.PlaceInfo
 import com.gakk.noorlibrary.util.PAGE_NEAREST_MOSQUE
 import com.gakk.noorlibrary.util.handleClickEvent
