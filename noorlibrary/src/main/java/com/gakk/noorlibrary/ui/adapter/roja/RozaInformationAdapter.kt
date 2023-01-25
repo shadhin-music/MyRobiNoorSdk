@@ -14,13 +14,12 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.base.BaseApplication
-import com.gakk.noorlibrary.databinding.*
+
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
@@ -72,51 +71,7 @@ internal class RozaInformationAdapter(
 
     inner class RozaInformationViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
        var view = layoutView
-       // var primaryHeaderBinding: LayoutRozaPrimaryHeaderBinding? = null
 
-//        constructor(binding: LayoutRozaPrimaryHeaderBinding) : super(binding.root) {
-//            primaryHeaderBinding = binding
-//            primaryHeaderBinding.let {
-//                it?.let {
-//                    it.layoutDivisionContainer.handleClickEvent {
-//                       // mCallBack?.showDivisionListAlert(it)
-//                    }
-//                }
-//
-//
-//            }
-//
-//        }
-//
-//        var sehriIfterHeaderBindingBinding: LayoutRozaSehriIfterHeaderBinding? = null
-//
-//        constructor(binding: LayoutRozaSehriIfterHeaderBinding) : super(binding.root) {
-//            sehriIfterHeaderBindingBinding = binding
-//            sehriIfterHeaderBindingBinding?.let {
-
-//            }
-//        }
-
-
-
-//        var rozaInfoCellBinding: LayoutRozaInfoCellBinding? = null
-//
-//        constructor(binding: LayoutRozaInfoCellBinding) : super(binding.root) {
-//            rozaInfoCellBinding = binding
-//        }
-//
-//        var duaHeaderBinding: LayoutRozaDuaHeaderBinding? = null
-//
-//        @SuppressLint("MissingPermission")
-//        constructor(binding: LayoutRozaDuaHeaderBinding) : super(binding.root) {
-//            duaHeaderBinding = binding
-//        }
-//
-//        var duaBinding: LayoutRozaDuaBinding? = null
-//
-//        constructor(binding: LayoutRozaDuaBinding) : super(binding.root) {
-//            duaBinding = binding
-//        }
     }
     fun getSehriIfterHeaderFormattedDate(): String {
         val cal: Calendar

@@ -1,14 +1,17 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatTextView
+
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.SurahDetailsCallBack
-import com.gakk.noorlibrary.databinding.LayoutSurahListItemBinding
+
 import com.gakk.noorlibrary.util.SurahListControl
 import com.gakk.noorlibrary.util.handleClickEvent
 
@@ -27,21 +30,12 @@ class SurahListAdapter(surahDetailsCallBack: SurahDetailsCallBack) : RecyclerVie
         viewHolderSelectionControl = SurahListViewHolderSelectionControl(SurahListControl.getSelectedSurahId()!!)
     }
 
-    inner class SurahListViewHolder : RecyclerView.ViewHolder {
+    inner class SurahListViewHolder (layoutView: View): RecyclerView.ViewHolder(layoutView) {
 
-        var mBinding: LayoutSurahListItemBinding? = null
+        var mBinding: View= layoutView
         var laoutTag: String? = null
 
-        constructor(binding: LayoutSurahListItemBinding) : super(binding.root) {
-            mBinding = binding
-            mBinding?.root?.let {
-                it.handleClickEvent {
-                    var selectedId=SurahListControl.surahList?.get(adapterPosition)?.id
-                    viewHolderSelectionControl.setSelectedId(selectedId!!)
-                    viewHolderSelectionControl.toggleSelectionVisibilityForAll()
-                }
-            }
-        }
+
 
         fun setTag(tag: String?) {
             laoutTag?.let {
@@ -55,8 +49,8 @@ class SurahListAdapter(surahDetailsCallBack: SurahDetailsCallBack) : RecyclerVie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurahListViewHolder {
-        val binding: LayoutSurahListItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
+        val binding: View =
+            LayoutInflater.from(parent.context).inflate(
             R.layout.layout_surah_list_item,
             parent,
             false
@@ -67,7 +61,16 @@ class SurahListAdapter(surahDetailsCallBack: SurahDetailsCallBack) : RecyclerVie
 
     override fun onBindViewHolder(holder: SurahListViewHolder, position: Int) {
         var surah=SurahListControl.surahList?.get(position)
-        holder.mBinding?.surah=surah
+        val tvSurahNumber:AppCompatTextView = holder.itemView.findViewById(R.id.tvSurahNumber)
+        val tvSurahName:AppCompatTextView = holder.itemView.findViewById(R.id.tvSurahName)
+        tvSurahNumber.text = surah?.surahNumber
+        tvSurahName.text = surah?.name
+        holder.itemView.handleClickEvent {
+            var selectedId=SurahListControl.surahList?.get(position)?.id
+            viewHolderSelectionControl.setSelectedId(selectedId!!)
+            viewHolderSelectionControl.toggleSelectionVisibilityForAll()
+        }
+
         holder.setTag("${surah!!.id}")
         viewHolderSelectionControl.toggleSelectionVisibility(holder)
     }
@@ -101,10 +104,11 @@ class SurahListViewHolderSelectionControl(id:String) {
     }
 
      fun toggleSelectionVisibility(holder: SurahListAdapter.SurahListViewHolder?) {
+         val imgChecked: ImageView? = holder?.itemView?.findViewById(R.id.imgChecked)
         holder?.laoutTag?.let {
             when (it == selectedId) {
-                true -> holder.mBinding?.let { it.imgChecked.visibility = VISIBLE }
-                false -> holder.mBinding?.let { it.imgChecked.visibility = INVISIBLE }
+                true -> holder.itemView?.let { imgChecked?.visibility = VISIBLE }
+                false -> holder.itemView?.let { imgChecked?.visibility = INVISIBLE }
             }
         }
     }

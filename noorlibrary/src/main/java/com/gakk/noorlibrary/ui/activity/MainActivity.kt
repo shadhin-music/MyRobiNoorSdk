@@ -20,10 +20,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -38,7 +39,6 @@ import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
-import com.gakk.noorlibrary.databinding.DialogAlreadyAttemptBinding
 import com.gakk.noorlibrary.job.RozaAlarmControlJob
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
@@ -360,6 +360,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             1 -> {
                 // If request is cancelled, the result arrays are empty.
@@ -671,15 +672,15 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 this,
                 R.style.MaterialAlertDialog_rounded
             )
-        val binding: DialogAlreadyAttemptBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
+        val binding: View =
+            LayoutInflater.from(this).inflate(
             R.layout.dialog_already_attempt,
             null,
             false
         )
 
 
-        val dialogView: View = binding.root
+        val dialogView: View = binding
         customDialog.setView(dialogView)
 
         val alertDialog = customDialog.show()
@@ -691,18 +692,19 @@ internal class MainActivity : BaseActivity(), MainCallback {
         alertDialog.window?.setGravity(Gravity.CENTER)
         alertDialog.setCancelable(true)
         alertDialog.show()
-
-        (binding.tvTitleExit.layoutParams as ConstraintLayout.LayoutParams).apply {
+        val tvTitleExit:AppCompatTextView = findViewById(R.id.tvTitleExit)
+        val btnComplete:AppCompatButton = findViewById(R.id.btnComplete)
+        (tvTitleExit.layoutParams as ConstraintLayout.LayoutParams).apply {
             marginStart = 50.toPx()
             topMargin = 8.toPx()
             marginEnd = 30.toPx()
             bottomMargin = 8.toPx()
             width = ConstraintLayout.LayoutParams.MATCH_PARENT
         }
-        binding.tvTitleExit.setText("On Android S and higher, the app needs permission to schedule exact alarms. Without this, no alarm can be set. Please go to Settings and enable this permission to continue setting an alarm.")
-        binding.btnComplete.setText("Go to Settings")
+       tvTitleExit.setText("On Android S and higher, the app needs permission to schedule exact alarms. Without this, no alarm can be set. Please go to Settings and enable this permission to continue setting an alarm.")
+        btnComplete.setText("Go to Settings")
 
-        binding.btnComplete.handleClickEvent {
+       btnComplete.handleClickEvent {
             alertDialog.dismiss()
             val intent = Intent()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

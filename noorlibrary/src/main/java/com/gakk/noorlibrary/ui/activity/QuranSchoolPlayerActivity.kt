@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.databinding.DataBindingUtil
+
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -22,8 +22,7 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.util.Util
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseActivity
-import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.databinding.ActivityYoutubePlayerBinding
+
 import com.gakk.noorlibrary.model.quranSchool.QuranSchoolModel
 import com.gakk.noorlibrary.model.video.category.Data
 import com.gakk.noorlibrary.ui.adapter.QuranSchoolAdapter

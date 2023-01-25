@@ -6,15 +6,14 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.DataBindingUtil
+
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
-import com.gakk.noorlibrary.databinding.RowListItemRomjanAmolBinding
+
 import com.gakk.noorlibrary.model.home.Item
 import com.gakk.noorlibrary.util.handleClickEvent
 
