@@ -4,17 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<!--    <data>-->
-
-<!--        <variable-->
-<!--            name="literature"-->
-<!--            type="com.gakk.noorlibrary.model.literature.Literature" />-->
-
-<!--        <variable-->
-<!--            name="constant"-->
-<!--            type="com.gakk.noorlibrary.util.ConstantsKt" />-->
-<!--    </data>-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
