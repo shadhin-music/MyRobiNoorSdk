@@ -23,6 +23,7 @@ import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.model.quranSchool.QuranSchoolModel
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.hide
+import com.gakk.noorlibrary.util.setImageFromUrl
 import com.gakk.noorlibrary.util.show
 
 /**
@@ -77,35 +78,7 @@ internal class QuranSchoolChildAdapter(
 
             val image = quranSchoolModel.contentBaseUrl + "/" + quranSchoolModel.imageUrl
 
-            Glide.with(scholars_img.context)
-                .load(image.replace("<size>", "1280"))
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        progressBar.visibility = View.GONE
-
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        progressBar.visibility = View.GONE
-                        return false
-                    }
-
-                })
-                .error(R.drawable.place_holder_16_9_ratio)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into(scholars_img)
+            setImageFromUrl(scholars_img, image, progressBar)
 
             val dateTv = binding.findViewById<AppCompatTextView>(R.id.date_tv)
             dateTv.text = quranSchoolModel.liveOn

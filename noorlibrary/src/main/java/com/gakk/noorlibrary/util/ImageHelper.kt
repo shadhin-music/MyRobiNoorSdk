@@ -2,6 +2,7 @@ package com.gakk.noorlibrary.util
 
 import android.graphics.Bitmap
 import com.gakk.noorlibrary.Noor
+import com.gakk.noorlibrary.data.prefs.AppPreference
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -13,8 +14,7 @@ object ImageHelper {
         //create a file to write bitmap data
         var f = File(
             Noor.appContext?.getCacheDir(),
-            ""
-            /*AppPreference.cachedUser?.userId!!*/
+            AppPreference.userId
         );
         f.createNewFile()
 

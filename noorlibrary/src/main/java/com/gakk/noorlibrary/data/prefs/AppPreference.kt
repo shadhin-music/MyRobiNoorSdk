@@ -121,6 +121,7 @@ object AppPreference {
     var userNumber: String? = null
 
     var userToken: String? = null
+    var userId: String? = null
 
     var cachedUser: Data?
         set(value) {

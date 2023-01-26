@@ -23,11 +23,9 @@
             <ImageView
                 android:id="@+id/scholars_img"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/default_content_des"
-                android:scaleType="centerCrop"
                 android:src="@drawable/place_holder_16_9_ratio" />
 
             <ProgressBar
