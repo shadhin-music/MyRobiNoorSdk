@@ -64,6 +64,7 @@ internal class QuranSchoolAdapter(
             title.text = listLiterature.contenTtitle
             val scholars_img: ImageView = itemView.findViewById(R.id.scholars_img)
             Glide.with(itemView.context).load(listLiterature.fullImageUrl.replace("<size>", "1280")).into(scholars_img)
+            scholars_img.scaleType = ImageView.ScaleType.CENTER_CROP
             val progressBar = itemView.findViewById<ProgressBar>(R.id.progressBar)
             progressBar.visibility = View.GONE
             //binding = listLiterature

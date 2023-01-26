@@ -152,6 +152,8 @@ fun setImageFromUrl(imageView: ImageView, url: String?, progressBar: ProgressBar
                 .error(R.drawable.place_holder_16_9_ratio)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(imageView)
+
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         }
 
     }

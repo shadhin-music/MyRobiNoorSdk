@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,10 +22,7 @@ import com.bumptech.glide.request.target.Target
 import com.gakk.noorlibrary.R
 
 import com.gakk.noorlibrary.model.quranSchool.QuranSchoolModel
-import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.hide
-import com.gakk.noorlibrary.util.setImageFromUrl
-import com.gakk.noorlibrary.util.show
+import com.gakk.noorlibrary.util.*
 
 /**
  * @AUTHOR: Mehedi Hasan
@@ -78,7 +76,7 @@ internal class QuranSchoolChildAdapter(
 
             val image = quranSchoolModel.contentBaseUrl + "/" + quranSchoolModel.imageUrl
 
-            setImageFromUrl(scholars_img, image, progressBar)
+            setImageFromUrl(scholars_img, image, progressBar, PLACE_HOLDER_16_9)
 
             val dateTv = binding.findViewById<AppCompatTextView>(R.id.date_tv)
             dateTv.text = quranSchoolModel.liveOn
