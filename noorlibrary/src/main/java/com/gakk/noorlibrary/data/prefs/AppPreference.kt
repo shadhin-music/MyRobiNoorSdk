@@ -21,7 +21,7 @@ object AppPreference {
     private lateinit var mGSonInstance: Gson
 
     private val whiteListNumber =
-        arrayListOf("8801537673977", "8801917589656")
+        arrayListOf("8801537673977")
 
     private const val PREF_FILE_NAME = "NoorPreference"
     private const val LANGUAGE = "Language"
@@ -118,11 +118,9 @@ object AppPreference {
         get() = preferences.getString(SET_LANGUAGE.first, SET_LANGUAGE.second)
         set(value) = preferences.edit { it.putString(SET_LANGUAGE.first, value) }
 
-    var userNumber: String?
-        get() = preferences.getString(SET_NUMBER.first, SET_NUMBER.second)
-        set(value) = preferences.edit { it.putString(SET_NUMBER.first, value) }
+    var userNumber: String? = null
 
-    var userToken:String?=null
+    var userToken: String? = null
 
     var cachedUser: Data?
         set(value) {
@@ -149,13 +147,6 @@ object AppPreference {
         get() = preferences.getBoolean(PREF_RAMADAN_NOTIFICATION_SEHRI_ALERT_ON, false)
         set(value) = preferences.edit {
             it.putBoolean(PREF_RAMADAN_NOTIFICATION_SEHRI_ALERT_ON, value)
-        }
-
-    var lastRozaAlarmDisMissTimeMs: Long
-        get() = preferences.getLong("last_roza_alrm_dismiss_time_ms", 0L)
-        set(value) = preferences.edit {
-            it.putLong("last_roza_alrm_dismiss_time_ms", value)
-            Log.e("RECEIVER", "$value")
         }
 
 
@@ -263,17 +254,6 @@ object AppPreference {
             }
         }
 
-    fun updateDownloadProgress(id: String, value: Int) {
-        val tempDownloadProgressMap = downloadProgressMap
-        tempDownloadProgressMap.put(id, value)
-        downloadProgressMap = tempDownloadProgressMap
-    }
-
-    fun getDownloadProgress(id: String): Int {
-        var progress = downloadProgressMap[id] ?: -1
-        return progress
-    }
-
     var downloadProgressMap: HashMap<String, Int?>
         set(value) {
             val mapStr = mGSonInstance.toJson(value)
@@ -341,39 +321,14 @@ object AppPreference {
             it.putBoolean(NOTIFICATION_FLAG.first, value)
         }
 
-    var soundflag: Boolean
-        get() = preferences.getBoolean(SOUND_FLAG.first, SOUND_FLAG.second)
-        set(value) = preferences.edit {
-            it.putBoolean(SOUND_FLAG.first, value)
-        }
-
     var totalCount: Int
         get() = preferences.getInt(TOTAL_COUNT.first, TOTAL_COUNT.second)
         set(value) = preferences.edit {
             it.putInt(TOTAL_COUNT.first, value)
         }
 
-    fun cleartotalCount() {
-        preferences.edit {
-            it.remove(TOTALCOUNTTAG)
-        }
-    }
-
-    fun setAlarmForAzan(value: Boolean, tag: String) {
-        preferences.edit {
-            it.putBoolean(tag, value)
-        }
-    }
-
     fun getAlarmForAzan(tag: String): Boolean {
         return preferences.getBoolean(tag, false)
-    }
-
-
-    fun saveTashbihCount(value: Int, tag: String) {
-        preferences.edit {
-            it.putInt(tag, value)
-        }
     }
 
 

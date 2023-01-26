@@ -5,11 +5,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,39 +28,19 @@ import kotlinx.coroutines.launch
 
 internal class SubscriptionFragment : Fragment() {
 
-
-    private lateinit var progressLayout:ProgressBar
-    private lateinit var ivShapeSubWeekly:ImageView
-    //private lateinit var btnSubscribeWeekly:TextView
-    private lateinit var tvAmount:TextView
-
-    private lateinit var tvFifteenService:TextView
-    private lateinit var tvAmountFifteen:TextView
-    private lateinit var tvSevenService:TextView
-    private lateinit var tvAmountWeekly:TextView
-    private lateinit var tvMonthlyService:TextView
-    private lateinit var tvAmountMonthly:TextView
-    private lateinit var tvTitleSub:TextView
-    private lateinit var tvDesSub:TextView
-    private lateinit var tvDailyService:TextView
-    private lateinit var tvContentMonthly:TextView
-
-
-    private lateinit var tvContent:TextView
-    private lateinit var tvContentSeven:TextView
-    private lateinit var ivShapeSubMonthly:ImageView
-    private lateinit var btnSubscribeMonthly:TextView
-    private lateinit var btnSubscribeFifteen:TextView
-    private lateinit var btnSubscribeDaily: AppCompatButton
-    private lateinit var btnSubscribeWeekly: AppCompatButton
-    private lateinit var ivBg:ImageView
-
     private var mCallback: DetailsCallBack? = null
     private lateinit var repository: RestRepository
     private lateinit var model: SubscriptionViewModel
     private lateinit var subscriptionId: String
-    private var isCelcom: Boolean? = null
-
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var ivShapeSubWeekly: AppCompatImageView
+    private lateinit var btnSubscribeWeekly: AppCompatButton
+    private lateinit var tvAmount: AppCompatTextView
+    private lateinit var tvContent: AppCompatTextView
+    private lateinit var ivShapeSubMonthly: AppCompatImageView
+    private lateinit var btnSubscribeMonthly: AppCompatButton
+    private lateinit var tvAmountMonthly: AppCompatTextView
+    private lateinit var ivBg: AppCompatImageView
 
     companion object {
 
@@ -72,7 +52,6 @@ internal class SubscriptionFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         mCallback = requireActivity() as DetailsCallBack
     }
 
@@ -81,18 +60,33 @@ internal class SubscriptionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-        return inflater.inflate( R.layout.fragment_subscription, container, false)
+
+        val view = inflater.inflate(
+            R.layout.fragment_subscription,
+            container, false
+        )
+
+        initUi(view)
+        return view
+    }
+
+    private fun initUi(view: View) {
+        progressLayout = view.findViewById(R.id.progressLayout)
+        ivShapeSubWeekly = view.findViewById(R.id.ivShapeSubWeekly)
+        btnSubscribeWeekly = view.findViewById(R.id.btnSubscribeWeekly)
+        tvAmount = view.findViewById(R.id.tvAmount)
+        tvContent = view.findViewById(R.id.tvContent)
+        ivShapeSubMonthly = view.findViewById(R.id.ivShapeSubMonthly)
+        btnSubscribeMonthly = view.findViewById(R.id.btnSubscribeMonthly)
+        tvAmountMonthly = view.findViewById(R.id.tvAmountMonthly)
+        ivBg = view.findViewById(R.id.ivBg)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        isCelcom = false
-        setupUi(view)
-        initViewRobi()
 
-        setImageFromUrlNoProgress(ivBg,ImageFromOnline("ic_bg_sub.png").fullImageUrl)
+        setImageFromUrlNoProgress(ivBg, ImageFromOnline("ic_bg_sub.png").fullImageUrl)
 
         lifecycleScope.launch {
 
@@ -113,54 +107,6 @@ internal class SubscriptionFragment : Fragment() {
                 SUBSCRIPTION_ID_FIFTEENDAYS
             )
 
-           /* model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_WEEKLY_ROBI)
-            model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_MONTHLY_ROBI)*/
-
-            model.weeklySubInfo.observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.LOADING -> {
-                        progressLayout.visibility = View.VISIBLE
-                        Log.e("Sub", "loading")
-                    }
-                    Status.SUCCESS -> {
-                        progressLayout.visibility = View.GONE
-                        Log.e("Sub", "Weekly" + it.data)
-                        when (it.data?.regStatus) {
-                            "1AK" -> {
-                                AppPreference.subWeekly = true
-                                btnSubscribeDaily.visibility = View.GONE
-                                btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
-                                btnSubscribeWeekly.setTextColor(Color.WHITE)
-                                tvAmount.setTextColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.txt_color_title
-                                    )
-                                )
-                                tvContent.setTextColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.txt_color_title
-                                    )
-                                )
-                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
-                            }
-                            else -> {
-                                AppPreference.subWeekly = false
-                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
-                                btnSubscribeWeekly.setText(getString(R.string.txt_sub))
-                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
-                            }
-
-                        }
-
-                    }
-                    Status.ERROR -> {
-                        progressLayout.visibility = View.GONE
-                        Log.e("Sub", "Error" + it.message)
-                    }
-                }
-            }
 
             model.weeklySubInfoRobi.observe(viewLifecycleOwner) {
                 when (it.status) {
@@ -170,12 +116,11 @@ internal class SubscriptionFragment : Fragment() {
                     }
                     Status.SUCCESS -> {
                         progressLayout.visibility = View.GONE
-
+                        Log.e("Sub", "Weekly" + it.data)
                         when (it.data) {
                             "1AK" -> {
-                                Log.e("Sub", "Weekly" + it.data)
                                 AppPreference.subWeekly = true
-                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_shape_sub_disable)
+                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
                                 btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
                                 btnSubscribeWeekly.setTextColor(Color.WHITE)
                                 tvAmount.setTextColor(
@@ -204,49 +149,6 @@ internal class SubscriptionFragment : Fragment() {
                     }
                     Status.ERROR -> {
                         progressLayout.visibility = View.GONE
-                        Log.e("Sub", "Error" + it.message)
-                    }
-                }
-            }
-            model.monthlySubInfo.observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.LOADING -> {
-                        Log.e("Sub", "loading")
-                    }
-                    Status.SUCCESS -> {
-                        Log.e("Sub", "Monthly" + it.data)
-                        when (it.data?.regStatus) {
-                            "1AK" -> {
-
-                                AppPreference.subMonthly = true
-                                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                btnSubscribeMonthly.setText(getString(R.string.txt_unsub))
-                                btnSubscribeMonthly.setTextColor(Color.WHITE)
-                                tvAmountMonthly.setTextColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.txt_color_title
-                                    )
-                                )
-                                tvContent.setTextColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.txt_color_title
-                                    )
-                                )
-                                btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
-                            }
-                            else -> {
-                                AppPreference.subMonthly = false
-                                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
-                                btnSubscribeMonthly.setText(getString(R.string.txt_sub))
-
-                                btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
-                            }
-                        }
-
-                    }
-                    Status.ERROR -> {
                         Log.e("Sub", "Error" + it.message)
                     }
                 }
@@ -295,94 +197,6 @@ internal class SubscriptionFragment : Fragment() {
                     }
                 }
             }
-
-
-            // robi new subscription package
-
-            model.subscription_robi.observe(viewLifecycleOwner)
-            {
-                when (it) {
-                    is SubsResource.Error -> Log.e("Sub", "Error" + it.msg)
-                    SubsResource.Loading -> Log.e("Sub", "loading")
-                    is SubsResource.SubscriptionRobi -> {
-
-                        when (it.subscriptionId) {
-
-                            SUBSCRIPTION_ID_WEEKLY_ROBI -> {
-
-                                when (it.data.data) {
-
-                                    "1AK" -> {
-
-                                        AppPreference.subWeeklyRobi = true
-                                        ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                        btnSubscribeWeekly.text = getString(R.string.txt_unsub)
-                                        btnSubscribeWeekly.setTextColor(Color.WHITE)
-                                        tvAmountWeekly.setTextColor(
-                                            ContextCompat.getColor(
-                                                requireContext(),
-                                                R.color.txt_color_title
-                                            )
-                                        )
-                                        tvContentSeven.setTextColor(
-                                            ContextCompat.getColor(
-                                                requireContext(),
-                                                R.color.txt_color_title
-                                            )
-                                        )
-                                        btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
-                                    }
-                                    else -> {
-                                        AppPreference.subWeeklyRobi = false
-                                        ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
-                                        btnSubscribeWeekly.text = getString(R.string.txt_sub)
-                                        btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
-                                    }
-                                }
-                            }
-
-                            SUBSCRIPTION_ID_MONTHLY_ROBI -> {
-
-                                when (it.data.data) {
-
-                                    "1AK" -> {
-
-                                        AppPreference.subMonthlyRobi = true
-                                        ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                        btnSubscribeMonthly.text = getString(R.string.txt_unsub)
-                                        btnSubscribeMonthly.setTextColor(Color.WHITE)
-                                        tvAmountMonthly.setTextColor(
-                                            ContextCompat.getColor(
-                                                requireContext(),
-                                                R.color.txt_color_title
-                                            )
-                                        )
-                                        tvContentMonthly.setTextColor(
-                                            ContextCompat.getColor(
-                                                requireContext(),
-                                                R.color.txt_color_title
-                                            )
-                                        )
-                                        btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
-                                    }
-                                    else -> {
-                                        AppPreference.subMonthlyRobi = false
-                                        ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
-                                        btnSubscribeMonthly.text = getString(R.string.txt_sub)
-
-                                        btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
-                                    }
-                                }
-
-
-                            }
-
-
-                        }
-                    }
-                }
-            }
-
             model.canelSubInfo.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
@@ -405,15 +219,6 @@ internal class SubscriptionFragment : Fragment() {
                                 model.checkSubscriptionFifteenDays(
                                     AppPreference.userNumber!!,
                                     SUBSCRIPTION_ID_FIFTEENDAYS
-                                )
-
-                                model.subscriptionCheckRobi(
-                                    AppPreference.userNumber!!,
-                                    SUBSCRIPTION_ID_WEEKLY_ROBI
-                                )
-                                model.subscriptionCheckRobi(
-                                    AppPreference.userNumber!!,
-                                    SUBSCRIPTION_ID_MONTHLY_ROBI
                                 )
 
                             }
@@ -451,50 +256,7 @@ internal class SubscriptionFragment : Fragment() {
                 }
             }
 
-            btnSubscribeDaily.handleClickEvent {
-
-                if (AppPreference.subYearly) {
-                    mCallback?.showToastMessage("You are Already subscribed")
-                } else {
-                    val unSubDialogTxt: String
-                    val planTitle: String
-                    val planDes: String
-
-                    if (isCelcom == true) {
-                        subscriptionId = SUBSCRIPTION_ID_WEEKLY
-                        unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_weekly)
-                        planTitle = getString(R.string.txt_weekly_service)
-                        planDes = getString(R.string.txt_dialog_sub_des_weekly)
-                    } else {
-                        subscriptionId = PRODUCT_ID_DAILY
-                        unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_daily)
-                        planTitle = getString(R.string.txt_daily_service)
-                        planDes = getString(R.string.txt_dialog_sub_des_daily)
-                    }
-
-                    when (AppPreference.subWeekly) {
-                        true -> {
-                            showSubDialog(
-                                PLAN_NAME_WEEKLY_ROBI,
-                                getString(R.string.txt_unsub),
-                                unSubDialogTxt
-                            )
-                        }
-
-                        else -> {
-                            showSubDialog(
-                                PLAN_NAME_WEEKLY_ROBI,
-                                planTitle,
-                                planDes
-                            )
-                        }
-                    }
-                }
-            }
-
-
             btnSubscribeWeekly.handleClickEvent {
-
 
                 if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
                     mCallback?.showToastMessage("You are Already subscribed")
@@ -503,15 +265,16 @@ internal class SubscriptionFragment : Fragment() {
                     val planTitle: String
                     val planDes: String
 
-                    subscriptionId = PRODUCT_ID_SEVEN_DAYS_ROBI
-                    unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_weekly)
-                    planTitle = getString(R.string.txt_weekly_service)
-                    planDes = getString(R.string.txt_dialog_sub_des_weekly_robi)
+                    subscriptionId = PRODUCT_ID_DAILY
+                    unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_daily)
+                    planTitle = getString(R.string.txt_daily_service)
+                    planDes = getString(R.string.txt_dialog_sub_des_daily)
 
-                    when (AppPreference.subWeeklyRobi) {
+
+                    when (AppPreference.subWeekly) {
                         true -> {
                             showSubDialog(
-                                PLAN_NAME_WEEKLY_ROBI,
+                                PLAN_NAME_WEEKLY,
                                 getString(R.string.txt_unsub),
                                 unSubDialogTxt
                             )
@@ -519,7 +282,7 @@ internal class SubscriptionFragment : Fragment() {
 
                         else -> {
                             showSubDialog(
-                                PLAN_NAME_WEEKLY_ROBI,
+                                PLAN_NAME_WEEKLY,
                                 planTitle,
                                 planDes
                             )
@@ -527,9 +290,6 @@ internal class SubscriptionFragment : Fragment() {
                     }
                 }
             }
-
-
-
             btnSubscribeMonthly.handleClickEvent {
 
                 if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
@@ -539,54 +299,11 @@ internal class SubscriptionFragment : Fragment() {
                     val planTitle: String
                     val planDes: String
 
-                    subscriptionId = PRODUCT_ID_THIRTY_DAYS_ROBI
-                    unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_monthly)
-                    planTitle = getString(R.string.txt_monthly_service)
-                    planDes = getString(R.string.txt_dialog_sub_des_monthly_robi)
+                    subscriptionId = PRODUCT_ID_FIFTEEN_DAYS
+                    unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_fifteen_robi)
+                    planTitle = getString(R.string.txt_fifteen_day_service)
+                    planDes = getString(R.string.txt_dialog_sub_des_fifteen_robi)
 
-                    Log.e("monthly product code", subscriptionId)
-
-                    when (AppPreference.subMonthlyRobi) {
-                        true -> {
-                            showSubDialog(
-                                PLAN_NAME_MONTHLY_ROBI,
-                                getString(R.string.txt_unsub),
-                                unSubDialogTxt
-                            )
-                        }
-
-                        else -> {
-                            showSubDialog(
-                                PLAN_NAME_MONTHLY_ROBI,
-                                planTitle,
-                                planDes
-                            )
-                        }
-                    }
-                }
-            }
-
-
-            btnSubscribeFifteen.handleClickEvent {
-
-                if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
-                    mCallback?.showToastMessage("You are Already subscribed")
-                } else {
-                    val unSubDialogTxt: String
-                    val planTitle: String
-                    val planDes: String
-
-                    if (isCelcom == true) {
-                        subscriptionId = SUBSCRIPTION_ID_MONTHLY
-                        unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_monthly)
-                        planTitle = getString(R.string.txt_monthly_service)
-                        planDes = getString(R.string.txt_dialog_sub_des_monthly)
-                    } else {
-                        subscriptionId = PRODUCT_ID_FIFTEEN_DAYS
-                        unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_fifteen_robi)
-                        planTitle = getString(R.string.txt_fifteen_day_service)
-                        planDes = getString(R.string.txt_dialog_sub_des_fifteen_robi)
-                    }
 
                     when (AppPreference.subMonthly) {
                         true -> {
@@ -608,59 +325,8 @@ internal class SubscriptionFragment : Fragment() {
                 }
 
             }
+
         }
-    }
-
-    private fun setupUi(view: View) {
-
-
-        /*ivShapeSubWeekly
-        btnSubscribeWeekly
-        tvAmount
-        tvFifteenService
-        tvAmountFifteen
-        tvSevenService
-        tvAmountWeekly
-        tvMonthlyService
-        tvAmountMonthly
-        tvTitleSub
-        tvDesSub
-        tvDailyService
-        tvContentMonthly
-
-        tvContent
-        tvContentSeven
-        ivShapeSubMonthly
-        btnSubscribeMonthly
-        btnSubscribeFifteen
-
-        */
-        progressLayout = view.findViewById(R.id.progressLayout)
-        ivShapeSubWeekly    = view.findViewById(R.id.ivShapeSubWeekly)
-       // btnSubscribeWeekly  = view.findViewById(R.id.btnSubscribeWeekly)
-        tvAmount    = view.findViewById(R.id.tvAmount)
-        tvFifteenService    = view.findViewById(R.id.tvFifteenService)
-        tvAmountFifteen = view.findViewById(R.id.tvAmountFifteen)
-        tvSevenService  = view.findViewById(R.id.tvSevenService)
-        tvAmountWeekly  = view.findViewById(R.id.tvAmountWeekly)
-        tvMonthlyService    = view.findViewById(R.id.tvMonthlyService)
-        tvAmountMonthly = view.findViewById(R.id.tvAmountMonthly)
-        tvTitleSub  = view.findViewById(R.id.tvTitleSub)
-        tvDesSub    = view.findViewById(R.id.tvDesSub)
-        tvDailyService  = view.findViewById(R.id.tvDailyService)
-        tvContentMonthly    = view.findViewById(R.id.tvContentMonthly)
-
-
-        tvContent  = view.findViewById(R.id.tvContent)
-        tvContentSeven = view.findViewById(R.id.tvContentSeven)
-        ivShapeSubMonthly  = view.findViewById(R.id.ivShapeSubMonthly)
-        btnSubscribeMonthly = view.findViewById(R.id.btnSubscribeMonthly)
-        btnSubscribeFifteen   = view.findViewById(R.id.btnSubscribeFifteen)
-        btnSubscribeDaily   = view.findViewById(R.id.btnSubscribeDaily)
-        btnSubscribeWeekly = view.findViewById(R.id.btnSubscribeWeekly)
-        ivBg   = view.findViewById(R.id.ivBg)
-
-
     }
 
     private fun checkMSISDN(output: String) {
@@ -694,24 +360,6 @@ internal class SubscriptionFragment : Fragment() {
         }
     }
 
-
-    private fun initViewRobi() {
-        tvTitleSub.setText(getString(R.string.sub_title_robi))
-        tvDesSub.setText(getString(R.string.sub_des_robi))
-
-        tvDailyService.setText(getString(R.string.txt_daily_service))
-        tvAmount.setText(getString(R.string.txt_amount_robi))
-
-        tvFifteenService.text = getString(R.string.txt_fifteen_day_service)
-        tvAmountFifteen.text = getString(R.string.txt_amount_fifteen_robi)
-
-        tvSevenService.text = getString(R.string.txt_seven_day_service)
-        tvAmountWeekly.text = getString(R.string.txt_amount_seven_robi)
-
-        tvMonthlyService.text = getString(R.string.txt_thirty_day_service)
-        tvAmountMonthly.text = getString(R.string.txt_amount_thirty_robi)
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -721,9 +369,6 @@ internal class SubscriptionFragment : Fragment() {
                 AppPreference.userNumber!!,
                 SUBSCRIPTION_ID_FIFTEENDAYS
             )
-            model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_WEEKLY_ROBI)
-            model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_MONTHLY_ROBI)
-
         } else {
             Log.e("chkSub", "not initialized")
         }
@@ -736,6 +381,7 @@ internal class SubscriptionFragment : Fragment() {
                 requireActivity(),
                 R.style.MaterialAlertDialog_rounded
             )
+
         val binding: View = LayoutInflater.from(requireActivity()).inflate(
             R.layout.dialog_subscription,
             null,
@@ -746,6 +392,13 @@ internal class SubscriptionFragment : Fragment() {
         val dialogView: View = binding
         customDialog.setView(dialogView)
 
+        val btnSub = binding.findViewById<AppCompatButton>(R.id.btnSub)
+        val icon = binding.findViewById<AppCompatImageView>(R.id.icon)
+        val tvTitle = binding.findViewById<AppCompatTextView>(R.id.tvTitle)
+        val tvDes = binding.findViewById<AppCompatTextView>(R.id.tvDes)
+        val imgClose = binding.findViewById<AppCompatImageView>(R.id.imgClose)
+
+
         val alertDialog = customDialog.show()
         alertDialog.window?.setLayout(
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -755,52 +408,47 @@ internal class SubscriptionFragment : Fragment() {
         if (planName.equals(PLAN_NAME_WEEKLY)) {
             when (AppPreference.subWeekly) {
                 true -> {
-                    binding.findViewById<TextView>(R.id.btnSub).setText(getString(R.string.txt_unsub))
-                    binding.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_close_rounded)
+                    btnSub.setText(getString(R.string.txt_unsub))
+                    icon.setImageResource(R.drawable.ic_close_rounded)
                 }
                 else -> {
-                    binding.findViewById<TextView>(R.id.btnSub).setText(getString(R.string.txt_sub))
-                    binding.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_premium)
+                    btnSub.setText(getString(R.string.txt_sub))
+                    icon.setImageResource(R.drawable.ic_premium)
                 }
             }
         } else {
             when (AppPreference.subMonthly) {
                 true -> {
-                    binding.findViewById<TextView>(R.id.btnSub).setText(getString(R.string.txt_unsub))
-                    binding.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_close_rounded)
+                    btnSub.setText(getString(R.string.txt_unsub))
+                    icon.setImageResource(R.drawable.ic_close_rounded)
                 }
                 else -> {
-                    binding.findViewById<TextView>(R.id.btnSub).setText(getString(R.string.txt_sub))
-                    binding.findViewById<ImageView>(R.id.icon).setImageResource(R.drawable.ic_premium)
+                    btnSub.setText(getString(R.string.txt_sub))
+                    icon.setImageResource(R.drawable.ic_premium)
                 }
             }
         }
 
 
-        binding.findViewById<TextView>(R.id.tvTitle).setText(title)
-        binding.findViewById<TextView>(R.id.tvDes).setText(descrption)
-
+        tvTitle.setText(title)
+        tvDes.setText(descrption)
 
 
         alertDialog.window?.setGravity(Gravity.CENTER)
         alertDialog.setCancelable(false)
         alertDialog.show()
 
-        binding.findViewById<View>(R.id.imgClose).handleClickEvent {
+        imgClose.handleClickEvent {
             alertDialog.dismiss()
         }
 
-        binding.findViewById<View>(R.id.btnSub).handleClickEvent {
+        btnSub.handleClickEvent {
 
             if (planName.equals(PLAN_NAME_WEEKLY)) {
                 if (AppPreference.subMonthly) {
 
                     val unsubText: String
-                    if (isCelcom == true) {
-                        unsubText = getString(R.string.unsubscribe_monthly)
-                    } else {
-                        unsubText = getString(R.string.unsubscribe_fifteen_robi)
-                    }
+                    unsubText = getString(R.string.unsubscribe_fifteen_robi)
 
                     Toast.makeText(
                         context,
@@ -811,40 +459,24 @@ internal class SubscriptionFragment : Fragment() {
                 } else {
                     when (AppPreference.subWeekly) {
                         true -> {
-                            if (isCelcom == true) {
-                                model.cancelSubscription(
-                                    AppPreference.userNumber!!,
-                                    SUBSCRIPTION_ID_WEEKLY
-                                )
-                            } else {
-                                model.cancelSubscriptionRobi(
-                                    AppPreference.userNumber!!,
-                                    SUBSCRIPTION_ID_DAILY
-                                )
-                            }
+                            model.cancelSubscriptionRobi(
+                                AppPreference.userNumber!!,
+                                SUBSCRIPTION_ID_DAILY
+                            )
 
                             alertDialog.dismiss()
                         }
                         else -> {
                             alertDialog.dismiss()
 
-                            if (isCelcom == true) {
-                                context?.startActivity(
-                                    Intent(
-                                        context,
-                                        SubscriptionBrowserActivity::class.java
-                                    ).putExtra(SUBSCRIPTION_ID_TAG, subscriptionId)
-                                )
+                            if (checkOtherNumber()) {
+                                model.checkNetworkStatus()
                             } else {
-                                if (checkOtherNumber()) {
-                                    model.checkNetworkStatus()
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        "Use airtel or robi number to upgrade!",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
+                                Toast.makeText(
+                                    context,
+                                    "Use airtel or robi number to upgrade!",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
 
                         }
@@ -853,11 +485,8 @@ internal class SubscriptionFragment : Fragment() {
             } else {
                 if (AppPreference.subWeekly) {
                     val unsubText: String
-                    if (isCelcom == true) {
-                        unsubText = getString(R.string.unsubscribe_weekly)
-                    } else {
-                        unsubText = getString(R.string.unsubscribe_daily)
-                    }
+                    unsubText = getString(R.string.unsubscribe_daily)
+
                     Toast.makeText(
                         context,
                         unsubText,
@@ -866,39 +495,24 @@ internal class SubscriptionFragment : Fragment() {
                 } else {
                     when (AppPreference.subMonthly) {
                         true -> {
-                            if (isCelcom == true) {
-                                model.cancelSubscription(
-                                    AppPreference.userNumber!!,
-                                    SUBSCRIPTION_ID_MONTHLY
-                                )
-                            } else {
-                                model.cancelSubscriptionRobi(
-                                    AppPreference.userNumber!!,
-                                    SUBSCRIPTION_ID_FIFTEENDAYS
-                                )
-                            }
+                            model.cancelSubscriptionRobi(
+                                AppPreference.userNumber!!,
+                                SUBSCRIPTION_ID_FIFTEENDAYS
+                            )
 
                             alertDialog.dismiss()
                         }
                         else -> {
                             alertDialog.dismiss()
-                            if (isCelcom == true) {
-                                context?.startActivity(
-                                    Intent(
-                                        context,
-                                        SubscriptionBrowserActivity::class.java
-                                    ).putExtra(SUBSCRIPTION_ID_TAG, subscriptionId)
-                                )
+
+                            if (checkOtherNumber()) {
+                                model.checkNetworkStatus()
                             } else {
-                                if (checkOtherNumber()) {
-                                    model.checkNetworkStatus()
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        "Use airtel or robi number to upgrade!",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
+                                Toast.makeText(
+                                    context,
+                                    "Use airtel or robi number to upgrade!",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
 
                         }

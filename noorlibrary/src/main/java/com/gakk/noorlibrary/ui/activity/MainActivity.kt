@@ -93,6 +93,8 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
         ivLogoHome.setImageResource(R.drawable.ic_noor_yellow_robi)
 
+        Log.e("numberchk","called ${AppPreference.userNumber}")
+        Log.e("suberchk","called ${AppPreference.subMonthly}")
 
         setSlider()
 
@@ -199,29 +201,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 }
             }
 
-            modelSubscription.weeklySubInfo.observe(this@MainActivity) {
-                when (it.status) {
-                    Status.LOADING -> {
-                        Log.d("SubMain", "loading")
-                    }
-                    Status.SUCCESS -> {
-                        Log.d("SubMain", "Weekly" + it.data)
-                        when (it.data?.regStatus) {
-                            "1AK" -> {
-                                AppPreference.subWeekly = true
-                            }
-                            "0AK" -> {
-                                AppPreference.subWeekly = false
-                            }
-                        }
-
-                    }
-                    Status.ERROR -> {
-                        Log.d("Sub", "Error" + it.message)
-                    }
-                }
-            }
-
             modelSubscription.weeklySubInfoRobi.observe(this@MainActivity) {
                 when (it.status) {
                     Status.LOADING -> {
@@ -238,28 +217,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
                             }
                         }
 
-                    }
-                    Status.ERROR -> {
-                        Log.d("Sub", "Error" + it.message)
-                    }
-                }
-            }
-            modelSubscription.monthlySubInfo.observe(this@MainActivity) {
-                when (it.status) {
-                    Status.LOADING -> {
-                        Log.d("Sub", "loading")
-                    }
-                    Status.SUCCESS -> {
-                        Log.e("Subinfo", "Monthly" + it.data)
-                        when (it.data?.regStatus) {
-                            "1AK" -> {
-                                AppPreference.subMonthly = true
-
-                            }
-                            "0AK" -> {
-                                AppPreference.subMonthly = false
-                            }
-                        }
                     }
                     Status.ERROR -> {
                         Log.d("Sub", "Error" + it.message)

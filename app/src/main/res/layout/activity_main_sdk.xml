@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_below="@id/phone_number"
         android:layout_margin="@dimen/standard_margin"
         android:background="@color/white"
         android:paddingTop="@dimen/standard_margin"
@@ -20,11 +21,12 @@
 
     <EditText
         android:id="@+id/phone_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:hint="Phone number"
+        android:textAlignment="center"
+        android:background="@color/white"
+        android:layout_centerInParent="true"
         android:inputType="textPhonetic"
-
         android:text="8801917589656" />
 </RelativeLayout>

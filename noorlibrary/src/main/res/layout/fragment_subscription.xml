@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+    <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -21,10 +22,8 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icon"
@@ -44,6 +43,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/txt_color_title"
                 android:textFontWeight="400"
+                android:text="@string/sub_title_robi"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/icon" />
@@ -56,6 +56,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/ash"
                 android:textFontWeight="400"
+                android:text="@string/sub_des_robi"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTitleSub" />
@@ -65,14 +66,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_margin"
-                android:visibility="gone"
                 android:background="@drawable/ic_rectangle_sub"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDesSub">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivShapeSubDaily"
+                    android:id="@+id/ivShapeSubWeekly"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/size_24"
@@ -92,10 +92,11 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/txt_white"
                     android:textFontWeight="400"
-                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubDaily"
-                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubDaily"
-                    app:layout_constraintStart_toStartOf="@id/ivShapeSubDaily"
-                    app:layout_constraintTop_toTopOf="@id/ivShapeSubDaily" />
+                    android:text="@string/txt_daily_service"
+                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubWeekly"
+                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubWeekly"
+                    app:layout_constraintStart_toStartOf="@id/ivShapeSubWeekly"
+                    app:layout_constraintTop_toTopOf="@id/ivShapeSubWeekly" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAmount"
@@ -106,10 +107,11 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/deep_green"
                     android:textFontWeight="700"
+                    android:text="@string/txt_amount_robi"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubDaily" />
+                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubWeekly" />
 
                 <RelativeLayout
                     android:id="@+id/rlContent"
@@ -142,7 +144,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSubscribeDaily"
+                    android:id="@+id/btnSubscribeWeekly"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/btn_height"
                     android:layout_marginStart="48dp"
@@ -167,136 +169,23 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/ash"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/btnSubscribeDaily"
-                    app:layout_constraintStart_toStartOf="@id/btnSubscribeDaily"
-                    app:layout_constraintTop_toBottomOf="@id/btnSubscribeDaily" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutWeekly"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_margin"
-                android:background="@drawable/ic_rectangle_sub"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutDaily">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivShapeSubWeekly"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/size_24"
-                    android:layout_marginEnd="@dimen/size_24"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_shape_sub"
-                    app:layout_constraintDimensionRatio="h,1:0.19354838"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvSevenService"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textColor="@color/txt_white"
-                    android:textFontWeight="400"
-                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubWeekly"
-                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubWeekly"
-                    app:layout_constraintStart_toStartOf="@id/ivShapeSubWeekly"
-                    app:layout_constraintTop_toTopOf="@id/ivShapeSubWeekly" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAmountWeekly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:fontFamily="sans-serif"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textColor="@color/deep_green"
-                    android:textFontWeight="700"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubWeekly" />
-
-                <RelativeLayout
-                    android:id="@+id/rlContentSeven"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvAmountWeekly">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imgChkSeven"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/small_spacing"
-                        android:src="@drawable/ic_check_green" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvContentSeven"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/imgChkSeven"
-                        android:fontFamily="sans-serif"
-                        android:text="@string/txt_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/txt_color_title"
-                        android:textFontWeight="400" />
-                </RelativeLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSubscribeWeekly"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/btn_height"
-                    android:layout_marginStart="48dp"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:layout_marginEnd="48dp"
-                    android:background="@drawable/ic_button_small"
-                    android:text="@string/txt_sub"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/txt_color"
-                    android:textFontWeight="400"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rlContentSeven" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_spacing"
-                    android:fontFamily="sans-serif"
-                    android:paddingBottom="@dimen/standard_margin"
-                    android:text="@string/txt_auto_renewal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/ash"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/btnSubscribeWeekly"
                     app:layout_constraintStart_toStartOf="@id/btnSubscribeWeekly"
                     app:layout_constraintTop_toBottomOf="@id/btnSubscribeWeekly" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutFifteen"
+                android:id="@+id/layoutMonthly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_margin"
                 android:background="@drawable/ic_rectangle_sub"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutWeekly">
+                app:layout_constraintTop_toBottomOf="@id/layoutDaily">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivShapeSubFifteen"
+                    android:id="@+id/ivShapeSubMonthly"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/size_24"
@@ -316,24 +205,26 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/txt_white"
                     android:textFontWeight="400"
-                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubFifteen"
-                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubFifteen"
-                    app:layout_constraintStart_toStartOf="@id/ivShapeSubFifteen"
-                    app:layout_constraintTop_toTopOf="@id/ivShapeSubFifteen" />
+                    android:text="@string/txt_fifteen_day_service"
+                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubMonthly"
+                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubMonthly"
+                    app:layout_constraintStart_toStartOf="@id/ivShapeSubMonthly"
+                    app:layout_constraintTop_toTopOf="@id/ivShapeSubMonthly" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAmountFifteen"
+                    android:id="@+id/tvAmountMonthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/standard_margin"
                     android:fontFamily="sans-serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/deep_green"
+                    android:text="@string/txt_amount_fifteen_robi"
                     android:textFontWeight="700"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubFifteen" />
+                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubMonthly" />
 
                 <RelativeLayout
                     android:id="@+id/rlContentFifteen"
@@ -342,7 +233,7 @@
                     android:layout_marginTop="@dimen/standard_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvAmountFifteen">
+                    app:layout_constraintTop_toBottomOf="@id/tvAmountMonthly">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgChkFiftten"
@@ -365,7 +256,7 @@
                 </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSubscribeFifteen"
+                    android:id="@+id/btnSubscribeMonthly"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/btn_height"
                     android:layout_marginStart="48dp"
@@ -391,128 +282,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/ash"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/btnSubscribeFifteen"
-                    app:layout_constraintStart_toStartOf="@id/btnSubscribeFifteen"
-                    app:layout_constraintTop_toBottomOf="@id/btnSubscribeFifteen" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutMonthly"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_margin"
-                android:background="@drawable/ic_rectangle_sub"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutFifteen">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivShapeSubMonthly"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/size_24"
-                    android:layout_marginEnd="@dimen/size_24"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_shape_sub"
-                    app:layout_constraintDimensionRatio="h,1:0.19354838"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvMonthlyService"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textColor="@color/txt_white"
-                    android:textFontWeight="400"
-                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubMonthly"
-                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubMonthly"
-                    app:layout_constraintStart_toStartOf="@id/ivShapeSubMonthly"
-                    app:layout_constraintTop_toTopOf="@id/ivShapeSubMonthly" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAmountMonthly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:fontFamily="sans-serif"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textColor="@color/deep_green"
-                    android:textFontWeight="700"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubMonthly" />
-
-                <RelativeLayout
-                    android:id="@+id/rlContentMonthly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvAmountMonthly">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imgChkMonthly"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/small_spacing"
-                        android:src="@drawable/ic_check_green" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvContentMonthly"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/imgChkMonthly"
-                        android:text="@string/txt_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/txt_color_title"
-                        android:textFontWeight="400"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSubscribeMonthly"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/btn_height"
-                    android:layout_marginStart="48dp"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:layout_marginEnd="48dp"
-                    android:background="@drawable/ic_button_small"
-                    android:text="@string/txt_sub"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/txt_color"
-                    android:textFontWeight="400"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rlContentMonthly" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_spacing"
-                    android:fontFamily="sans-serif"
-                    android:paddingBottom="@dimen/standard_margin"
-                    android:text="@string/txt_auto_renewal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/ash"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/btnSubscribeMonthly"
                     app:layout_constraintStart_toStartOf="@id/btnSubscribeMonthly"
                     app:layout_constraintTop_toBottomOf="@id/btnSubscribeMonthly" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-            <ProgressBar
+            <include
                 android:id="@+id/progressLayout"
+                layout="@layout/layout_circular_progress"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:visibility="gone"
@@ -520,6 +297,5 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
