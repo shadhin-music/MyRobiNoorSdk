@@ -199,6 +199,7 @@ const val CHANNEL_ID = "12345"
 const val ACTION_SHARE = "com.mcc.noor.ACTION_SHARE"
 const val PAYMENT_STATUS_TAG = "PaymentTag"
 const val PAYMENT_HAJJ_PRE_REG = "HajjPreReg"
+const val PAYMENT_DONATION = "Donation"
 
 const val PAGE_UMRAH_HAJJ = "Umrah Hajj"
 const val COUNTRY_NAME = "MALAYSIA"
@@ -221,7 +222,7 @@ const val DONATION_TERM =
 const val TAG_COULD_NOT_TRACK_DATA = "could not track"
 
 const val DONATION_CHANNEL = "APP"
-
+const val DONATION_CHANNEL_WEB = "WEB"
 
 const val VIDEO_PLAYER_NOTIFICATION_CHANNEL_NAME = "Noor Video"
 const val VIDEO_PLAYER_NOTIFICATION_CHANNEL_DESC = "This is for video player"

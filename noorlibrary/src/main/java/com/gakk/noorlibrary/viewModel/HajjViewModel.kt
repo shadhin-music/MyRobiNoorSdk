@@ -467,12 +467,12 @@ internal class HajjViewModel(private val repository: RestRepository) : ViewModel
 
                     }
 
-                    else ->
+                   /* else ->
                     {
                         _paymentStatus.postValue(
                             PaymentResource.Error("Error Occurred!"
                             ))
-                    }
+                    }*/
 
                 }
 

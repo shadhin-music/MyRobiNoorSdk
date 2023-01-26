@@ -89,8 +89,6 @@ class UmrahPersonalInfoFragment : Fragment() {
 
        }
 
-
-
     }
 
     override fun onCreateView(

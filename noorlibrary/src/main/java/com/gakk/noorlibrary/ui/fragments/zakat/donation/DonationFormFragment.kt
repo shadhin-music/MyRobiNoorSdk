@@ -1,13 +1,16 @@
 package com.gakk.noorlibrary.ui.fragments.zakat.donation
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -21,10 +24,13 @@ import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.literature.Literature
+import com.gakk.noorlibrary.ui.activity.PreRegistrationBrowserActivity
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -65,6 +71,7 @@ internal class DonationFormFragment : Fragment() {
     private lateinit var tvdetailsOrg: AppCompatTextView
     private lateinit var appCompatImageView10: AppCompatImageView
     private lateinit var progressBar: ProgressBar
+    private lateinit var progressLayout: ConstraintLayout
     private lateinit var repository: RestRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,6 +121,7 @@ internal class DonationFormFragment : Fragment() {
         tvdetailsOrg = view.findViewById(R.id.tvdetailsOrg)
         appCompatImageView10 = view.findViewById(R.id.appCompatImageView10)
         progressBar = view.findViewById(R.id.progressBar)
+        progressLayout = view.findViewById(R.id.progressLayout)
 
         return view
     }
@@ -166,6 +174,10 @@ internal class DonationFormFragment : Fragment() {
                 this@DonationFormFragment,
                 SubscriptionViewModel.FACTORY(repository)
             ).get(SubscriptionViewModel::class.java)
+
+            viewModelSub.let {
+                initObserver()
+            }
 
         }
 
@@ -302,14 +314,65 @@ internal class DonationFormFragment : Fragment() {
         // TODO("need to implement ssl observer")
 
         AppPreference.userNumber?.let {
-            viewModelSub.initiatePaymentSslRange(
+
+            viewModelSub.initiatePaymentSslRangeDonation(
                 it,
                 DONATION_SERVICE_ID,
                 customerName,
-                SSL_CUSTOMER_EMAIL
+                SSL_CUSTOMER_EMAIL,
+                donationAmount
             )
         }
 
+
+
+    }
+
+    // payement ssl ob server
+
+
+    private fun  initObserver()
+    {
+
+        viewModelSub.paymentSsl.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    Log.e("paymentSslHajj", "LOADING")
+                    progressLayout.visibility = View.VISIBLE
+                }
+
+                Status.SUCCESS -> {
+                    progressLayout.visibility = View.GONE
+                    Log.e("paymentSslHajj", "SUCCESS${Gson().toJson(it.data)}")
+                    if (it.data?.errorCode.equals("200")) {
+                        if (it.data?.gatewayPageURL?.isNotEmpty() == true) {
+                            if (isNetworkConnected(requireContext())) {
+                                context?.startActivity(
+                                    Intent(
+                                        context,
+                                        PreRegistrationBrowserActivity::class.java
+                                    ).putExtra(TRACKING_NO_TAG, AppPreference.userNumber!!)
+                                        .putExtra(PAYMENT_URL_TAG, it.data.gatewayPageURL)
+                                       .putExtra(PAYMENT_STATUS_TAG, PAYMENT_DONATION)
+                                )
+                                requireActivity().finish()
+                            } else {
+                                mDetailsCallBack?.showToastMessage("Please check internet connection!")
+                            }
+
+                        }
+                    } else {
+                        mDetailsCallBack?.showToastMessage("Try again!")
+                    }
+                }
+
+                Status.ERROR -> {
+                    Log.e("UMRAH PAYMENT", "ERROR")
+                    mDetailsCallBack?.showToastMessage("something went wrong! Please try again")
+                    progressLayout.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun checkPersonAddress(): Boolean {

@@ -548,7 +548,9 @@ class RestRepository(
         msisdn: String,
         serviceId: String,
         customerName: String,
-        customerEmail: String
+        customerEmail: String,
+        channel:String = DONATION_CHANNEL,
+        amount:String = ""
     ): SslPaymentInitiateResponse {
 
         val paymentModel =
@@ -558,7 +560,8 @@ class RestRepository(
                 SSL_PUSER,
                 customerName,
                 customerEmail,
-                DONATION_CHANNEL
+                channel,
+                amount
             )
         val gson = Gson()
         val params = gson.toJson(paymentModel)

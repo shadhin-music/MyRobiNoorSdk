@@ -12,6 +12,7 @@ import com.gakk.noorlibrary.model.nagad.PaymentInitiateResponse
 import com.gakk.noorlibrary.model.ssl.SslPaymentInitiateResponse
 import com.gakk.noorlibrary.model.subs.CheckSubResponse
 import com.gakk.noorlibrary.ui.fragments.subscription.SubsResource
+import com.gakk.noorlibrary.util.DONATION_CHANNEL
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 
@@ -214,6 +215,41 @@ internal class SubscriptionViewModel(private val repository: RestRepository) : V
                             serviceid,
                             customerName,
                             customerEmail
+                        )
+                    )
+                )
+
+            } catch (e: Exception) {
+                paymentSsl.postValue(
+                    Resource.error(
+                        data = null,
+                        message = e.message ?: "Error Occurred!"
+                    )
+                )
+            }
+        }
+    }
+
+
+    fun initiatePaymentSslRangeDonation(
+        msisdn: String,
+        serviceid: String,
+        customerName: String,
+        customerEmail: String,
+        amount:String
+    ) {
+        viewModelScope.launch {
+            paymentSsl.postValue(Resource.loading(data = null))
+            try {
+                paymentSsl.postValue(
+                    Resource.success(
+                        data = repository.initiatePaymentSslRange(
+                            msisdn,
+                            serviceid,
+                            customerName,
+                            customerEmail,
+                            DONATION_CHANNEL,
+                            amount
                         )
                     )
                 )
