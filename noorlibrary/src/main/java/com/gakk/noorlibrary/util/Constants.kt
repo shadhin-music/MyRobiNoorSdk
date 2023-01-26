@@ -171,8 +171,6 @@ const val CAT_WOMEN = "Women"
 const val SUBSCRIPTION_ID_TAG = "SubscriptionId"
 
 const val SUB_BASE_URL_ROBI = "http://27.131.15.12/sdpdcg/default.aspx?msisdn="
-const val SUBSCRIPTION_ID_WEEKLY = "2242"
-const val SUBSCRIPTION_ID_MONTHLY = "2243"
 
 const val SUBSCRIPTION_ID_DAILY = "244"
 const val SUBSCRIPTION_ID_FIFTEENDAYS = "245"

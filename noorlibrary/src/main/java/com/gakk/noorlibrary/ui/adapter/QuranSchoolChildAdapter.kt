@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.ui.adapter
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.gakk.noorlibrary.R
 
 import com.gakk.noorlibrary.model.quranSchool.QuranSchoolModel
@@ -34,12 +40,12 @@ internal class QuranSchoolChildAdapter(
 
         val binding: View =
             LayoutInflater.from(parent.context).inflate(
-            R.layout.layout_quran_school_old_child_item,
-            parent,
-            false
-        )
+                R.layout.layout_quran_school_old_child_item,
+                parent,
+                false
+            )
 
-      val  viewHolder = QuranSchoolChildOldViewHolder(binding)
+        val viewHolder = QuranSchoolChildOldViewHolder(binding)
 
         return viewHolder
     }
@@ -66,25 +72,56 @@ internal class QuranSchoolChildAdapter(
         }
 
         fun bind(quranSchoolModel: QuranSchoolModel) {
-            val scholars_img:ImageView = binding.findViewById(R.id.scholars_img)
-            val image = quranSchoolModel.contentBaseUrl+"/"+quranSchoolModel.imageUrl
-            Glide.with(binding.context).load(image).into(scholars_img)
+            val scholars_img: ImageView = binding.findViewById(R.id.scholars_img)
             val progressBar = binding.findViewById<ProgressBar>(R.id.progressBar)
-           val dateTv = binding.findViewById<AppCompatTextView>(R.id.date_tv)
-              dateTv.text = quranSchoolModel.liveOn
+
+            val image = quranSchoolModel.contentBaseUrl + "/" + quranSchoolModel.imageUrl
+
+            Glide.with(scholars_img.context)
+                .load(image.replace("<size>", "1280"))
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                })
+                .error(R.drawable.place_holder_16_9_ratio)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(scholars_img)
+
+            val dateTv = binding.findViewById<AppCompatTextView>(R.id.date_tv)
+            dateTv.text = quranSchoolModel.liveOn
             val title = binding.findViewById<AppCompatTextView>(R.id.title)
-            title.text= quranSchoolModel.title
-          val  iconLive:AppCompatImageView =binding.findViewById(R.id.icon_live)
-           val description = binding.findViewById<AppCompatTextView>(R.id.description)
-            description.text = quranSchoolModel.about ?:quranSchoolModel.scholarName
+            title.text = quranSchoolModel.title
+            val iconLive: AppCompatImageView = binding.findViewById(R.id.icon_live)
+            val description = binding.findViewById<AppCompatTextView>(R.id.description)
+            description.text = quranSchoolModel.about ?: quranSchoolModel.scholarName
             progressBar.visibility = View.GONE
             if (quranSchoolModel.isLive == true) {
-               iconLive.show()
-            dateTv.hide()
-             description.hide()
+                iconLive.show()
+                dateTv.hide()
+                description.hide()
             } else {
-               iconLive.hide()
-               dateTv.show()
+                iconLive.hide()
+                dateTv.show()
                 description.show()
             }
             //binding.item = quranSchoolModel

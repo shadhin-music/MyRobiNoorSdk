@@ -27,28 +27,30 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
     inner class ViewHolder(layoutId: Int, layoutView: View) :
         RecyclerView.ViewHolder(layoutView) {
 
-         var view: View = layoutView
-         val layoutTag = layoutId
+        var view: View = layoutView
+        val layoutTag = layoutId
 
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        lateinit var view:View
+        lateinit var view: View
 
         when (viewType) {
             ZAKAT_CALC_VIEW -> {
 
-                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_saved_jakat,parent,false)
+                view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_item_saved_jakat, parent, false)
 
-                return ViewHolder(ZAKAT_CALC_VIEW,view)
+                return ViewHolder(ZAKAT_CALC_VIEW, view)
             }
 
             NO_DATA -> {
 
-                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_no_data,parent,false)
+                view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_no_data, parent, false)
 
-                return ViewHolder(NO_DATA,view)
+                return ViewHolder(NO_DATA, view)
             }
 
             else -> throw IllegalStateException("Illegal view type")
@@ -57,14 +59,17 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        when(holder.layoutTag)
-        {
-            ZAKAT_CALC_VIEW ->
-            {
-                val  tvDate = holder.view.findViewById<AppCompatTextView>(R.id.tvDate)
+        when (holder.layoutTag) {
+            ZAKAT_CALC_VIEW -> {
+                val tvDate = holder.view.findViewById<AppCompatTextView>(R.id.tvDate)
                 val ivDelete = holder.view.findViewById<AppCompatImageView>(R.id.ivDelete)
+                val tvContent = holder.view.findViewById<AppCompatTextView>(R.id.tvContent)
+                val tvContentJakat = holder.view.findViewById<AppCompatTextView>(R.id.tvContentJakat)
+
                 val data = mZakatList[position]
                 tvDate.text = data.date
+                tvContent.text = data.asset
+                tvContentJakat.text = data.zakat
 
                 ivDelete.handleClickEvent {
 
@@ -72,8 +77,7 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
                 }
             }
 
-            NO_DATA ->
-            {
+            NO_DATA -> {
                 NoDataLayout(holder.view)
             }
         }
@@ -97,6 +101,5 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
     fun updateZakatList(list: List<ZakatDataModel>) {
         mZakatList = listOf()
         mZakatList = list
-        // notifyDataSetChanged()
     }
 }

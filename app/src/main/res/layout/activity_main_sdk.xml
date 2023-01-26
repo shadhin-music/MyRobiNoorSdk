@@ -27,6 +27,7 @@
         android:textAlignment="center"
         android:background="@color/white"
         android:layout_centerInParent="true"
-        android:inputType="textPhonetic"
-        android:text="8801917589656" />
+        android:inputType="number"
+        android:text="8801672219992"
+        android:layout_margin="@dimen/standard_margin"/>
 </RelativeLayout>
