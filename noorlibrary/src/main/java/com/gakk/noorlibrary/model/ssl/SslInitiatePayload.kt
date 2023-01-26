@@ -9,5 +9,6 @@ data class SslInitiatePayload(
     val puser: String,
     val cus_name: String,
     val cus_email: String,
-    val channel: String
+    val channel: String,
+    val amount: String? = ""
 )

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
@@ -30,12 +31,13 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
     private lateinit var progressBar:ProgressBar
     private lateinit var webview:WebView
-    private lateinit var toolBar:View
+    private lateinit var toolBar:ConstraintLayout
 
 
     //private lateinit var binding: ActivitySubscriptionBrowserBinding
     private lateinit var viewModelHajj: HajjViewModel
     private lateinit var repository: RestRepository
+    private  lateinit var paymentTag: String
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,12 +49,11 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
         val url: String?
         val trackongNo: String?
-        val paymentTag: String?
 
         intent.let {
             trackongNo = intent.getStringExtra(TRACKING_NO_TAG)
             url = intent.getStringExtra(PAYMENT_URL_TAG)
-            paymentTag = intent.getStringExtra(PAYMENT_STATUS_TAG)
+            paymentTag = intent.getStringExtra(PAYMENT_STATUS_TAG).toString()
         }
 
 
@@ -86,9 +87,15 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 Log.e("onPageFinished", url)
                 if (url.contains("SSLPaySuccessCallBack")) {
                     trackongNo.let {
-                        viewModelHajj.updatePaymentStatus(it,paymentTag.toString())
+                        when(paymentTag)
+                        {
+                            PAYMENT_DONATION -> showPaymentStatusDialog(1)
+                            else -> viewModelHajj.updatePaymentStatus(it,paymentTag)
+                        }
+
                     }
                 } else if (url.contains("SSLPayFailCallBack")) {
+                    Log.e("TEST","OK")
                     showPaymentStatusDialog(0)
                 }
             }
@@ -113,7 +120,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
     private fun setupUi() {
         progressBar = findViewById(R.id.progressBar)
         webview = findViewById(R.id.webview)
-        toolBar = findViewById(R.id.toolBar_a)
+        toolBar = findViewById(R.id.toolBar)
     }
 
     private fun subscribeObserver() {
@@ -124,7 +131,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
             {
                 is PaymentResource.Error ->
                 {
-                    showPaymentStatusDialog(0)
+                    showPaymentStatusDialog(0,)
                     progressBar.visibility = View.GONE
                 }
                 PaymentResource.Loading -> progressBar.visibility = View.VISIBLE
@@ -148,7 +155,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 R.style.MaterialAlertDialog_rounded
             )
 
-        val view = layoutInflater.inflate(R.layout.dialog_hajj_refund, null)
+        val view = layoutInflater.inflate(R.layout.dialog_hajj_refund, null,false)
 
         val dialogView: View = view
         customDialog.setView(dialogView)
@@ -158,6 +165,29 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
         val tvDesRefund = view.findViewById<AppCompatTextView>(R.id.tvDesRefund)
         val textViewNormal5 = view.findViewById<AppCompatTextView>(R.id.textViewNormal5)
         val rlBtn = view.findViewById<RelativeLayout>(R.id.rlBtn)
+
+
+
+        if (status == 0) {
+            imgChecked.setImageResource(R.drawable.ic_failed)
+            tvTitleThank.setText("দুঃখিত মুহতারাম!")
+            tvDesRefund.setText("আপনার পেমেন্ট সফল হয়নি। অনুগ্রহ করে আবার চেষ্টা করুন অথবা আমাদের সাথে যোগাযোগ করুন।")
+            textViewNormal5.setText("আবার চেষ্টা করুন")
+        } else {
+            tvTitleThank.setText("ধন্যবাদ মুহতারাম!")
+            tvDesRefund.setText("আপনার পেমেন্ট সম্পন্ন হয়েছে। খুব শীঘ্রই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।")
+
+            when(paymentTag)
+            {
+                PAYMENT_DONATION ->
+                {
+                    tvTitleThank.text = "ধন্যবাদ মুহতারাম!"
+                    tvDesRefund.text = "আপনার পেমেন্টটি সফল হয়েছে। আপনি শীঘ্রই নিশ্চিতকরণ ই-মেইল পাবেন।"
+
+                }
+            }
+        }
+
 
         val alertDialog = customDialog.show()
         alertDialog.window?.setLayout(
@@ -169,15 +199,6 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
         alertDialog.setCancelable(false)
         alertDialog.show()
 
-        if (status == 0) {
-            imgChecked.setImageResource(R.drawable.ic_failed)
-            tvTitleThank.setText("দুঃখিত মুহতারাম!")
-            tvDesRefund.setText("আপনার পেমেন্ট সফল হয়নি। অনুগ্রহ করে আবার চেষ্টা করুন অথবা আমাদের সাথে যোগাযোগ করুন।")
-            textViewNormal5.setText("আবার চেষ্টা করুন")
-        } else {
-            tvTitleThank.setText("ধন্যবাদ মুহতারাম!")
-            tvDesRefund.setText("আপনার পেমেন্ট সম্পন্ন হয়েছে। খুব শীঘ্রই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।")
-        }
 
         rlBtn.handleClickEvent {
             alertDialog.dismiss()
