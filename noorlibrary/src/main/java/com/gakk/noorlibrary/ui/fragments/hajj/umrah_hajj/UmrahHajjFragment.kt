@@ -135,7 +135,6 @@ class UmrahHajjFragment : Fragment(), UmrahPackAdapter.OnItemClickListener, Umra
                 is UmrahHajjResource.Error ->
                 {
 
-                    Log.e("UMRAH",it.errorMsg)
                     progressLayout.visibility = View.GONE
                     noInternetLayout.visibility = View.VISIBLE
                 }
@@ -147,12 +146,17 @@ class UmrahHajjFragment : Fragment(), UmrahPackAdapter.OnItemClickListener, Umra
                 is UmrahHajjResource.UmrahHajjPackListresponse ->
                 {
 
-                    umrah_pack_adapter = it.data.data?.data?.let { it1 -> UmrahPackAdapter(it1,this@UmrahHajjFragment) }
-
-                    umrah_pack.adapter = umrah_pack_adapter
-
                     progressLayout.visibility = View.GONE
                     noInternetLayout.visibility = View.GONE
+
+                    it.data.data?.data?.let {
+                        umrah_pack_adapter =  UmrahPackAdapter(it,this@UmrahHajjFragment)
+
+                        umrah_pack.adapter = umrah_pack_adapter
+
+                    }?: run {
+                        noInternetLayout.visibility = View.VISIBLE
+                    }
 
                 }
                 else -> Unit

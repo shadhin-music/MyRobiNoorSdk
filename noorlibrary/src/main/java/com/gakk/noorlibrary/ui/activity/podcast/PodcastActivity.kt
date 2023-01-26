@@ -16,6 +16,7 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
@@ -113,7 +114,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
     private lateinit var tvCountCollapse : AppCompatTextView
     private lateinit var comment_root:RelativeLayout
     private lateinit var commentLayout:ConstraintLayout
-    private lateinit var comment_ed:AppCompatTextView
+    private lateinit var comment_ed: AppCompatEditText
     private lateinit var comment_rv:RecyclerView
     private lateinit var ivComment:ImageView
     private lateinit var playerLayout:FrameLayout
@@ -428,6 +429,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
         videoTitle = findViewById(R.id.videoTitle)
         tvSpeaker = findViewById(R.id.tvSpeaker)
         progressBar = findViewById(R.id.progressBar)
+        comment_rv = findViewById(R.id.comment_rv)
 
 
         fullscreenToggleButton = findViewById(R.id.toggleOrientationButton)
@@ -472,8 +474,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
 
         }
 
-        commentBaseAdapter =
-            com.gakk.noorlibrary.ui.adapter.podcast.CommentPagingAdapter(this, this)
+        commentBaseAdapter = CommentPagingAdapter(this, this)
         linearLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         commentBaseAdapter!!.clearAll()
         comment_rv.layoutManager = linearLayoutManager

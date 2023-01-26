@@ -36,7 +36,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/small_spacing"
                     android:fontFamily="sans-serif-medium"
-                    android:text="@{model.userName}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/txt_color_black"
                     tools:text="Ahmed kabir" />
@@ -61,7 +60,6 @@
                 android:layout_below="@id/comment_times"
                 android:layout_marginTop="@dimen/small_spacing"
                 android:fontFamily="sans-serif"
-                android:text="@{model.message}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/txt_color_black"
                 android:textColorLink="@color/colorPrimaryDark" />

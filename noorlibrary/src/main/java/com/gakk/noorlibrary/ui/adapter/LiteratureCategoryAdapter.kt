@@ -77,15 +77,15 @@ internal class LiteratureCategoryAdapter(
 
                 CATEGORY_NAMAZ_RULES_MALE_FEMALE_INSTRUCTION ->
                 {
-                    view?.let {
+                    view.let {
 
                         val layoutVisualForMen = view.findViewById<CardView>(R.id.layoutVisualForMen)
                         val layoutVisualForWomen = view.findViewById<CardView>(R.id.layoutVisualForWomen)
-                        val imgThumbnail = view.findViewById<ImageView>(R.id.imgThumbnail)
-                        val tvSubTitle = view.findViewById<AppCompatTextView>(R.id.tvSubTitle)
+                        val imgThumbnail = layoutVisualForWomen.findViewById<ImageView>(R.id.imgThumbnail)
+                        val tvSubTitle = layoutVisualForWomen.findViewById<AppCompatTextView>(R.id.tvSubTitle)
 
 
-                        if (mCatId.equals(R.string.namaz_rules_cat_id.getLocalisedTextFromResId())) {
+                        if (mCatId == R.string.namaz_rules_cat_id.getLocalisedTextFromResId()) {
                             layoutVisualForMen.visibility = View.VISIBLE
                             layoutVisualForWomen.visibility = View.VISIBLE
                         }

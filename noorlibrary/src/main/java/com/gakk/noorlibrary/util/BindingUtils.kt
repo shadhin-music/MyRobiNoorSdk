@@ -64,6 +64,9 @@ fun setImageFromUrl(
                 .error(placeHolder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(imageView)
+
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+
         }
     }
 }
