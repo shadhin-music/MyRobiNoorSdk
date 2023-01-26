@@ -1,123 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        style="@style/CardViewStyleNoElevation"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/CardViewStyleNoElevation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/margin_12"
+            android:fontFamily="sans-serif"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/disabled_color"
+            android:textFontWeight="400"
+            app:layout_constraintEnd_toStartOf="@id/ivDelete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/standard_margin"
-                android:layout_marginTop="@dimen/margin_12"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textColor="@color/disabled_color"
-                android:textFontWeight="400"
-                android:fontFamily="sans-serif"
-                app:layout_constraintEnd_toStartOf="@id/ivDelete"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="@id/tvDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvDate" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivDelete"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="@dimen/standard_margin"
-                android:src="@drawable/ic_delete"
-                app:layout_constraintBottom_toBottomOf="@id/tvDate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tvDate" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvtitle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/margin_10"
+            android:fontFamily="sans-serif"
+            android:text="@string/txt_total_asset"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/txt_color_title"
+            android:textFontWeight="400"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDate" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvtitle"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/standard_margin"
-                android:layout_marginTop="@dimen/margin_10"
-                android:text="@string/txt_total_asset"
-                android:fontFamily="sans-serif"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/txt_color_title"
-                android:textFontWeight="400"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDate" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_colon_black"
+            app:layout_constraintBottom_toBottomOf="@+id/tvtitle"
+            app:layout_constraintStart_toEndOf="@+id/tvtitle"
+            app:layout_constraintTop_toTopOf="@+id/tvtitle" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="@null"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_colon_black"
-                app:layout_constraintBottom_toBottomOf="@+id/tvtitle"
-                app:layout_constraintStart_toEndOf="@+id/tvtitle"
-                app:layout_constraintTop_toTopOf="@+id/tvtitle" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_24"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:fontFamily="sans-serif"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/txt_color_title"
+            android:textFontWeight="400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/tvtitle" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvContent"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_24"
-                android:layout_marginEnd="@dimen/standard_margin"
-                android:text="@{data.asset}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/txt_color_title"
-                android:fontFamily="sans-serif"
-                android:textFontWeight="400"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/tvtitle" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvtitleJakat"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:fontFamily="sans-serif"
+            android:text="@string/txt_jakat_baki"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/yellow_deep"
+            android:textFontWeight="400"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvtitle" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvtitleJakat"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/standard_margin"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginBottom="@dimen/standard_margin"
-                android:text="@string/txt_jakat_baki"
-                android:fontFamily="sans-serif"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/yellow_deep"
-                android:textFontWeight="400"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvtitle" />
+        <ImageView
+            android:id="@+id/imageViewColon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_colon_yellow"
+            app:layout_constraintBottom_toBottomOf="@+id/tvtitleJakat"
+            app:layout_constraintStart_toEndOf="@+id/tvtitleJakat"
+            app:layout_constraintTop_toTopOf="@+id/tvtitleJakat" />
 
-            <ImageView
-                android:id="@+id/imageViewColon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:background="@null"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_colon_yellow"
-                app:layout_constraintBottom_toBottomOf="@+id/tvtitleJakat"
-                app:layout_constraintStart_toEndOf="@+id/tvtitleJakat"
-                app:layout_constraintTop_toTopOf="@+id/tvtitleJakat" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvContentJakat"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="@dimen/standard_margin"
-                android:text="@{data.zakat}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/yellow_deep"
-                android:fontFamily="sans-serif"
-                android:textFontWeight="400"
-                app:layout_constraintBottom_toBottomOf="@+id/tvtitleJakat"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageViewColon"
-                app:layout_constraintTop_toTopOf="@+id/tvtitleJakat" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContentJakat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:fontFamily="sans-serif"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/yellow_deep"
+            android:textFontWeight="400"
+            app:layout_constraintBottom_toBottomOf="@+id/tvtitleJakat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewColon"
+            app:layout_constraintTop_toTopOf="@+id/tvtitleJakat" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

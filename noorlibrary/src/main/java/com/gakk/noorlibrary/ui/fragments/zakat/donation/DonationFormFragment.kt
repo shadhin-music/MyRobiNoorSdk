@@ -9,6 +9,8 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -19,12 +21,11 @@ import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.literature.Literature
-import com.gakk.noorlibrary.util.DONATION_SERVICE_ID
-import com.gakk.noorlibrary.util.DONATION_TERM
-import com.gakk.noorlibrary.util.SSL_CUSTOMER_EMAIL
-import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
+import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -64,6 +65,7 @@ internal class DonationFormFragment : Fragment() {
     private lateinit var tvdetailsOrg: AppCompatTextView
     private lateinit var appCompatImageView10: AppCompatImageView
     private lateinit var progressBar: ProgressBar
+    private lateinit var repository: RestRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,6 +154,19 @@ internal class DonationFormFragment : Fragment() {
                 .error(R.drawable.place_holder_2_3_ratio)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(appCompatImageView10)
+        }
+
+        lifecycleScope.launch {
+            val job = launch {
+                repository = RepositoryProvider.getRepository()
+            }
+            job.join()
+
+            viewModelSub = ViewModelProvider(
+                this@DonationFormFragment,
+                SubscriptionViewModel.FACTORY(repository)
+            ).get(SubscriptionViewModel::class.java)
+
         }
 
         enableFixedAmount(500)
@@ -284,14 +299,16 @@ internal class DonationFormFragment : Fragment() {
                 .show()
             return
         }
-        // TODO("mobile number configure from sdk")
+        // TODO("need to implement ssl observer")
 
-        viewModelSub.initiatePaymentSslRange(
-            "01",
-            DONATION_SERVICE_ID,
-            customerName,
-            SSL_CUSTOMER_EMAIL
-        )
+        AppPreference.userNumber?.let {
+            viewModelSub.initiatePaymentSslRange(
+                it,
+                DONATION_SERVICE_ID,
+                customerName,
+                SSL_CUSTOMER_EMAIL
+            )
+        }
 
     }
 
