@@ -38,6 +38,7 @@
         <domain includeSubdomains="true">d2-consent.robi.com.bd</domain>
         <domain includeSubdomains="true">noorsawab.com</domain>
         <domain includeSubdomains="true">wdp.joycalls.com</domain>
+        <domain includeSubdomains="true">portal.fb.com</domain>
 
         <base-config >
              <trust-anchors>

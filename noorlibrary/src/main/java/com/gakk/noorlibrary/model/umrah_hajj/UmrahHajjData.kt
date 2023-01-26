@@ -1,9 +1,11 @@
 package com.mcc.noor.model.umrah_hajj
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.mcc.noor.model.umrah_hajjs.UmrahHajjPackageDescription
 import kotlinx.parcelize.Parcelize
 
+@Keep
 @Parcelize
 data class UmrahHajjData(
     var image: String?,
