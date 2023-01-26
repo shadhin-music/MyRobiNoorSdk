@@ -302,11 +302,15 @@ object AppPreference {
         preferences.edit { it.putString(USER_CURRENT_LOCATION, userCurLocString) }
     }
 
-    fun getUserCurrentLocation(): UserLocation {
-        val userCurLocString = preferences.getString(USER_CURRENT_LOCATION, "")
-
-
-        if (userCurLocString == null || userCurLocString.length < 1) {
+    fun getUserCurrentLocation(context: Context? = null): UserLocation {
+        if (preferences == null && context != null){
+            preferences = context.getSharedPreferences(PREF_FILE_NAME, MODE)
+        }
+        var userCurLocString: String? = null
+        kotlin.runCatching {
+            userCurLocString = preferences.getString(USER_CURRENT_LOCATION, "")
+        }
+        if (userCurLocString.isNullOrEmpty()) {
             val mLocation = UserLocation(
                 23.8103, 90.4125
             )

@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.roza
 
+import android.content.Context
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.extralib.azan.Azan
 import com.gakk.noorlibrary.extralib.azan.Method
@@ -11,7 +12,7 @@ import java.util.*
 
 object IftarAndSehriTimeProvider {
 
-    fun getIfterAndSehriTimeFromGivenDateByGivenOffset(dateMs:Long,offSetInDays:Int):IfterAndSehriTime{
+    fun getIfterAndSehriTimeFromGivenDateByGivenOffset(dateMs:Long,offSetInDays:Int, context: Context? = null):IfterAndSehriTime{
 
        val cal = GregorianCalendar()
         cal.timeInMillis=dateMs

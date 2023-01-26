@@ -49,7 +49,7 @@ class RozaAlarmJobService : JobService() {
     }
 
     suspend fun populateAndUpdateIfterAndSehriTimes() {
-        IfterAndSehriTimePopulationControl.populateAndSaveUpdatedIfterSehriTimes()
+        IfterAndSehriTimePopulationControl.populateAndSaveUpdatedIfterSehriTimes(context)
     }
 
 

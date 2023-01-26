@@ -21,6 +21,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
@@ -372,10 +373,10 @@ internal class HajjPersonalInfoFragment : Fragment() {
                 createNewFile()
                 deleteOnExit()
             }
-
+        val auth = ""+requireContext().packageName+".noorlibrary.provider"
         return FileProvider.getUriForFile(
             requireContext().applicationContext,
-            "com.gakk.noorlibrary.provider",
+            auth,
             tmpFile
         )
     }

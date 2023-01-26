@@ -136,14 +136,14 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.{applicationId}.noorlibrary.provider"
+            android:authorities="${applicationId}.noorlibrary.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        
+
         <service
             android:name=".service.HajjLocationShareService"
             android:exported="true" />

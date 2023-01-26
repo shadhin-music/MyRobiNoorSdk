@@ -1,5 +1,6 @@
 package com.gakk.noorlibrary.roza
 
+import android.content.Context
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
 
@@ -16,14 +17,15 @@ object IfterAndSehriTimePopulationControl {
     /**
      * Populates Ifter and Sehri time for next 10 days(Including today)
      */
-    fun populateIfterAndSehriTimeForNextTenDays(){
+    fun populateIfterAndSehriTimeForNextTenDays(context: Context? = null){
         nextTenDaysIfterNSehriTimeList= mutableListOf()
         var todayInMs = System.currentTimeMillis()
         for (i in 0..9) {
             var ifterAndSehriTime =
                 IftarAndSehriTimeProvider.getIfterAndSehriTimeFromGivenDateByGivenOffset(
                     todayInMs,
-                    i
+                    i,
+                    context
                 )
             nextTenDaysIfterNSehriTimeList.add(ifterAndSehriTime)
 
@@ -33,14 +35,15 @@ object IfterAndSehriTimePopulationControl {
     /**
      * Populates Ifter and Sehri time for Current Year's Ramadan
      */
-    fun populateIfterAndSehriTimeForThisRamadan(){
+    fun populateIfterAndSehriTimeForThisRamadan(context: Context? = null){
         ramadanIfterNSehriTimeList= mutableListOf()
         var firstRamadanMs = CalenderUtil.getFirstRmdnGrgMs()
         for (i in 0..29) {
             var ifterAndSehriTime =
                 IftarAndSehriTimeProvider.getIfterAndSehriTimeFromGivenDateByGivenOffset(
                     firstRamadanMs,
-                    i
+                    i,
+                    context
                 )
             ramadanIfterNSehriTimeList.add(ifterAndSehriTime)
 //            var date = TimeFormtter.getddMMYYYYFormattedStringFromMS(ifterAndSehriTime.dateMs)
@@ -58,9 +61,9 @@ object IfterAndSehriTimePopulationControl {
         AppPreference.nextTenDaysSehriIfterTimes = nextTenDaysIfterNSehriTimeList
     }
 
-    fun populateAndSaveUpdatedIfterSehriTimes(){
-        populateIfterAndSehriTimeForNextTenDays()
-        populateIfterAndSehriTimeForThisRamadan()
+    fun populateAndSaveUpdatedIfterSehriTimes(context: Context? = null){
+        populateIfterAndSehriTimeForNextTenDays(context)
+        populateIfterAndSehriTimeForThisRamadan(context)
         saveRamadanSehriIfterListToSp()
         saveNextTenDaysSehriIfterListToSp()
     }
