@@ -105,9 +105,11 @@ public class CommentPagingAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ConstraintLayout llLike = holder.binding.findViewById(R.id.llLike);
                 AppCompatImageView ivLike = holder.binding.findViewById(R.id.ivLike);
                 AppCompatTextView like = holder.binding.findViewById(R.id.like);
+                AppCompatTextView user_base_comment = holder.binding.findViewById(R.id.user_base_comment);
 
                 user_name.setText(data.getUserName());
 
+                user_base_comment.setText(data.getMessage());
 
                 Glide.with(context.getApplicationContext())
                         .load(CONTENT_BASE_URL + data.getImageUrl())
@@ -160,7 +162,7 @@ public class CommentPagingAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 //view
                 AppCompatTextView more_btn = vh.binding.findViewById(R.id.more_btn);
-                ProgressBar progressBar = vh.binding.findViewById(R.id.progressBar);
+                ProgressBar progressBar = vh.binding.findViewById(R.id.progress_bar);
 
                 more_btn.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);

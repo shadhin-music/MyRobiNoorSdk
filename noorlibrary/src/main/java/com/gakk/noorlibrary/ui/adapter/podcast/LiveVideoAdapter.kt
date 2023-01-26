@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.ui.adapter.podcast
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ internal class LiveVideoAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val listItem = videoList?.get(position)
 
        val item = listItem

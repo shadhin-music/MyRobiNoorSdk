@@ -147,14 +147,17 @@ class PaymentHistoryFragment : Fragment() {
                     {
                         200 ->
                         {
-                            Log.e("Umrah Pay List",Gson().toJson(it.data.data))
-                            umrah_pay_history_adapter = it.data.data?.data?.let { it1 ->
-                                UmrahPaymentHistoryAdapter(
-                                    it1
-                                )
+
+                            it.data.data.data?.let {
+
+                                umrah_pay_history_adapter = UmrahPaymentHistoryAdapter(it)
+
+                                payHistory.adapter = umrah_pay_history_adapter
+
+                            }?: run {
+                                noDataLayout.visibility = View.VISIBLE
                             }
 
-                            payHistory.adapter = umrah_pay_history_adapter
 
                         }
 

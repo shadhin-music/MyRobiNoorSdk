@@ -3,6 +3,7 @@ package com.gakk.noorlibrary.ui.adapter.hut
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -72,15 +73,18 @@ internal class OnlineHutHomeAdapter(
 
             ITEM_HEADER -> {
                 val image = holder.itemView.findViewById<AppCompatImageView>(R.id.ivHeaderHut)
-                Glide.with(holder.view.context).load(ImageFromOnline("ic_north_city_corporation.png").fullImageUrl).into(image)
+                Glide.with(holder.view.context).load(ImageFromOnline("ic_header_online_hut.png").fullImageUrl).into(image)
+                image.scaleType = ImageView.ScaleType.CENTER_CROP
                 val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
                 progressBar.visibility = View.GONE
             }
             ITEM_LOCATION -> {
                 val ivNorthCity = holder.itemView.findViewById<AppCompatImageView>(R.id.ivNorthCity)
-                Glide.with(holder.view.context).load(ImageFromOnline("ic_header_online_hut.png").fullImageUrl).into(ivNorthCity)
+                Glide.with(holder.view.context).load(ImageFromOnline("ic_north_city_corporation.png").fullImageUrl).into(ivNorthCity)
+                ivNorthCity.scaleType = ImageView.ScaleType.CENTER_CROP
                 val ivSouthCity = holder.itemView.findViewById<AppCompatImageView>(R.id.ivSouthCity)
                 Glide.with(holder.view.context).load( ImageFromOnline("ic_south_city_corporation.png").fullImageUrl).into(ivSouthCity)
+                ivSouthCity.scaleType = ImageView.ScaleType.CENTER_CROP
                 val progressBarNorth = holder.view.findViewById<ProgressBar>(R.id.progressBarNorth)
                 progressBarNorth.visibility = View.GONE
                 val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
@@ -105,7 +109,7 @@ internal class OnlineHutHomeAdapter(
 
                 val listItem = literatureList.get(position - 3)
                 val image = holder.itemView.findViewById<AppCompatImageView>(R.id.img)
-                Glide.with(holder.view.context).load(listItem?.fullImageUrl).into(image)
+                Glide.with(holder.view.context).load(listItem.fullImageUrl).into(image)
                 val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
                 progressBar.visibility = View.GONE
               //  holder.bindingOnlineHut?.item = listItem
