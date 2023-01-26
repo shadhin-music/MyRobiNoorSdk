@@ -276,7 +276,8 @@ fun Activity.shareCacheDirBitmapV2(uri: Uri?) {
     try {
         val file = File("${this.cacheDir}/prayer.png")
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
-        val contentUri = FileProvider.getUriForFile(this, "com.gakk.noorlibrary.provider", file)
+        val auth = ""+packageName+".noorlibrary.provider"
+        val contentUri = FileProvider.getUriForFile(this, auth, file)
 
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND

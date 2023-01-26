@@ -32,7 +32,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl{
+internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemControl {
 
     private lateinit var mCallback: MainCallback
     private lateinit var repository: RestRepository
@@ -54,11 +54,11 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
     //view
 
-    private lateinit var homeRecycle:RecyclerView
-    private lateinit var progressLayout:ConstraintLayout
-    private lateinit var noInternetLayout:ConstraintLayout
-    private lateinit var noDataLayout:ConstraintLayout
-    private lateinit var btnRetry:AppCompatButton
+    private lateinit var homeRecycle: RecyclerView
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var noDataLayout: ConstraintLayout
+    private lateinit var btnRetry: AppCompatButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,8 +87,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
         return view
     }
 
-    private fun initView(view:View)
-    {
+    private fun initView(view: View) {
         homeRecycle = view.findViewById(R.id.homeRecycle)
         progressLayout = view.findViewById(R.id.progressLayout)
         noInternetLayout = view.findViewById(R.id.noInternetLayout)
