@@ -30,10 +30,7 @@ object AppPreference {
     private const val PREF_USER = "user"
     private const val PREF_USER_INFO = "userInfo"
 
-    private const val PREF_DOWNLOAD_PROGRESS_MAP = "downloadProgressMap"
-    private const val PREF_DOWNLOAD_PATH_MAP = "downloadPathMap"
     private const val ISNOTIFICATIONON = "isNotificationOn"
-    private const val ISSOUNDON = "isSoundOn"
     private const val TOTALCOUNTTAG = "totalcount"
 
     private const val PREF_RAMADAN_SEHRI_IFTER_LIST = "ramadanSehriIfterList"
@@ -46,11 +43,6 @@ object AppPreference {
     private const val PREF_LAST_SET_SEHRI_ALARM_TIME = "lastSavedSehriAlarmTime"
     private const val PREF_LAST_SET_IFTER_ALARM_TIME = "lastSavedIfterAlarmTime"
 
-    const val IS_FAJR_ALARM_SET = "is_fajr_alarm_set"
-    const val IS_DHUHR_ALARM_SET = "is_dhuhr_alarm_set"
-    const val IS_ASR_ALARM_SET = "is_asr_alarm_set"
-    const val IS_MAGHRIB_ALARM_SET = "is_maghrib_alarm_set"
-    const val IS_ISHA_ALARM_SET = "is_isha_alarm_set"
 
     private const val ISSUBDAILY = "is_sub_daily"
     private const val ISSUBFIFTEENDAYS = "is_sub_fifteendays"
@@ -84,7 +76,6 @@ object AppPreference {
 
     private lateinit var SET_LANGUAGE: Pair<String, String>
 
-    private val SET_NUMBER = Pair(USER_NUMBER, NUMBER)
     private val NOTIFICATION_FLAG = Pair(ISNOTIFICATIONON, true)
     private val TOTAL_COUNT = Pair(TOTALCOUNTTAG, 0)
 
