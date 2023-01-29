@@ -306,7 +306,7 @@ object AppPreference {
 
             if ((!this::preferences.isInitialized || !this::mGSonInstance.isInitialized) && context != null){
                 init(context)
-               // preferences = context.getSharedPreferences(PREF_FILE_NAME, MODE)
+
             }
 
         var userCurLocString: String? = null
