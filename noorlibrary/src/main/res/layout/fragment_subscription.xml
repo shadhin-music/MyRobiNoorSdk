@@ -72,7 +72,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvDesSub">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivShapeSubWeekly"
+                    android:id="@+id/ivShapeSubDaily"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/size_24"
@@ -93,10 +93,10 @@
                     android:textColor="@color/txt_white"
                     android:textFontWeight="400"
                     android:text="@string/txt_daily_service"
-                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubWeekly"
-                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubWeekly"
-                    app:layout_constraintStart_toStartOf="@id/ivShapeSubWeekly"
-                    app:layout_constraintTop_toTopOf="@id/ivShapeSubWeekly" />
+                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubDaily"
+                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubDaily"
+                    app:layout_constraintStart_toStartOf="@id/ivShapeSubDaily"
+                    app:layout_constraintTop_toTopOf="@id/ivShapeSubDaily" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAmount"
@@ -111,7 +111,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubWeekly" />
+                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubDaily" />
 
                 <RelativeLayout
                     android:id="@+id/rlContent"
@@ -144,7 +144,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSubscribeWeekly"
+                    android:id="@+id/btnSubscribeDaily"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/btn_height"
                     android:layout_marginStart="48dp"
@@ -169,13 +169,13 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/ash"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/btnSubscribeWeekly"
-                    app:layout_constraintStart_toStartOf="@id/btnSubscribeWeekly"
-                    app:layout_constraintTop_toBottomOf="@id/btnSubscribeWeekly" />
+                    app:layout_constraintEnd_toEndOf="@id/btnSubscribeDaily"
+                    app:layout_constraintStart_toStartOf="@id/btnSubscribeDaily"
+                    app:layout_constraintTop_toBottomOf="@id/btnSubscribeDaily" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutMonthly"
+                android:id="@+id/layoutFifteen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_margin"
@@ -185,7 +185,7 @@
                 app:layout_constraintTop_toBottomOf="@id/layoutDaily">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivShapeSubMonthly"
+                    android:id="@+id/ivShapeSubFifteen"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/size_24"
@@ -206,13 +206,13 @@
                     android:textColor="@color/txt_white"
                     android:textFontWeight="400"
                     android:text="@string/txt_fifteen_day_service"
-                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubMonthly"
-                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubMonthly"
-                    app:layout_constraintStart_toStartOf="@id/ivShapeSubMonthly"
-                    app:layout_constraintTop_toTopOf="@id/ivShapeSubMonthly" />
+                    app:layout_constraintBottom_toBottomOf="@id/ivShapeSubFifteen"
+                    app:layout_constraintEnd_toEndOf="@id/ivShapeSubFifteen"
+                    app:layout_constraintStart_toStartOf="@id/ivShapeSubFifteen"
+                    app:layout_constraintTop_toTopOf="@id/ivShapeSubFifteen" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAmountMonthly"
+                    android:id="@+id/tvAmountFifteen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/standard_margin"
@@ -224,7 +224,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubMonthly" />
+                    app:layout_constraintTop_toBottomOf="@id/ivShapeSubFifteen" />
 
                 <RelativeLayout
                     android:id="@+id/rlContentFifteen"
@@ -233,7 +233,7 @@
                     android:layout_marginTop="@dimen/standard_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvAmountMonthly">
+                    app:layout_constraintTop_toBottomOf="@id/tvAmountFifteen">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgChkFiftten"
@@ -256,7 +256,7 @@
                 </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSubscribeMonthly"
+                    android:id="@+id/btnSubscribeFiftten"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/btn_height"
                     android:layout_marginStart="48dp"
@@ -282,9 +282,9 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/ash"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/btnSubscribeMonthly"
-                    app:layout_constraintStart_toStartOf="@id/btnSubscribeMonthly"
-                    app:layout_constraintTop_toBottomOf="@id/btnSubscribeMonthly" />
+                    app:layout_constraintEnd_toEndOf="@id/btnSubscribeFiftten"
+                    app:layout_constraintStart_toStartOf="@id/btnSubscribeFiftten"
+                    app:layout_constraintTop_toBottomOf="@id/btnSubscribeFiftten" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include

@@ -53,44 +53,42 @@
     </array>
 
     <array name="hajj_tracker_places">
-        <item>Lokasi pertama di Mekah</item>
-        <item>Hari pertama di Mina</item>
-        <item>Hari kedua di Gunung Arafah</item>
-        <item>Hari kedua – Muzdalifah</item>
-        <item>Hari ketiga – Jambatan Jamrah</item>
-        <item>Hari keenam – Mekah</item>
-        <item>Hari keempat dan kelima – Berkhemah di Mina</item>
+        <item>যাত্রা শুরুর স্থান-মক্কা</item>
+        <item>১ম দিন মদিন-মিনা</item>
+        <item>২য় দিন-আরাফাত ময়দান</item>
+        <item>২য় দিন-মুজদালিফা</item>
+        <item>৩য়দিন-জামারাত ব্রিজ</item>
+        <item>৩য়দিন-মক্কা</item>
+        <item>৪র্থ এবং ৫ম দিন – মিনায় অবস্থান</item>
     </array>
+
     <array name="hajjDetailsText">
-        <item>Semasa Haji benar-benar bermula sesudah jemaah haji itu meninggalkan rumah, perkara
-            pertama yang akan dilaksanakan ialah tawaf dan saie di Mekah. Jemaah haji seterusnya
-            akan melakukan tawaf sebanyak 7 kali. Kemudian para jemaah akan berjalan atau berlari
-            tujuh kali di antara bukit-bukit Safa dan Marwah (Saie), melakonkan semula tindakan
-            Hajar, isteri kepada Abraham, ketika ia berlari berputus asa mencari air setelah
-            terkandas di sana.
+        <item>যখন হজ্ব শুরু হয় তখন প্রথম গুরুত্বপূর্ণ বিষয় হচ্ছে হজ্জযাত্রীদের তাওয়াফ এবং সা ঈ।
+            প্রথমে হজ্জযাত্রীরা কাবাকে কেন্দ্র করে সাতবার ঘুরে (তাওয়াফ) । তারপর হজ্জযাত্রীরা সাফা ও
+            মারওয়াহ (সা ঈ) পাহাড়ের মাঝখানে সাতবার হাটবে অথবা দৌড়বে, যেমনটি হযরত ইব্রাহীম(আঃ)এর
+            স্ত্রী পানির সন্ধানে দুটো পাহাড়ের মাঝখানে ভ্রান্ত হয়ে দৌড়চ্ছিলেন।
         </item>
-        <item>Pada hari kelapan bulan ZulHijjah, jemaah haji menuju Mina, di mana ribuan khemah
-            telah dibina untuk menempatkan mereka. Jemaah haji akan bermalam di sini semalaman.
+        <item>৮ই জিলহজ্জ, হজ্জযাত্রীরা মিনায় অবস্থান করেন, যেখানে হাজার হাজার তাঁবু স্থাপন করা
+            হয়েছে। হজ্জযাত্রীরা এখানে রাত্রিযাপন করবে।
         </item>
-        <item>Pada hari kedua, para jemaah berjalan ke dataran Arafat - dimana Gunung Arafat berada
-            ditengahnya. Di sinilah Nabi Muhammad memberikan khutbah perpisahannya. Jemaah haji akan
-            kekal di sini, menunaikan solat sehingga matahari terbenam.
+        <item>দ্বিতীয় দিনে, হজ্জযাত্রীরা আরাফাত ময়দানের সমভূমিতে অবস্থান করেন। এই হল সেই স্থান,
+            যেখানে নবী মুহাম্মদ (সাঃ) তার বিদায় হজ্জের ভাষণ দিয়েছিলেন। আরাফাতে সূর্যাস্ত পর্যন্ত
+            অবস্থান করা হজ্জের গুরুত্বপূর্ণ ফরজ।
         </item>
-        <item>Selepas matahari terbenam, jemaah haji menuju Muzdalifah pada malam itu. Di sana
-            mereka mengumpulkan kerikil untuk digunakan dalam upacara pada hari berikutnya.
+        <item>মুযদালিফায় থাকাকালীন পাহাড়ে অথবা তার পাদদেশে যে কোন ঘাসদুবলা থেকে খুঁজে খুঁজে পাথর
+            মারার জন্য ৭২টি (চানা বুটের ন্যায় কঙ্কর) ছোট ছোট পাথর সংগ্রহ করে ইহরামের কাপড়ে বেঁধে
+            নিন।
         </item>
-        <item>Jemaah haji kembali ke Jambatan Jamrah di Mina untuk upacara "Melontar Jamrah". Mereka
-            membuang kerikil pada tiga tiang berturut-turut yang mewakili Syaitan/Iblis. Hari ini,
-            hari ke-10 ZulHijjah, juga AidilAdha untuk umat Islam di seluruh dunia. Hari ini ditanda
-            dengan mengorbankan ternakan dan berkongsi daging dengan keluarga dan orang miskin.
+        <item>হজ্জযাত্রীরা মিনাতে জামারাত ব্রিজে ফেরত আসবেন শয়তানকে পাথর নিক্ষেপণের জন্য। এইদিন,
+            ১০ইজিলহজ্জ, সারা বিশ্বের মুসলমানদের জন্য ঈদ-উল-আযহা হয়। দিনটি পশুদের বলিদান এবং পরিবার
+            এবং দরিদ্রের সাথে মাংস ভাগ করে চিহ্নিত করা হয়।
         </item>
-        <item>Selepas meninggalkan Jambatan Jamrah di Mina, para jemaah menunaikan tawaf sekali lagi
-            di Mekah. Tetapi tidak ada rehat dan mereka kembali ke Mina sekali lagi untuk bermalam.
+        <item>মিনাতে জামারাত ব্রিজ ত্যাগের পরে হজ্জযাত্রীরা মক্কাতে আরও একটি তাওয়াফ পালন করেন।
+            কিন্তু ক্লান্ত হয়ে পড়ার জন্য কোন বিশ্রাম নেই এবং রাতেই আবার মিনাতে ফেরত যান।
         </item>
-        <item>Jemaah haji menghabiskan malam hari 3, serta dua hari yang akan datang berkhemah di
-            Mina. Pada kedua hari ini, mereka kembali ke Jambatan Jamrah untuk membuang kerikil pada
-            ketiga-tiga dinding yang mewakili syaitan, arah dari timur ke barat. Pada akhir hari
-            kelima, mereka telah menyelesaikan Haji mereka.
+        <item>হজ্জযাত্রীরা ৩য় দিনের রাত্রি এবং পরের ২ দিন মিনাতে তাবুতে অবস্থান করবেন। হজ্জযাত্রীরা
+            মিনাতে জামারাত ব্রিজে ফেরত আসবেন শয়তানকে পাথর নিক্ষেপণের জন্য, পূর্ব থেকে পশ্চিম দিকে।
+            ৫ম দিনের শেষে, তারা তাদের হজ্জ সম্পন্ন করবেন।
         </item>
     </array>
 

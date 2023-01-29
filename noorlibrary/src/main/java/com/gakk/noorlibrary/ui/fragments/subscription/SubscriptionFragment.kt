@@ -33,13 +33,13 @@ internal class SubscriptionFragment : Fragment() {
     private lateinit var model: SubscriptionViewModel
     private lateinit var subscriptionId: String
     private lateinit var progressLayout: ConstraintLayout
-    private lateinit var ivShapeSubWeekly: AppCompatImageView
-    private lateinit var btnSubscribeWeekly: AppCompatButton
+    private lateinit var ivShapeSubDaily: AppCompatImageView
+    private lateinit var btnSubscribeDaily: AppCompatButton
     private lateinit var tvAmount: AppCompatTextView
     private lateinit var tvContent: AppCompatTextView
-    private lateinit var ivShapeSubMonthly: AppCompatImageView
-    private lateinit var btnSubscribeMonthly: AppCompatButton
-    private lateinit var tvAmountMonthly: AppCompatTextView
+    private lateinit var ivShapeSubFifteen: AppCompatImageView
+    private lateinit var btnSubscribeFiftten: AppCompatButton
+    private lateinit var tvAmountFifteen: AppCompatTextView
     private lateinit var ivBg: AppCompatImageView
 
     companion object {
@@ -72,13 +72,13 @@ internal class SubscriptionFragment : Fragment() {
 
     private fun initUi(view: View) {
         progressLayout = view.findViewById(R.id.progressLayout)
-        ivShapeSubWeekly = view.findViewById(R.id.ivShapeSubWeekly)
-        btnSubscribeWeekly = view.findViewById(R.id.btnSubscribeWeekly)
+        ivShapeSubDaily = view.findViewById(R.id.ivShapeSubDaily)
+        btnSubscribeDaily = view.findViewById(R.id.btnSubscribeDaily)
         tvAmount = view.findViewById(R.id.tvAmount)
         tvContent = view.findViewById(R.id.tvContent)
-        ivShapeSubMonthly = view.findViewById(R.id.ivShapeSubMonthly)
-        btnSubscribeMonthly = view.findViewById(R.id.btnSubscribeMonthly)
-        tvAmountMonthly = view.findViewById(R.id.tvAmountMonthly)
+        ivShapeSubFifteen = view.findViewById(R.id.ivShapeSubFifteen)
+        btnSubscribeFiftten = view.findViewById(R.id.btnSubscribeFiftten)
+        tvAmountFifteen = view.findViewById(R.id.tvAmountFifteen)
         ivBg = view.findViewById(R.id.ivBg)
     }
 
@@ -120,9 +120,9 @@ internal class SubscriptionFragment : Fragment() {
                         when (it.data) {
                             "1AK" -> {
                                 AppPreference.subWeekly = true
-                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                btnSubscribeWeekly.setText(getString(R.string.txt_unsub))
-                                btnSubscribeWeekly.setTextColor(Color.WHITE)
+                                ivShapeSubDaily.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeDaily.setText(getString(R.string.txt_unsub))
+                                btnSubscribeDaily.setTextColor(Color.WHITE)
                                 tvAmount.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
@@ -135,13 +135,13 @@ internal class SubscriptionFragment : Fragment() {
                                         R.color.txt_color_title
                                     )
                                 )
-                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                btnSubscribeDaily.setBackgroundResource(R.drawable.ic_button_unsub)
                             }
                             else -> {
                                 AppPreference.subWeekly = false
-                                ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub)
-                                btnSubscribeWeekly.setText(getString(R.string.txt_sub))
-                                btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
+                                ivShapeSubDaily.setImageResource(R.drawable.ic_shape_sub)
+                                btnSubscribeDaily.setText(getString(R.string.txt_sub))
+                                btnSubscribeDaily.setBackgroundResource(R.drawable.ic_button_small)
                             }
 
                         }
@@ -165,10 +165,10 @@ internal class SubscriptionFragment : Fragment() {
                             "1AK" -> {
 
                                 AppPreference.subMonthly = true
-                                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
-                                btnSubscribeMonthly.setText(getString(R.string.txt_unsub))
-                                btnSubscribeMonthly.setTextColor(Color.WHITE)
-                                tvAmountMonthly.setTextColor(
+                                ivShapeSubFifteen.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeFiftten.setText(getString(R.string.txt_unsub))
+                                btnSubscribeFiftten.setTextColor(Color.WHITE)
+                                tvAmountFifteen.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
@@ -180,14 +180,14 @@ internal class SubscriptionFragment : Fragment() {
                                         R.color.txt_color_title
                                     )
                                 )
-                                btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                btnSubscribeFiftten.setBackgroundResource(R.drawable.ic_button_unsub)
                             }
                             else -> {
                                 AppPreference.subMonthly = false
-                                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
-                                btnSubscribeMonthly.setText(getString(R.string.txt_sub))
+                                ivShapeSubFifteen.setImageResource(R.drawable.ic_shape_sub)
+                                btnSubscribeFiftten.setText(getString(R.string.txt_sub))
 
-                                btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
+                                btnSubscribeFiftten.setBackgroundResource(R.drawable.ic_button_small)
                             }
                         }
 
@@ -256,7 +256,7 @@ internal class SubscriptionFragment : Fragment() {
                 }
             }
 
-            btnSubscribeWeekly.handleClickEvent {
+            btnSubscribeDaily.handleClickEvent {
 
                 if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
                     mCallback?.showToastMessage("You are Already subscribed")
@@ -290,7 +290,7 @@ internal class SubscriptionFragment : Fragment() {
                     }
                 }
             }
-            btnSubscribeMonthly.handleClickEvent {
+            btnSubscribeFiftten.handleClickEvent {
 
                 if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
                     mCallback?.showToastMessage("You are Already subscribed")

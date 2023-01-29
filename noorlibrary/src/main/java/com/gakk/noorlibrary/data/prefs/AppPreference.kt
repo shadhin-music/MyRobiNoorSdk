@@ -303,9 +303,14 @@ object AppPreference {
     }
 
     fun getUserCurrentLocation(context: Context? = null): UserLocation {
-        if (preferences == null && context != null){
-            preferences = context.getSharedPreferences(PREF_FILE_NAME, MODE)
+        if (this::preferences.isInitialized){
+
+        }else {
+            if (preferences == null && context != null){
+                preferences = context.getSharedPreferences(PREF_FILE_NAME, MODE)
+            }
         }
+
         var userCurLocString: String? = null
         kotlin.runCatching {
             userCurLocString = preferences.getString(USER_CURRENT_LOCATION, "")

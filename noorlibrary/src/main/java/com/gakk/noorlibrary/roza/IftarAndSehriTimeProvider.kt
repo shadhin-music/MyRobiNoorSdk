@@ -18,7 +18,7 @@ object IftarAndSehriTimeProvider {
         cal.timeInMillis=dateMs
         cal.add(Calendar.DATE, offSetInDays)
         val selectedDate = SimpleDate(cal)
-        val location = Location(AppPreference.getUserCurrentLocation().lat!!,AppPreference.getUserCurrentLocation().lng!!, getGMTOffSet(cal), 0)
+        val location = Location(AppPreference.getUserCurrentLocation(context).lat!!,AppPreference.getUserCurrentLocation(context).lng!!, getGMTOffSet(cal), 0)
         val azan = Azan(location, Method.KARACHI_HANAF)
         val prayerTimes = azan.getPrayerTimes(selectedDate)
 

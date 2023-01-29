@@ -96,17 +96,6 @@ interface ApiService {
     @GET("account/getuser/{id}")
     suspend fun getUserInfo(@Path("id") id: String): UserInfoResponse
 
-    @Multipart
-    @PUT("account/updateprofile")
-    suspend fun updateInfowithoutPic(@Part("payload") body: RequestBody): UserInfoResponse
-
-    @Multipart
-    @PUT("account/updateprofile")
-    suspend fun updateInfowithPic(
-        @Part image: MultipartBody.Part?,
-        @Part("payload") body: RequestBody
-    ): UserInfoResponse
-
     @GET("billboard/publishedcontent/{languageCode}")
     suspend fun getBillbordData(@Path("languageCode") languageCode: String): BillboardResponse
 

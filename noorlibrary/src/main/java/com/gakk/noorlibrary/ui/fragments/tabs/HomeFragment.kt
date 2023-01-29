@@ -153,7 +153,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                     noInternetLayout.visibility = View.GONE
                 }
                 Status.SUCCESS -> {
-                    Log.e("homeerror", "${it}")
                     when (it.data?.status) {
                         200 -> {
                             biilboradList = it.data.data

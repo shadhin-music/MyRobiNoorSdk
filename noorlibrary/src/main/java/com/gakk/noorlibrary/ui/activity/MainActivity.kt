@@ -93,9 +93,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
         ivLogoHome.setImageResource(R.drawable.ic_noor_yellow_robi)
 
-        Log.e("numberchk","called ${AppPreference.userNumber}")
-        Log.e("suberchk","called ${AppPreference.subMonthly}")
-
         setSlider()
 
         checkGPS()
@@ -179,24 +176,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
                     }
                     else -> {
                         Log.d("Surah", "Failed")
-                    }
-                }
-            }
-            modelProfile.profile.observe(
-                this@MainActivity
-            ) {
-                when (it.status) {
-                    Status.LOADING -> {
-                        Log.e("Profile", "loading")
-                    }
-
-                    Status.SUCCESS -> {
-                        Log.e("Profile", "success")
-                        AppPreference.cachedUserInfo = it.data?.data!!
-                    }
-
-                    Status.ERROR -> {
-                        Log.e("Profile", "error${it.message}")
                     }
                 }
             }
@@ -631,10 +610,10 @@ internal class MainActivity : BaseActivity(), MainCallback {
             )
         val binding: View =
             LayoutInflater.from(this).inflate(
-            R.layout.dialog_already_attempt,
-            null,
-            false
-        )
+                R.layout.dialog_already_attempt,
+                null,
+                false
+            )
 
 
         val dialogView: View = binding
@@ -649,8 +628,8 @@ internal class MainActivity : BaseActivity(), MainCallback {
         alertDialog.window?.setGravity(Gravity.CENTER)
         alertDialog.setCancelable(true)
         alertDialog.show()
-        val tvTitleExit:AppCompatTextView = findViewById(R.id.tvTitleExit)
-        val btnComplete:AppCompatButton = findViewById(R.id.btnComplete)
+        val tvTitleExit: AppCompatTextView = findViewById(R.id.tvTitleExit)
+        val btnComplete: AppCompatButton = findViewById(R.id.btnComplete)
         (tvTitleExit.layoutParams as ConstraintLayout.LayoutParams).apply {
             marginStart = 50.toPx()
             topMargin = 8.toPx()
@@ -658,10 +637,10 @@ internal class MainActivity : BaseActivity(), MainCallback {
             bottomMargin = 8.toPx()
             width = ConstraintLayout.LayoutParams.MATCH_PARENT
         }
-       tvTitleExit.setText("On Android S and higher, the app needs permission to schedule exact alarms. Without this, no alarm can be set. Please go to Settings and enable this permission to continue setting an alarm.")
+        tvTitleExit.setText("On Android S and higher, the app needs permission to schedule exact alarms. Without this, no alarm can be set. Please go to Settings and enable this permission to continue setting an alarm.")
         btnComplete.setText("Go to Settings")
 
-       btnComplete.handleClickEvent {
+        btnComplete.handleClickEvent {
             alertDialog.dismiss()
             val intent = Intent()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
