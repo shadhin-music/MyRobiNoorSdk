@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -308,6 +309,9 @@ internal class NamazTimingFragment : Fragment() {
         val dialogView: View = binding
         customDialog.setView(dialogView)
 
+        val ivNamazDak = dialogView.findViewById<AppCompatImageView>(R.id.ivNamazDak)
+        val progressBar = dialogView.findViewById<ProgressBar>(R.id.progressBar)
+
         val alertDialog = customDialog.show()
         alertDialog.window?.setLayout(
             WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT
@@ -319,10 +323,7 @@ internal class NamazTimingFragment : Fragment() {
 
             if (i.title?.trim().equals(waqtName)) {
 
-                kotlin.runCatching {
-                    setImageFromUrl(view?.findViewById<ImageView>(R.id.ivNamazDak)!!,
-                        i.fullImageUrl,view?.findViewById<ProgressBar>(R.id.progressBar)!!)
-                }
+                setImageFromUrl(ivNamazDak, i.fullImageUrl, progressBar)
                 shareItem = i
                 break
             }
@@ -333,11 +334,11 @@ internal class NamazTimingFragment : Fragment() {
         alertDialog.setCancelable(true)
         alertDialog.show()
 
-        binding.findViewById<View>(R.id.imgClose).handleClickEvent {
+        dialogView.findViewById<AppCompatImageView>(R.id.imgClose).handleClickEvent {
             alertDialog.dismiss()
         }
 
-        binding.findViewById<View>(R.id.btnShare).handleClickEvent {
+        dialogView.findViewById<AppCompatButton>(R.id.btnShare).handleClickEvent {
             getBitmapFromUrl(shareItem?.fullImageUrl!!)
 
             alertDialog.dismiss()

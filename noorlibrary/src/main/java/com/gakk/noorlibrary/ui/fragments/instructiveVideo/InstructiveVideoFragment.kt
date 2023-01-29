@@ -65,7 +65,6 @@ internal class InstructiveVideoFragment : Fragment(), InstructiveVideoAdapter.On
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         val view = inflater.inflate(
             R.layout.fragment_instructive_video,

@@ -18,7 +18,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HajjViewModel
@@ -42,7 +41,6 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setApplicationLanguage(AppPreference.language!!)
 
         setContentView( R.layout.activity_subscription_browser)
         setupUi()

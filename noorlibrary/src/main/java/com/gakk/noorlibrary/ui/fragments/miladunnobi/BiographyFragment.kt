@@ -16,16 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.extralib.StepBarView.stepbarView
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.adapter.SliderAdapter
-import com.gakk.noorlibrary.extralib.StepBarView.stepbarView
 import com.gakk.noorlibrary.ui.fragments.miladunnobi.BiographyImageFragment
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 import java.io.Serializable
@@ -81,7 +79,6 @@ internal class BiographyFragment : Fragment(), SliderControl {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         val view = inflater.inflate(
             R.layout.fragment_biography,

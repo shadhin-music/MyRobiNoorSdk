@@ -13,12 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.podcast.IslamicDiscussAdapter
 import com.gakk.noorlibrary.util.RepositoryProvider
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -51,7 +49,6 @@ internal class IslamicDiscussFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         val view = inflater.inflate(
             R.layout.fragment_islamic_discuss,

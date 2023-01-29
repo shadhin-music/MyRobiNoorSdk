@@ -15,13 +15,10 @@ import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.util.PLACE_HOLDER_16_9
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.util.setImageFromUrl
 import com.mcc.noor.model.umrah_hajj.UmrahHajjData
-import org.w3c.dom.Text
 
 private const val ARG_PACKAGE_DATA = "umrahHajjData"
 
@@ -72,8 +69,6 @@ class UmrahDetailsFragment : Fragment()  {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         val view = inflater.inflate(
             R.layout.fragment_umrah_details,

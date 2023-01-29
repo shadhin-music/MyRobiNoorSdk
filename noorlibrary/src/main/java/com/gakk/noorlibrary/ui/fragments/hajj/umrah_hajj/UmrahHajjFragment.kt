@@ -1,27 +1,24 @@
 package com.mcc.noor.ui.fragments.hajj.umrah_hajj
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.ui.adapter.umrahhajj.UmrahPackAdapter
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.UmrahHajjViewModel
 import com.mcc.noor.model.umrah_hajj.UmrahHajjData
-import com.gakk.noorlibrary.ui.adapter.umrahhajj.UmrahPackAdapter
 import kotlinx.coroutines.launch
 
 
@@ -76,8 +73,6 @@ class UmrahHajjFragment : Fragment(), UmrahPackAdapter.OnItemClickListener, Umra
             initObserver()
 
         }
-
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         val view = inflater.inflate(
             R.layout.fragment_umrah_hajj,

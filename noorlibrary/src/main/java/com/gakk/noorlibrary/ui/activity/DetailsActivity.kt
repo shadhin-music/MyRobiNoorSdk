@@ -6,26 +6,25 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseActivity
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.*
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.ui.adapter.DivisionCallbackFunc
 import com.gakk.noorlibrary.ui.adapter.SurahListAdapter
 import com.gakk.noorlibrary.ui.fragments.*
+import com.gakk.noorlibrary.ui.fragments.BiographyFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationListFragment
@@ -34,9 +33,7 @@ import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.DonationHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.OrganizationDetailsFragment
 import com.gakk.noorlibrary.util.*
-import com.gakk.noorlibrary.ui.fragments.BiographyFragment
 import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
-import java.io.File
 import java.util.*
 
 
@@ -103,8 +100,8 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             }
             PAGE_ISLAMIC_EVENT -> {
                 val isFav = intent.getBooleanExtra("FromHome", false)
-                if (isFav){
-                    Log.e("sss","home${isFav}")
+                if (isFav) {
+                    Log.e("sss", "home${isFav}")
 
                     FragmentProvider.getFragmentByName(
                         PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY,
@@ -113,8 +110,8 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
                         subCatId = intent.getStringExtra(SUB_CAT_ID),
                         isFromHomeEvent = isFav
                     )
-                }else {
-                    Log.e("sss","home${isFav}")
+                } else {
+                    Log.e("sss", "home${isFav}")
 
                     FragmentProvider.getFragmentByName(name = mPage, detailsActivityCallBack = this)
                 }
@@ -250,16 +247,28 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
         when (buttonType) {
             ActionButtonType.TypeOne -> {
                 findViewById<View>(R.id.btnCustomActionOne).tag = tag
-                findViewById<ImageButton>(R.id.btnCustomActionOne)?.let { updateButtonIconBasedOnTag(it) }
+                findViewById<ImageButton>(R.id.btnCustomActionOne)?.let {
+                    updateButtonIconBasedOnTag(
+                        it
+                    )
+                }
             }
             ActionButtonType.TypeTwo -> {
                 findViewById<View>(R.id.btnCustomActionTwo)?.tag = tag
-                findViewById<ImageButton>(R.id.btnCustomActionTwo)?.let { updateButtonIconBasedOnTag(it) }
+                findViewById<ImageButton>(R.id.btnCustomActionTwo)?.let {
+                    updateButtonIconBasedOnTag(
+                        it
+                    )
+                }
             }
 
             ActionButtonType.TypeThree -> {
                 findViewById<View>(R.id.btnCustomActionThree)?.tag = tag
-                findViewById<ImageButton>(R.id.btnCustomActionThree)?.let { updateButtonIconBasedOnTag(it) }
+                findViewById<ImageButton>(R.id.btnCustomActionThree)?.let {
+                    updateButtonIconBasedOnTag(
+                        it
+                    )
+                }
             }
 
         }
@@ -373,46 +382,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
 
     override fun showToastMessage(message: String) {
         super.showToast(message)
-    }
-
-
-    override fun startDownloadIfPermissionGiven(action: () -> Unit) {
-
-        performAction(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) {
-            showDialogWithActionAndParam(
-                DialogType.DownloadConfirmDialog,
-                actionOneWithNoParameter = action
-            )
-        }
-    }
-
-    override fun startDownloadCertificateIfPermissionGiven(action: () -> Unit) {
-        performAction(Manifest.permission.WRITE_EXTERNAL_STORAGE, action)
-    }
-
-    override fun openFileInGalary(path: String) {
-
-        val photoURI = FileProvider.getUriForFile(
-            this, BuildConfig.LIBRARY_PACKAGE_NAME + ".provider",
-            File(path)
-        )
-        Log.i("PhotoURI", "$photoURI")
-
-        // val filePth=path.replace("file://", "content://")
-        try {
-            val intent = Intent().also {
-                it.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                it.action = Intent.ACTION_VIEW
-                it.setDataAndType(photoURI, "image/*")
-            }
-            startActivity(intent)
-        } catch (e: Exception) {
-            Log.i("EXCEPTION", e.message!!)
-        }
-
-
     }
 
     override fun performAction(nameOfPermision: String, action: () -> Unit) {

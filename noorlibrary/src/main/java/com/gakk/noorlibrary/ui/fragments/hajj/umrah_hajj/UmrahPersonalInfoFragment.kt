@@ -112,8 +112,6 @@ class UmrahPersonalInfoFragment : Fragment() {
 
         }
 
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
-
         val view = inflater.inflate(
             R.layout.fragment_umrah_personal_info,
             container, false

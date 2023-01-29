@@ -43,19 +43,6 @@ fun Activity.setStatusColor(color: Int) {
     }
 }
 
-fun Context.setApplicationLanguage(newLanguage: String) {
-    val activityRes = resources
-    val activityConf = activityRes.configuration
-    val newLocale = Locale(newLanguage)
-    activityConf.setLocale(newLocale)
-    activityRes.updateConfiguration(activityConf, activityRes.displayMetrics)
-
-    val applicationRes = applicationContext.resources
-    val applicationConf = applicationRes.configuration
-    applicationConf.setLocale(newLocale)
-    applicationRes.updateConfiguration(applicationConf, applicationRes.displayMetrics)
-}
-
 fun String.getNumberInBangla(): String {
     val bangla_number = charArrayOf('০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯')
     val eng_number = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
@@ -208,43 +195,14 @@ sealed class ViewDimension {
     object HalfScreenWidthMargin : ViewDimension()
 }
 
-/*fun Context.openAppSystemSettings() {
-    startActivity(Intent().apply {
-        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        data = Uri.fromParts(
-            "package", BuildConfig.APPLICATION_ID, null
-        )
-    })
-}*/
-
 // Extension function to share save bitmap in cache directory and share
 fun Activity.shareCacheDirBitmap(uri: Uri) {
-    var txtShare: String = ""
-    when (AppPreference.language) {
+    var txtShare = ""
 
-        LAN_ENGLISH -> {
-            txtShare =
-                "Indeed, I am Allah . There is no deity except Me, so worship Me and establish prayer for My remembrance. \n" +
-                        "Al- Quran\n" +
-                        "#Callforprayer\n" +
-                        "Download Noor App\n" +
-                        "https://goo.gl/KvU8Zq"
-        }
-
-        LAN_BANGLA -> {
-            txtShare = "\"যদি তোমরা মুমিন হও তবে সঠিক সময়ে সালাত আদায় কর।\"-আল কুরআন \n" +
-                    "#নামাজেরডাক \n" +
-                    "ডাউনলোড নূর অ্যাপ\n" +
-                    "https://goo.gl/KvU8Zq"
-        }
-
-        else -> {
-            txtShare = "\"যদি তোমরা মুমিন হও তবে সঠিক সময়ে সালাত আদায় কর।\"-আল কুরআন \n" +
-                    "#নামাজেরডাক \n" +
-                    "ডাউনলোড নূর অ্যাপ\n" +
-                    "https://goo.gl/KvU8Zq"
-        }
-    }
+    txtShare = "\"যদি তোমরা মুমিন হও তবে সঠিক সময়ে সালাত আদায় কর।\"-আল কুরআন \n" +
+            "#নামাজেরডাক \n" +
+            "ডাউনলোড নূর অ্যাপ\n" +
+            "https://goo.gl/KvU8Zq"
 
     val fis = FileInputStream(uri.path)  // 2nd line
     val bitmap = BitmapFactory.decodeStream(fis)
@@ -253,7 +211,8 @@ fun Activity.shareCacheDirBitmap(uri: Uri) {
     try {
         val file = File("${this.cacheDir}/prayer.png")
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
-        val contentUri = FileProvider.getUriForFile(this, "com.gakk.noorlibrary.provider", file)
+        val auth = ""+packageName+".noorlibrary.provider"
+        val contentUri = FileProvider.getUriForFile(this, auth, file)
 
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
@@ -337,25 +296,6 @@ fun String.toBitmap(): Bitmap? {
 
 fun String.isEmailValid(): Boolean {
     return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
-}
-
-fun List<KhatamQuranVideosResponse.Data>?.videoNewList(
-    mediaId: String?,
-    isPlaying: Boolean
-): List<KhatamQuranVideosResponse.Data> {
-    val newList: MutableList<KhatamQuranVideosResponse.Data> = ArrayList()
-    if (mediaId == null && this != null) {
-        return this
-    }
-    this?.forEach {
-        val newItem = it.copy(isPlaying = false, isSelected = false)
-        if (it.id == mediaId) {
-            newItem.isPlaying = isPlaying
-            newItem.isSelected = true
-        }
-        newList.add(newItem)
-    }
-    return newList
 }
 
 fun Fragment?.runOnUiThread(action: () -> Unit) {

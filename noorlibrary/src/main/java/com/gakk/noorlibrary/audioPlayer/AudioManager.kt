@@ -4,19 +4,20 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.gakk.noorlibrary.Noor
-import com.google.android.exoplayer2.*
+import com.gakk.noorlibrary.model.quran.surah.Data
+import com.gakk.noorlibrary.service.AudioPlayerService
+import com.gakk.noorlibrary.util.NEXT_COMMAND
+import com.gakk.noorlibrary.util.SURAH_LIST_TYPE
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import com.gakk.noorlibrary.base.BaseApplication
-import com.gakk.noorlibrary.model.quran.surah.Data
-import com.gakk.noorlibrary.service.AudioPlayerService
-import com.gakk.noorlibrary.util.NEXT_COMMAND
-import com.gakk.noorlibrary.util.SURAH_LIST_TYPE
-import kotlin.math.E
 
 
 object AudioManager {
@@ -51,7 +52,8 @@ object AudioManager {
         fun getSurahList() = surahList
 
         fun getCurrentSurah() = surahList?.get(
-            currentIndex ?: 0)
+            currentIndex ?: 0
+        )
 
         fun isPlayListNull(): Boolean {
             when (listType) {
@@ -116,27 +118,12 @@ object AudioManager {
                 ) {
                     if (playWhenReady && playbackState == Player.STATE_READY) {
                         Log.i("STATE", "PLAYING =$playWhenReady")
-                        //isNotPaused=playWhenReady
-//                        if (AudioManager.isServiceStarted) {
-//                            AudioManager.resumePlayButtonAction()
-//                        }
-
-                        // media actually playing
                     } else if (playWhenReady) {
                         Log.i("STATE", "PLAYING =$playWhenReady")
-                        //isNotPaused=playWhenReady
-                        // might be idle (plays after prepare()),
-                        // buffering (plays when data available)
-                        // or ended (plays when seek away from end)
+
                     } else {
                         Log.i("STATE", "PLAYING =$playWhenReady")
-                        //isNotPaused=playWhenReady
-                        //  Log.i("STATE", "PAUSED")
-//                        if (AudioManager.isServiceStarted) {
-//                            AudioManager.pauseButtonAction()
-//                        }
 
-                        // player paused in any state
                     }
                 }
             })
@@ -154,7 +141,7 @@ object AudioManager {
                     playbackState: Int
                 ) {
                     if (playbackState == ExoPlayer.STATE_ENDED) {
-                       Noor.appContext.let {
+                        Noor.appContext.let {
                             AudioPlayerService.executePlayerCommand(NEXT_COMMAND)
                         }
 
@@ -187,7 +174,7 @@ object AudioManager {
                 context!!
             )!!
             val path =
-               getPathByListType()
+                getPathByListType()
             val dataSourceFactory: DataSource.Factory =
                 DefaultDataSourceFactory(
                     context,
@@ -225,7 +212,8 @@ object AudioManager {
         fun getPathByListType(): String {
             when (listType) {
                 SURAH_LIST_TYPE -> return surahList!!.get(
-                    currentIndex!!).audioUrl
+                    currentIndex!!
+                ).audioUrl
                 else -> return ""
             }
         }
@@ -233,7 +221,7 @@ object AudioManager {
         fun pauseAction() {
             isNotPaused = false
             audioPlayer?.playWhenReady =
-               isNotPaused
+                isNotPaused
         }
 
         fun resumeAction() {

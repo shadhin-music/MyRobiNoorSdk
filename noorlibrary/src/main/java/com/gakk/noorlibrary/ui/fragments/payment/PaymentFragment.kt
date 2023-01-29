@@ -3,7 +3,6 @@ package com.gakk.noorlibrary.ui.fragments.payment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,11 @@ import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.activity.PreRegistrationBrowserActivity
@@ -121,8 +120,6 @@ class PaymentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         val view = inflater.inflate(
             R.layout.fragment_payment,

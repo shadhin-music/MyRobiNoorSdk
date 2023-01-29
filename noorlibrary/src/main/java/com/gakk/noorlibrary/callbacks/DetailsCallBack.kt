@@ -46,9 +46,6 @@ interface DetailsCallBack {
     fun setActionOfActionButton(action: () -> Unit, actionButtonType: ActionButtonType)
     fun getScreenWith(): Int
     fun showToastMessage(message: String)
-    fun startDownloadIfPermissionGiven(action: () -> Unit)
-    fun startDownloadCertificateIfPermissionGiven(action: () -> Unit)
-    fun openFileInGalary(path: String)
     fun performAction(nameOfPermision: String, action: () -> Unit)
     fun openUrl(url: String)
     fun showDialer(number: String?)

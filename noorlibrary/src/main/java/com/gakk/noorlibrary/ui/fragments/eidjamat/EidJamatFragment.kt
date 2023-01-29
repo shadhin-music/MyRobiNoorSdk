@@ -21,7 +21,6 @@ import com.gakk.noorlibrary.ui.adapter.eidjamat.EidJamatAdapter
 import com.gakk.noorlibrary.util.PermissionManager
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
-import com.gakk.noorlibrary.util.setApplicationLanguage
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -56,7 +55,6 @@ internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AppPreference.language?.let { context?.setApplicationLanguage(it) }
 
         val view = inflater.inflate(
             R.layout.fragment_eid_jamat,
