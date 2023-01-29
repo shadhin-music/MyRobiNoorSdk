@@ -71,7 +71,7 @@ object Util {
 
     fun checkSub(): Boolean {
 
-        if (AppPreference.subWeekly || AppPreference.subMonthly
+        if (AppPreference.subDaily || AppPreference.subFifteenDays
         ) {
             return true
         }
@@ -166,11 +166,6 @@ object Util {
     }
 }
 
-fun ExoPlayer?.isRelayEnd(): Boolean {
-    return (this?.duration.abs() != 0L && this?.currentPosition.abs() != 0L) &&
-            (this?.duration.abs() <= this?.contentPosition.abs())
-}
-
 fun Long?.abs(): Long {
     return this?.absoluteValue ?: 0L
 }
@@ -227,28 +222,11 @@ suspend inline fun <T> safeApiCall(crossinline responseFunction: suspend () -> T
 
 }
 
-fun addTestDeviceId() {
-    /* val configuration = RequestConfiguration.Builder().setTestDeviceIds(
-         listOf(
-             "5455DBDD3ECFDD2D7441F7873C056362"
-         )
-     )
-         .build()
-     MobileAds.setRequestConfiguration(configuration)*/
-}
-
 fun decrementDateByOne(date: Date?): Date? {
     val c = Calendar.getInstance()
     c.time = date
     c.add(Calendar.DATE, -1)
     return c.time
-}
-
-fun getDay(date: Date?): Int {
-    val cal = Calendar.getInstance()
-    cal.time = date
-    cal.add(Calendar.DATE, -1)
-    return cal[Calendar.DAY_OF_MONTH]
 }
 
 fun getBitmapFromView(ctx: Context, view: View): Bitmap? {

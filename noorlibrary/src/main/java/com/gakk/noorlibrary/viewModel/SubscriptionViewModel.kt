@@ -19,11 +19,9 @@ import kotlinx.coroutines.launch
 internal class SubscriptionViewModel(private val repository: RestRepository) : ViewModel() {
 
     var canelSubInfo: MutableLiveData<Resource<String>> = MutableLiveData()
-    var weeklySubInfoRobi: MutableLiveData<Resource<String>> = MutableLiveData()
-    var monthlySubInfoRobi: MutableLiveData<Resource<String>> = MutableLiveData()
+    var dailySubInfoRobi: MutableLiveData<Resource<String>> = MutableLiveData()
+    var fifteenSubInfoRobi: MutableLiveData<Resource<String>> = MutableLiveData()
     var networkInfo: MutableLiveData<Resource<String>> = MutableLiveData()
-    var nagadSubInfoHalfYearly: MutableLiveData<Resource<NagadSubStatusResponse>> =
-        MutableLiveData()
     var paymentSsl: MutableLiveData<Resource<SslPaymentInitiateResponse>> = MutableLiveData()
 
     private val _subscription_robi : MutableLiveData<SubsResource> = MutableLiveData()
@@ -33,27 +31,6 @@ internal class SubscriptionViewModel(private val repository: RestRepository) : V
         val FACTORY = singleArgViewModelFactory(::SubscriptionViewModel)
     }
 
-
-    fun cancelSubscription(msisdn: String, subscriptionId: String) {
-        viewModelScope.launch {
-            canelSubInfo.postValue(Resource.loading(data = null))
-            try {
-                canelSubInfo.postValue(
-                    Resource.success(
-                        data = repository.cancelSubscription(msisdn, subscriptionId)
-                    )
-                )
-
-            } catch (e: Exception) {
-                canelSubInfo.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
 
     // Robi subscription part
 
@@ -83,16 +60,16 @@ internal class SubscriptionViewModel(private val repository: RestRepository) : V
     }
     fun checkSubscriptionRobi(msisdn: String, subscriptionId: String) {
         viewModelScope.launch {
-            weeklySubInfoRobi.postValue(Resource.loading(data = null))
+            dailySubInfoRobi.postValue(Resource.loading(data = null))
             try {
-                weeklySubInfoRobi.postValue(
+                dailySubInfoRobi.postValue(
                     Resource.success(
                         data = repository.checkSubscriptionRobi(msisdn, subscriptionId)
                     )
                 )
 
             } catch (e: Exception) {
-                weeklySubInfoRobi.postValue(
+                dailySubInfoRobi.postValue(
                     Resource.error(
                         data = null,
                         message = e.message ?: "Error Occurred!"
@@ -104,16 +81,16 @@ internal class SubscriptionViewModel(private val repository: RestRepository) : V
 
     fun checkSubscriptionFifteenDays(msisdn: String, subscriptionId: String) {
         viewModelScope.launch {
-            monthlySubInfoRobi.postValue(Resource.loading(data = null))
+            fifteenSubInfoRobi.postValue(Resource.loading(data = null))
             try {
-                monthlySubInfoRobi.postValue(
+                fifteenSubInfoRobi.postValue(
                     Resource.success(
                         data = repository.checkSubscriptionRobi(msisdn, subscriptionId)
                     )
                 )
 
             } catch (e: Exception) {
-                monthlySubInfoRobi.postValue(
+                fifteenSubInfoRobi.postValue(
                     Resource.error(
                         data = null,
                         message = e.message ?: "Error Occurred!"

@@ -56,7 +56,7 @@ internal class LiveVideoAdapter(
             } else {
                     holder.itemView.context.startActivity(
                         Intent(holder.itemView.context, DetailsActivity::class.java)
-                            .putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_WITH_G_PAY)
+                            .putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)
                     )
             }
         }

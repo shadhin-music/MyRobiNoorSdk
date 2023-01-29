@@ -27,23 +27,6 @@ internal class QuranSchoolViewModel(private val repository: RestRepository) : Vi
 
     var quranSchoolLiveData: MutableLiveData<Resource<QuranSchoolResponse>> = MutableLiveData()
 
-    fun getAllScholars() {
-        viewModelScope.launch {
-            scholarsLiveData.postValue(Resource.loading(data = null))
-
-            try {
-                scholarsLiveData.postValue(Resource.success(data = repository.getAllScholars()))
-            } catch (e: Exception) {
-                scholarsLiveData.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
-
     fun getScholarsById(id: String) {
         viewModelScope.launch {
             singleScholarsLiveData.postValue(Resource.loading(data = null))

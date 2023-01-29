@@ -108,7 +108,7 @@ internal class SubscriptionFragment : Fragment() {
             )
 
 
-            model.weeklySubInfoRobi.observe(viewLifecycleOwner) {
+            model.dailySubInfoRobi.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
                         progressLayout.visibility = View.VISIBLE
@@ -119,7 +119,7 @@ internal class SubscriptionFragment : Fragment() {
                         Log.e("Sub", "Weekly" + it.data)
                         when (it.data) {
                             "1AK" -> {
-                                AppPreference.subWeekly = true
+                                AppPreference.subDaily = true
                                 ivShapeSubDaily.setImageResource(R.drawable.ic_shape_sub_disable)
                                 btnSubscribeDaily.setText(getString(R.string.txt_unsub))
                                 btnSubscribeDaily.setTextColor(Color.WHITE)
@@ -138,7 +138,7 @@ internal class SubscriptionFragment : Fragment() {
                                 btnSubscribeDaily.setBackgroundResource(R.drawable.ic_button_unsub)
                             }
                             else -> {
-                                AppPreference.subWeekly = false
+                                AppPreference.subDaily = false
                                 ivShapeSubDaily.setImageResource(R.drawable.ic_shape_sub)
                                 btnSubscribeDaily.setText(getString(R.string.txt_sub))
                                 btnSubscribeDaily.setBackgroundResource(R.drawable.ic_button_small)
@@ -154,7 +154,7 @@ internal class SubscriptionFragment : Fragment() {
                 }
             }
 
-            model.monthlySubInfoRobi.observe(viewLifecycleOwner) {
+            model.fifteenSubInfoRobi.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
                         Log.e("Sub", "loading")
@@ -164,7 +164,7 @@ internal class SubscriptionFragment : Fragment() {
                         when (it.data) {
                             "1AK" -> {
 
-                                AppPreference.subMonthly = true
+                                AppPreference.subFifteenDays = true
                                 ivShapeSubFifteen.setImageResource(R.drawable.ic_shape_sub_disable)
                                 btnSubscribeFiftten.setText(getString(R.string.txt_unsub))
                                 btnSubscribeFiftten.setTextColor(Color.WHITE)
@@ -183,7 +183,7 @@ internal class SubscriptionFragment : Fragment() {
                                 btnSubscribeFiftten.setBackgroundResource(R.drawable.ic_button_unsub)
                             }
                             else -> {
-                                AppPreference.subMonthly = false
+                                AppPreference.subFifteenDays = false
                                 ivShapeSubFifteen.setImageResource(R.drawable.ic_shape_sub)
                                 btnSubscribeFiftten.setText(getString(R.string.txt_sub))
 
@@ -271,7 +271,7 @@ internal class SubscriptionFragment : Fragment() {
                     planDes = getString(R.string.txt_dialog_sub_des_daily)
 
 
-                    when (AppPreference.subWeekly) {
+                    when (AppPreference.subDaily) {
                         true -> {
                             showSubDialog(
                                 PLAN_NAME_WEEKLY,
@@ -305,7 +305,7 @@ internal class SubscriptionFragment : Fragment() {
                     planDes = getString(R.string.txt_dialog_sub_des_fifteen_robi)
 
 
-                    when (AppPreference.subMonthly) {
+                    when (AppPreference.subFifteenDays) {
                         true -> {
                             showSubDialog(
                                 PLAN_NAME_MONTHLY,
@@ -406,7 +406,7 @@ internal class SubscriptionFragment : Fragment() {
         )
 
         if (planName.equals(PLAN_NAME_WEEKLY)) {
-            when (AppPreference.subWeekly) {
+            when (AppPreference.subDaily) {
                 true -> {
                     btnSub.setText(getString(R.string.txt_unsub))
                     icon.setImageResource(R.drawable.ic_close_rounded)
@@ -417,7 +417,7 @@ internal class SubscriptionFragment : Fragment() {
                 }
             }
         } else {
-            when (AppPreference.subMonthly) {
+            when (AppPreference.subFifteenDays) {
                 true -> {
                     btnSub.setText(getString(R.string.txt_unsub))
                     icon.setImageResource(R.drawable.ic_close_rounded)
@@ -445,7 +445,7 @@ internal class SubscriptionFragment : Fragment() {
         btnSub.handleClickEvent {
 
             if (planName.equals(PLAN_NAME_WEEKLY)) {
-                if (AppPreference.subMonthly) {
+                if (AppPreference.subFifteenDays) {
 
                     val unsubText: String
                     unsubText = getString(R.string.unsubscribe_fifteen_robi)
@@ -457,7 +457,7 @@ internal class SubscriptionFragment : Fragment() {
                     ).show()
 
                 } else {
-                    when (AppPreference.subWeekly) {
+                    when (AppPreference.subDaily) {
                         true -> {
                             model.cancelSubscriptionRobi(
                                 AppPreference.userNumber!!,
@@ -483,7 +483,7 @@ internal class SubscriptionFragment : Fragment() {
                     }
                 }
             } else {
-                if (AppPreference.subWeekly) {
+                if (AppPreference.subDaily) {
                     val unsubText: String
                     unsubText = getString(R.string.unsubscribe_daily)
 
@@ -493,7 +493,7 @@ internal class SubscriptionFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    when (AppPreference.subMonthly) {
+                    when (AppPreference.subFifteenDays) {
                         true -> {
                             model.cancelSubscriptionRobi(
                                 AppPreference.userNumber!!,

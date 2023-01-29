@@ -52,8 +52,8 @@ object AppPreference {
     const val IS_MAGHRIB_ALARM_SET = "is_maghrib_alarm_set"
     const val IS_ISHA_ALARM_SET = "is_isha_alarm_set"
 
-    private const val ISSUBWEEKLY = "is_sub_daily"
-    private const val ISSUBMONTHLY = "is_sub_monthly"
+    private const val ISSUBDAILY = "is_sub_daily"
+    private const val ISSUBFIFTEENDAYS = "is_sub_fifteendays"
     private const val ISSUBYEARLY = "is_sub_yearly"
     private const val ISSUBWEEKLYROBI = "is_sub_weekly_robi"
     private const val ISSUBMONTHLYROBI = "is_sub_monthly_robi"
@@ -86,11 +86,10 @@ object AppPreference {
 
     private val SET_NUMBER = Pair(USER_NUMBER, NUMBER)
     private val NOTIFICATION_FLAG = Pair(ISNOTIFICATIONON, true)
-    private val SOUND_FLAG = Pair(ISSOUNDON, true)
     private val TOTAL_COUNT = Pair(TOTALCOUNTTAG, 0)
 
-    private val IS_SUB_WEEKLY = Pair(ISSUBWEEKLY, false)
-    private val IS_SUB_MONTHLY = Pair(ISSUBMONTHLY, false)
+    private val IS_SUB_DAILY = Pair(ISSUBDAILY, false)
+    private val IS_SUB_FIFTEENDAYS = Pair(ISSUBFIFTEENDAYS, false)
     private val IS_SUB_YEARLY = Pair(ISSUBYEARLY, false)
     private val IS_SUB_MONTHLY_GPAY = Pair(ISSUBMONTHLYGPAY, false)
     private val IS_SUB_MONTHLY_NAGAD = Pair(ISSUBMONTHLYNAGAD, false)
@@ -212,13 +211,7 @@ object AppPreference {
             val type: Type = genericType<MutableList<IfterAndSehriTime>?>()
             return mGSonInstance.fromJson(sehriIfterList, type)*/
         }
-//    var lastSetSehriTimeInMs: Long
-//        get() = preferences.getLong(PREF_LAST_SET_SEHRI_ALARM_TIME_MS, 0)
-//        set(value) = preferences.edit { it.putLong(PREF_LAST_SET_SEHRI_ALARM_TIME_MS, value) }
-//
-//    var lastSetIfterTimeInMs: Long
-//        get() = preferences.getLong(PREF_LAST_SET_IFTER_ALARM_TIME_MS, 0)
-//        set(value) = preferences.edit { it.putLong(PREF_LAST_SET_IFTER_ALARM_TIME_MS, value) }
+
 
     var _nextTenDaysSehriIfterTimes: MutableList<IfterAndSehriTime>? = mutableListOf()
     var nextTenDaysSehriIfterTimes: MutableList<IfterAndSehriTime>?
@@ -235,46 +228,11 @@ object AppPreference {
         }
 
 
-    fun getDownloadPath(id: String): String? {
-        var path = downloadPathMap[id]
-        return path
-    }
-
-    var downloadPathMap: HashMap<String, String?>
-        set(value) {
-            val mapStr = mGSonInstance.toJson(value)
-            preferences.edit { it.putString(PREF_DOWNLOAD_PATH_MAP, mapStr) }
-        }
-        get() {
-            val mapStr = preferences.getString(PREF_DOWNLOAD_PATH_MAP, null)
-            if (mapStr == null) {
-                return HashMap()
-            } else {
-                val type: Type = genericType<HashMap<String, String?>>()
-                return mGSonInstance.fromJson(mapStr, type)
-            }
-        }
-
-    var downloadProgressMap: HashMap<String, Int?>
-        set(value) {
-            val mapStr = mGSonInstance.toJson(value)
-            preferences.edit { it.putString(PREF_DOWNLOAD_PROGRESS_MAP, mapStr) }
-        }
-        get() {
-            val mapStr = preferences.getString(PREF_DOWNLOAD_PROGRESS_MAP, null)
-            if (mapStr == null) {
-                return HashMap()
-            } else {
-                val type: Type = genericType<HashMap<String, Int?>>()
-                return mGSonInstance.fromJson(mapStr, type)
-            }
-        }
-
     fun clearCachedUser() {
         preferences.edit {
             it.remove(PREF_USER)
-            it.remove(ISSUBWEEKLY)
-            it.remove(ISSUBMONTHLY)
+            it.remove(ISSUBDAILY)
+            it.remove(ISSUBFIFTEENDAYS)
             it.remove(ISSUBMONTHLYGPAY)
             it.remove(ISSUBYEARLY)
             it.remove(ISSUBWEEKLYSOFTBUNDLE)
@@ -335,20 +293,7 @@ object AppPreference {
             it.putInt(TOTAL_COUNT.first, value)
         }
 
-    fun getAlarmForAzan(tag: String): Boolean {
-        return preferences.getBoolean(tag, false)
-    }
 
-
-    fun loadTashbihCount(tag: String): Int {
-        return preferences.getInt(tag, 0)
-    }
-
-    fun clearHistoryCount(tag: String) {
-        preferences.edit {
-            it.remove(tag)
-        }
-    }
 
     fun saveHajjGuideStep(value: Boolean, tag: String) {
         preferences.edit {
@@ -360,21 +305,21 @@ object AppPreference {
         return preferences.getBoolean(tag, false)
     }
 
-    var subWeekly: Boolean
+    var subDaily: Boolean
         get() = preferences.getBoolean(
-            IS_SUB_WEEKLY.first,
-            IS_SUB_WEEKLY.second
+            IS_SUB_DAILY.first,
+            IS_SUB_DAILY.second
         )
         set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_WEEKLY.first, value)
+            it.putBoolean(IS_SUB_DAILY.first, value)
         }
-    var subMonthly: Boolean
+    var subFifteenDays: Boolean
         get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
-            IS_SUB_MONTHLY.first,
-            IS_SUB_MONTHLY.second
+            IS_SUB_FIFTEENDAYS.first,
+            IS_SUB_FIFTEENDAYS.second
         )
         set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_MONTHLY.first, value)
+            it.putBoolean(IS_SUB_FIFTEENDAYS.first, value)
         }
     var subYearly: Boolean
         get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(

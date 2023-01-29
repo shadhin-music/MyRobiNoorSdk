@@ -64,7 +64,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
     private lateinit var model: QuranViewModel
     private lateinit var modelSubscription: SubscriptionViewModel
     private lateinit var modelLiterature: LiteratureViewModel
-    private lateinit var modelProfile: ProfileViewModel
     private lateinit var viewmodelHome: HomeViewModel
     private lateinit var repository: RestRepository
     private var surahList: MutableList<Data>? = null
@@ -153,11 +152,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 LiteratureViewModel.FACTORY(repository)
             ).get(LiteratureViewModel::class.java)
 
-            modelProfile = ViewModelProvider(
-                this@MainActivity,
-                ProfileViewModel.FACTORY(repository)
-            ).get(ProfileViewModel::class.java)
-
             viewmodelHome = ViewModelProvider(
                 this@MainActivity,
                 HomeViewModel.FACTORY(repository)
@@ -180,7 +174,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 }
             }
 
-            modelSubscription.weeklySubInfoRobi.observe(this@MainActivity) {
+            modelSubscription.dailySubInfoRobi.observe(this@MainActivity) {
                 when (it.status) {
                     Status.LOADING -> {
                         Log.d("SubMain", "loading")
@@ -189,10 +183,10 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         Log.d("SubMain", "Weekly" + it.data)
                         when (it.data) {
                             "1AK" -> {
-                                AppPreference.subWeekly = true
+                                AppPreference.subDaily = true
                             }
                             "0AK" -> {
-                                AppPreference.subWeekly = false
+                                AppPreference.subDaily = false
                             }
                         }
 
@@ -203,7 +197,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 }
             }
 
-            modelSubscription.monthlySubInfoRobi.observe(this@MainActivity) {
+            modelSubscription.fifteenSubInfoRobi.observe(this@MainActivity) {
                 when (it.status) {
                     Status.LOADING -> {
                         Log.d("Sub", "loading")
@@ -212,11 +206,11 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         Log.e("Subinfo", "Monthly" + it.data)
                         when (it.data) {
                             "1AK" -> {
-                                AppPreference.subMonthly = true
+                                AppPreference.subFifteenDays = true
 
                             }
                             "0AK" -> {
-                                AppPreference.subMonthly = false
+                                AppPreference.subFifteenDays = false
                             }
                         }
                     }

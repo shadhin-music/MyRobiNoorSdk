@@ -39,7 +39,6 @@ import java.util.*
 
 internal class DetailsActivity : BaseActivity(), DetailsCallBack {
 
-    //private var binding: ActivityDetailsBinding? = null
     private lateinit var mPage: String
     private var mFrament: Fragment? = null
     private lateinit var mFragmentStack: Stack<Fragment>

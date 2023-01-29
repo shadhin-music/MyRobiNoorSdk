@@ -490,7 +490,7 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
 
                 else -> {
                     mainCallback?.openDetailsActivityWithPageName(
-                        pageName = PAGE_SUBSCRIPTION_WITH_G_PAY
+                        pageName = PAGE_SUBSCRIPTION
                     )
                 }
             }
