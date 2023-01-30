@@ -178,7 +178,7 @@ object FragmentProvider {
             PAGE_HAJJ_HOME ->
                 HajjHomeFragment.newInstance()
 
-           // PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
+            PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
             PAGE_SUBSCRIPTION_OPTION_LIST -> SubscriptionOptionListFragment.newInstance()
             PAGE_SUBSCRIPTION_NAGAD -> NagadSubscriptionFragment.newInstance(
                 isFav
