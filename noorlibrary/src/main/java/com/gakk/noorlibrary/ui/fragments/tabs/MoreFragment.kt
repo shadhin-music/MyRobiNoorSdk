@@ -3,7 +3,6 @@ package com.gakk.noorlibrary.ui.fragments.tabs
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,20 +72,18 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
 
         layoutSubscribeCon.handleClickEvent {
-            Log.e("pageName", "called $PAGE_SUBSCRIPTION_OPTION_LIST")
 
-              //  dialog.dismiss()
+            dialog.dismiss()
 
-           /* if (isNetworkConnected(requireContext())) {
+            if (isNetworkConnected(requireContext())) {
                 Intent(context, DetailsActivity::class.java).apply {
                     this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                     startActivity(this)
                 }
-                Log.e("pageName", "called $PAGE_SUBSCRIPTION_OPTION_LIST")
 
             } else {
                 mCallback.showToastMessage("Please check internet connection!")
-            }*/
+            }
         }
     }
 

@@ -46,7 +46,6 @@
                 android:id="@+id/layoutSubscribe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvMore">
 
@@ -93,7 +92,6 @@
                 android:layout_marginTop="@dimen/standard_margin"
                 android:layout_marginEnd="@dimen/small_spacing"
                 android:background="@drawable/ic_rectanglecat"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
@@ -135,8 +133,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutSubscribeCon"
                 app:spanCount="4"
-                tools:listitem="@layout/layout_menu_item"
-                android:visibility="gone">
+                tools:listitem="@layout/layout_menu_item">
 
             </androidx.recyclerview.widget.RecyclerView>
 

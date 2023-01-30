@@ -58,6 +58,5 @@ configurations.all {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.core:core-ktx:1.9.0'
-    //implementation project(path: ':noorlibrary')
-    implementation 'com.github.shadhin-music:MyRobiNoorSdk:0.0.12'
+    implementation project(path: ':noorlibrary')
 }
