@@ -513,7 +513,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
     override fun onResume() {
         super.onResume()
-        totalCount = AppPreference.totalCount
     }
 }
 

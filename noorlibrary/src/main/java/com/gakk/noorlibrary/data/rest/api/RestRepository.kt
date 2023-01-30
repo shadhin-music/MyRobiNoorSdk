@@ -571,7 +571,19 @@ class RestRepository(
 
         return subApiServiceSsl.initiateSslPaymentRange("application/json", body)
     }
+    suspend fun checkSubStatusSsl(
+        msisdn: String,
+        serviceId: String
+    ): NagadSubStatusResponse {
+        val jsonParams: MutableMap<String?, Any?> = ArrayMap()
+        jsonParams["MSISDN"] = msisdn
+        jsonParams["serviceid"] = serviceId
 
+        val JSON = "application/json; charset=utf-8".toMediaType()
+        val body = JSONObject(jsonParams).toString().toRequestBody(JSON)
+
+        return subApiServiceSsl.checkSslSubStatus("application/json", body)
+    }
     suspend fun hajjPreregistration(
         image: File?,
         payload: HajjpackageRegPayload

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/double_margin"
+        android:layout_marginEnd="@dimen/double_margin"
+        android:paddingBottom="@dimen/standard_margin">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:src="@drawable/ic_premium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitleSub"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:fontFamily="sans-serif"
+            android:text="@string/txt_choose_plan"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/txt_color_title"
+            android:textFontWeight="400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutMonthlyNagad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@drawable/ic_rectangle_sub"
+            android:paddingBottom="@dimen/standard_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitleSub">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivShapeSubMonthly"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/size_24"
+                android:layout_marginEnd="@dimen/size_24"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_shape_sub"
+                app:layout_constraintDimensionRatio="h,1:0.19354838"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDailyService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_plan_monthly"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/txt_white"
+                android:textFontWeight="400"
+                app:layout_constraintBottom_toBottomOf="@id/ivShapeSubMonthly"
+                app:layout_constraintEnd_toEndOf="@id/ivShapeSubMonthly"
+                app:layout_constraintStart_toStartOf="@id/ivShapeSubMonthly"
+                app:layout_constraintTop_toTopOf="@id/ivShapeSubMonthly" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_amount_monthly"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/deep_green"
+                android:textFontWeight="700"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivShapeSubMonthly" />
+
+            <RelativeLayout
+                android:id="@+id/rlContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAmount">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgChek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/small_spacing"
+                    android:src="@drawable/ic_check_green" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imgChek"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/txt_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/txt_color_title"
+                    android:textFontWeight="400" />
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubscribeMonthly"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="48dp"
+                android:background="@drawable/ic_button_small"
+                android:text="@string/txt_sub"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/txt_color"
+                android:textFontWeight="400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rlContent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutHalfYearly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:background="@drawable/ic_rectangle_sub"
+            android:paddingBottom="@dimen/standard_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutMonthlyNagad">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivShapeHalfYearly"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/size_24"
+                android:layout_marginEnd="@dimen/size_24"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_shape_sub"
+                app:layout_constraintDimensionRatio="h,1:0.19354838"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFifteenService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_plan_half_yearly"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/txt_white"
+                android:textFontWeight="400"
+                app:layout_constraintBottom_toBottomOf="@id/ivShapeHalfYearly"
+                app:layout_constraintEnd_toEndOf="@id/ivShapeHalfYearly"
+                app:layout_constraintStart_toStartOf="@id/ivShapeHalfYearly"
+                app:layout_constraintTop_toTopOf="@id/ivShapeHalfYearly" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAmountHalfYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_amount_half_yearly"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/deep_green"
+                android:textFontWeight="700"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivShapeHalfYearly" />
+
+            <RelativeLayout
+                android:id="@+id/rlContentHalfYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAmountHalfYearly">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgChkHalfYearly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/small_spacing"
+                    android:src="@drawable/ic_check_green" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvContentHalfYearly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imgChkHalfYearly"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/txt_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/txt_color_title"
+                    android:textFontWeight="400" />
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubscribeHalfYearly"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="48dp"
+                android:background="@drawable/ic_button_small"
+                android:text="@string/txt_sub"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/txt_color"
+                android:textFontWeight="400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rlContentHalfYearly" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutYearly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:background="@drawable/ic_rectangle_sub"
+            android:paddingBottom="@dimen/standard_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutHalfYearly">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivShapeSubYearly"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/size_24"
+                android:layout_marginEnd="@dimen/size_24"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_shape_sub"
+                app:layout_constraintDimensionRatio="h,1:0.19354838"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvYearlyService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_plan_yearly"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/txt_white"
+                android:textFontWeight="400"
+                app:layout_constraintBottom_toBottomOf="@id/ivShapeSubYearly"
+                app:layout_constraintEnd_toEndOf="@id/ivShapeSubYearly"
+                app:layout_constraintStart_toStartOf="@id/ivShapeSubYearly"
+                app:layout_constraintTop_toTopOf="@id/ivShapeSubYearly" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAmountYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:fontFamily="sans-serif"
+                android:text="@string/txt_amount_yearly"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/deep_green"
+                android:textFontWeight="700"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivShapeSubYearly" />
+
+            <RelativeLayout
+                android:id="@+id/rlContentYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAmountYearly">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgChkYearly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/small_spacing"
+                    android:src="@drawable/ic_check_green" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvContentYearly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imgChkYearly"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/txt_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/txt_color_title"
+                    android:textFontWeight="400" />
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubscribeYearly"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginEnd="48dp"
+                android:background="@drawable/ic_button_small"
+                android:text="@string/txt_sub"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/txt_color"
+                android:textFontWeight="400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rlContentYearly" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/progressLayout"
+            layout="@layout/layout_circular_progress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

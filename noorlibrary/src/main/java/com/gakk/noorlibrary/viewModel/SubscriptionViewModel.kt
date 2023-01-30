@@ -23,6 +23,10 @@ internal class SubscriptionViewModel(private val repository: RestRepository) : V
     var fifteenSubInfoRobi: MutableLiveData<Resource<String>> = MutableLiveData()
     var networkInfo: MutableLiveData<Resource<String>> = MutableLiveData()
     var paymentSsl: MutableLiveData<Resource<SslPaymentInitiateResponse>> = MutableLiveData()
+    var sslSubInfoMonthly: MutableLiveData<Resource<NagadSubStatusResponse>> = MutableLiveData()
+    var sslSubInfoHalfYearly: MutableLiveData<Resource<NagadSubStatusResponse>> =
+        MutableLiveData()
+    var sslSubInfoYearly: MutableLiveData<Resource<NagadSubStatusResponse>> = MutableLiveData()
 
     private val _subscription_robi : MutableLiveData<SubsResource> = MutableLiveData()
 
@@ -233,6 +237,69 @@ internal class SubscriptionViewModel(private val repository: RestRepository) : V
 
             } catch (e: Exception) {
                 paymentSsl.postValue(
+                    Resource.error(
+                        data = null,
+                        message = e.message ?: "Error Occurred!"
+                    )
+                )
+            }
+        }
+    }
+
+    fun checkSslSubStatusMonthly(msisdn: String, serviceid: String) {
+        viewModelScope.launch {
+            sslSubInfoMonthly.postValue(Resource.loading(data = null))
+            try {
+                sslSubInfoMonthly.postValue(
+                    Resource.success(
+                        data = repository.checkSubStatusSsl(msisdn, serviceid)
+                    )
+                )
+
+            } catch (e: Exception) {
+                sslSubInfoMonthly.postValue(
+                    Resource.error(
+                        data = null,
+                        message = e.message ?: "Error Occurred!"
+                    )
+                )
+            }
+        }
+    }
+
+    fun checkSslSubStatusHalfYearly(msisdn: String, serviceid: String) {
+        viewModelScope.launch {
+            sslSubInfoHalfYearly.postValue(Resource.loading(data = null))
+            try {
+                sslSubInfoHalfYearly.postValue(
+                    Resource.success(
+                        data = repository.checkSubStatusSsl(msisdn, serviceid)
+                    )
+                )
+
+            } catch (e: Exception) {
+                sslSubInfoHalfYearly.postValue(
+                    Resource.error(
+                        data = null,
+                        message = e.message ?: "Error Occurred!"
+                    )
+                )
+            }
+        }
+    }
+
+    fun checkSslSubStatusYearly(msisdn: String, serviceid: String) {
+        viewModelScope.launch {
+            sslSubInfoYearly.postValue(Resource.loading(data = null))
+            try {
+                sslSubInfoYearly.postValue(
+                    Resource.success(
+                        data = repository.checkSubStatusSsl(msisdn, serviceid)
+                    )
+                )
+
+            } catch (e: Exception) {
+                sslSubInfoYearly.postValue(
                     Resource.error(
                         data = null,
                         message = e.message ?: "Error Occurred!"

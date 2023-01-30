@@ -362,15 +362,15 @@
     <string name="txt_fifteen_day_service">নূর ১৫ দিন সার্ভিস</string>
     <string name="txt_amount_fifteen_robi">৯.৩৩ টাকা</string>
 
-    <!--<string name="txt_dialog_sub_des_weekly">আপনি কি নূর সাপ্তাহিক সার্ভিস টি এক্টিভেট করতে চান? চার্জ RM ৩ প্রতি সপ্তাহের জন্য (অটো রিনিউয়াল)</string>
-    <string name="txt_dialog_sub_des_monthly">আপনি কি নূর মাসিক সার্ভিস টি এক্টিভেট করতে চান? চার্জ RM ১২ প্রতি মাসের জন্য (অটো রিনিউয়াল)</string>
-    <string name="txt_dialog_unsub_des_weekly">আপনি কি নূর সাপ্তাহিক সার্ভিস টি আনসাবস্ক্রাইব করতে চান?</string>
-    <string name="txt_dialog_unsub_des_monthly">আপনি কি নূর মাসিক সার্ভিস টি আনসাবস্ক্রাইব করতে চান?</string>
-    <string name="unsubscribe_success">Successfully Unsubscribed!</string>
-    <string name="sub_fail">Subscription Failed! Please try again.</string>
-    <string name="unsubscribe_monthly">Please unsubscribe monthly plan first !</string>
-    <string name="unsubscribe_weekly">Please unsubscribe weekly plan first !</string>
-    <string name="text_sub_soft_bundle">আপনি Soft Bundle প্যাকে সাবস্ক্রাইব আছেন!</string>-->
+    <!--Subscription Page Nagad !-->
+    <string name="txt_choose_plan">আপনার পছন্দের প্ল্যান নির্বাচন করুন</string>
+    <string name="txt_plan_monthly">নূর ৩০ দিন প্ল্যান</string>
+    <string name="txt_plan_half_yearly">নূর ৬ মাস প্ল্যান</string>
+    <string name="txt_plan_yearly">নূর ১ বছর প্ল্যান</string>
+    <string name="txt_amount_monthly">৩০ টাকা</string>
+    <string name="txt_amount_half_yearly">১২০ টাকা</string>
+    <string name="txt_amount_yearly">২০০ টাকা</string>
+    <string name="txt_subscribed">সাবস্ক্রাইবড</string>
 
 
     <string name="currency_converter">কারেন্সি কনভার্টার </string>

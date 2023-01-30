@@ -4,15 +4,12 @@ package com.gakk.noorlibrary.data.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.gakk.noorlibrary.model.UserLocation
 import com.gakk.noorlibrary.model.billboard.Data
 import com.gakk.noorlibrary.model.roza.IftarAndSheriTimeforBD
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
 import com.gakk.noorlibrary.util.LAN_BANGLA
-import com.gakk.noorlibrary.util.NUMBER
 import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
@@ -31,7 +28,6 @@ object AppPreference {
     private const val PREF_USER_INFO = "userInfo"
 
     private const val ISNOTIFICATIONON = "isNotificationOn"
-    private const val TOTALCOUNTTAG = "totalcount"
 
     private const val PREF_RAMADAN_SEHRI_IFTER_LIST = "ramadanSehriIfterList"
     private const val PREF_NEXT_TEN_DAYS_SEHRI_IFTER_LIST = "nextTenDaysSehriIfterList"
@@ -51,15 +47,7 @@ object AppPreference {
     private const val ISSUBMONTHLYROBI = "is_sub_monthly_robi"
     private val IS_SUB_WEEKLY_ROBI = Pair(ISSUBWEEKLYROBI, false)
     private val IS_SUB_MONTHLY_ROBI = Pair(ISSUBMONTHLYROBI, false)
-    private const val ISSUBMONTHLYGPAY = "is_sub_monthly_gpay"
-    private const val ISSUBWEEKLYSOFTBUNDLE = "is_sub_weekly_soft"
-    private const val ISSUBMONTHLYSOFTBUNDLE = "is_sub_monthly_soft"
-    private const val ISSUBMONTHLYSOFTBUNDLEROBI = "is_sub_monthly_soft_robi"
-    private const val ISSUBWEEKLYSOFTBUNDLEROBI = "is_sub_weekly_soft_robi"
-    private const val ISSUBSOFTBUNDLEROBI = "is_sub_soft_robi"
-    private const val ISSUBSOFTBUNDLERAMADANROBI = "is_sub_soft_ramadan_robi"
-    private const val ISSUBSOFTBUNDLESEVENDAYSROBI = "is_sub_soft_seven_days_robi"
-    private const val ISSUBSOFTBUNDLEFIFTEENDAYSROBI = "is_sub_soft_fifteen_days_robi"
+
     private const val ISSUBIQRA = "is_sub_iqra"
     private const val ISSUBQURAN = "is_sub_quran"
     private const val ISSUBMONTHLYNAGAD = "is_sub_monthly_nagad"
@@ -69,6 +57,9 @@ object AppPreference {
     private const val ISSUBMONTHLYSSL = "is_sub_monthly_ssl"
     private const val ISSUBHALFYEARLYSSL = "is_sub_half_yearly_ssl"
     private const val ISSUBYEARLYSSL = "is_sub_yearly_ssl"
+    private val IS_SUB_MONTHLY_SSL = Pair(ISSUBMONTHLYSSL, false)
+    private val IS_SUB_HALF_YEARLY_SSL = Pair(ISSUBHALFYEARLYSSL, false)
+    private val IS_SUB_YEARLY_SSL = Pair(ISSUBYEARLYSSL, false)
     private const val ISFROMBD = "is_from_bd"
 
     private const val MODE = Context.MODE_PRIVATE
@@ -77,15 +68,10 @@ object AppPreference {
     private lateinit var SET_LANGUAGE: Pair<String, String>
 
     private val NOTIFICATION_FLAG = Pair(ISNOTIFICATIONON, true)
-    private val TOTAL_COUNT = Pair(TOTALCOUNTTAG, 0)
 
     private val IS_SUB_DAILY = Pair(ISSUBDAILY, false)
     private val IS_SUB_FIFTEENDAYS = Pair(ISSUBFIFTEENDAYS, false)
     private val IS_SUB_YEARLY = Pair(ISSUBYEARLY, false)
-    private val IS_SUB_MONTHLY_GPAY = Pair(ISSUBMONTHLYGPAY, false)
-    private val IS_SUB_MONTHLY_NAGAD = Pair(ISSUBMONTHLYNAGAD, false)
-    private val IS_SUB_HALF_YEARLY_NAGAD = Pair(ISSUBHALFYEARLYNAGAD, false)
-    private val IS_SUB_YEARLY_NAGAD = Pair(ISSUBYEARLYNAGAD, false)
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREF_FILE_NAME, MODE)
@@ -224,16 +210,7 @@ object AppPreference {
             it.remove(PREF_USER)
             it.remove(ISSUBDAILY)
             it.remove(ISSUBFIFTEENDAYS)
-            it.remove(ISSUBMONTHLYGPAY)
             it.remove(ISSUBYEARLY)
-            it.remove(ISSUBWEEKLYSOFTBUNDLE)
-            it.remove(ISSUBMONTHLYSOFTBUNDLE)
-            it.remove(ISSUBMONTHLYSOFTBUNDLEROBI)
-            it.remove(ISSUBWEEKLYSOFTBUNDLEROBI)
-            it.remove(ISSUBSOFTBUNDLEROBI)
-            it.remove(ISSUBSOFTBUNDLERAMADANROBI)
-            it.remove(ISSUBSOFTBUNDLESEVENDAYSROBI)
-            it.remove(ISSUBSOFTBUNDLEFIFTEENDAYSROBI)
             it.remove(ISSUBIQRA)
             it.remove(ISSUBMONTHLYNAGAD)
             it.remove(ISSUBHALFYEARLYNAGAD)
@@ -253,10 +230,10 @@ object AppPreference {
 
     fun getUserCurrentLocation(context: Context? = null): UserLocation {
 
-            if ((!this::preferences.isInitialized || !this::mGSonInstance.isInitialized) && context != null){
-                init(context)
+        if ((!this::preferences.isInitialized || !this::mGSonInstance.isInitialized) && context != null) {
+            init(context)
 
-            }
+        }
 
         var userCurLocString: String? = null
         kotlin.runCatching {
@@ -277,13 +254,6 @@ object AppPreference {
         set(value) = preferences.edit {
             it.putBoolean(NOTIFICATION_FLAG.first, value)
         }
-
-    var totalCount: Int
-        get() = preferences.getInt(TOTAL_COUNT.first, TOTAL_COUNT.second)
-        set(value) = preferences.edit {
-            it.putInt(TOTAL_COUNT.first, value)
-        }
-
 
 
     fun saveHajjGuideStep(value: Boolean, tag: String) {
@@ -312,50 +282,6 @@ object AppPreference {
         set(value) = preferences.edit {
             it.putBoolean(IS_SUB_FIFTEENDAYS.first, value)
         }
-    var subYearly: Boolean
-        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
-            IS_SUB_YEARLY.first,
-            IS_SUB_YEARLY.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_YEARLY.first, value)
-        }
-
-    var subMonthlyGpay: Boolean
-        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
-            IS_SUB_MONTHLY_GPAY.first,
-            IS_SUB_MONTHLY_GPAY.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_MONTHLY_GPAY.first, value)
-        }
-
-    var subMonthlyNagad: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_MONTHLY_NAGAD.first,
-            IS_SUB_MONTHLY_NAGAD.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_MONTHLY_NAGAD.first, value)
-        }
-
-    var subHalfYearlyNagad: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_HALF_YEARLY_NAGAD.first,
-            IS_SUB_HALF_YEARLY_NAGAD.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_HALF_YEARLY_NAGAD.first, value)
-        }
-
-    var subYearlyNagad: Boolean
-        get() = preferences.getBoolean(
-            IS_SUB_YEARLY_NAGAD.first,
-            IS_SUB_YEARLY_NAGAD.second
-        )
-        set(value) = preferences.edit {
-            it.putBoolean(IS_SUB_YEARLY_NAGAD.first, value)
-        }
 
     var subWeeklyRobi: Boolean
         get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
@@ -375,22 +301,29 @@ object AppPreference {
             it.putBoolean(IS_SUB_MONTHLY_ROBI.first, value)
         }
 
-
-    fun loadAllMalayNamazTime(requestType: String): List<List<Long>>? {
-        var callLog: List<List<Long>>? = null
-        try {
-            val json = preferences.getString(requestType, "")
-            if (json != null /*&& check month*/) {
-                callLog = if (json.isEmpty()) {
-                    ArrayList()
-                } else {
-                    val type = object : TypeToken<List<List<Long?>?>?>() {}.type
-                    mGSonInstance.fromJson<List<List<Long>>>(json, type)
-                }
-            }
-        } catch (e: JsonSyntaxException) {
-
+    var subMonthlySsl: Boolean
+        get() = preferences.getBoolean(
+            IS_SUB_MONTHLY_SSL.first,
+            IS_SUB_MONTHLY_SSL.second
+        )
+        set(value) = preferences.edit {
+            it.putBoolean(IS_SUB_MONTHLY_SSL.first, value)
         }
-        return callLog
-    }
+    var subHalfYearlySsl: Boolean
+        get() = preferences.getBoolean(
+            IS_SUB_HALF_YEARLY_SSL.first,
+            IS_SUB_HALF_YEARLY_SSL.second
+        )
+        set(value) = preferences.edit {
+            it.putBoolean(IS_SUB_HALF_YEARLY_SSL.first, value)
+        }
+
+    var subYearlySsl: Boolean
+        get() = preferences.getBoolean(
+            IS_SUB_YEARLY_SSL.first,
+            IS_SUB_YEARLY_SSL.second
+        )
+        set(value) = preferences.edit {
+            it.putBoolean(IS_SUB_YEARLY_SSL.first, value)
+        }
 }

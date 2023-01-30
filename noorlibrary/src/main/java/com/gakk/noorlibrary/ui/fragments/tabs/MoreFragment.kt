@@ -3,6 +3,7 @@ package com.gakk.noorlibrary.ui.fragments.tabs
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
     private lateinit var mCallback: MainCallback
     private lateinit var rvCategory: RecyclerView
     private lateinit var imgDrag: AppCompatImageView
-    private lateinit var layoutProfile: ConstraintLayout
     private lateinit var layoutSubscribeCon: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +54,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         rvCategory = view.findViewById(R.id.rvCategory)
         imgDrag = view.findViewById(R.id.imgDrag)
-        layoutProfile = view.findViewById(R.id.layoutProfile)
         layoutSubscribeCon = view.findViewById(R.id.layoutSubscribeCon)
 
         return view
@@ -73,25 +72,21 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
         }
 
 
-        layoutProfile.handleClickEvent {
-            dialog.dismiss()
-            Intent(context, DetailsActivity::class.java).apply {
-                this.putExtra(PAGE_NAME, PAGE_PROFILE)
-                startActivity(this)
-            }
-        }
-
         layoutSubscribeCon.handleClickEvent {
-            dialog.dismiss()
+            Log.e("pageName", "called $PAGE_SUBSCRIPTION_OPTION_LIST")
 
-            if (isNetworkConnected(requireContext())) {
+              //  dialog.dismiss()
+
+           /* if (isNetworkConnected(requireContext())) {
                 Intent(context, DetailsActivity::class.java).apply {
-                    this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)
+                    this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                     startActivity(this)
                 }
+                Log.e("pageName", "called $PAGE_SUBSCRIPTION_OPTION_LIST")
+
             } else {
                 mCallback.showToastMessage("Please check internet connection!")
-            }
+            }*/
         }
     }
 

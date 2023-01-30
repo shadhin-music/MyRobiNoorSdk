@@ -19,7 +19,9 @@ import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
 import com.gakk.noorlibrary.ui.fragments.onlinehut.OnlintHutHomeFragment
 import com.gakk.noorlibrary.ui.fragments.quranSchool.QuranSchoolHomeFragment
 import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
+import com.gakk.noorlibrary.ui.fragments.subscription.NagadSubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
+import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionOptionListFragment
 import com.gakk.noorlibrary.ui.fragments.tracker.TrackerTabFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.ZakatCalculatorFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.*
@@ -64,17 +66,6 @@ object FragmentProvider {
             PAGE_NEAREST_MOSQUE -> NearestMosqueFragment.newInstance(
                 PAGE_NEAREST_MOSQUE
             )
-            PAGE_NEAREST_RESTAURANT -> when (Util.checkSub()) {
-                true -> {
-                    NearestMosqueFragment.newInstance(
-                        PAGE_NEAREST_RESTAURANT
-                    )
-                }
-
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-            }
 
             PAGE_FULL_PLAYER -> SurahFullPlayerFragment.newInstance()
             PAGE_ROZA -> com.gakk.noorlibrary.ui.fragments.roja.RozaInformationFragment.newInstance()
@@ -90,37 +81,10 @@ object FragmentProvider {
                     )
                 }
                 else -> {
-                    SubscriptionFragment.newInstance()
+                    SubscriptionOptionListFragment.newInstance()
                 }
             }
 
-            PAGE_WALL_PAPER -> when (Util.checkSub()) {
-                true -> {
-                    LiteratureListFragment.newInstance(
-                        false,
-                        catId = R.string.wallpaper_cat_id.getLocalisedTextFromResId(),
-                        subCatId = "undefined",
-                        pageTitle = ""
-                    )
-                }
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-            }
-
-            PAGE_ANIMATION -> when (Util.checkSub()) {
-                true -> {
-                    LiteratureListFragment.newInstance(
-                        false,
-                        catId = R.string.animation_cat_id.getLocalisedTextFromResId(),
-                        subCatId = "undefined",
-                        pageTitle = ""
-                    )
-                }
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-            }
 
             PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY -> LiteratureListFragment.newInstance(
                 isFav, catId = catId!!, subCatId = subCatId!!, pageTitle = pageTitle
@@ -133,7 +97,7 @@ object FragmentProvider {
                 }
 
                 else -> {
-                    SubscriptionFragment.newInstance()
+                    SubscriptionOptionListFragment.newInstance()
 
                 }
             }
@@ -155,7 +119,7 @@ object FragmentProvider {
                     }
 
                     else -> {
-                        SubscriptionFragment.newInstance()
+                        SubscriptionOptionListFragment.newInstance()
 
                     }
                 }
@@ -184,7 +148,7 @@ object FragmentProvider {
                     )
                 }
                 else -> {
-                    SubscriptionFragment.newInstance()
+                    SubscriptionOptionListFragment.newInstance()
                 }
             }
 
@@ -200,21 +164,10 @@ object FragmentProvider {
                     )
                 }
                 else -> {
-                    SubscriptionFragment.newInstance()
+                    SubscriptionOptionListFragment.newInstance()
                 }
             }
 
-
-            PAGE_CAT_INSTRUCTIVE_VIDEO -> when (Util.checkSub()) {
-                true -> {
-                    InstructiveVideoFragment.newInstance(
-                        "Instructive Video"
-                    )
-                }
-                else -> {
-                    SubscriptionFragment.newInstance()
-                }
-            }
 
             PAGE_CAT_LIVE_QA ->
                 InstructiveVideoFragment.newInstance(
@@ -225,7 +178,11 @@ object FragmentProvider {
             PAGE_HAJJ_HOME ->
                 HajjHomeFragment.newInstance()
 
-            PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
+           // PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
+            PAGE_SUBSCRIPTION_OPTION_LIST -> SubscriptionOptionListFragment.newInstance()
+            PAGE_SUBSCRIPTION_NAGAD -> NagadSubscriptionFragment.newInstance(
+                isFav
+            )
 
             PAGE_TRACKER -> when (Util.checkSub()) {
                 true -> {
@@ -233,7 +190,7 @@ object FragmentProvider {
                 }
 
                 else -> {
-                    SubscriptionFragment.newInstance()
+                    SubscriptionOptionListFragment.newInstance()
                 }
             }
 
@@ -253,7 +210,7 @@ object FragmentProvider {
                 }
 
                 else -> {
-                    SubscriptionFragment.newInstance()
+                    SubscriptionOptionListFragment.newInstance()
                 }
             }
 

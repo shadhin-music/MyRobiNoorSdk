@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.activity
 
-import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -55,6 +54,7 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
         mPage = intent.getStringExtra(PAGE_NAME)!!
 
 
+
         mFrament = when (mPage) {
             PAGE_DUA -> FragmentProvider.getFragmentByName(
                 name = mPage,
@@ -78,13 +78,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
                     currentPageNo = currentPage,
                     isFav = isFav
                 )
-
-
-//                putExtra(SELECTED_INDEX,selectedIndex)
-//                putExtra(LITERATURE_LIST_CALL_BACK,literatureListCallBack)
-//                putExtra(CURRENT_PAGE,currentPageNo)
-//                putExtra(IS_FAV,isFav)
-
 
             }
 
@@ -144,20 +137,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
                 )
             }
 
-            PAGE_TASBIH -> {
-                val index = intent.getIntExtra(SELECTED_INDEX, 0)
-                val currentPage = intent.getIntExtra(CURRENT_PAGE, 0)
-                val count = intent.getIntExtra(ITEM_COUNT, 0)
-                val times = intent.getIntExtra(ITEM_TIMES, 33)
-                FragmentProvider.getFragmentByName(
-                    name = PAGE_TASBIH,
-                    detailsActivityCallBack = this,
-                    selectedLiteratureIndex = index,
-                    currentPageNo = currentPage,
-                    itemCount = count,
-                    times = times
-                )
-            }
             PAGE_SUBSCRIPTION_NAGAD -> {
                 val isFav = intent.getBooleanExtra(IS_FAV, false)
                 FragmentProvider.getFragmentByName(

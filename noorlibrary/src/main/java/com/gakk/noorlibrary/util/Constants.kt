@@ -67,8 +67,7 @@ const val PAGE_HAJJ_HOME = "Hajj"
 const val PAGE_TASBIH = "Tasbih"
 const val PAGE_SUBSCRIPTION = "subscription"
 const val PAGE_SUBSCRIPTION_NAGAD = "subscriptionNagad"
-const val PAGE_SUBSCRIPTION_WITH_G_PAY = "subscription with g pay"
-const val PAGE_AZAN = "Azan"
+const val PAGE_SUBSCRIPTION_OPTION_LIST = "Subscription Option List"
 const val PAGE_ISLAMIC_CALENDER = "Islamic Calendar"
 const val PAGE_TRACKER = "Tracker"
 const val PAGE_QURBANI_HOME = "Eid Ul Adha"
@@ -181,6 +180,7 @@ const val SUBSCRIPTION_ID_MONTHLY_ROBI = "292"
 const val HAJJ_PREREG_SERVICE_ID = "2283"
 const val DONATION_SERVICE_ID = "2279"
 
+
 const val PRODUCT_ID_DAILY = "0300410704"
 const val PRODUCT_ID_FIFTEEN_DAYS = "0300410706"
 const val PRODUCT_ID_SEVEN_DAYS_ROBI = "0300418810"
@@ -188,7 +188,8 @@ const val PRODUCT_ID_THIRTY_DAYS_ROBI = "0300418812"
 
 const val UMRAH_SERVICE_ID = "2284"
 const val SSL_SERVICE_ID_MONTHLY = "2280"
-
+const val SSL_SERVICE_ID_HALF_YEARLY = "2281"
+const val SSL_SERVICE_ID_YEARLY = "2282"
 
 const val SUB_END_PART_ROBI = "&backurl=http://noorsawab.com/"
 const val PLAN_NAME_WEEKLY = "Weekly"
@@ -238,6 +239,7 @@ const val PAYMENT_URL_TAG = "PaymentUrl"
 
 
 const val SSL_PUSER = "s@l!sg\$\$k"
+const val SSL_CUSTOMER_NAME = "Noor"
 const val SSL_CUSTOMER_EMAIL = "support@noorsawab.com"
 const val STATUS_PENDING = "Pending"
 const val TRACKING_NO_TAG = "TrackingNo"

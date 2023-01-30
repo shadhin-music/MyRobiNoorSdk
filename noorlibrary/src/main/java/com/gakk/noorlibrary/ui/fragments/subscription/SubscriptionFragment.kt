@@ -258,7 +258,7 @@ internal class SubscriptionFragment : Fragment() {
 
             btnSubscribeDaily.handleClickEvent {
 
-                if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
+                if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
                     mCallback?.showToastMessage("You are Already subscribed")
                 } else {
                     val unSubDialogTxt: String
@@ -292,7 +292,7 @@ internal class SubscriptionFragment : Fragment() {
             }
             btnSubscribeFiftten.handleClickEvent {
 
-                if (AppPreference.subMonthlyNagad || AppPreference.subHalfYearlyNagad || AppPreference.subYearlyNagad || AppPreference.subMonthlyGpay || AppPreference.subYearly) {
+                if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
                     mCallback?.showToastMessage("You are Already subscribed")
                 } else {
                     val unSubDialogTxt: String
