@@ -48,7 +48,10 @@ import com.gakk.noorlibrary.ui.fragments.LiteratureHomeFragment
 import com.gakk.noorlibrary.ui.fragments.tabs.HomeFragment
 import com.gakk.noorlibrary.ui.fragments.tabs.MoreFragment
 import com.gakk.noorlibrary.util.*
-import com.gakk.noorlibrary.viewModel.*
+import com.gakk.noorlibrary.viewModel.HomeViewModel
+import com.gakk.noorlibrary.viewModel.LiteratureViewModel
+import com.gakk.noorlibrary.viewModel.QuranViewModel
+import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
@@ -219,7 +222,80 @@ internal class MainActivity : BaseActivity(), MainCallback {
                     }
                 }
             }
+            modelSubscription.sslSubInfoMonthly.observe(this@MainActivity) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("sslSubInfoMonthly", "LOADING")
+                    }
 
+                    Status.SUCCESS -> {
+                        Log.e("sslSubInfoMonthly", "SUCCESS")
+                        when (it.data?.response) {
+                            "1AC" -> {
+                                AppPreference.subMonthlySsl = true
+                            }
+
+                            else -> {
+                                AppPreference.subMonthlySsl = false
+                            }
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        Log.e("sslSubInfoMonthly", "ERROR")
+                    }
+                }
+            }
+
+            modelSubscription.sslSubInfoHalfYearly.observe(this@MainActivity) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("sslSubInfoHalfYearly", "LOADING")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("sslSubInfoHalfYearly", "SUCCESS")
+                        when (it.data?.response) {
+                            "1AC" -> {
+                                AppPreference.subHalfYearlySsl = true
+                            }
+
+                            else -> {
+                                AppPreference.subHalfYearlySsl = false
+                            }
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        Log.e("sslSubInfoHalfYearly", "ERROR")
+                    }
+                }
+            }
+
+            modelSubscription.sslSubInfoYearly.observe(this@MainActivity) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("sslSubInfoYearly", "LOADING")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("sslSubInfoYearly", "SUCCESS")
+                        when (it.data?.response) {
+                            "1AC" -> {
+                                AppPreference.subYearlySsl = true
+                            }
+
+                            else -> {
+                                AppPreference.subYearlySsl = false
+                            }
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        Log.e("sslSubInfoYearly", "ERROR")
+                    }
+                }
+            }
             modelLiterature.literatureListData.observe(this@MainActivity) {
                 when (it.status) {
                     Status.LOADING -> {
@@ -271,7 +347,21 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         AppPreference.userNumber!!,
                         SUBSCRIPTION_ID_FIFTEENDAYS
                     )
+
+                    modelSubscription.checkSslSubStatusMonthly(
+                        AppPreference.userNumber!!,
+                        SSL_SERVICE_ID_MONTHLY
+                    )
+                    modelSubscription.checkSslSubStatusHalfYearly(
+                        AppPreference.userNumber!!,
+                        SSL_SERVICE_ID_HALF_YEARLY
+                    )
+                    modelSubscription.checkSslSubStatusYearly(
+                        AppPreference.userNumber!!,
+                        SSL_SERVICE_ID_YEARLY
+                    )
                 }
+
             }
         }
 
@@ -318,6 +408,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
     override fun onDestroy() {
 
         super.onDestroy()
+        AppPreference.clearCachedUser()
     }
 
     override fun onNewIntent(intent: Intent?) {

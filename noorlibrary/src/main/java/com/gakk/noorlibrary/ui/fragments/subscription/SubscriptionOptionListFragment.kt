@@ -58,7 +58,7 @@ class SubscriptionOptionListFragment : Fragment() {
         cardMfs.handleClickEvent {
 
             val fragment = FragmentProvider.getFragmentByName(
-                PAGE_SUBSCRIPTION_NAGAD, detailsActivityCallBack = mCallback,
+                PAGE_SUBSCRIPTION_SSL, detailsActivityCallBack = mCallback,
                 isFav = false
             )
             mCallback?.addFragmentToStackAndShow(fragment!!)

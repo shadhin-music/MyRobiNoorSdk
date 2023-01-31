@@ -210,16 +210,9 @@ object AppPreference {
             it.remove(PREF_USER)
             it.remove(ISSUBDAILY)
             it.remove(ISSUBFIFTEENDAYS)
-            it.remove(ISSUBYEARLY)
-            it.remove(ISSUBIQRA)
-            it.remove(ISSUBMONTHLYNAGAD)
-            it.remove(ISSUBHALFYEARLYNAGAD)
-            it.remove(ISSUBYEARLYNAGAD)
             it.remove(ISSUBMONTHLYSSL)
             it.remove(ISSUBHALFYEARLYSSL)
             it.remove(ISSUBYEARLYSSL)
-            it.remove(ISFROMBD)
-            it.remove(ISSUBQURAN)
         }
     }
 
@@ -274,8 +267,9 @@ object AppPreference {
         set(value) = preferences.edit {
             it.putBoolean(IS_SUB_DAILY.first, value)
         }
+
     var subFifteenDays: Boolean
-        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
+        get() = preferences.getBoolean(
             IS_SUB_FIFTEENDAYS.first,
             IS_SUB_FIFTEENDAYS.second
         )
@@ -302,7 +296,7 @@ object AppPreference {
         }
 
     var subMonthlySsl: Boolean
-        get() = preferences.getBoolean(
+        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
             IS_SUB_MONTHLY_SSL.first,
             IS_SUB_MONTHLY_SSL.second
         )

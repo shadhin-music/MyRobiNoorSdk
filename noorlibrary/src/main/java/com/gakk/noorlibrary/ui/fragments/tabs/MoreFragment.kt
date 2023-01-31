@@ -76,9 +76,26 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             dialog.dismiss()
 
             if (isNetworkConnected(requireContext())) {
-                Intent(context, DetailsActivity::class.java).apply {
+                /*Intent(context, DetailsActivity::class.java).apply {
                     this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                     startActivity(this)
+                }*/
+                if (AppPreference.subDaily || AppPreference.subFifteenDays) {
+                    Intent(context, DetailsActivity::class.java).apply {
+                        this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)
+                        startActivity(this)
+                    }
+                }  else if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
+                    Intent(context, DetailsActivity::class.java).apply {
+                        this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_SSL)
+                        this.putExtra(IS_FAV, false)
+                        startActivity(this)
+                    }
+                }  else {
+                    Intent(context, DetailsActivity::class.java).apply {
+                        this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
+                        startActivity(this)
+                    }
                 }
 
             } else {

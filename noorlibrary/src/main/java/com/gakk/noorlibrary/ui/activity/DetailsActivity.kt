@@ -137,14 +137,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
                 )
             }
 
-            PAGE_SUBSCRIPTION_NAGAD -> {
-                val isFav = intent.getBooleanExtra(IS_FAV, false)
-                FragmentProvider.getFragmentByName(
-                    name = PAGE_SUBSCRIPTION_NAGAD,
-                    detailsActivityCallBack = this,
-                    isFav = isFav
-                )
-            }
 
             PAGE_UMRAH_HAJJ -> {
 

@@ -19,7 +19,7 @@ import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
 import com.gakk.noorlibrary.ui.fragments.onlinehut.OnlintHutHomeFragment
 import com.gakk.noorlibrary.ui.fragments.quranSchool.QuranSchoolHomeFragment
 import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
-import com.gakk.noorlibrary.ui.fragments.subscription.NagadSubscriptionFragment
+import com.gakk.noorlibrary.ui.fragments.subscription.SslSubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionOptionListFragment
 import com.gakk.noorlibrary.ui.fragments.tracker.TrackerTabFragment
@@ -180,9 +180,7 @@ object FragmentProvider {
 
             PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
             PAGE_SUBSCRIPTION_OPTION_LIST -> SubscriptionOptionListFragment.newInstance()
-            PAGE_SUBSCRIPTION_NAGAD -> NagadSubscriptionFragment.newInstance(
-                isFav
-            )
+            PAGE_SUBSCRIPTION_SSL -> SslSubscriptionFragment.newInstance()
 
             PAGE_TRACKER -> when (Util.checkSub()) {
                 true -> {

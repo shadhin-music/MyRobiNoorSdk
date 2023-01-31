@@ -30,14 +30,12 @@ import kotlinx.coroutines.launch
  * @DATE: 4/1/2021, Thu
  */
 
-private const val ARG_IS_NAGAD = "isNagad"
 
-class NagadSubscriptionFragment : Fragment() {
+internal class SslSubscriptionFragment : Fragment() {
 
     private var mCallback: DetailsCallBack? = null
     private lateinit var viewModel: SubscriptionViewModel
     private lateinit var repository: RestRepository
-    private var isNagad: Boolean? = null
     private lateinit var btnSubscribeMonthly: AppCompatButton
     private lateinit var btnSubscribeHalfYearly: AppCompatButton
     private lateinit var btnSubscribeYearly: AppCompatButton
@@ -55,20 +53,12 @@ class NagadSubscriptionFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(isNagad: Boolean) =
-            NagadSubscriptionFragment().apply {
-                arguments = Bundle().apply {
-                    putBoolean(ARG_IS_NAGAD, isNagad)
-                }
-            }
+        fun newInstance() =
+            SslSubscriptionFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            isNagad = it.getBoolean(ARG_IS_NAGAD, false)
-        }
 
         mCallback = requireActivity() as DetailsCallBack
     }
@@ -115,7 +105,7 @@ class NagadSubscriptionFragment : Fragment() {
             }
             job.join()
             viewModel = ViewModelProvider(
-                this@NagadSubscriptionFragment,
+                this@SslSubscriptionFragment,
                 SubscriptionViewModel.FACTORY(repository)
             ).get(SubscriptionViewModel::class.java)
 

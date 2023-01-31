@@ -20,7 +20,6 @@ import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Resource
-import com.google.android.exoplayer2.ExoPlayer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.UnsupportedEncodingException
@@ -72,6 +71,7 @@ object Util {
     fun checkSub(): Boolean {
 
         if (AppPreference.subDaily || AppPreference.subFifteenDays
+            || AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl
         ) {
             return true
         }
