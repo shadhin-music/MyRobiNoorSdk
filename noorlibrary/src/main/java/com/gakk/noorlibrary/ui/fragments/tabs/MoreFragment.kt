@@ -3,6 +3,7 @@ package com.gakk.noorlibrary.ui.fragments.tabs
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +67,8 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        Log.e("subchk", "${Util.checkSub()}")
         imgDrag.handleClickEvent {
             dialog.dismiss()
         }
@@ -76,10 +79,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             dialog.dismiss()
 
             if (isNetworkConnected(requireContext())) {
-                /*Intent(context, DetailsActivity::class.java).apply {
-                    this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
-                    startActivity(this)
-                }*/
+
                 if (AppPreference.subDaily || AppPreference.subFifteenDays) {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)

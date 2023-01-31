@@ -188,7 +188,8 @@ internal class MainActivity : BaseActivity(), MainCallback {
                             "1AK" -> {
                                 AppPreference.subDaily = true
                             }
-                            "0AK" -> {
+
+                            else -> {
                                 AppPreference.subDaily = false
                             }
                         }
@@ -212,9 +213,10 @@ internal class MainActivity : BaseActivity(), MainCallback {
                                 AppPreference.subFifteenDays = true
 
                             }
-                            "0AK" -> {
+                            else -> {
                                 AppPreference.subFifteenDays = false
                             }
+
                         }
                     }
                     Status.ERROR -> {
@@ -407,7 +409,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
     override fun onDestroy() {
         super.onDestroy()
-        AppPreference.clearCachedUser()
+       // AppPreference.clearCachedUser()
     }
 
     override fun onNewIntent(intent: Intent?) {

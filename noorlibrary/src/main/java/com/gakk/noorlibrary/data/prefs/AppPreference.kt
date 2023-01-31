@@ -42,17 +42,10 @@ object AppPreference {
 
     private const val ISSUBDAILY = "is_sub_daily"
     private const val ISSUBFIFTEENDAYS = "is_sub_fifteendays"
-    private const val ISSUBYEARLY = "is_sub_yearly"
     private const val ISSUBWEEKLYROBI = "is_sub_weekly_robi"
     private const val ISSUBMONTHLYROBI = "is_sub_monthly_robi"
     private val IS_SUB_WEEKLY_ROBI = Pair(ISSUBWEEKLYROBI, false)
     private val IS_SUB_MONTHLY_ROBI = Pair(ISSUBMONTHLYROBI, false)
-
-    private const val ISSUBIQRA = "is_sub_iqra"
-    private const val ISSUBQURAN = "is_sub_quran"
-    private const val ISSUBMONTHLYNAGAD = "is_sub_monthly_nagad"
-    private const val ISSUBHALFYEARLYNAGAD = "is_sub_half_yearly_nagad"
-    private const val ISSUBYEARLYNAGAD = "is_sub_yearly_nagad"
 
     private const val ISSUBMONTHLYSSL = "is_sub_monthly_ssl"
     private const val ISSUBHALFYEARLYSSL = "is_sub_half_yearly_ssl"
@@ -60,7 +53,6 @@ object AppPreference {
     private val IS_SUB_MONTHLY_SSL = Pair(ISSUBMONTHLYSSL, false)
     private val IS_SUB_HALF_YEARLY_SSL = Pair(ISSUBHALFYEARLYSSL, false)
     private val IS_SUB_YEARLY_SSL = Pair(ISSUBYEARLYSSL, false)
-    private const val ISFROMBD = "is_from_bd"
 
     private const val MODE = Context.MODE_PRIVATE
     private lateinit var preferences: SharedPreferences
@@ -71,7 +63,6 @@ object AppPreference {
 
     private val IS_SUB_DAILY = Pair(ISSUBDAILY, false)
     private val IS_SUB_FIFTEENDAYS = Pair(ISSUBFIFTEENDAYS, false)
-    private val IS_SUB_YEARLY = Pair(ISSUBYEARLY, false)
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREF_FILE_NAME, MODE)
