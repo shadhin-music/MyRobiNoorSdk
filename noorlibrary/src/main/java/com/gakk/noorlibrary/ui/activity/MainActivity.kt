@@ -406,7 +406,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
 
     override fun onDestroy() {
-
         super.onDestroy()
         AppPreference.clearCachedUser()
     }
