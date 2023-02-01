@@ -51,10 +51,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.activity.KafelaPlayerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ui.fragments.hajj.hajjtracker.HajjTrackerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 

@@ -118,7 +118,6 @@ class FragmentDestinationMap {
                 context.resources.getString(R.string.cat_tasbih) -> PAGE_TASBIH
                 context.resources.getString(R.string.cat_hajj) -> PAGE_HAJJ_HOME
                 context.resources.getString(R.string.cat_islamic_calender) -> PAGE_ISLAMIC_CALENDER
-                context.resources.getString(R.string.cat_tracker) -> PAGE_TRACKER
                 context.resources.getString(R.string.cat_qurbani) -> PAGE_QURBANI_HOME
                 context.resources.getString(R.string.cat_instructive_video) -> PAGE_CAT_INSTRUCTIVE_VIDEO
                 context.resources.getString(R.string.txt_title_inspiration) -> PAGE_CAT_INSLAMIC_INSPIRATION
@@ -135,7 +134,6 @@ class FragmentDestinationMap {
                 context.resources.getString(R.string.cat_khatam_quran) -> PAGE_KHATAM_QURAN
                 context.resources.getString(R.string.cat_eid_jamat) -> PAGE_EID_JAMAT
                 context.resources.getString(R.string.cat_live_qa) -> PAGE_CAT_LIVE_QA
-                "Online Hut" -> ONLINE_HUT_HOME
                 context.resources.getString(R.string.cat_umrah_hajj) -> PAGE_UMRAH_HAJJ
                 else -> null
             }

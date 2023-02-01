@@ -41,12 +41,10 @@ internal class QurbaniHomeFragment : Fragment() {
 
 
     //view
-    private lateinit var ivHeader : AppCompatImageView
-    private lateinit var clHut : ConstraintLayout
-    private lateinit var progressLayout : ConstraintLayout
-    private lateinit var rvLiteratureList : RecyclerView
-
-
+    private lateinit var ivHeader: AppCompatImageView
+    private lateinit var clHut: ConstraintLayout
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var rvLiteratureList: RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,10 +77,8 @@ internal class QurbaniHomeFragment : Fragment() {
         return view
     }
 
-    private fun initView(view:View)
-    {
+    private fun initView(view: View) {
         ivHeader = view.findViewById(R.id.ivHeader)
-        clHut = view.findViewById(R.id.clHut)
         progressLayout = view.findViewById(R.id.progressLayout)
         rvLiteratureList = view.findViewById(R.id.rvLiteratureList)
     }
@@ -94,19 +90,7 @@ internal class QurbaniHomeFragment : Fragment() {
         updateToolbarForThisFragment()
 
         val item = ImageFromOnline("qurbani_header.png")
-        setImageFromUrlNoProgress(ivHeader,item.fullImageUrl)
-
-        if (AppPreference.language.equals(LAN_BANGLA)) {
-            clHut.visibility = View.VISIBLE
-
-            clHut.handleClickEvent {
-                val fragment = FragmentProvider.getFragmentByName(
-                    ONLINE_HUT_HOME,
-                    detailsActivityCallBack = mCallback
-                )
-                mCallback?.addFragmentToStackAndShow(fragment!!)
-            }
-        }
+        setImageFromUrlNoProgress(ivHeader, item.fullImageUrl)
 
         lifecycleScope.launch {
             val job = launch {
@@ -175,7 +159,6 @@ internal class QurbaniHomeFragment : Fragment() {
                     mAdapter.listOfItems = literatureList
                     mAdapter.expressionViewHolderBinding = { eachItem, positionItem, view ->
 
-                        // val view = viewBinding as LayoutLiteratureBinding
                         view.findViewById<TextView>(R.id.tvTitle).text = eachItem.title
                         view.setOnClickListener {
                             val qurbaniDiscussTitle = eachItem.title?.trim()?.replace(" ", "")
@@ -212,7 +195,7 @@ internal class QurbaniHomeFragment : Fragment() {
 
                     mAdapter.expressionOnCreateViewHolder = { viewGroup ->
                         LayoutInflater.from(viewGroup.context)
-                            .inflate(R.layout.layout_literature,viewGroup,false)
+                            .inflate(R.layout.layout_literature, viewGroup, false)
                     }
 
                     rvLiteratureList.adapter = mAdapter

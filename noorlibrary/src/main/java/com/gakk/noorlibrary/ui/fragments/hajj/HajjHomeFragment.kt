@@ -24,13 +24,11 @@ import com.bumptech.glide.request.target.Target
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.subcategory.Data
 import com.gakk.noorlibrary.ui.activity.DetailsActivity
-import com.gakk.noorlibrary.ui.activity.KafelaPlayerActivity
 import com.gakk.noorlibrary.ui.adapter.HajjCategoryAdapter
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationFragment
 import com.gakk.noorlibrary.util.*
@@ -47,7 +45,6 @@ internal class HajjHomeFragment : Fragment() {
     private lateinit var header_image: ImageView
     private lateinit var progressBar: ProgressBar
     private lateinit var hajjPreRegistration: ConstraintLayout
-    private lateinit var virtualKafela: ConstraintLayout
     private lateinit var noInternetLayout: ConstraintLayout
     private lateinit var progressLayout: ConstraintLayout
     private lateinit var sub_cat_rv: RecyclerView
@@ -78,7 +75,6 @@ internal class HajjHomeFragment : Fragment() {
         header_image = view.findViewById(R.id.header_image)
         progressBar = view.findViewById(R.id.progressBar)
         hajjPreRegistration = view.findViewById(R.id.hajjPreRegistration)
-        virtualKafela = view.findViewById(R.id.virtualKafela)
         noInternetLayout = view.findViewById(R.id.noInternetLayout)
         progressLayout = view.findViewById(R.id.progressLayout)
         sub_cat_rv = view.findViewById(R.id.sub_cat_rv)
@@ -90,10 +86,6 @@ internal class HajjHomeFragment : Fragment() {
 
         updateToolbarForThisFragment()
 
-        if (AppPreference.language.equals(LAN_BANGLA)) {
-            hajjPreRegistration.visibility = View.VISIBLE
-            virtualKafela.visibility = View.VISIBLE
-        }
 
         val item = ImageFromOnline("hajj_page_top_image.png")
 
@@ -153,19 +145,6 @@ internal class HajjHomeFragment : Fragment() {
             )
         }
 
-        virtualKafela.handleClickEvent {
-            if (isNetworkConnected(requireContext())) {
-                requireContext().startActivity(
-                    Intent(
-                        requireContext(),
-                        KafelaPlayerActivity::class.java
-                    )
-                )
-            } else {
-                mCallback?.showToastMessage(getString(R.string.txt_check_internet))
-            }
-
-        }
     }
 
 
@@ -200,14 +179,16 @@ internal class HajjHomeFragment : Fragment() {
     }
 
     private fun setUpRV(list: MutableList<Data>) {
+        val currencyCat = requireContext().getString(R.string.hajj_currency_cateogry_id)
+        val sortedList = list.filterNot { it.id.equals(currencyCat) }
         sub_cat_rv.apply {
             adapter = HajjCategoryAdapter().apply {
-                submitList(list)
+                submitList(sortedList)
                 setOnItemClickListener {
                     Log.d("itemClicked", "setUpRV: " + it.id)
 
                     val mapCat = requireContext().getString(R.string.hajj_map_cateogry_id)
-                    val currencyCat = requireContext().getString(R.string.hajj_currency_cateogry_id)
+
                     val hajjGuideCat =
                         requireContext().getString(R.string.hajj_guide_sub_category_id)
                     it.category?.let { catID ->
@@ -223,16 +204,11 @@ internal class HajjHomeFragment : Fragment() {
                                     else -> {
                                         requireContext().startActivity(
                                             Intent(requireContext(), DetailsActivity::class.java)
-                                                .putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)
+                                                .putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                                         )
                                     }
                                 }
 
-                            }
-                            currencyCat -> {
-                                mCallback?.addFragmentToStackAndShow(
-                                    CurrencyConverterFragment.newInstance()
-                                )
                             }
 
                             hajjGuideCat -> {
@@ -251,7 +227,7 @@ internal class HajjHomeFragment : Fragment() {
                                 } else {
                                     requireContext().startActivity(
                                         Intent(requireContext(), DetailsActivity::class.java)
-                                            .putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)
+                                            .putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                                     )
                                 }
                             }

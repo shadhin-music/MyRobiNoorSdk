@@ -183,7 +183,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         Log.d("SubMain", "loading")
                     }
                     Status.SUCCESS -> {
-                        Log.d("SubMain", "Weekly" + it.data)
+                        Log.d("SubMain", "dailySubInfoRobi" + it.data)
                         when (it.data) {
                             "1AK" -> {
                                 AppPreference.subDaily = true
@@ -207,7 +207,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         Log.d("Sub", "loading")
                     }
                     Status.SUCCESS -> {
-                        Log.e("Subinfo", "Monthly" + it.data)
+                        Log.e("Subinfo", "fifteenSubInfoRobi" + it.data)
                         when (it.data) {
                             "1AK" -> {
                                 AppPreference.subFifteenDays = true

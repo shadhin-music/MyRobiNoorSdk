@@ -128,78 +128,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/virtualKafela"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hajjPreRegistration"
-        android:background="@color/bg"
-        android:paddingStart="@dimen/margin_20"
-        android:paddingTop="@dimen/small_spacing"
-        android:paddingEnd="@dimen/margin_20"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/small_spacing"
-            app:cardElevation="0dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.gakk.noorlibrary.util.CircleImageView
-                    android:id="@+id/imgKafela"
-                    android:layout_width="@dimen/size_24"
-                    android:layout_height="@dimen/size_24"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:layout_marginBottom="@dimen/standard_margin"
-                    android:background="@null"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic__hajj_pre_reg"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvKafela"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:layout_marginTop="@dimen/small_spacing"
-                    android:layout_marginEnd="@dimen/standard_margin"
-                    android:layout_marginBottom="@dimen/small_spacing"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="ভার্চুয়াল কাফেলা"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="@color/txt_color_black"
-                    android:textFontWeight="400"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imgKafela"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sub_cat_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/virtualKafela"
+        android:layout_below="@+id/hajjPreRegistration"
         android:clipToPadding="false"
         android:paddingStart="@dimen/standard_margin"
         android:paddingTop="@dimen/small_spacing"

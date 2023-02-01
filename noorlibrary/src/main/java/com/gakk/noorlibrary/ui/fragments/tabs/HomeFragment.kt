@@ -192,9 +192,11 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                             homeList =
                                 it.data.data as MutableList<com.gakk.noorlibrary.model.home.Data>
 
+                            val sortedList = homeList.filterNot { it.about.equals("Virtual Kafela") }
+
 
                             adapter = HomeFragmentAdapter(
-                                homeList,
+                                sortedList as MutableList<com.gakk.noorlibrary.model.home.Data>,
 
                                 mCallback,
                                 this@HomeFragment,

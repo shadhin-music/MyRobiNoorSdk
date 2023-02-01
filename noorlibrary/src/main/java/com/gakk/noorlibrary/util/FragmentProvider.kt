@@ -13,16 +13,13 @@ import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.HajjGuideFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjpreRegistrationDetailsFragment
 import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
-import com.gakk.noorlibrary.ui.fragments.inspiration.InspirationDetailsFragment
 import com.gakk.noorlibrary.ui.fragments.instructiveVideo.InstructiveVideoFragment
 import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
-import com.gakk.noorlibrary.ui.fragments.onlinehut.OnlintHutHomeFragment
 import com.gakk.noorlibrary.ui.fragments.quranSchool.QuranSchoolHomeFragment
 import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SslSubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionOptionListFragment
-import com.gakk.noorlibrary.ui.fragments.tracker.TrackerTabFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.ZakatCalculatorFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.*
 import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
@@ -58,9 +55,6 @@ object FragmentProvider {
             PAGE_QURAN_HOME -> QuranHomeFragment.newInstance()
             PAGE_SURAH_DETAILS -> SurahDetailsFragment.newInstance(
                 id!!, detailsActivityCallBack!!, surahList
-            )
-            PAGE_CAT_INSLAMIC_INSPIRATION -> InspirationDetailsFragment.newInstance(
-                id!!
             )
 
             PAGE_NEAREST_MOSQUE -> NearestMosqueFragment.newInstance(
@@ -182,16 +176,6 @@ object FragmentProvider {
             PAGE_SUBSCRIPTION_OPTION_LIST -> SubscriptionOptionListFragment.newInstance()
             PAGE_SUBSCRIPTION_SSL -> SslSubscriptionFragment.newInstance()
 
-            PAGE_TRACKER -> when (Util.checkSub()) {
-                true -> {
-                    TrackerTabFragment.newInstance()
-                }
-
-                else -> {
-                    SubscriptionOptionListFragment.newInstance()
-                }
-            }
-
             PAGE_QURBANI_HOME ->
                 QurbaniHomeFragment.newInstance()
 
@@ -241,14 +225,11 @@ object FragmentProvider {
 
             PAGE_IJTEMA -> BishwaIjtemaFragment.newInstance()
 
-            ONLINE_HUT_HOME -> OnlintHutHomeFragment.newInstance()
-
             PAGE_HAJJ_GUIDE -> HajjGuideFragment.newInstance()
 
             PAGE_HAJJ_PREREGISTRATION -> HajjpreRegistrationDetailsFragment.newInstance()
 
             PAGE_UMRAH_HAJJ -> UmrahHajjFragment.newInstance()
-
 
             else -> null
         }

@@ -63,6 +63,8 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
     private lateinit var rvVideoList: RecyclerView
     private lateinit var videoView: PlayerView
     private lateinit var layoutParent: ConstraintLayout
+    private lateinit var tvTitle: AppCompatTextView
+    private lateinit var tvOtherInfo: AppCompatTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,9 +75,12 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
         title = toolBar.findViewById(R.id.title)
         btnBack = toolBar.findViewById(R.id.btnBack)
 
+
         rvVideoList = findViewById(R.id.rvVideoList)
         videoView = findViewById(R.id.videoView)
         layoutParent = findViewById(R.id.layoutParent)
+        tvTitle = findViewById(R.id.tvTitle)
+        tvOtherInfo = findViewById(R.id.tvOtherInfo)
 
         setStatusColor(R.color.bg)
         setStatusbarTextDark()
@@ -282,7 +287,9 @@ internal class VideoPlayerHomeActivity : BaseActivity(), VideoDataCallback {
     }
 
     override fun setData(data: Data) {
-        val  video = data
+        val video = data
+        tvTitle.text = video.contenTtitle
+        tvOtherInfo.text = video.miniSummary
         tvVideoTitle.setText(data.contenTtitle)
 
         player?.seekTo(currentWindow, playbackPosition)

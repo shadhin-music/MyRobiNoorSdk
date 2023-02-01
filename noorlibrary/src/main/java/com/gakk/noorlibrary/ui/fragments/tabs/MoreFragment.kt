@@ -218,13 +218,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             )
         )
 
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_tracker,
-                getString(R.string.cat_tracker)
-            )
-        )
-
         val txtMiladunnobi: String
         txtMiladunnobi = getString(R.string.cat_eid_e_miladunnobi_robi)
 
