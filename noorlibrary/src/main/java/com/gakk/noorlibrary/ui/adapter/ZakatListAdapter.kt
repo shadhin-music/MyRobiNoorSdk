@@ -7,22 +7,21 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
-import com.gakk.noorlibrary.model.zakat.ZakatDataModel
-import com.gakk.noorlibrary.ui.fragments.zakat.DeleteOperation
+import com.gakk.noorlibrary.model.zakat.ZakatModel
 import com.gakk.noorlibrary.util.NoDataLayout
+import com.gakk.noorlibrary.util.formatDate
 import com.gakk.noorlibrary.util.handleClickEvent
 
 const val ZAKAT_CALC_VIEW = 1
 
-class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteOperation) :
+class ZakatListAdapter(
+    zakatList: List<ZakatModel>,
+    private val onItemClickListener: OnItemClickListener?,
+) :
     RecyclerView.Adapter<ZakatListAdapter.ViewHolder>() {
 
-    val mDeleteOperation: DeleteOperation
     var mZakatList = zakatList
 
-    init {
-        mDeleteOperation = deleteOperation
-    }
 
     inner class ViewHolder(layoutId: Int, layoutView: View) :
         RecyclerView.ViewHolder(layoutView) {
@@ -67,13 +66,20 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
                 val tvContentJakat = holder.view.findViewById<AppCompatTextView>(R.id.tvContentJakat)
 
                 val data = mZakatList[position]
-                tvDate.text = data.date
-                tvContent.text = data.asset
-                tvContentJakat.text = data.zakat
+
+                val totalAsset =
+                    data.cash!! + data.cashInBankaccount!! + data.valueOfGold!! + data.valueOfSilver!! + data.stockMarketInvestment!! + data.otherInvestments!! + data.houseRent!! + data.property!! + data.businessPayment!! + data.products!! + data.pension!! + data.familyLoansAndOthers!! + data.otherCapital!! + data.agriculture!!
+
+                val totalLiabilities =
+                    data.creditCardPayment!! + data.carPayment!! + data.businessPayment!! + data.familyLoan!! + data.otherLoans!!
+
+
+                tvDate.text = data.createdOn?.let { formatDate(it) }
+                tvContent.text = totalAsset.toString()
+                tvContentJakat.text = totalLiabilities.toString()
 
                 ivDelete.handleClickEvent {
-
-                    mDeleteOperation.deleteData(mZakatList[position])
+                    onItemClickListener?.onItemClick(position, mZakatList)
                 }
             }
 
@@ -85,10 +91,7 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
     }
 
     override fun getItemCount(): Int {
-        var size = mZakatList.size
-        if (size == 0)
-            return 1
-        return size
+        return mZakatList.size
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -98,8 +101,15 @@ class ZakatListAdapter(zakatList: List<ZakatDataModel>, deleteOperation: DeleteO
         }
     }
 
-    fun updateZakatList(list: List<ZakatDataModel>) {
+    fun updateZakatList(list: List<ZakatModel>) {
         mZakatList = listOf()
         mZakatList = list
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(
+            postion: Int,
+            zakat: List<ZakatModel>
+        )
     }
 }

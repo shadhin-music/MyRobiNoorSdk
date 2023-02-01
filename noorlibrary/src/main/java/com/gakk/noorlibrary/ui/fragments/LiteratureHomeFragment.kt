@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.model.zakat.ZakatDataModel
 import com.gakk.noorlibrary.ui.adapter.LiteratureListFragmentPagerAdapter
-import com.gakk.noorlibrary.ui.adapter.ZakatListAdapter
 import com.gakk.noorlibrary.util.LiteratureType
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
 import com.gakk.noorlibrary.views.CustomTabLayout
@@ -91,8 +89,6 @@ internal class LiteratureHomeFragment : Fragment() {
             literatureType = mLiteratureType!!
         )
         tabLayout.setupWithViewPager(pager)
-        ZakatCalculationObserver.attatchViewPager(pager)
-
 
         updateToolbarForThisFragment()
     }
@@ -115,12 +111,6 @@ internal class LiteratureHomeFragment : Fragment() {
 
     }
 
-    override fun onDestroy() {
-        ZakatCalculationObserver.clearResource()
-        super.onDestroy()
-    }
-
-
     companion object {
 
         @JvmStatic
@@ -133,30 +123,4 @@ internal class LiteratureHomeFragment : Fragment() {
     }
 
 
-}
-
-object ZakatCalculationObserver {
-    var viewPager: ViewPager? = null
-    var adapter: ZakatListAdapter? = null
-    fun attatchViewPager(viewPager: ViewPager) {
-        this.viewPager = viewPager
-    }
-
-    fun switchTabAtIndex(index: Int) {
-        viewPager?.currentItem = index
-    }
-
-    fun attatchAdapter(adapter: ZakatListAdapter?) {
-        this.adapter = adapter
-    }
-
-    fun updateZakatList(list: List<ZakatDataModel>) {
-        adapter?.updateZakatList(list)
-        adapter?.notifyDataSetChanged()
-    }
-
-    fun clearResource() {
-        viewPager = null
-        adapter = null
-    }
 }

@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
+import com.gakk.noorlibrary.util.formatDate
 import com.mcc.noor.model.umrah_hajj.UmrahHajjRegData
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -87,17 +88,6 @@ class UmrahPaymentHistoryAdapter(
 
             }
         }
-    }
-
-    private fun formatDate(dateString: String): String? {
-        try {
-            var sd = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-            val d: Date = sd.parse(dateString)
-            sd = SimpleDateFormat("HH:mm aa • dd MMMM ,yyyy")
-            return sd.format(d)
-        } catch (e: ParseException) {
-        }
-        return ""
     }
 
         companion object {

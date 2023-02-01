@@ -257,3 +257,17 @@ fun getBitmapFromView(ctx: Context, view: View): Bitmap? {
     view.draw(canvas)
     return bitmap
 }
+
+
+fun formatDate(dateString: String): String? {
+    try {
+        var sd = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS",
+            AppPreference.language?.let { Locale(it) })
+        val d: Date = sd.parse(dateString)
+        sd = SimpleDateFormat("HH:mm aa • dd MMMM ,yyyy",
+            AppPreference.language?.let { Locale(it) })
+        return sd.format(d)
+    } catch (e: ParseException) {
+    }
+    return ""
+}

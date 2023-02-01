@@ -2,8 +2,6 @@ package com.gakk.noorlibrary.base
 
 import android.app.Application
 import android.content.Context
-import com.gakk.noorlibrary.data.roomdb.RoomRepository
-import com.gakk.noorlibrary.data.roomdb.ZakatRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -15,8 +13,8 @@ class BaseApplication : Application() {
 
     // Using by lazy so the database and the repository are only created when they're needed
     // rather than when the application starts
-    val database by lazy { ZakatRoomDatabase.getDatabase(this) }
-    val repository by lazy { RoomRepository(database.zakatDao()) }
+   // val database by lazy { ZakatRoomDatabase.getDatabase(this) }
+    //val repository by lazy { RoomRepository(database.zakatDao()) }
 
 
     companion object {

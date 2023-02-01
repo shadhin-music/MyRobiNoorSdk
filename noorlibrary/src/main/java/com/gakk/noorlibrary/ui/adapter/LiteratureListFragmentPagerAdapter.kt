@@ -54,6 +54,7 @@ internal class LiteratureListFragmentPagerAdapter(
                 when (mLiteratureType) {
                     LiteratureType.Jakat -> {
                         ZakatListFragment.newInstance()
+
                     }
                     else -> {
                         LiteratureListFragment.newInstance(

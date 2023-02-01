@@ -14,10 +14,14 @@ import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.BaseActivity
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.*
+import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.ui.adapter.DivisionCallbackFunc
@@ -32,7 +36,9 @@ import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.DonationHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.OrganizationDetailsFragment
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.ZakatViewModel
 import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -41,7 +47,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
     private lateinit var mPage: String
     private var mFrament: Fragment? = null
     private lateinit var mFragmentStack: Stack<Fragment>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)

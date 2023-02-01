@@ -36,9 +36,11 @@ import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.activity.DetailsActivity
 import com.gakk.noorlibrary.ui.adapter.LiteratureListAdapter
+import com.gakk.noorlibrary.ui.fragments.zakat.ZakatCalculatorFragment
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.util.RepositoryProvider.Companion.getRepository
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
+import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahDetailsFragment
 import kotlinx.coroutines.launch
 
 private const val ARG_IS_FAV_LIST = "isFav"
@@ -213,10 +215,14 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
             }
 
             layoutNewCalculation.handleClickEvent {
-                Intent(context, DetailsActivity::class.java).apply {
+               /* Intent(context, DetailsActivity::class.java).apply {
                     this.putExtra(PAGE_NAME, PAGE_JAKAT_NEW_CALCULATION)
                     startActivity(this)
-                }
+                }*/
+
+                mDetailsCallBack?.addFragmentToStackAndShow(
+                    ZakatCalculatorFragment.newInstance()
+                )
             }
             var job = launch {
                 repository = getRepository()

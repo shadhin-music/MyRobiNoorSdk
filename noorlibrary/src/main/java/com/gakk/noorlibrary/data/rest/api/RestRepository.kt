@@ -2,7 +2,6 @@ package com.gakk.noorlibrary.data.rest.api
 
 import android.util.ArrayMap
 import android.util.Log
-import androidx.annotation.Keep
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.model.CommonApiResponse
 import com.gakk.noorlibrary.model.UserLocation
@@ -46,8 +45,13 @@ import com.gakk.noorlibrary.model.tracker.ramadan.AllRamadanDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.add.PostRamadanDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.add.RamadanAddModel
 import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
+import com.gakk.noorlibrary.model.zakat.SaveZakatResponse
+import com.gakk.noorlibrary.model.zakat.ZakatDelResponse
+import com.gakk.noorlibrary.model.zakat.ZakatListResponse
+import com.gakk.noorlibrary.model.zakat.ZakatModel
 import com.gakk.noorlibrary.util.*
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.mcc.noor.model.umrah_hajj.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -622,6 +626,33 @@ class RestRepository(
     suspend fun getUmrahHajjPackage(): UmrahHajjModel {
         return contentApiService.getAllUmrahPackage()
     }
+
+    // zakat calculator save data
+
+    suspend fun saveZakatData(
+        payload : ZakatModel
+    ): SaveZakatResponse {
+
+        val gson = Gson()
+        val jsonObj: JsonElement = gson.fromJson(gson.toJson(payload), JsonElement::class.java)
+        jsonObj.asJsonObject.remove("createdOn")
+        jsonObj.asJsonObject.remove("id")
+
+        return contentApiService.saveZakatData(Gson().toJson(jsonObj))
+    }
+
+
+    suspend fun getZakatList(): ZakatListResponse {
+
+        return contentApiService.getZakatList()
+    }
+
+    suspend fun deleteZakat(id:String): ZakatDelResponse {
+
+        return contentApiService.delZakat(id)
+    }
+
+
 
     suspend fun postUmrahHajjPersoanlInfo(data: UmrahHajjPersonalPostModel): UmrahHajjRegResponse {
 
