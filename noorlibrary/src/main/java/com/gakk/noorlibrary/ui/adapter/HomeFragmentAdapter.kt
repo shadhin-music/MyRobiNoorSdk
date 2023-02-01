@@ -67,7 +67,6 @@ class HomeFragmentAdapter(
         private const val CELL_ROMJAN_AMOL = 6
         private const val CELL_NAMAZ_VISUAL = 8
         private const val CELL_ISLAM_PILLER = 9
-        private const val CELL_LEARN_QURAN = 10
         private const val CELL_NEAREST_MOSQUE = 11
         private const val CELL_EMPTY = -1
     }
@@ -351,14 +350,6 @@ class HomeFragmentAdapter(
 
             }
 
-            CELL_LEARN_QURAN -> {
-                val imgBg = holder.view.findViewById<AppCompatImageView>(R.id.imgBg)
-                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
-
-                val item = list.items?.get(0)
-                setImageFromUrl(imgBg, item?.fullImageUrl, progressBar)
-            }
-
         }
 
     }
@@ -387,9 +378,7 @@ class HomeFragmentAdapter(
                 PATCH_TYPE_ISLAM_PILLER -> {
                     CELL_ISLAM_PILLER
                 }
-                PATCH_TYPE_LEARN_QURAN -> {
-                    CELL_LEARN_QURAN
-                }
+
                 PATCH_TYPE_NEAREST_MOSQUE -> {
                     CELL_NEAREST_MOSQUE
                 }
