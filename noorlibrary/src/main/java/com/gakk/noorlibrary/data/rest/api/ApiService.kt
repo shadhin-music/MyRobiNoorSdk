@@ -41,6 +41,10 @@ import com.gakk.noorlibrary.model.tracker.PostPrayerDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.AllRamadanDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.add.PostRamadanDataResponse
 import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
+import com.gakk.noorlibrary.model.zakat.SaveZakatResponse
+import com.gakk.noorlibrary.model.zakat.ZakatDelResponse
+import com.gakk.noorlibrary.model.zakat.ZakatListResponse
+import com.gakk.noorlibrary.model.zakat.ZakatModel
 import com.mcc.noor.model.umrah_hajj.CheckUmrahReg
 import com.mcc.noor.model.umrah_hajj.UmrahHajjModel
 import com.mcc.noor.model.umrah_hajj.UmrahHajjRegResponse
@@ -404,6 +408,26 @@ interface ApiService {
     suspend fun UmrahPaymentStatus(
         @Body param: RequestBody
     ): UmrahHajjRegResponse
+
+
+    // zakat calculator
+
+    @FormUrlEncoded
+    @POST("zakatcalculation/add")
+    suspend fun saveZakatData(
+        @Field("payload") payload:String
+    ): SaveZakatResponse
+
+    @GET("zakatcalculation/1/10")
+    suspend fun getZakatList(
+    ): ZakatListResponse
+
+    @DELETE("zakatcalculation/delete/{id}")
+    suspend fun delZakat(
+        @Path("id") id: String,
+    ): ZakatDelResponse
+
+
 
     @FormUrlEncoded
     @POST("account/RobiLogin")

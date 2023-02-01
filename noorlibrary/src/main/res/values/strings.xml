@@ -669,7 +669,7 @@
     <string name="material_calendar_today_button">Today</string>
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Cancel</string>
-    <string name="cat_umrah_details">Umrah Hajj Package</string>
+    <string name="cat_umrah_details">উমরাহ হজ্জ প্যাকেজ</string>
     <string name="umrah_package_book_btn">প্যাকেজ বুক করুন</string>
     <string name="hint_passport_number">পাসপোর্ট নম্বর</string>
     <string name="txt_next1">পরবর্তী ধাপ</string>

@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.ui.fragments.zakat
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,18 +13,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.roomdb.RoomRepository
-import com.gakk.noorlibrary.data.roomdb.ZakatRoomDatabase
-import com.gakk.noorlibrary.model.zakat.ZakatDataModel
-import com.gakk.noorlibrary.ui.fragments.ZakatCalculationObserver
-import com.gakk.noorlibrary.util.TimeFormtter
-import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.model.zakat.ZakatModel
+import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.ZakatViewModel
+import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.util.*
+
 
 /**
  * @AUTHOR: Taslima Sumi
@@ -34,7 +35,7 @@ internal class ZakatCalculatorFragment : Fragment() {
 
     private lateinit var mCallback: DetailsCallBack
     private lateinit var viewModel: ZakatViewModel
-    private lateinit var repository: RoomRepository
+    private lateinit var repository: RestRepository
     private lateinit var layoutNagadTakaHeader: ConstraintLayout
     private lateinit var tvTitleHeaderNagadTaka: AppCompatTextView
     private lateinit var ivInfoHeaderNagadTaka: AppCompatImageView
@@ -101,10 +102,8 @@ internal class ZakatCalculatorFragment : Fragment() {
     private lateinit var btnSave: AppCompatButton
     private lateinit var textTotalAsset: AppCompatTextView
     private lateinit var textTotalJakat: AppCompatTextView
-
-
-    val database by lazy { ZakatRoomDatabase.getDatabase(requireContext()) }
-    val repositoryRoom by lazy { RoomRepository(database.zakatDao()) }
+    private lateinit var progressLayout: ConstraintLayout
+    private lateinit var rootView : ConstraintLayout
 
     companion object {
         @JvmStatic
@@ -127,10 +126,23 @@ internal class ZakatCalculatorFragment : Fragment() {
         )
 
         initUi(view)
+
+        lifecycleScope.launch {
+            repository =  RepositoryProvider.getRepository()
+
+            viewModel = ViewModelProvider(requireActivity(),ZakatViewModel.FACTORY(repository))[ZakatViewModel::class.java]
+
+            initObserver()
+
+        }
+
         return view
     }
 
     private fun initUi(view: View) {
+
+        rootView = view.findViewById(R.id.rootview)
+        progressLayout = view.findViewById(R.id.progressLayout)
         layoutNagadTakaHeader = view.findViewById(R.id.layoutNagadTakaHeader)
         ivInfoHeaderNagadTaka = layoutNagadTakaHeader.findViewById(R.id.ivInfoHeader)
         tvTitleHeaderNagadTaka = layoutNagadTakaHeader.findViewById(R.id.tvTitleHeader)
@@ -200,13 +212,6 @@ internal class ZakatCalculatorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        repository = repositoryRoom
-
-        viewModel = ViewModelProvider(
-            this@ZakatCalculatorFragment, ZakatViewModel.FACTORY(repository)
-        ).get(ZakatViewModel::class.java)
-
 
         mCallback.setToolBarTitle(getString(R.string.txt_new_calculation))
 
@@ -486,6 +491,8 @@ internal class ZakatCalculatorFragment : Fragment() {
                 otherLoanAmount = otherLoanText.toString().toDouble()
             }
 
+
+
             val totalAsset =
                 nogodtakaAmount + nogodtakaBankAmount + goldAmount + silverAmount + shareMarketAmount + otherInvestmentAmount + houseRentAmount + assetAmount + nogodbusinessAmount + productAmount + pensionAmount + loanAmount + otherCapitalAmount + farmingAmount
 
@@ -517,22 +524,107 @@ internal class ZakatCalculatorFragment : Fragment() {
                     TimeFormtter.getBanglaMonthName(month, it)
                 } + " " + TimeFormtter.getNumberByLocale(year.toString()))
             val minute = TimeFormtter.getCurrentTime() + " "
-            val fullDate = minute + "• " + dateTxt
-            val data = ZakatDataModel(
-                fullDate,
-                DecimalFormat("##.##").format(totalNetAsset),
-                DecimalFormat("##.##").format(totalZakat)
-            )
-            viewModel.insert(data)
+
             textTotalAsset.text = DecimalFormat("##.##").format(totalNetAsset)
             textTotalJakat.text = DecimalFormat("##.##").format(totalZakat)
 
-            ZakatCalculationObserver.switchTabAtIndex(1)
 
-            viewModel.allData.observe(viewLifecycleOwner) {
-                ZakatCalculationObserver.updateZakatList(it)
-                mCallback.showToastMessage(getText(R.string.save_message).toString())
+            val zakatModel = ZakatModel(
+                farmingAmount,
+                businessPaymentAmount,
+                carPaymentAmount,
+                nogodtakaAmount,
+                nogodtakaBankAmount,
+                nogodbusinessAmount,
+                creditCardAmount,
+                familyLoanAmount,
+                loanAmount,
+                houseRentAmount,
+                true,
+                "bn",
+                otherCapitalAmount,
+                otherInvestmentAmount,
+                otherLoanAmount,
+                pensionAmount,
+                productAmount,
+                assetAmount,
+                shareMarketAmount,
+                goldAmount,
+                silverAmount,
+                year)
+
+
+            viewModel.saveZakatData(zakatModel)
+
+        }
+    }
+
+    private fun initObserver()
+    {
+        viewModel.zakat_calculator?.observe(viewLifecycleOwner)
+        {
+            hideLoading()
+            when(it)
+            {
+                is ZakatResource.Error -> mCallback.showToastMessage(it.errorMsg)
+                ZakatResource.Loading -> showLoading()
+                is ZakatResource.zakatSave ->
+                {
+                    when(it.data.data?.status)
+                    {
+                        200 ->
+                        {
+                            mCallback.showToastMessage(getText(R.string.save_message).toString())
+                            lifecycleScope.launch {
+
+                                viewModel.callback(1)
+                            }
+                        }
+                        else ->
+                        {
+                            mCallback.showToastMessage("Something went wrong! try again")
+                        }
+                    }
+                }
+                else -> Unit
             }
         }
     }
+
+    private fun showLoading()
+    {
+        for (i in 0 until rootView.childCount) {
+            val view = rootView.getChildAt(i)
+            if (view.id == R.id.progressLayout) {
+
+                view.show()
+            } else {
+
+                view.hide()
+            }
+        }
+    }
+
+    private fun hideLoading()
+    {
+        for (i in 0 until rootView.childCount) {
+            val view = rootView.getChildAt(i)
+            if (view.id == R.id.progressLayout) {
+
+                view.hide()
+            } else {
+
+                view.show()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycleScope.launch {
+            viewModel.clearLiveData()
+        }
+    }
+
+
 }

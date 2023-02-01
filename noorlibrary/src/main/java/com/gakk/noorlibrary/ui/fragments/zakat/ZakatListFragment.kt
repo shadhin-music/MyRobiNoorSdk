@@ -1,34 +1,39 @@
 package com.gakk.noorlibrary.ui.fragments.zakat
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
-import com.gakk.noorlibrary.data.roomdb.RoomRepository
-import com.gakk.noorlibrary.data.roomdb.ZakatRoomDatabase
-import com.gakk.noorlibrary.model.zakat.ZakatDataModel
+import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.model.zakat.ZakatModel
 import com.gakk.noorlibrary.ui.adapter.ZakatListAdapter
-import com.gakk.noorlibrary.ui.fragments.ZakatCalculationObserver
+import com.gakk.noorlibrary.util.RepositoryProvider
+import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.util.hide
+import com.gakk.noorlibrary.util.show
 import com.gakk.noorlibrary.viewModel.ZakatViewModel
 import kotlinx.coroutines.launch
-import java.io.Serializable
 
-internal class ZakatListFragment : Fragment(), DeleteOperation {
+internal class ZakatListFragment : Fragment(), ZakatListAdapter.OnItemClickListener {
 
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var viewModel: ZakatViewModel
-    private lateinit var repository: RoomRepository
+    private lateinit var repository: RestRepository
     private var adapter: ZakatListAdapter? = null
     private lateinit var listZakat: RecyclerView
-
-    val database by lazy { ZakatRoomDatabase.getDatabase(requireContext()) }
-    val repositoryRoom by lazy { RoomRepository(database.zakatDao()) }
+    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var noInternetLayout: ConstraintLayout
+    private lateinit var noDataLayout: ConstraintLayout
+    private lateinit var btnRetry: AppCompatButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,7 @@ internal class ZakatListFragment : Fragment(), DeleteOperation {
             ZakatListFragment()
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,34 +59,108 @@ internal class ZakatListFragment : Fragment(), DeleteOperation {
             container, false
         )
 
-        repository = repositoryRoom
 
         listZakat = view.findViewById(R.id.listZakat)
+        progressLayout = view.findViewById(R.id.progressLayout)
+        noInternetLayout = view.findViewById(R.id.noInternetLayout)
+        noDataLayout = view.findViewById(R.id.noDataLayout)
+        btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
 
-        viewModel = ViewModelProvider(
-            this@ZakatListFragment,
-            ZakatViewModel.FACTORY(repository)
-        ).get(ZakatViewModel::class.java)
+        lifecycleScope.launch {
 
+            repository = RepositoryProvider.getRepository()
 
-        viewModel.allData.observe(viewLifecycleOwner) {
+            viewModel = ViewModelProvider(requireActivity(),ZakatViewModel.FACTORY(repository))[ZakatViewModel::class.java]
 
-            adapter = ZakatListAdapter(it, this)
-            listZakat.adapter = adapter
-            ZakatCalculationObserver.attatchAdapter(adapter)
+            initObserver()
+            viewModel.getZakatList()
+
         }
+
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun deleteData(data: ZakatDataModel) {
+        btnRetry.handleClickEvent {
+
+            lifecycleScope.launch {
+                viewModel.getZakatList()
+            }
+        }
+    }
+
+
+    private fun initObserver()
+    {
+
+        viewModel.zakatCallback.observe(viewLifecycleOwner)
+        {
+            when(it)
+            {
+                1 -> lifecycleScope.launch {
+                    viewModel.getZakatList()
+                    viewModel.callback(0)
+                }
+
+                0-> Unit
+            }
+        }
+        viewModel.zakat_list.observe(viewLifecycleOwner)
+        {
+            progressLayout.hide()
+            noDataLayout.hide()
+            noInternetLayout.hide()
+
+            when(it)
+            {
+                is ZakatResource.Error -> noInternetLayout.show()
+                ZakatResource.Loading -> progressLayout.show()
+                is ZakatResource.zakatList ->
+                {
+                    when(it.data.data?.status)
+                    {
+                        200->
+                        {
+                                    it.data.data.data?.let {
+
+                                            it1 -> adapter = ZakatListAdapter(it1, this@ZakatListFragment)
+                                    } ?: noDataLayout.show()
+
+                                listZakat.adapter = adapter
+                        }
+                        204 -> noDataLayout.show()
+
+                        else ->noInternetLayout.show()
+                    }
+                }
+                is ZakatResource.zakatDelete ->
+                {
+                    when(it.data.data?.status)
+                    {
+                        200 ->
+                        {
+                            lifecycleScope.launch {
+                                viewModel.getZakatList()
+                            }
+                        }
+
+                        else -> mDetailsCallBack?.showToastMessage("Something went wrong! try again")
+                    }
+                }
+                else -> Unit
+            }
+        }
+
+    }
+
+    override fun onItemClick(postion: Int, zakat: List<ZakatModel>) {
+
         lifecycleScope.launch {
-            viewModel.delete(data)
+            zakat.get(postion).id?.let { viewModel.delZakat(it) }
         }
     }
 
 }
 
-interface DeleteOperation : Serializable {
-    fun deleteData(data: ZakatDataModel)
-}

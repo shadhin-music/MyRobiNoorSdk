@@ -15,8 +15,6 @@ import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 
 import com.gakk.noorlibrary.model.literature.Literature
-import com.gakk.noorlibrary.ui.adapter.ZAKAT_CALC_VIEW
-import com.gakk.noorlibrary.ui.adapter.ZakatListAdapter
 import com.gakk.noorlibrary.util.FragmentProvider
 import com.gakk.noorlibrary.util.ORGANIZATION_DETAILS
 import com.gakk.noorlibrary.util.handleClickEvent
