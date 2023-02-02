@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -14,12 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.zakat.ZakatModel
 import com.gakk.noorlibrary.ui.adapter.ZakatListAdapter
-import com.gakk.noorlibrary.util.RepositoryProvider
-import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.hide
-import com.gakk.noorlibrary.util.show
+import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.ZakatViewModel
 import kotlinx.coroutines.launch
 
@@ -34,6 +33,7 @@ internal class ZakatListFragment : Fragment(), ZakatListAdapter.OnItemClickListe
     private lateinit var noInternetLayout: ConstraintLayout
     private lateinit var noDataLayout: ConstraintLayout
     private lateinit var btnRetry: AppCompatButton
+    private lateinit var imgNoInternet:ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +64,7 @@ internal class ZakatListFragment : Fragment(), ZakatListAdapter.OnItemClickListe
         progressLayout = view.findViewById(R.id.progressLayout)
         noInternetLayout = view.findViewById(R.id.noInternetLayout)
         noDataLayout = view.findViewById(R.id.noDataLayout)
+        imgNoInternet = view.findViewById(R.id.imgNoInternet)
         btnRetry = noInternetLayout.findViewById(R.id.btnRetry)
 
         lifecycleScope.launch {
@@ -126,11 +127,15 @@ internal class ZakatListFragment : Fragment(), ZakatListAdapter.OnItemClickListe
                                     it.data.data.data?.let {
 
                                             it1 -> adapter = ZakatListAdapter(it1, this@ZakatListFragment)
-                                    } ?: noDataLayout.show()
+                                    }
 
                                 listZakat.adapter = adapter
                         }
-                        204 -> noDataLayout.show()
+                        204 ->
+                        {
+                            noDataLayout.show()
+                            NoDataLayout(noDataLayout)
+                        }
 
                         else ->noInternetLayout.show()
                     }

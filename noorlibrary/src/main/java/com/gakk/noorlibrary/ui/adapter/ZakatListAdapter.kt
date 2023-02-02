@@ -1,16 +1,17 @@
 package com.gakk.noorlibrary.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
+import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.zakat.ZakatModel
-import com.gakk.noorlibrary.util.NoDataLayout
-import com.gakk.noorlibrary.util.formatDate
-import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.util.*
 
 const val ZAKAT_CALC_VIEW = 1
 
@@ -37,7 +38,6 @@ class ZakatListAdapter(
 
         when (viewType) {
             ZAKAT_CALC_VIEW -> {
-
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_item_saved_jakat, parent, false)
 
@@ -45,6 +45,7 @@ class ZakatListAdapter(
             }
 
             NO_DATA -> {
+
 
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_no_data, parent, false)
@@ -60,6 +61,7 @@ class ZakatListAdapter(
 
         when (holder.layoutTag) {
             ZAKAT_CALC_VIEW -> {
+
                 val tvDate = holder.view.findViewById<AppCompatTextView>(R.id.tvDate)
                 val ivDelete = holder.view.findViewById<AppCompatImageView>(R.id.ivDelete)
                 val tvContent = holder.view.findViewById<AppCompatTextView>(R.id.tvContent)
@@ -84,7 +86,14 @@ class ZakatListAdapter(
             }
 
             NO_DATA -> {
-                NoDataLayout(holder.view)
+
+                val imgNoInternet = holder.view.findViewById<ImageView>(R.id.imgNoInternet)
+
+                val itemNoData = ImageFromOnline("bg_no_data.png")
+                setImageFromUrlNoProgress(imgNoInternet,itemNoData.fullImageUrl)
+
+                holder.view.hide()
+
             }
         }
 
@@ -95,9 +104,9 @@ class ZakatListAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        when {
-            mZakatList.size > 0 -> return ZAKAT_CALC_VIEW
-            else -> return NO_DATA
+        return when {
+            mZakatList.size > 0 -> ZAKAT_CALC_VIEW
+            else -> NO_DATA
         }
     }
 
