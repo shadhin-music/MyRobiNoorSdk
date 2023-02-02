@@ -155,7 +155,11 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                 Status.SUCCESS -> {
                     when (it.data?.status) {
                         200 -> {
-                            biilboradList = it.data.data
+                            val list = it.data.data
+                            biilboradList = list.filterNot {
+                                it.categoryName.trim().equals("আল্লাহর ৯৯ নাম") ||
+                                        it.categoryName.trim().equals("ট্র্যাকার")
+                            }
                             model.getHomeData()
                         }
                         else -> {
