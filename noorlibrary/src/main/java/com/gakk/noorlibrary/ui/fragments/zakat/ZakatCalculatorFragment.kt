@@ -624,6 +624,8 @@ internal class ZakatCalculatorFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.clearLiveData()
         }
+
+       requireActivity().viewModelStore.clear()
     }
 
 
