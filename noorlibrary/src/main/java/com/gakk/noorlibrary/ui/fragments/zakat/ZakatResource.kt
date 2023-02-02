@@ -10,7 +10,7 @@ import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjResource
 sealed interface ZakatResource
 {
     object Loading: ZakatResource
-    data class zakatSave(val data: Resource<SaveZakatResponse>): ZakatResource
+    data class zakatSave(val data: Resource<SaveZakatResponse>?): ZakatResource
     data class zakatList(val data: Resource<ZakatListResponse>): ZakatResource
     data class zakatDelete(val data: Resource<ZakatDelResponse>): ZakatResource
     data class Error(val errorMsg:String): ZakatResource

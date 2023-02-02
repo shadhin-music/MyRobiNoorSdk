@@ -15,8 +15,8 @@ internal class ZakatViewModel(private val repository: RestRepository) : ViewMode
         val FACTORY = singleArgViewModelFactory(::ZakatViewModel)
     }
 
-    private var _zakat_calculator : MutableLiveData<ZakatResource>? = MutableLiveData()
-    val zakat_calculator: MutableLiveData<ZakatResource>? get() = _zakat_calculator
+    private var _zakat_calculator : MutableLiveData<ZakatResource> = MutableLiveData()
+    val zakat_calculator: MutableLiveData<ZakatResource> get() = _zakat_calculator
 
     private val _zakat_list : MutableLiveData<ZakatResource> = MutableLiveData()
     val zakat_list: LiveData<ZakatResource> get() = _zakat_list
@@ -34,9 +34,9 @@ internal class ZakatViewModel(private val repository: RestRepository) : ViewMode
     {
         viewModelScope.launch {
 
-            _zakat_calculator?.postValue(ZakatResource.Loading)
+            _zakat_calculator.postValue(ZakatResource.Loading)
             try {
-                _zakat_calculator?.postValue(
+                _zakat_calculator.postValue(
                     ZakatResource.zakatSave(
                         Resource.success(
                             data = repository.saveZakatData(payload)
@@ -46,7 +46,7 @@ internal class ZakatViewModel(private val repository: RestRepository) : ViewMode
 
                 )
             } catch (e: Exception) {
-                _zakat_calculator?.postValue(
+                _zakat_calculator.postValue(
                     ZakatResource.Error(
                         e.message ?: "Error Occurred!"
                     )
@@ -111,8 +111,8 @@ internal class ZakatViewModel(private val repository: RestRepository) : ViewMode
 
     fun clearLiveData()
     {
-        _zakatCallback.postValue(0)
-        _zakat_calculator = null
+        _zakat_calculator.value = ZakatResource.zakatSave(null)
+
     }
 
 }

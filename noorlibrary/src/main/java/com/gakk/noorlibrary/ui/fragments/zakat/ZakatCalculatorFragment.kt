@@ -570,7 +570,7 @@ internal class ZakatCalculatorFragment : Fragment() {
                 ZakatResource.Loading -> showLoading()
                 is ZakatResource.zakatSave ->
                 {
-                    when(it.data.data?.status)
+                    when(it.data?.data?.status)
                     {
                         200 ->
                         {
@@ -578,8 +578,10 @@ internal class ZakatCalculatorFragment : Fragment() {
                             lifecycleScope.launch {
 
                                 viewModel.callback(1)
+                                viewModel.clearLiveData()
                             }
                         }
+                        null -> Unit
                         else ->
                         {
                             mCallback.showToastMessage("Something went wrong! try again")
@@ -618,15 +620,5 @@ internal class ZakatCalculatorFragment : Fragment() {
             }
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        lifecycleScope.launch {
-            viewModel.clearLiveData()
-        }
-
-       requireActivity().viewModelStore.clear()
-    }
-
 
 }
