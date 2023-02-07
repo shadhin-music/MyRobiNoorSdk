@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.adapter.donation
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE

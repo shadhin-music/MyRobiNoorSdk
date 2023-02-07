@@ -254,19 +254,9 @@ class HomeFragmentAdapter(
                 cardBanner!!.handleClickEvent {
                     list.about.let { it1 ->
                         it1?.let { it2 ->
-                            if (it2 == PAGE_ISLAMIC_EVENT) {
-                                mCallBack.openDetailsActivityWithPageName(
-                                    pageName = it2,
-                                    catId = list.items?.get(0)?.category,
-                                    subCatId = list.items?.get(0)?.subcategory,
-                                    isFromHomeEvent = true
-                                )
-                            } else {
                                 mCallBack.openDetailsActivityWithPageName(
                                     it2,
                                 )
-                            }
-
                         }
                     }
                 }

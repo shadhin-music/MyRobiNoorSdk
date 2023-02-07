@@ -99,16 +99,11 @@
     <string name="txt_asr">আসর</string>
     <string name="txt_magrib">মাগরিব</string>
     <string name="txt_esha">ইশা</string>
-    <string name="txt_title_inspiration">ইসলামের অনুপ্রেরণা</string>
-    <string name="txt_more_inspiration">আরও ইসলামের অনুপ্রেরণা</string>
-    <string name="txt_title_scholar_video">স্কলার ভিডিও</string>
     <string name="txt_learn_more">আরও জানুন</string>
-    <string name="txt_title_quran_learn">২৭ ঘন্টায় কুরআন শিখুন</string>
     <string name="txt_minute">মিনিট</string>
     <string name="txt_more_category">আরও ক্যাটাগরি</string>
     <string name="title_subscribe">নূরে সাবস্ক্রাইব করুন</string>
     <string name="des_subscribe">এক জায়গায় সমস্ত ইসলামী পরিষেবা উপভোগ করুন</string>
-    <string name="txt_profile">প্রোফাইল</string>
     <string name="txt_subscribe">সাবস্ক্রাইব</string>
     <string name="cat_quran">পবিত্র কুরআন</string>
     <string name="cat_roja">রোজা</string>
@@ -121,10 +116,7 @@
     <string name="title_ninety_nine_names_allah">আল্লাহর ৯৯ নাম</string>
     <string name="cat_islamic_video">ইসলামিক ভিডিও</string>
     <string name="cat_islamic_name">ইসলামিক নাম</string>
-    <string name="cat_compass">কম্পাস</string>
     <string name="cat_nearest_mosque">নিকটবর্তী মসজিদ</string>
-    <string name="cat_quran_school">কুরআন স্কুল</string>
-    <string name="cat_tasbih">তাসবীহ</string>
     <string name="cat_scholar_video">স্কলার ভিডিও</string>
     <string name="title_personal_tracker">ব্যক্তিগত ট্র্যাকার</string>
     <string name="txt_not_yet">এখনো না</string>
@@ -135,9 +127,6 @@
     <string name="cat_instructive_video">ইসলামিক শিক্ষনীয় ভিডিও</string>
     <string name="cat_islamic_song">ইসলামিক গান</string>
     <string name="cat_donation">ডোনেশন</string>
-    <string name="cat_ijtema">বিশ্ব ইজতেমা</string>
-    <string name="cat_quiz">কুইজ</string>
-
 
     <string name="fajr" translatable="false">Fajr</string>
     <string name="dhuhr" translatable="false">Dhuhr</string>
@@ -350,7 +339,6 @@
     <string name="hajj_pre_registration_category_id">625cf907bf0f1370b2ed535d</string>
     <string name="hajj_map_cateogry_id">6087a1ae5b10ee41c9e7d69a</string>
     <string name="hajj_currency_cateogry_id">6087a2265b10ee41c9e7d69b</string>
-    <string name="qurbani_cateogry_id">60cadb9fdd1390a52293934c</string>
     <string name="quran_class_cat_id">6061659ee03cc3b3f50e09bd</string>
     <string name="instructive_video_cat_id">612378552d5c4aaaa1fe7645</string>
     <string name="miladunnobi_cateogry_id">6134511e857486b08405e9fd</string>
@@ -359,22 +347,13 @@
     <string name="charity_organisation_id">615e7c7122348fc226f6f24b</string>
     <string name="donation_importance_id">615e7c7f22348fc226f6f24c</string>
     <string name="ijtema_id">61515463910e7aed861b79e2</string>
-    <string name="corona_funeral_id">61dff7c43f2e99556e5fa6af</string>
-    <string name="corona_funeral_subcategory_id">61dff9d93f2e99556e5fa6b0</string>
-    <string name="ambulance_subcategory_id">61dffa763f2e99556e5fa6b1</string>
-    <string name="event_cateogry_id">62022d5f680c4f8afc5a6317</string>
     <string name="eid_jamat_id">623053463468b928f271d8d9</string>
     <string name="live_qa_cat_id">62415b6dfa79873a11c9000a</string>
     <string name="hajj_refund_category_id">628b19bf265a6b36210e5df5</string>
     <string name="hajj_preregistration_sub_category_id">625d20b93e65c410063b7360</string>
-    <string name="online_hut_category_id">62aedc0cdd05dd1c77226d4b</string>
-    <string name="online_hut_subcategory_id">62b056d9a56104af33764576</string>
-    <string name="online_hut_north_subcategory_id">62b05782ee00d1a45ccd01bd</string>
-    <string name="online_hut_sounth_subcategory_id">62b057b4ee00d1a45ccd01be</string>
     <string name="hajj_guide_category_id">62bc022291776fe33f8b9fe1</string>
     <string name="hajj_guide_sub_category_id">62c687407441a12ee460d041</string>
     <string name="hajj_package_id">62d4f2d7f91b8f49a6bfca8d</string>
-    <string name="islamic_chuti_id">627c8495c44068285dde96c2</string>
 
     <string name="default_content_des">content description image</string>
     <string name="digital_school">নূর কুরআন স্কুল</string>
@@ -386,45 +365,15 @@
 
     <string name="quran_clasess">কুরআন শিক্ষা ক্লাস</string>
 
-
-    <string name="cat_nearest_retuarant">নিকটবর্তী রেস্তরাঁ</string>
-    <string name="cat_live_video">লাইভ ভিডিও</string>
     <string name="tab_home">হোম</string>
-    <string name="tab_compass">কম্পাস</string>
     <string name="tab_more">আরও</string>
-    <string name="search_islamic_name_text">মুসলিম বেবির জন্য পছন্দের ইসলামিক নাম খুঁজে নিন</string>
-    <string name="names_of_male">ছেলেদের</string>
-    <string name="islamic_name">ইসলামিক নাম</string>
-    <string name="names_of_female">মেয়েদের</string>
-    <string name="names">নাম সমূহ</string>
-    <string name="male_islamic_names">ছেলেদের ইসলামিক নাম</string>
-    <string name="female_islamic_names">মেয়েদের ইসলামিক নাম</string>
-    <string name="nam_meaning">নামের অর্থ</string>
-    <string name="favourite_name">প্রিয় নাম</string>
     <string name="cat_hajj">হজ্জ</string>
-    <string name="cat_hajj_tracker">হজ্জ ট্র্যাকার</string>
     <string name="hajj_header_dua_one">"লাব্বাইকা <br />আল্লাহুম্মা লাব্বাইক"</string>
     <string name="hajj_header_dua_two">লাব্বাইকা লা শারিকা লাকা লাব্বাইক … </string>
-
-    <!--Tasbih Page !-->
-    <string name="text_zero">০০</string>
-    <string name="text_thirty_three">৩৩ বার</string>
-    <string name="text_thirty_four">৩৪ বার</string>
-    <string name="text_ninety_nine">৯৯ বার</string>
-
-    <string name="txt_times">বার</string>
-    <string name="txt_total_count">মোট গণনা</string>
-    <string name="txt_your_count">আপনার গণনা</string>
-    <string name="count_complete">আপনার গণনা সম্পন্ন হয়ছেে</string>
-    <string name="txt_round">রাউন্ড</string>
-    <string name="txt_reset_count">গণনা রিসেট</string>
-    <string name="reset_des">রিসেট সম্পন্ন হলে, মোট/বর্তমান গণনা রিকভার করা সম্ভব না</string>
-    <string name="current_count">বর্তমান গণনা</string>
 
     <string name="hajj_map_title">হজ্জ্ব ম্যাপ </string>
     <string name="select_currency">মুদ্রা নির্বাচন করুন</string>
     <string name="currency_update">"সর্বশেষ আপডেট "</string>
-    <string name="hjCurrencyConvert">কনভার্ট করুন</string>
 
     <!--Subscription Page !-->
     <string name="page_title_subscription">সাবস্ক্রিপশন</string>
@@ -484,20 +433,11 @@
     <string name="name">নাম</string>
     <string name="cat_islamic_calender">ইসলামিক ক্যালেন্ডার</string>
     <string name="cat_tracker">ট্র্যাকার</string>
-    <string name="cat_qurbani">কুরবানী</string>
-    <string name="cat_corona_funeral_service">করোনা দাফন সেবা</string>
-    <string name="cat_islamic_event">ইসলামিক ইভেন্ট</string>
-    <string name="title_online_hut">অনলাইন গরুর হাট</string>
     <string name="cat_islamic_podcast">ইসলামিক পডকাস্ট</string>
-    <string name="cat_khatam_quran">খতমে কুরআন</string>
     <string name="cat_eid_jamat">ঈদ জামাতের স্থান</string>
     <string name="cat_hajj_package">হজ্জ প্যাকেজ</string>
-    <string name="cat_live_qa">নূর জিজ্ঞাসা</string>
 
 
-    <string name="cat_eid_e_miladunnobi">ঈদ ই মিলাদুন্নবী</string>
-    <string name="cat_eid_e_miladunnobi_robi">ঈদ ই মিলাদুন্নবী</string>
-    <string name="title_eid_e_miladunnobi_robi">ঈদ ই মিলাদুন্নবী</string>
     <string name="cat_quran_learning">কুরআন শিক্ষা ক্লাস</string>
 
     <string name="sat">শনি</string>
@@ -516,15 +456,6 @@
     <string name="next_azan">পরবর্তী আযান</string>
     <string name="restaturant_disclaimer">রেস্টুরেন্টের অবস্থান এবং হালাল সার্টিফিকেশন গুগল ম্যাপের উপর ভিত্তি করে নির্ধারিত</string>
 
-    <!--Tracker Page !-->
-    <string name="prayer_tracker">নামাজ ট্র্যাকার</string>
-    <string name="ramadan_tracker">রোজা ট্র্যাকার</string>
-    <string name="des_prayer_tracker">নূর অ্যাপ দিয়ে নামাজ ট্র্যাক করুন</string>
-    <string name="des_ramadan_tracker">নূর অ্যাপ দিয়ে রোজা ট্র্যাক করুন</string>
-    <string name="txt_are_you_fasting_today">আপনি কি আজ রোজা রেখেছেন?</string>
-    <string name="txt_not_fasting">রোজা নেই</string>
-    <string name="txt_yes_fasting">হ্যাঁ রোজা</string>
-
     <string name="material_calendar_monday">সোম</string>
     <string name="material_calendar_tuesday">মঙ্গল</string>
     <string name="material_calendar_wednesday">বুধ</string>
@@ -536,17 +467,6 @@
     <!--Eid-E-Miladunnanbi Page !-->
     <string name="title_miladunnanbi">ভিজ্যুয়াল জীবনী</string>
     <string name="des_miladunnanbi">নবী (সা:) এর \n<br>সংক্ষিপ্ত জীবনী</br></string>
-
-
-    <!--Covid Funeral Page !-->
-    <string name="title_ambulance_service">অ্যাম্বুলেন্স সেবা</string>
-    <string name="txt_fb_page">ফেসবুক পেজ</string>
-    <string name="txt_website">ওয়েবসাইট</string>
-    <string name="txt_call">যোগাযোগ করুন</string>
-    <string name="ambulace_list">অ্যাম্বুলেন্স তালিকা</string>
-    <string name="see_map">ম্যাপ দেখুন</string>
-    <string name="txt_call_ambulance">কল অ্যাম্বুলেন্স</string>
-    <string name="txt_see_on_map">ম্যাপ দেখুন</string>
 
     <!--Custom month !-->
     <string name="txt_jan">জানুয়ারি</string>
@@ -639,17 +559,6 @@
     <string name="title_notification">নোটিফিকেশন</string>
     <string name="select_a_country_cpp">Select a country</string>
     <string name="search_ccp">Search...</string>
-
-
-    <array name="material_calendar_day_abbreviations_array">
-        <item>@string/material_calendar_sunday</item>
-        <item>@string/material_calendar_monday</item>
-        <item>@string/material_calendar_tuesday</item>
-        <item>@string/material_calendar_wednesday</item>
-        <item>@string/material_calendar_thursday</item>
-        <item>@string/material_calendar_friday</item>
-        <item>@string/material_calendar_saturday</item>
-    </array>
 
     <array name="material_calendar_months_array">
         <item>January</item>

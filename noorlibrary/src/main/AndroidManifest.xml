@@ -37,11 +37,6 @@
         tools:replace="android:allowBackup,android:usesCleartextTraffic">
 
         <activity
-            android:name=".ui.activity.YoutubePlayerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ui.activity.podcast.PodcastActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
@@ -109,12 +104,6 @@
             android:name=".ui.activity.PreRegistrationBrowserActivity"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name=".ui.activity.VideoPlayerHomeActivity"
-            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
-            android:theme="@style/AppTheme.NoActionBar" />
-
 
         <meta-data
             android:name="android.supports_size_changes"

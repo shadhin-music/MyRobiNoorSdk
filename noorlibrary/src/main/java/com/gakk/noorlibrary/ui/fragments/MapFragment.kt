@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
-import com.gakk.noorlibrary.util.PAGE_AMBULANCE
 import com.gakk.noorlibrary.util.PAGE_NEAREST_MOSQUE
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CameraPosition
@@ -76,13 +75,8 @@ internal class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (categoryType == PAGE_NEAREST_MOSQUE) {
-            mCallback.setToolBarTitle(getString(R.string.title_near_mosque))
-        } else if (categoryType == PAGE_AMBULANCE) {
-            mCallback.setToolBarTitle(getString(R.string.title_ambulance_service))
-        } else {
-            mCallback.setToolBarTitle(getString(R.string.cat_nearest_retuarant))
-        }
+
+        mCallback.setToolBarTitle(getString(R.string.title_near_mosque))
 
         val options = GoogleMapOptions()
         options.zoomControlsEnabled(true).compassEnabled(true)
@@ -120,29 +114,16 @@ internal class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun animateCamera() {
 
-        if (categoryType == PAGE_AMBULANCE) {
-            val cameraPosition = CameraPosition.Builder()
-                .target(
-                    LatLng(
-                        AppPreference.getUserCurrentLocation().lat!!,
-                        AppPreference.getUserCurrentLocation().lng!!
-                    )
+        val cameraPosition = CameraPosition.Builder()
+            .target(
+                LatLng(
+                    AppPreference.getUserCurrentLocation().lat!!,
+                    AppPreference.getUserCurrentLocation().lng!!
                 )
-                .zoom(12f)
-                .build()
-            mMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), null)
-        } else {
-            val cameraPosition = CameraPosition.Builder()
-                .target(
-                    LatLng(
-                        AppPreference.getUserCurrentLocation().lat!!,
-                        AppPreference.getUserCurrentLocation().lng!!
-                    )
-                )
-                .zoom(17f)
-                .build()
-            mMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), null)
-        }
+            )
+            .zoom(17f)
+            .build()
+        mMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), null)
 
     }
 

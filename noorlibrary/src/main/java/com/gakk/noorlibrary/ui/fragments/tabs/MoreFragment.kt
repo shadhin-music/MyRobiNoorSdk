@@ -85,13 +85,13 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)
                         startActivity(this)
                     }
-                }  else if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
+                } else if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_SSL)
                         this.putExtra(IS_FAV, false)
                         startActivity(this)
                     }
-                }  else {
+                } else {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                         startActivity(this)
@@ -170,24 +170,12 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             )
         )
 
-        if (AppPreference.language.equals(LAN_BANGLA)) {
-
-            bottomSheetItems.add(
-                BottomSheetItem(
-                    R.drawable.ic_islamic_podcast,
-                    getString(R.string.cat_islamic_podcast)
-                )
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_islamic_podcast,
+                getString(R.string.cat_islamic_podcast)
             )
-
-            bottomSheetItems.add(
-                BottomSheetItem(
-                    R.drawable.ic_live_question_answer,
-                    getString(R.string.cat_live_qa)
-                )
-            )
-        }
-
-
+        )
 
         bottomSheetItems.add(
             BottomSheetItem(
@@ -203,32 +191,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             )
         )
 
-
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_qurbani,
-                getString(R.string.cat_qurbani)
-            )
-        )
-
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_hajj_live,
-                getString(R.string.cat_live_video)
-            )
-        )
-
-        val txtMiladunnobi: String
-        txtMiladunnobi = getString(R.string.cat_eid_e_miladunnobi_robi)
-
-
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_miladunnobi,
-                txtMiladunnobi
-            )
-        )
-
         bottomSheetItems.add(
             BottomSheetItem(
                 R.drawable.ic_cat_donation,
@@ -237,47 +199,14 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
         )
 
 
-
-
-        if (AppPreference.language.equals(LAN_BANGLA)) {
-
-            bottomSheetItems.add(
-                BottomSheetItem(
-                    R.drawable.ic_cat_quran_school,
-                    getString(R.string.cat_quran_school)
-                )
-            )
-
-
-            bottomSheetItems.add(
-                BottomSheetItem(
-                    R.drawable.ic_cat_ijtema,
-                    getString(R.string.cat_ijtema)
-                )
-            )
-
-            bottomSheetItems.add(
-                BottomSheetItem(
-                    R.drawable.ic_eid_jamater_location,
-                    getString(R.string.cat_eid_jamat)
-                )
-            )
-
-            bottomSheetItems.add(
-                BottomSheetItem(
-                    R.drawable.ic_hajj_tracker,
-                    getString(R.string.cat_hajj_tracker)
-                )
-            )
-
-        }
-
         bottomSheetItems.add(
             BottomSheetItem(
-                R.drawable.ic_islamic_event,
-                getString(R.string.cat_islamic_event)
+                R.drawable.ic_eid_jamater_location,
+                getString(R.string.cat_eid_jamat)
             )
         )
+
+
 
         bottomSheetItems.add(
             BottomSheetItem(
