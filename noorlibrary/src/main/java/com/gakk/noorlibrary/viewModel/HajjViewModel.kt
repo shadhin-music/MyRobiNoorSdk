@@ -19,9 +19,9 @@ import com.gakk.noorlibrary.model.hajjtracker.HajjLocationShareRequestResponse
 import com.gakk.noorlibrary.model.hajjtracker.HajjShareLocationGetResponse
 import com.gakk.noorlibrary.model.hajjtracker.HajjTrackingListResponse
 import com.gakk.noorlibrary.model.subcategory.SubcategoriesByCategoryIdResponse
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahPaymentStatus
+import com.gakk.noorlibrary.ui.fragments.payment.PaymentResource
 import com.gakk.noorlibrary.util.*
-import com.mcc.noor.model.umrah_hajj.UmrahPaymentStatus
-import com.mcc.noor.ui.fragments.payment.PaymentResource
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject

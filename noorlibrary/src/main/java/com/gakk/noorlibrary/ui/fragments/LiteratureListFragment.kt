@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.fragments
 
-import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -34,13 +33,11 @@ import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
-import com.gakk.noorlibrary.ui.activity.DetailsActivity
 import com.gakk.noorlibrary.ui.adapter.LiteratureListAdapter
 import com.gakk.noorlibrary.ui.fragments.zakat.ZakatCalculatorFragment
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.util.RepositoryProvider.Companion.getRepository
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
-import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahDetailsFragment
 import kotlinx.coroutines.launch
 
 private const val ARG_IS_FAV_LIST = "isFav"

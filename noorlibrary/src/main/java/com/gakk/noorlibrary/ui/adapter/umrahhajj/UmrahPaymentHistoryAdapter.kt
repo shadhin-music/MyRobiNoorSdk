@@ -10,11 +10,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjRegData
 import com.gakk.noorlibrary.util.formatDate
-import com.mcc.noor.model.umrah_hajj.UmrahHajjRegData
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class UmrahPaymentHistoryAdapter(
     private var paymentList: List<UmrahHajjRegData?>

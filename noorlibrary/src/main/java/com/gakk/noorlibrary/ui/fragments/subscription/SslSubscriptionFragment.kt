@@ -231,7 +231,7 @@ internal class SslSubscriptionFragment : Fragment() {
                 }
 
                 Status.ERROR -> {
-                    Log.e("paymentNagad", "ERROR")
+                    Log.e("paymentNagad", "ERROR ${it.message}")
                     progressLayout.visibility = View.GONE
                 }
             }

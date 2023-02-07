@@ -4,8 +4,6 @@ import com.gakk.noorlibrary.data.rest.Resource
 import com.gakk.noorlibrary.model.zakat.SaveZakatResponse
 import com.gakk.noorlibrary.model.zakat.ZakatDelResponse
 import com.gakk.noorlibrary.model.zakat.ZakatListResponse
-import com.mcc.noor.model.umrah_hajj.UmrahHajjModel
-import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjResource
 
 sealed interface ZakatResource
 {

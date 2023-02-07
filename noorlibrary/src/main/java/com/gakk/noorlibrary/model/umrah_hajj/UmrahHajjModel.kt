@@ -1,4 +1,4 @@
-package com.mcc.noor.model.umrah_hajj
+package com.gakk.noorlibrary.model.umrah_hajj
 
 
 import com.google.gson.annotations.SerializedName

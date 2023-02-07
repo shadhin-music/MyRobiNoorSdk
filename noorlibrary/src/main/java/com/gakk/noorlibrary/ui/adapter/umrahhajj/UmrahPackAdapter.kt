@@ -9,10 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjData
 import com.gakk.noorlibrary.util.PLACE_HOLDER_16_9
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.setImageFromUrl
-import com.mcc.noor.model.umrah_hajj.UmrahHajjData
+
 class UmrahPackAdapter(
     private var hajj_packlist: List<UmrahHajjData?>,
     private val onItemClickListener: OnItemClickListener?,

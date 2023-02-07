@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.gakk.noorlibrary.data.rest.Resource
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.util.singleArgViewModelFactory
-import com.mcc.noor.model.umrah_hajj.UmrahHajjPersonalPostModel
-import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjResource
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjPersonalPostModel
+import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjResource
 import kotlinx.coroutines.launch
 
 class UmrahHajjViewModel(private val repository: RestRepository) : ViewModel() {

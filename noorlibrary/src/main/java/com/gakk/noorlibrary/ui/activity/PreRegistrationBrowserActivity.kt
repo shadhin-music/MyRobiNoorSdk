@@ -22,7 +22,7 @@ import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HajjViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.mcc.noor.ui.fragments.payment.PaymentResource
+import com.gakk.noorlibrary.ui.fragments.payment.PaymentResource
 import kotlinx.coroutines.launch
 
 

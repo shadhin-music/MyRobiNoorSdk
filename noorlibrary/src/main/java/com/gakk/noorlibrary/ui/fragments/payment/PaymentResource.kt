@@ -1,8 +1,8 @@
-package com.mcc.noor.ui.fragments.payment
+package com.gakk.noorlibrary.ui.fragments.payment
 
 import com.gakk.noorlibrary.data.rest.Resource
 import com.gakk.noorlibrary.model.CommonApiResponse
-import com.mcc.noor.model.umrah_hajj.UmrahHajjRegResponse
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjRegResponse
 
 sealed interface PaymentResource
 {

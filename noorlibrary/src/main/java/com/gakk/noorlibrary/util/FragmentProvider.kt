@@ -22,7 +22,7 @@ import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionOptionListFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.ZakatCalculatorFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.*
-import com.mcc.noor.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
+import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import java.io.Serializable
 
 
