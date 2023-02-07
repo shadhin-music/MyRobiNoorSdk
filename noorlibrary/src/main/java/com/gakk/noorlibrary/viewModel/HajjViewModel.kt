@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gakk.noorlibrary.data.rest.Resource
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.model.CommonApiResponse
 import com.gakk.noorlibrary.model.currency.CurrencyModel
 import com.gakk.noorlibrary.model.currency.CurrentCurrencyModel
 import com.gakk.noorlibrary.model.hajjpackage.HajjPackageEntryResponse
@@ -21,7 +20,10 @@ import com.gakk.noorlibrary.model.hajjtracker.HajjTrackingListResponse
 import com.gakk.noorlibrary.model.subcategory.SubcategoriesByCategoryIdResponse
 import com.gakk.noorlibrary.model.umrah_hajj.UmrahPaymentStatus
 import com.gakk.noorlibrary.ui.fragments.payment.PaymentResource
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.LAN_BANGLA
+import com.gakk.noorlibrary.util.PAYMENT_HAJJ_PRE_REG
+import com.gakk.noorlibrary.util.PAYMENT_UMRAH_HAJJ_REG
+import com.gakk.noorlibrary.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
@@ -171,184 +173,6 @@ internal class HajjViewModel(private val repository: RestRepository) : ViewModel
             return null
         }
         return json
-    }
-
-
-    fun getCurrentRates(from: String, to: String) {
-        viewModelScope.launch {
-            currentRateLivaData.postValue(Resource.loading(data = null))
-            try {
-                val model = repository.getTodayCurrencyRate(from, to)
-                model?.let {
-                    currentRateLivaData.postValue(
-                        Resource.success(
-                            model
-                        )
-                    )
-
-                } ?: kotlin.run {
-                    currentRateLivaData.postValue(
-                        Resource.error(
-                            data = null,
-                            message = "Error Occurred!"
-                        )
-                    )
-                }
-
-            } catch (e: Exception) {
-                currentRateLivaData.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
-
-    fun postHajjUser(msisdn: String) {
-        viewModelScope.launch {
-            addHajjUser.postValue(Resource.loading(data = null))
-
-            try {
-                addHajjUser.postValue(Resource.success(data = repository.registerHajjUser(msisdn)))
-            } catch (e: Exception) {
-                addHajjUser.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
-
-
-    fun locationShareRequest(trackerPhone: String) {
-        viewModelScope.launch {
-            shareLocation.postValue(Resource.loading(data = null))
-            try {
-                shareLocation.postValue(
-                    Resource.success(
-                        data = repository.locationShareRequest(
-                            trackerPhone
-                        )
-                    )
-                )
-            } catch (e: Exception) {
-                shareLocation.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
-
-    fun locationTrackRequestFromTracker(shaererPhone: String, trackerPhone: String) {
-        viewModelScope.launch {
-            trackLocation.postValue(Resource.loading(data = null))
-            try {
-                trackLocation.postValue(
-                    Resource.success(
-                        data = repository.locationTrackRequest(
-                            shaererPhone,
-                            trackerPhone
-                        )
-                    )
-                )
-            } catch (e: Exception) {
-                trackLocation.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
-
-    fun locationTrackRequestFromSharer(trackerPhone: String) {
-        viewModelScope.launch {
-            trackRequest.postValue(Resource.loading(data = null))
-            try {
-                trackRequest.postValue(
-                    Resource.success(
-                        data = repository.locationTrackRequest(
-                            trackerPhone
-                        )
-                    )
-                )
-            } catch (e: Exception) {
-                trackRequest.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
-
-    fun loadTrackingList() {
-        viewModelScope.launch {
-            trackList.postValue(Resource.loading(data = null))
-            try {
-                trackList.postValue(
-                    Resource.success(
-                        data = repository.getHajjTrackingList()
-                    )
-                )
-            } catch (e: Exception) {
-                trackList.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
-
-    fun getHajjLocation(msisdn: String) {
-        viewModelScope.launch {
-            hajjLocation.postValue(Resource.loading(data = null))
-            try {
-                hajjLocation.postValue(
-                    Resource.success(
-                        data = repository.getHajjShareLocation(msisdn)
-                    )
-                )
-            } catch (e: Exception) {
-                hajjLocation.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
-    }
-
-    fun deleteDataHajj(id: String) {
-        viewModelScope.launch {
-            deleteData.postValue(Resource.loading(data = null))
-            try {
-                deleteData.postValue(
-                    Resource.success(
-                        data = repository.deleteHajjData(id)
-                    )
-                )
-            } catch (e: Exception) {
-                deleteData.postValue(
-                    Resource.error(
-                        data = null,
-                        message = e.message ?: "Error Occurred!"
-                    )
-                )
-            }
-        }
     }
 
     fun addHajjPreRegistration(

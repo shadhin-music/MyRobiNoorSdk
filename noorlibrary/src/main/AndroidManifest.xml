@@ -129,9 +129,6 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <service
-            android:name=".service.HajjLocationShareService"
-            android:exported="true" />
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.ui.activity.SubscriptionBrowserActivity
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
@@ -346,7 +347,10 @@ internal class SslSubscriptionFragment : Fragment() {
             }
 
             else -> {
-                ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub)
+                setImageFromUrlNoProgress(
+                    ivShapeSubMonthly,
+                    ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl
+                )
                 btnSubscribeMonthly.setText(getString(R.string.txt_sub))
                 btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
             }
@@ -376,8 +380,10 @@ internal class SslSubscriptionFragment : Fragment() {
             }
 
             else -> {
-
-                ivShapeHalfYearly.setImageResource(R.drawable.ic_shape_sub)
+                setImageFromUrlNoProgress(
+                    ivShapeHalfYearly,
+                    ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl
+                )
                 btnSubscribeHalfYearly.setText(getString(R.string.txt_sub))
                 btnSubscribeHalfYearly.setBackgroundResource(R.drawable.ic_button_small)
             }
@@ -407,7 +413,10 @@ internal class SslSubscriptionFragment : Fragment() {
             }
 
             else -> {
-                ivShapeSubYearly.setImageResource(R.drawable.ic_shape_sub)
+                setImageFromUrlNoProgress(
+                    ivShapeSubYearly,
+                    ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl
+                )
                 btnSubscribeYearly.setText(getString(R.string.txt_sub))
                 btnSubscribeYearly.setBackgroundResource(R.drawable.ic_button_small)
             }

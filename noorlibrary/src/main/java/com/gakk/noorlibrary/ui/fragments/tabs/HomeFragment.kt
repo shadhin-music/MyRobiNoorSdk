@@ -24,8 +24,6 @@ import com.gakk.noorlibrary.model.tracker.SalahStatus
 import com.gakk.noorlibrary.ui.adapter.HomeFragmentAdapter
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HomeViewModel
-import com.gakk.noorlibrary.viewModel.NinetyNineNamesOfAllahViewModel
-import com.gakk.noorlibrary.viewModel.TrackerViewModel
 import kotlinx.coroutines.launch
 import java.io.Serializable
 import java.text.DateFormat
@@ -39,8 +37,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     private lateinit var model: HomeViewModel
     private lateinit var biilboradList: List<Data>
     private lateinit var prayerTimeCalculator: PrayerTimeCalculator
-    private lateinit var modelTracker: TrackerViewModel
-    private lateinit var modelAllahNames: NinetyNineNamesOfAllahViewModel
     private var fromMonth: Date? = null
     private lateinit var toMonth: String
     private val dateFormatForDisplaying =
@@ -116,15 +112,7 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                 HomeViewModel.FACTORY(repository)
             ).get(HomeViewModel::class.java)
 
-            modelTracker = ViewModelProvider(
-                this@HomeFragment,
-                TrackerViewModel.FACTORY(repository)
-            ).get(TrackerViewModel::class.java)
 
-            modelAllahNames = ViewModelProvider(
-                this@HomeFragment,
-                NinetyNineNamesOfAllahViewModel.FACTORY(repository)
-            ).get(NinetyNineNamesOfAllahViewModel::class.java)
 
 
             subscribeObserver()
@@ -211,10 +199,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                             homeRecycle.adapter = adapter
                             adapter.nextWaqt = upCommingPrayer.nextWaqtNameTracker
 
-                            modelTracker.loadAllPrayerData(
-                                dateFormatForDisplaying.format(Date()),
-                                dateFormatForDisplaying.format(Date())
-                            )
 
                         }
                         STATUS_NO_DATA -> {
@@ -226,71 +210,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                 }
                 Status.ERROR -> {
                     progressLayout.visibility = View.GONE
-                }
-            }
-        }
-
-
-        modelTracker.prayerListData.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.LOADING -> {
-                    Log.d("Tracker", "loading")
-                }
-
-                Status.SUCCESS -> {
-                    when (it.data?.status) {
-
-                        200 -> {
-
-                            prayerDataList = it.data.data
-                            adapter.prayerData =
-                                prayerDataList
-
-                        }
-                        else -> {
-                        }
-                    }
-                    adapter.invalidatePersonalTracker()
-                }
-
-                Status.ERROR -> {
-                    adapter.invalidatePersonalTracker()
-                    Log.d("Tracker", "ERROR")
-                }
-            }
-        }
-
-        modelTracker.addPrayerData.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.LOADING -> {
-                    Log.d("AddPrayerData", "LOADING")
-                }
-                Status.SUCCESS -> {
-                    modelTracker.loadAllPrayerData(
-                        dateFormatForDisplaying.format(Date()),
-                        dateFormatForDisplaying.format(Date())
-                    )
-                }
-
-                Status.ERROR -> {
-                    Log.d("AddPrayerData", "Error")
-                }
-            }
-        }
-
-        modelTracker.updatePrayerData.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.LOADING -> {
-                    Log.d("UpdatePrayerData", "loading")
-                }
-                Status.SUCCESS -> {
-                    modelTracker.loadAllPrayerData(
-                        dateFormatForDisplaying.format(Date()),
-                        dateFormatForDisplaying.format(Date())
-                    )
-                }
-                Status.ERROR -> {
-                    Log.d("UpdatePrayerData", "Error")
                 }
             }
         }
@@ -317,11 +236,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                     statusSalah.get("Maghrib")!!,
                     statusSalah.get("Isha")!!,
                 )
-
-                modelTracker.postPrayerData(
-                    outputFormat.format(Date()),
-                    AppPreference.language!!, salahStatus
-                )
             }
 
             else -> {
@@ -332,135 +246,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                     statusSalah.get("Maghrib")!!,
                     statusSalah.get("Isha")!!,
                 )
-                modelTracker.updatePrayerData(
-                    prayerDataList!!.get(0).id,
-                    prayerDataList!!.get(0).createdBy, outputFormat.format(Date()),
-                    AppPreference.language!!, salahStatus
-                )
-            }
-
-        }
-    }
-
-    override fun switchClick(isChecked: Boolean, switchName: String) {
-
-        when ((prayerDataList?.count() ?: 0) == 0) {
-
-            true -> {
-                var salahStatus: SalahStatus? = null
-                when (switchName) {
-                    SWITCH_FAJR -> {
-                        salahStatus = SalahStatus(
-                            isChecked,
-                            false,
-                            false,
-                            false,
-                            false,
-                        )
-                    }
-                    SWITCH_JOHR -> {
-                        salahStatus = SalahStatus(
-                            false,
-                            isChecked,
-                            false,
-                            false,
-                            false,
-                        )
-                    }
-                    SWITCH_ASR -> {
-                        salahStatus = SalahStatus(
-                            false,
-                            false,
-                            isChecked,
-                            false,
-                            false,
-                        )
-                    }
-                    SWITCH_MAGRIB -> {
-                        salahStatus = SalahStatus(
-                            false,
-                            false,
-                            false,
-                            isChecked,
-                            false,
-                        )
-                    }
-                    SWITCH_ESHA -> {
-                        salahStatus = SalahStatus(
-                            false,
-                            false,
-                            false,
-                            false,
-                            isChecked,
-                        )
-                    }
-                }
-
-                if (salahStatus != null) {
-                    modelTracker.postPrayerData(
-                        outputFormat.format(Date()),
-                        AppPreference.language!!, salahStatus
-                    )
-                }
-            }
-
-            else -> {
-                var salahStatus: SalahStatus? = null
-                when (switchName) {
-                    SWITCH_FAJR -> {
-                        salahStatus = SalahStatus(
-                            isChecked,
-                            prayerDataList?.get(0)?.salahStatus?.zuhr,
-                            prayerDataList?.get(0)?.salahStatus?.asar,
-                            prayerDataList?.get(0)?.salahStatus?.maghrib,
-                            prayerDataList?.get(0)?.salahStatus?.isha,
-                        )
-                    }
-                    SWITCH_JOHR -> {
-                        salahStatus = SalahStatus(
-                            prayerDataList?.get(0)?.salahStatus?.fajr,
-                            isChecked,
-                            prayerDataList?.get(0)?.salahStatus?.asar,
-                            prayerDataList?.get(0)?.salahStatus?.maghrib,
-                            prayerDataList?.get(0)?.salahStatus?.isha,
-                        )
-                    }
-                    SWITCH_ASR -> {
-                        salahStatus = SalahStatus(
-                            prayerDataList?.get(0)?.salahStatus?.fajr,
-                            prayerDataList?.get(0)?.salahStatus?.zuhr,
-                            isChecked,
-                            prayerDataList?.get(0)?.salahStatus?.maghrib,
-                            prayerDataList?.get(0)?.salahStatus?.isha,
-                        )
-                    }
-                    SWITCH_MAGRIB -> {
-                        salahStatus = SalahStatus(
-                            prayerDataList?.get(0)?.salahStatus?.fajr,
-                            prayerDataList?.get(0)?.salahStatus?.zuhr,
-                            prayerDataList?.get(0)?.salahStatus?.asar,
-                            isChecked,
-                            prayerDataList?.get(0)?.salahStatus?.isha,
-                        )
-                    }
-                    SWITCH_ESHA -> {
-                        salahStatus = SalahStatus(
-                            prayerDataList?.get(0)?.salahStatus?.fajr,
-                            prayerDataList?.get(0)?.salahStatus?.zuhr,
-                            prayerDataList?.get(0)?.salahStatus?.asar,
-                            prayerDataList?.get(0)?.salahStatus?.maghrib,
-                            isChecked,
-                        )
-                    }
-                }
-
-                if (salahStatus != null) {
-                    modelTracker.updatePrayerData(
-                        prayerDataList!!.get(0).id,
-                        prayerDataList!!.get(0).createdBy, outputFormat.format(Date()),
-                        AppPreference.language!!, salahStatus
-                    )
-                }
             }
 
         }
@@ -529,7 +314,6 @@ interface BillboardItemControl : Serializable {
 
 interface HomeCellItemControl : Serializable {
     fun btnClick()
-    fun switchClick(isChecked: Boolean, switchName: String)
     fun shareBitMap(bitmap: Bitmap?)
     fun shareImage(imageUrl: String)
 }

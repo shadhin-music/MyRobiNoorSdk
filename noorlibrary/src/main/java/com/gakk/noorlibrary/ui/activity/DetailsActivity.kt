@@ -87,11 +87,7 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
                     isFav = intent.getBooleanExtra(IS_FAV, false)
                 )
             }
-            PAGE_QURAN_SCHOOL -> FragmentProvider.getFragmentByName(
-                name = mPage,
-                detailsActivityCallBack = this,
-                scholar = intent.getParcelableExtra(SCHOLAR)
-            )
+
 
             PAGE_SURAH_DETAILS -> {
                 val id = intent.getStringExtra(SURAH_ID)

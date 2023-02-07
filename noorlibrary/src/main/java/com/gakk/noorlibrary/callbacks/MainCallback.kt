@@ -2,8 +2,6 @@ package com.gakk.noorlibrary.callbacks
 
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
-import com.gakk.noorlibrary.model.quranSchool.Scholar
-import java.io.Serializable
 
 interface MainCallback  {
     fun openSuraDetailsById(id: String)
@@ -11,7 +9,6 @@ interface MainCallback  {
         pageName: String,
         surahId: String? = null,
         surahList: MutableList<Data>? = null,
-        scholar: Scholar? = null,
         selectedIndex: Int? = null,
         literatureListCallBack: LiteratureListCallBack? = null,
         currentPageNo: Int? = null,

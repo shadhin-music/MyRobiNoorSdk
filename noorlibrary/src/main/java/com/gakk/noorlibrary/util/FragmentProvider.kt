@@ -6,7 +6,6 @@ import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
-import com.gakk.noorlibrary.model.quranSchool.Scholar
 import com.gakk.noorlibrary.ui.fragments.*
 import com.gakk.noorlibrary.ui.fragments.eidjamat.EidJamatFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
@@ -37,7 +36,6 @@ object FragmentProvider {
         isFav: Boolean = false,
         surahList: MutableList<Data>? = null,
         pageTitle: String? = null,
-        scholar: Scholar? = null,
         catName: String? = null,
         literature: Literature? = null
     ): Fragment? {

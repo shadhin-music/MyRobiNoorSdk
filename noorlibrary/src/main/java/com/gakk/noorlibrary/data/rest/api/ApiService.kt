@@ -18,35 +18,26 @@ import com.gakk.noorlibrary.model.literature.IsFavouriteResponse
 import com.gakk.noorlibrary.model.literature.LiteratureListResponse
 import com.gakk.noorlibrary.model.nagad.NagadSubStatusResponse
 import com.gakk.noorlibrary.model.nagad.PaymentInitiateResponse
-import com.gakk.noorlibrary.model.names.NamesOfAllahApiResponse
 import com.gakk.noorlibrary.model.nearby.NearbyResponse
 import com.gakk.noorlibrary.model.podcast.AddCommentResponse
 import com.gakk.noorlibrary.model.podcast.CommentListResponse
 import com.gakk.noorlibrary.model.podcast.LiveVideosResponse
-import com.gakk.noorlibrary.model.profile.UserInfoResponse
 import com.gakk.noorlibrary.model.quran.ayah.AyahsBySurah
 import com.gakk.noorlibrary.model.quran.surah.SurahListResponse
 import com.gakk.noorlibrary.model.quran.surah.favourite.FavouriteResponse
 import com.gakk.noorlibrary.model.quran.surah.unfavourite.UnfavouriteResponse
 import com.gakk.noorlibrary.model.quran.surahDetail.SurahDetailsResponse
-import com.gakk.noorlibrary.model.quranSchool.QuranSchoolResponse
-import com.gakk.noorlibrary.model.quranSchool.ScholarsResponse
-import com.gakk.noorlibrary.model.quranSchool.SingleScholarResponse
 import com.gakk.noorlibrary.model.roza.IftarAndSheriTimeforBD
 import com.gakk.noorlibrary.model.ssl.SslPaymentInitiateResponse
 import com.gakk.noorlibrary.model.subcategory.SubcategoriesByCategoryIdResponse
 import com.gakk.noorlibrary.model.subs.CheckSubResponse
-import com.gakk.noorlibrary.model.tracker.AllPrayerDataResponse
-import com.gakk.noorlibrary.model.tracker.PostPrayerDataResponse
-import com.gakk.noorlibrary.model.tracker.ramadan.AllRamadanDataResponse
-import com.gakk.noorlibrary.model.tracker.ramadan.add.PostRamadanDataResponse
+import com.gakk.noorlibrary.model.umrah_hajj.CheckUmrahReg
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjModel
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjRegResponse
 import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
 import com.gakk.noorlibrary.model.zakat.SaveZakatResponse
 import com.gakk.noorlibrary.model.zakat.ZakatDelResponse
 import com.gakk.noorlibrary.model.zakat.ZakatListResponse
-import com.gakk.noorlibrary.model.umrah_hajj.CheckUmrahReg
-import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjModel
-import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjRegResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -74,9 +65,6 @@ interface ApiService {
         @Path("pageNo") pageNo: String
     ): LiteratureListResponse
 
-    @GET("ninetyninename/{languageCode}/1/100")
-    suspend fun getNamesOfAllah(@Path("languageCode") languageCode: String): NamesOfAllahApiResponse
-
     @Multipart
     @POST("textcontent/getfavorite/{pageNo}/10")
     suspend fun getFavouriteLiteratureBySubCategory(
@@ -95,9 +83,6 @@ interface ApiService {
     @Multipart
     @POST("textcontent/unfavorite")
     suspend fun unFavouriteLiteratureById(@Part("payload") body: RequestBody): FavUnFavResponse
-
-    @GET("account/getuser/{id}")
-    suspend fun getUserInfo(@Path("id") id: String): UserInfoResponse
 
     @GET("billboard/publishedcontent/{languageCode}")
     suspend fun getBillbordData(@Path("languageCode") languageCode: String): BillboardResponse
@@ -188,16 +173,6 @@ interface ApiService {
     suspend fun unFavouriteSurah(@Path("id") id: String): UnfavouriteResponse
 
 
-    @GET("scholar/{lang}/null/null")
-    suspend fun getAllScholars(@Path("lang") lang: String): ScholarsResponse
-
-    @GET("scholar/{scholarsId}")
-    suspend fun getScholarsById(@Path("scholarsId") scholarsId: String): SingleScholarResponse
-
-    @GET("quranschool/byscholar/{scholarsId}/null/null")
-    suspend fun getQuranSchoolByScholars(@Path("scholarsId") scholarsId: String): QuranSchoolResponse
-
-
     //islamic names
     @GET("islamicname/{lang}/null/null/{gender}")
     suspend fun getIslamicName(
@@ -220,45 +195,11 @@ interface ApiService {
     @GET
     suspend fun getCurrencyDetails(@Url url: String): ResponseBody
 
-    //Prayer Tracker
-    @GET("Salahtracker/bymonth/{fromMonth}/{toMonth}/1/100")
-    suspend fun getAllPrayerData(
-        @Path("fromMonth") fromMonth: String,
-        @Path("toMonth") toMonth: String
-    ): AllPrayerDataResponse
-
 
     @GET("prayer/{name}/BD")
     suspend fun getRamadanTimingData(
         @Path("name") name: String
     ): IftarAndSheriTimeforBD
-
-
-    @Multipart
-    @POST("Salahtracker/add")
-    suspend fun addPrayerData(@Part("payload") body: RequestBody): PostPrayerDataResponse
-
-    @Multipart
-    @PUT("Salahtracker/edit")
-    suspend fun updatePrayerData(@Part("payload") body: RequestBody): PostPrayerDataResponse
-
-
-    //Ramadan Tracker
-    @GET("ramadantracker/byyear/{fromMonth}/{toMonth}/1/100")
-    suspend fun getAllRamadanData(
-        @Path("fromMonth") fromMonth: String,
-        @Path("toMonth") toMonth: String
-    ): AllRamadanDataResponse
-
-    @Multipart
-    @POST("ramadantracker/add")
-    suspend fun addRamadanData(@Part("payload") body: RequestBody): PostRamadanDataResponse
-
-    @Multipart
-    @PUT("ramadantracker/edit")
-    suspend fun updateRamadanData(@Part("payload") body: RequestBody): PostRamadanDataResponse
-
-    //Live Podcast
 
     @GET("streaming/geturl/bn/{CategoryId}/{SubcategoryId}")
     suspend fun getLive(
@@ -414,7 +355,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("zakatcalculation/add")
     suspend fun saveZakatData(
-        @Field("payload") payload:String
+        @Field("payload") payload: String
     ): SaveZakatResponse
 
     @GET("zakatcalculation/1/10")
@@ -427,8 +368,7 @@ interface ApiService {
     ): ZakatDelResponse
 
 
-
     @FormUrlEncoded
     @POST("account/RobiLogin")
-    suspend fun login(@Field("payload") payload:String):AuthResponse
+    suspend fun login(@Field("payload") payload: String): AuthResponse
 }
