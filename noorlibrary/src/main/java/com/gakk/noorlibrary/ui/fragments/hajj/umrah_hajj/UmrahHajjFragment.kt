@@ -1,4 +1,4 @@
-package com.mcc.noor.ui.fragments.hajj.umrah_hajj
+package com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.gakk.noorlibrary.ui.adapter.umrahhajj.UmrahPackAdapter
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.viewModel.UmrahHajjViewModel
-import com.mcc.noor.model.umrah_hajj.UmrahHajjData
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjData
 import kotlinx.coroutines.launch
 
 

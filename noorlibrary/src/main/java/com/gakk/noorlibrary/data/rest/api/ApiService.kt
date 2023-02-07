@@ -44,10 +44,9 @@ import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
 import com.gakk.noorlibrary.model.zakat.SaveZakatResponse
 import com.gakk.noorlibrary.model.zakat.ZakatDelResponse
 import com.gakk.noorlibrary.model.zakat.ZakatListResponse
-import com.gakk.noorlibrary.model.zakat.ZakatModel
-import com.mcc.noor.model.umrah_hajj.CheckUmrahReg
-import com.mcc.noor.model.umrah_hajj.UmrahHajjModel
-import com.mcc.noor.model.umrah_hajj.UmrahHajjRegResponse
+import com.gakk.noorlibrary.model.umrah_hajj.CheckUmrahReg
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjModel
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjRegResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody

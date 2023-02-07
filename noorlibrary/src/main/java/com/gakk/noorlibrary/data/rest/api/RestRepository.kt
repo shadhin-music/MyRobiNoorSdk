@@ -44,6 +44,7 @@ import com.gakk.noorlibrary.model.tracker.SalahStatus
 import com.gakk.noorlibrary.model.tracker.ramadan.AllRamadanDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.add.PostRamadanDataResponse
 import com.gakk.noorlibrary.model.tracker.ramadan.add.RamadanAddModel
+import com.gakk.noorlibrary.model.umrah_hajj.*
 import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
 import com.gakk.noorlibrary.model.zakat.SaveZakatResponse
 import com.gakk.noorlibrary.model.zakat.ZakatDelResponse
@@ -52,7 +53,6 @@ import com.gakk.noorlibrary.model.zakat.ZakatModel
 import com.gakk.noorlibrary.util.*
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import com.mcc.noor.model.umrah_hajj.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType

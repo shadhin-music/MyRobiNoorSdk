@@ -1,8 +1,8 @@
-package com.mcc.noor.model.umrah_hajj
+package com.gakk.noorlibrary.model.umrah_hajj
 
 import android.os.Parcelable
 import androidx.annotation.Keep
-import com.mcc.noor.model.umrah_hajjs.UmrahHajjPackageDescription
+import com.gakk.noorlibrary.model.umrah_hajjs.UmrahHajjPackageDescription
 import kotlinx.parcelize.Parcelize
 
 @Keep

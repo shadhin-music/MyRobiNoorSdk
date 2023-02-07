@@ -1,4 +1,4 @@
-package com.mcc.noor.ui.fragments.hajj.umrah_hajj
+package com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj
 
 import android.content.Intent
 import android.net.Uri
@@ -15,10 +15,10 @@ import androidx.fragment.app.Fragment
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjData
 import com.gakk.noorlibrary.util.PLACE_HOLDER_16_9
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.setImageFromUrl
-import com.mcc.noor.model.umrah_hajj.UmrahHajjData
 
 private const val ARG_PACKAGE_DATA = "umrahHajjData"
 

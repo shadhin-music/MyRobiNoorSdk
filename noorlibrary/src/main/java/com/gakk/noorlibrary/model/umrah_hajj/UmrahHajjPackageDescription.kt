@@ -1,4 +1,4 @@
-package com.mcc.noor.model.umrah_hajjs
+package com.gakk.noorlibrary.model.umrah_hajjs
 
 import android.os.Parcelable
 import androidx.annotation.Keep

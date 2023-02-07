@@ -1,4 +1,4 @@
-package com.mcc.noor.ui.fragments.hajj.umrah_hajj
+package com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj
 
 import android.os.Bundle
 import android.view.LayoutInflater

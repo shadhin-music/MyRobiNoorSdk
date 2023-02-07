@@ -100,12 +100,9 @@ const val PLACE_HOLDER_4_3 = "4_3"
 
 const val PATCH_TYPE_AYAT = "AyatToday"
 const val PATCH_TYPE_PRAYER_FOR_DUA = "PrayerForDua"
-const val PATCH_TYPE_ISLAMIC_INSPIRATION = "IslamInspiration"
 const val PATCH_TYPE_LOCAL_CONTENT = "LocalContent"
-const val PATCH_TYPE_PERSONAL_TRACKER = "PersonalTracker"
 const val PATCH_TYPE_ROMJAN_AMOL = "RamadanAmols"
 const val PATCH_TYPE_ISLAM_PILLER = "IslamPillers"
-const val PATCH_TYPE_LEARN_QURAN = "LearnQuran"
 const val PATCH_TYPE_NEAREST_MOSQUE = "NearestMosque"
 
 const val HIZRI_YR_OFFSET = 579
@@ -200,8 +197,6 @@ const val PAYMENT_HAJJ_PRE_REG = "HajjPreReg"
 const val PAYMENT_DONATION = "Donation"
 
 const val PAGE_UMRAH_HAJJ = "Umrah Hajj"
-const val COUNTRY_NAME = "MALAYSIA"
-const val COUNTRY_NAME_BN = "মালয়েশিয়া"
 const val STATUS_SUCCESS = 200
 const val STATUS_NO_DATA = 204
 const val VIDEO_CAT_ID = "VideoCatId"

@@ -1,9 +1,9 @@
-package com.mcc.noor.ui.fragments.hajj.umrah_hajj
+package com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj
 
 import com.gakk.noorlibrary.data.rest.Resource
-import com.mcc.noor.model.umrah_hajj.CheckUmrahReg
-import com.mcc.noor.model.umrah_hajj.UmrahHajjModel
-import com.mcc.noor.model.umrah_hajj.UmrahHajjRegResponse
+import com.gakk.noorlibrary.model.umrah_hajj.CheckUmrahReg
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjModel
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjRegResponse
 
 sealed interface UmrahHajjResource
 {

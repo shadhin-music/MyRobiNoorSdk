@@ -1,4 +1,4 @@
-package com.mcc.noor.ui.fragments.hajj.umrah_hajj
+package com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj
 
 
 import android.os.Bundle
@@ -21,7 +21,7 @@ import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.UmrahHajjViewModel
 import com.google.gson.Gson
-import com.mcc.noor.model.umrah_hajj.UmrahHajjPersonalPostModel
+import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjPersonalPostModel
 import com.gakk.noorlibrary.ui.fragments.payment.PaymentFragment
 import kotlinx.coroutines.launch
 
