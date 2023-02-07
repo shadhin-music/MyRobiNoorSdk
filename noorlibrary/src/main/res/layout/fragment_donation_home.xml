@@ -77,11 +77,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="@dimen/standard_margin"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_donate"
             app:layout_constraintBottom_toBottomOf="@+id/ivDonate"
             app:layout_constraintStart_toStartOf="@+id/ivDonate"
             app:layout_constraintTop_toTopOf="@+id/ivDonate" />
@@ -134,10 +133,9 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/appCompatImageView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="@dimen/standard_margin"
-                android:src="@drawable/ic_charity"
                 app:layout_constraintBottom_toBottomOf="@+id/ivCharityOrganization"
                 app:layout_constraintStart_toStartOf="@+id/ivCharityOrganization"
                 app:layout_constraintTop_toTopOf="@+id/ivCharityOrganization" />
@@ -180,10 +178,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="@dimen/standard_margin"
-            android:src="@drawable/ic_donate_impotance"
             app:layout_constraintBottom_toBottomOf="@+id/ivDonationImportance"
             app:layout_constraintStart_toStartOf="@+id/ivDonationImportance"
             app:layout_constraintTop_toTopOf="@+id/ivDonationImportance" />

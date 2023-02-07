@@ -90,6 +90,11 @@ internal class NamazTimingFragment : Fragment() {
     private lateinit var tvNextWaqt: AppCompatTextView
     private lateinit var progressBar: ProgressBar
     private lateinit var ivParent: AppCompatImageView
+    private lateinit var ic_asr:AppCompatImageView
+    private lateinit var ic_fajr:AppCompatImageView
+    private lateinit var ic_dhuhr:AppCompatImageView
+    private lateinit var ic_isha:AppCompatImageView
+    private lateinit var ic_maghrib:AppCompatImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -122,6 +127,12 @@ internal class NamazTimingFragment : Fragment() {
         progressCircular = view.findViewById(R.id.progressCircular)
         progressBar = view.findViewById(R.id.progressBar)
         ivParent = view.findViewById(R.id.ivParent)
+        ic_fajr = view.findViewById(R.id.ic_fajr)
+        ic_dhuhr = view.findViewById(R.id.ic_dhuhr)
+        ic_asr = view.findViewById(R.id.ic_asr)
+        ic_maghrib = view.findViewById(R.id.ic_maghrib)
+        ic_isha = view.findViewById(R.id.ic_isha)
+
 
         prayerTimeCalculator = PrayerTimeCalculator(requireContext())
         upCommingPrayer = prayerTimeCalculator.getUpCommingPrayer()
@@ -202,6 +213,18 @@ internal class NamazTimingFragment : Fragment() {
 
         }
         initPrayerTimeHandler()
+
+        val ic_fajr_img = ImageFromOnline("Drawable/ic_fajr.png")
+        val ic_dhuhr_img = ImageFromOnline("Drawable/ic_dhuhr.png")
+        val ic_asr_img = ImageFromOnline("Drawable/ic_asr.png")
+        val ic_maghrib_img = ImageFromOnline("Drawable/ic_maghrib.png")
+        val ic_isha_img = ImageFromOnline("Drawable/ic_isha.png")
+
+        setImageFromUrlNoProgress(ic_fajr,ic_fajr_img.fullImageUrl)
+        setImageFromUrlNoProgress(ic_dhuhr,ic_dhuhr_img.fullImageUrl)
+        setImageFromUrlNoProgress(ic_asr,ic_asr_img.fullImageUrl)
+        setImageFromUrlNoProgress(ic_maghrib,ic_maghrib_img.fullImageUrl)
+        setImageFromUrlNoProgress(ic_isha,ic_isha_img.fullImageUrl)
     }
 
 

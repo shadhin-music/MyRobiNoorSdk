@@ -40,6 +40,10 @@ internal class DonationHomeFragment : Fragment() {
     private lateinit var progressLayout: ConstraintLayout
     private lateinit var progressBar: ProgressBar
     private lateinit var appCompatImageView3: AppCompatImageView
+    private lateinit var appCompatImageView5:AppCompatImageView
+    private lateinit var appCompatImageView9:AppCompatImageView
+    private lateinit var appCompatImageView7:AppCompatImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +76,10 @@ internal class DonationHomeFragment : Fragment() {
         progressLayout = view.findViewById(R.id.progressLayout)
         progressBar = view.findViewById(R.id.progressBar)
         appCompatImageView3 = view.findViewById(R.id.appCompatImageView3)
+        appCompatImageView5 = view.findViewById(R.id.appCompatImageView5)
+        appCompatImageView7 = view.findViewById(R.id.appCompatImageView7)
+        appCompatImageView9  = view.findViewById(R.id.appCompatImageView9)
+
 
         return view
     }
@@ -171,6 +179,14 @@ internal class DonationHomeFragment : Fragment() {
                 }
             }
         }
+
+        val ic_donate =ImageFromOnline("Drawable/ic_donate.png")
+        val ic_charity =ImageFromOnline("Drawable/ic_charity.png")
+        val ic_donate_impotance =ImageFromOnline("Drawable/ic_donate_impotance.png")
+
+        setImageFromUrlNoProgress(appCompatImageView5,ic_donate.fullImageUrl)
+        setImageFromUrlNoProgress(appCompatImageView7,ic_charity.fullImageUrl)
+        setImageFromUrlNoProgress(appCompatImageView9,ic_donate_impotance.fullImageUrl)
     }
 
     fun updateToolbarForThisFragment() {

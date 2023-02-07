@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.util
 
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View.GONE
@@ -106,7 +107,6 @@ fun setImageFromUrl(imageView: ImageView, url: String?, progressBar: ProgressBar
 
     }
 }
-
 
 fun setImageFromUrlNoProgress(imageView: ImageView, url: String?) {
 

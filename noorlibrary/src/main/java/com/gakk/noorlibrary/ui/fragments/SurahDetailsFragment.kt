@@ -27,6 +27,7 @@ import com.gakk.noorlibrary.audioPlayer.AudioManager
 import com.gakk.noorlibrary.callbacks.*
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.quran.surahDetail.Data
 import com.gakk.noorlibrary.service.AudioPlayerService
 import com.gakk.noorlibrary.ui.adapter.SurahDetailsAdapter
@@ -73,6 +74,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
     private lateinit var tvCurrentTime: AppCompatTextView
     private lateinit var tvSurahName: AppCompatTextView
     private lateinit var tvAyahNum: AppCompatTextView
+    private lateinit var imgQuranMini:ImageView
 
     private lateinit var exoProgressMini: AppCompatSeekBar
 
@@ -113,6 +115,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
         tvCurrentTime = layoutMiniPlayer.findViewById(R.id.tvCurrentTime)
         tvSurahName = layoutMiniPlayer.findViewById(R.id.tvSurahName)
         tvAyahNum = layoutMiniPlayer.findViewById(R.id.tvAyahNum)
+        imgQuranMini = layoutMiniPlayer.findViewById(R.id.imgQuranMini)
 
         return view
     }
@@ -269,7 +272,11 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
             }
 
         }
+
         AudioPlayerService.attatchSurahDetailsCallBack(this)
+        val bg_quran_mini_player = ImageFromOnline("Drawable/bg_quran_mini_player.webp")
+       setImageFromUrlNoProgress(imgQuranMini,bg_quran_mini_player.fullImageUrl)
+
     }
 
     override fun onPause() {
