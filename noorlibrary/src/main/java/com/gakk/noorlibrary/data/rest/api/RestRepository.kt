@@ -18,32 +18,20 @@ import com.gakk.noorlibrary.model.literature.*
 import com.gakk.noorlibrary.model.nagad.NagadInitiatePaylaod
 import com.gakk.noorlibrary.model.nagad.NagadSubStatusResponse
 import com.gakk.noorlibrary.model.nagad.PaymentInitiateResponse
-import com.gakk.noorlibrary.model.names.NamesOfAllahApiResponse
 import com.gakk.noorlibrary.model.nearby.NearbyResponse
 import com.gakk.noorlibrary.model.podcast.AddCommentResponse
 import com.gakk.noorlibrary.model.podcast.CommentListResponse
 import com.gakk.noorlibrary.model.podcast.LiveVideosResponse
-import com.gakk.noorlibrary.model.profile.UserInfoResponse
 import com.gakk.noorlibrary.model.quran.ayah.AyahsBySurah
 import com.gakk.noorlibrary.model.quran.surah.SurahListResponse
 import com.gakk.noorlibrary.model.quran.surah.favourite.FavouriteResponse
 import com.gakk.noorlibrary.model.quran.surah.unfavourite.UnfavouriteResponse
 import com.gakk.noorlibrary.model.quran.surahDetail.SurahDetailsResponse
-import com.gakk.noorlibrary.model.quranSchool.QuranSchoolResponse
-import com.gakk.noorlibrary.model.quranSchool.ScholarsResponse
-import com.gakk.noorlibrary.model.quranSchool.SingleScholarResponse
 import com.gakk.noorlibrary.model.roza.IftarAndSheriTimeforBD
 import com.gakk.noorlibrary.model.ssl.SslInitiatePayload
 import com.gakk.noorlibrary.model.ssl.SslPaymentInitiateResponse
 import com.gakk.noorlibrary.model.subcategory.SubcategoriesByCategoryIdResponse
 import com.gakk.noorlibrary.model.subs.CheckSubResponse
-import com.gakk.noorlibrary.model.tracker.AllPrayerDataResponse
-import com.gakk.noorlibrary.model.tracker.PostPrayerDataResponse
-import com.gakk.noorlibrary.model.tracker.PrayerAddModel
-import com.gakk.noorlibrary.model.tracker.SalahStatus
-import com.gakk.noorlibrary.model.tracker.ramadan.AllRamadanDataResponse
-import com.gakk.noorlibrary.model.tracker.ramadan.add.PostRamadanDataResponse
-import com.gakk.noorlibrary.model.tracker.ramadan.add.RamadanAddModel
 import com.gakk.noorlibrary.model.umrah_hajj.*
 import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
 import com.gakk.noorlibrary.model.zakat.SaveZakatResponse
@@ -80,9 +68,6 @@ class RestRepository(
         return contentApiService.getSubCategoriesByCatId(catId, pageNo)
     }
 
-    suspend fun getNinetyNineNamesOfAllah(): NamesOfAllahApiResponse {
-        return contentApiService.getNamesOfAllah(AppPreference.language!!)
-    }
 
     suspend fun geTextBasedtLiteratureListBySubCategory(
         catId: String,
@@ -143,10 +128,6 @@ class RestRepository(
             else -> return contentApiService.unFavouriteLiteratureById(body)
         }
 
-    }
-
-    suspend fun getUserInfo(id: String): UserInfoResponse {
-        return contentApiService.getUserInfo(id)
     }
 
     suspend fun getBillboradList(): BillboardResponse {
@@ -237,150 +218,8 @@ class RestRepository(
         return contentApiService.unFavouriteSurah(id)
     }
 
-    suspend fun getAllScholars(): ScholarsResponse {
-        return contentApiService.getAllScholars(AppPreference.language!!)
-    }
-
-    suspend fun getScholarsById(id: String): SingleScholarResponse {
-        return contentApiService.getScholarsById(id)
-    }
-
-    suspend fun getQuranSchoolByScholars(id: String): QuranSchoolResponse {
-        return contentApiService.getQuranSchoolByScholars(id)
-    }
-
-    suspend fun getIslamicNamesByGender(gender: String): IslamicNameResponse {
-        return contentApiService.getIslamicName(AppPreference.language!!, gender)
-    }
-
-    suspend fun makeIslamicNameFav(id: String): FavouriteResponse {
-        return contentApiService.makeIslamicNameFavorite(id)
-    }
-
-    suspend fun removeIslamicNameFromFav(id: String): UnfavouriteResponse {
-        return contentApiService.removeIslamicNameFromFav(id)
-    }
-
-    suspend fun getAllFavoritedIslamicNames(gender: String): IslamicNameResponse {
-        return contentApiService.getFavouritedIslamicNames(AppPreference.language!!, gender)
-    }
-
-    suspend fun getAllPrayerData(fromMonth: String, toMonth: String): AllPrayerDataResponse {
-        return contentApiService.getAllPrayerData(fromMonth, toMonth)
-    }
-
     suspend fun getRamadanTimingData(name: String): IftarAndSheriTimeforBD {
         return contentApiService.getRamadanTimingData(name)
-    }
-
-    suspend fun addPrayerData(
-        createdOn: String,
-        language: String,
-        salahStatus: SalahStatus
-    ): PostPrayerDataResponse {
-        val addPrayerModel = PrayerAddModel(
-            CreatedOn = createdOn, Language = language,
-            SalahStatus = salahStatus
-        )
-        val gson = Gson()
-        val params = gson.toJson(addPrayerModel)
-
-        val JSON = "text/plain".toMediaType()
-        val body = JSONObject(params).toString().toRequestBody(JSON)
-        val result = contentApiService.addPrayerData(body)
-        return result
-    }
-
-    suspend fun updatePrayerData(
-        id: String,
-        createdBy: String,
-        createdOn: String,
-        language: String,
-        salahStatus: SalahStatus
-    ): PostPrayerDataResponse {
-        val addPrayerModel = PrayerAddModel(
-            id = id,
-            CreatedBy = createdBy,
-            CreatedOn = createdOn, Language = language,
-            SalahStatus = salahStatus
-        )
-        val gson = Gson()
-        val params = gson.toJson(addPrayerModel)
-
-        val JSON = "text/plain".toMediaType()
-        val body = JSONObject(params).toString().toRequestBody(JSON)
-        val result = contentApiService.updatePrayerData(body)
-        return result
-    }
-
-    suspend fun getAllRamadanData(fromMonth: String, toMonth: String): AllRamadanDataResponse {
-        return contentApiService.getAllRamadanData(fromMonth, toMonth)
-    }
-
-
-    suspend fun addRamadanData(
-        createdOn: String,
-        language: String,
-        ramadanStatus: Boolean
-    ): PostRamadanDataResponse {
-        val addPrayerModel = RamadanAddModel(
-            CreatedOn = createdOn, Language = language,
-            RamadanStatus = ramadanStatus
-        )
-        val gson = Gson()
-        val params = gson.toJson(addPrayerModel)
-
-        val JSON = "text/plain".toMediaType()
-        val body = JSONObject(params).toString().toRequestBody(JSON)
-        val result = contentApiService.addRamadanData(body)
-        return result
-    }
-
-    suspend fun updateRamadanData(
-        id: String,
-        createdBy: String,
-        createdOn: String,
-        language: String,
-        ramadanStatus: Boolean
-    ): PostRamadanDataResponse {
-        val addPrayerModel = RamadanAddModel(
-            id = id,
-            CreatedBy = createdBy,
-            CreatedOn = createdOn, Language = language,
-            RamadanStatus = ramadanStatus
-        )
-        val gson = Gson()
-        val params = gson.toJson(addPrayerModel)
-
-        val JSON = "text/plain".toMediaType()
-        val body = JSONObject(params).toString().toRequestBody(JSON)
-        val result = contentApiService.updateRamadanData(body)
-        return result
-    }
-
-    suspend fun getTodayCurrencyRate(from: String, to: String): CurrentCurrencyModel? {
-        var currentCurrencyModel: CurrentCurrencyModel? = null
-        val url = String.format(
-            "http://data.fixer.io/api/latest?access_key=6777107e8e6d8515777655152d451e7a&base=EUR&symbols=%s,%s",
-            from,
-            to
-        )
-        val response = contentApiService.getCurrencyDetails(url)
-        withContext(Dispatchers.IO) {
-            val jsonObject = JSONObject(response.string())
-            val isSuccess: Boolean = jsonObject.getBoolean("success")
-            if (isSuccess) {
-                currentCurrencyModel = CurrentCurrencyModel(
-                    isSuccess,
-                    jsonObject.getInt("timestamp"),
-                    jsonObject.getString("date"),
-                    jsonObject.getJSONObject("rates").getString(from),
-                    jsonObject.getJSONObject("rates").getString(to)
-                )
-            }
-        }
-
-        return currentCurrencyModel
     }
 
     //Live Podcast
@@ -423,103 +262,8 @@ class RestRepository(
         return contentApiService.getKhatamQuranVideos()
     }
 
-    suspend fun registerHajjUser(
-        msisdn: String
-    ): HajjPackageEntryResponse {
-        val registerModel = HajjPackagePayload(msisdn)
-        val gson = Gson()
-        val params = gson.toJson(registerModel)
-
-        val JSON = "text/plain".toMediaType()
-        val body = JSONObject(params).toString().toRequestBody(JSON)
-        val result = contentApiService.hajjPackageEntry(body)
-        return result
-    }
-
     suspend fun addDeviceinfo(token: String): HajjLocationShareRequestResponse {
         return contentApiService.addDeviceId(token)
-    }
-
-    suspend fun locationShareRequest(trackerPhone: String): HajjLocationShareRequestResponse {
-        return contentApiService.hajjLocationShareRequest(trackerPhone)
-    }
-
-    suspend fun locationTrackRequest(
-        sharerPhone: String,
-        trackerPhone: String
-    ): HajjLocationShareRequestResponse {
-        val registerModel = LocationTrackPayload(sharerPhone, trackerPhone)
-        val gson = Gson()
-        val params = gson.toJson(registerModel)
-
-        val JSON = "text/plain".toMediaType()
-        val body = JSONObject(params).toString().toRequestBody(JSON)
-        val result = contentApiService.hajjLocationTrackingRequest(body)
-        return result
-    }
-
-    suspend fun getHajjSharingList(): HajjSharingListResponse {
-        return contentApiService.getHajjSharingList()
-    }
-
-    suspend fun hajjLocationSave(
-        lat: String,
-        lon: String
-    ): HajjLocationShareRequestResponse {
-        val registerModel = LocationSavePayload(lat, lon)
-        val gson = Gson()
-        val params = gson.toJson(registerModel)
-
-        val JSON = "text/plain".toMediaType()
-        val body = JSONObject(params).toString().toRequestBody(JSON)
-        val result = contentApiService.addtHajjTrakingData(body)
-        return result
-    }
-
-    suspend fun locationTrackRequest(sharerUserPhone: String): HajjLocationShareRequestResponse {
-        return contentApiService.hajjLocationTrackRequest(sharerUserPhone)
-    }
-
-    suspend fun getHajjTrackingList(): HajjTrackingListResponse {
-        return contentApiService.getHajjTrackingList()
-    }
-
-    suspend fun getHajjShareLocation(msisdn: String): HajjShareLocationGetResponse {
-        return contentApiService.getSharerLocation(msisdn)
-    }
-
-    suspend fun deleteHajjData(id: String): HajjLocationShareRequestResponse {
-        return contentApiService.deleteHajjTrackingData(id)
-    }
-
-
-    suspend fun initiatePaymentNagad(
-        msisdn: String,
-        serviceId: String
-    ): PaymentInitiateResponse {
-
-        val paymentModel = NagadInitiatePaylaod(msisdn, serviceId, NAGAD_PUSER)
-        val gson = Gson()
-        val params = gson.toJson(paymentModel)
-
-        val JSON = "application/json; charset=utf-8".toMediaType()
-        val body = JSONObject(params).toString().toRequestBody(JSON)
-
-        return subApiServiceNagad.initiateNagadPayment("application/json", body)
-    }
-
-    suspend fun checkSubStatusNagad(
-        msisdn: String,
-        serviceId: String
-    ): NagadSubStatusResponse {
-        val jsonParams: MutableMap<String?, Any?> = ArrayMap()
-        jsonParams["MSISDN"] = msisdn
-        jsonParams["serviceid"] = serviceId
-
-        val JSON = "application/json; charset=utf-8".toMediaType()
-        val body = JSONObject(jsonParams).toString().toRequestBody(JSON)
-
-        return subApiServiceNagad.checkNagadSubStatus("application/json", body)
     }
 
     suspend fun initiatePaymentSsl(

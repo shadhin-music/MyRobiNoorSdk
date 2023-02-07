@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.LiteratureCategoryAdapter
@@ -108,12 +109,19 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
                                 )
                                 rvLiteratureCategories.adapter = adapter
                                 rvLiteratureCategories.layoutManager =
-                                    GridLayoutManager(
-                                        context,
-                                        2,
-                                        RecyclerView.VERTICAL,
-                                        false
-                                    )
+                                    when (mCatId) {
+                                        R.string.namaz_rules_cat_id.getLocalisedTextFromResId() -> {
+                                            LinearLayoutManager(context)
+                                        }
+                                        else -> {
+                                            GridLayoutManager(
+                                                context,
+                                                2,
+                                                RecyclerView.VERTICAL,
+                                                false
+                                            )
+                                        }
+                                    }
 
                             }
 
@@ -134,12 +142,12 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
 
                         }
                         progressLayout.visibility = GONE
-                        progressLayout.visibility = GONE
+                       progressLayout.visibility = GONE
 
 
                     }
                     Status.LOADING -> {
-                        noInternetLayout.visibility = GONE
+                       noInternetLayout.visibility = GONE
                         if (pageNo == 1) {
                             progressLayout.visibility = VISIBLE
                         }
@@ -154,7 +162,7 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
             initPagingProperties()
             loadData()
 
-            btnRetry.handleClickEvent {
+           btnRetry.handleClickEvent {
                 loadData()
             }
 
@@ -171,6 +179,7 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
             R.string.namaz_rules_cat_id.getLocalisedTextFromResId() -> {
                 mDetailsCallback?.setToolBarTitle(resources.getString(R.string.cat_namaz_sikhha))
             }
+
         }
 
         mDetailsCallback?.toggleToolBarActionIconsVisibility(false)

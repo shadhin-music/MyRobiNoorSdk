@@ -14,8 +14,6 @@ const val FLAG_BASE_URL = "http://flags.fmcdn.net/data/flags/h20/"
 const val CONTENT_BASE_URL = "http://27.131.15.12:801/contents/"
 const val IMAGES_BASE_URL = "https://shadhinmusiccontent.sgp1.digitaloceanspaces.com/NoorSdkImages/"
 
-const val USER_NUMBER = "USER_NUMBER"
-
 const val PAGE_NAME = "page"
 
 const val SURAH_ID = "surahId"

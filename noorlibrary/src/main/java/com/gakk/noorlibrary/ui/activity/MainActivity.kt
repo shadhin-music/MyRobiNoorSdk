@@ -2,27 +2,14 @@ package com.gakk.noorlibrary.ui.activity
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlarmManager
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -42,7 +29,6 @@ import com.gakk.noorlibrary.data.wrapper.LiteratureListWrapper
 import com.gakk.noorlibrary.job.RozaAlarmControlJob
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
-import com.gakk.noorlibrary.model.quranSchool.Scholar
 import com.gakk.noorlibrary.ui.adapter.SliderAdapter
 import com.gakk.noorlibrary.ui.fragments.LiteratureHomeFragment
 import com.gakk.noorlibrary.ui.fragments.tabs.HomeFragment
@@ -53,7 +39,6 @@ import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import com.gakk.noorlibrary.viewModel.QuranViewModel
 import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import java.io.Serializable
 
@@ -73,14 +58,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
     private var surahId: String? = null
     private var moreFragment: MoreFragment? = null
     var mainCallback: MainCallback? = null
-
-
-    val settingsActLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                Log.e("Noor", "permitted")
-            }
-        }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -481,7 +458,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
         pageName: String,
         surahId: String?,
         surahList: MutableList<Data>?,
-        scholar: Scholar?,
         selectedIndex: Int?,
         literatureListCallBack: LiteratureListCallBack?,
         currentPageNo: Int?,
@@ -528,9 +504,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 surahList?.let {
                     putExtra(SURAH_LIST, it as Serializable)
                 }
-                scholar?.let {
-                    putExtra(SCHOLAR, it)
-                }
+
             }
         startActivity(intent)
 

@@ -100,16 +100,6 @@ object AppPreference {
             val type: Type = genericType<Data>()
             return mGSonInstance.fromJson(userDataStr, type)
         }
-    var cachedUserInfo: com.gakk.noorlibrary.model.profile.Data
-        set(value) {
-            val userDataStr = mGSonInstance.toJson(value)
-            preferences.edit { it.putString(PREF_USER_INFO, userDataStr) }
-        }
-        get() {
-            val userDataStr = preferences.getString(PREF_USER_INFO, "")
-            val type: Type = genericType<com.gakk.noorlibrary.model.profile.Data>()
-            return mGSonInstance.fromJson(userDataStr, type)
-        }
 
     var sehriAlertOn: Boolean
         get() = preferences.getBoolean(PREF_RAMADAN_NOTIFICATION_SEHRI_ALERT_ON, false)

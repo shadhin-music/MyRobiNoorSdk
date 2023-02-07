@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.callbacks.PagingViewCallBack
+import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.subcategory.Data
 import com.gakk.noorlibrary.util.*
 
@@ -81,7 +82,8 @@ internal class LiteratureCategoryAdapter(
 
                         val layoutVisualForMen = view.findViewById<CardView>(R.id.layoutVisualForMen)
                         val layoutVisualForWomen = view.findViewById<CardView>(R.id.layoutVisualForWomen)
-                        val imgThumbnail = layoutVisualForWomen.findViewById<ImageView>(R.id.imgThumbnail)
+                        val imgThumbnailWomen = layoutVisualForWomen.findViewById<ImageView>(R.id.imgThumbnail)
+                        val imgThumbnailMen = layoutVisualForMen.findViewById<ImageView>(R.id.imgThumbnail)
                         val tvSubTitle = layoutVisualForWomen.findViewById<AppCompatTextView>(R.id.tvSubTitle)
 
 
@@ -90,8 +92,8 @@ internal class LiteratureCategoryAdapter(
                             layoutVisualForWomen.visibility = View.VISIBLE
                         }
 
-
-                        imgThumbnail.setImageResource(R.drawable.ic_women_praying)
+                        setImageFromUrlNoProgress(imgThumbnailMen, ImageFromOnline("Drawable/ic_man_praying.webp").fullImageUrl)
+                        setImageFromUrlNoProgress(imgThumbnailWomen, ImageFromOnline("Drawable/ic_women_praying.webp").fullImageUrl)
                         tvSubTitle.setText(R.string.for_women)
 
                         layoutVisualForMen.handleClickEvent {

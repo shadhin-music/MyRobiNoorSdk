@@ -139,7 +139,7 @@ internal class SubscriptionFragment : Fragment() {
                             }
                             else -> {
                                 AppPreference.subDaily = false
-                                ivShapeSubDaily.setImageResource(R.drawable.ic_shape_sub)
+                                setImageFromUrlNoProgress(ivShapeSubDaily, ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl)
                                 btnSubscribeDaily.setText(getString(R.string.txt_sub))
                                 btnSubscribeDaily.setBackgroundResource(R.drawable.ic_button_small)
                             }
@@ -184,7 +184,7 @@ internal class SubscriptionFragment : Fragment() {
                             }
                             else -> {
                                 AppPreference.subFifteenDays = false
-                                ivShapeSubFifteen.setImageResource(R.drawable.ic_shape_sub)
+                                setImageFromUrlNoProgress(ivShapeSubFifteen, ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl)
                                 btnSubscribeFiftten.setText(getString(R.string.txt_sub))
 
                                 btnSubscribeFiftten.setBackgroundResource(R.drawable.ic_button_small)

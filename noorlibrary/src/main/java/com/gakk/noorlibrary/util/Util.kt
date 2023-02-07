@@ -13,17 +13,13 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.provider.Settings
-import android.util.Base64
 import android.view.View
 import android.widget.FrameLayout
-import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.UnsupportedEncodingException
-import java.nio.charset.StandardCharsets
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -37,17 +33,6 @@ import kotlin.math.absoluteValue
  */
 object Util {
     private lateinit var mProgressDialog: ProgressDialog
-    fun parseAndGetKey(): String {
-        val data = Base64.decode(BuildConfig.YOUTUBE_API_KEY, Base64.DEFAULT)
-        var text = ""
-        try {
-            text = String(data, StandardCharsets.UTF_8)
-        } catch (e: UnsupportedEncodingException) {
-            e.printStackTrace()
-        }
-
-        return text
-    }
 
 
     fun showProgressDialog(context: Context?, title: String?, message: String?) {
