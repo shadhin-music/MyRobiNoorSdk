@@ -212,10 +212,10 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
             }
 
             layoutNewCalculation.handleClickEvent {
-               /* Intent(context, DetailsActivity::class.java).apply {
-                    this.putExtra(PAGE_NAME, PAGE_JAKAT_NEW_CALCULATION)
-                    startActivity(this)
-                }*/
+                /* Intent(context, DetailsActivity::class.java).apply {
+                     this.putExtra(PAGE_NAME, PAGE_JAKAT_NEW_CALCULATION)
+                     startActivity(this)
+                 }*/
 
                 mDetailsCallBack?.addFragmentToStackAndShow(
                     ZakatCalculatorFragment.newInstance()
@@ -345,7 +345,6 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
             R.string.animation_cat_id.getLocalisedTextFromResId() -> resources.getString(R.string.cat_animation)
             R.string.jakat_cat_id.getLocalisedTextFromResId() -> resources.getString(R.string.txt_jakat_calculator)
             R.string.hajj_cateogry_id.getLocalisedTextFromResId() -> resources.getString(R.string.cat_hajj)
-            R.string.qurbani_cateogry_id.getLocalisedTextFromResId() -> resources.getString(R.string.cat_qurbani)
             R.string.miladunnobi_cateogry_id.getLocalisedTextFromResId() -> txtMiladunnobi
             R.string.donation_importance_id.getLocalisedTextFromResId() -> resources.getString(R.string.txt_charity_importance)
 

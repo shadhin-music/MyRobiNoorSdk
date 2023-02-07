@@ -350,7 +350,6 @@
     <string name="hajj_pre_registration_category_id">625cf907bf0f1370b2ed535d</string>
     <string name="hajj_map_cateogry_id">6087a1ae5b10ee41c9e7d69a</string>
     <string name="hajj_currency_cateogry_id">6087a2265b10ee41c9e7d69b</string>
-    <string name="qurbani_cateogry_id">60cadb9fdd1390a52293934c</string>
     <string name="quran_class_cat_id">6061659ee03cc3b3f50e09bd</string>
     <string name="instructive_video_cat_id">612378552d5c4aaaa1fe7645</string>
     <string name="miladunnobi_cateogry_id">6134511e857486b08405e9fd</string>
@@ -373,7 +372,6 @@
     <string name="hajj_guide_category_id">62bc022291776fe33f8b9fe1</string>
     <string name="hajj_guide_sub_category_id">62c687407441a12ee460d041</string>
     <string name="hajj_package_id">62d4f2d7f91b8f49a6bfca8d</string>
-    <string name="islamic_chuti_id">627c8495c44068285dde96c2</string>
 
     <string name="default_content_des">content description image</string>
     <string name="digital_school">নূর কুরআন স্কুল</string>
@@ -483,7 +481,6 @@
     <string name="name">নাম</string>
     <string name="cat_islamic_calender">ইসলামিক ক্যালেন্ডার</string>
     <string name="cat_tracker">ট্র্যাকার</string>
-    <string name="cat_qurbani">কুরবানী</string>
     <string name="cat_corona_funeral_service">করোনা দাফন সেবা</string>
     <string name="title_online_hut">অনলাইন গরুর হাট</string>
     <string name="cat_islamic_podcast">ইসলামিক পডকাস্ট</string>

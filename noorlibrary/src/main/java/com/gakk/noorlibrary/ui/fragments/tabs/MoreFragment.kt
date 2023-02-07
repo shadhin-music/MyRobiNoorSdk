@@ -85,13 +85,13 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)
                         startActivity(this)
                     }
-                }  else if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
+                } else if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_SSL)
                         this.putExtra(IS_FAV, false)
                         startActivity(this)
                     }
-                }  else {
+                } else {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                         startActivity(this)
@@ -200,14 +200,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             BottomSheetItem(
                 R.drawable.ic_cat_hajj,
                 getString(R.string.cat_hajj)
-            )
-        )
-
-
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_cat_qurbani,
-                getString(R.string.cat_qurbani)
             )
         )
 

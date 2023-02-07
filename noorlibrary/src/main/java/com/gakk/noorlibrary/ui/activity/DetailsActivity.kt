@@ -29,7 +29,6 @@ import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistratio
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationListFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
-import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.DonationHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.OrganizationDetailsFragment
 import com.gakk.noorlibrary.util.*
@@ -295,7 +294,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
             HajjHomeFragment::class.java -> (fragment as HajjHomeFragment).updateToolbarForThisFragment()
             HajjPreRegistrationFragment::class.java -> (fragment as HajjPreRegistrationFragment).updateToolbarForThisFragment()
             HajjPreRegistrationListFragment::class.java -> (fragment as HajjPreRegistrationListFragment).updateToolbarForThisFragment()
-            QurbaniHomeFragment::class.java -> (fragment as QurbaniHomeFragment).updateToolbarForThisFragment()
             BishwaIjtemaFragment::class.java -> (fragment as BishwaIjtemaFragment).updateToolbarForThisFragment()
             UmrahHajjFragment::class.java -> (fragment as UmrahHajjFragment).setupToolbarCallback()
 

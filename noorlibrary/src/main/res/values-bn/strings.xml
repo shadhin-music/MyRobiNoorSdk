@@ -272,7 +272,6 @@
 
     <string name="hajj_map_cateogry_id">6087a1ae5b10ee41c9e7d69a</string>
     <string name="hajj_currency_cateogry_id">6087a2265b10ee41c9e7d69b</string>
-    <string name="qurbani_cateogry_id">60cadb9fdd1390a52293934c</string>
     <string name="quran_class_cat_id">6061659ee03cc3b3f50e09bd</string>
     <string name="instructive_video_cat_id">612378552d5c4aaaa1fe7645</string>
     <string name="miladunnobi_cateogry_id">6134511e857486b08405e9fd</string>
@@ -377,7 +376,6 @@
     <string name="name">নাম</string>
     <string name="cat_islamic_calender">ইসলামিক ক্যালেন্ডার</string>
     <string name="cat_tracker">ট্র্যাকার</string>
-    <string name="cat_qurbani">কুরবানী</string>
 
     <string name="cat_eid_e_miladunnobi">ঈদ ই মিলাদুন্নবী</string>
     <string name="cat_eid_e_miladunnobi_robi">ঈদ ই মিলাদুন্নবী</string>

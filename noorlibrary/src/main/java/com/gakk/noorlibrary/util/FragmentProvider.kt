@@ -12,17 +12,16 @@ import com.gakk.noorlibrary.ui.fragments.eidjamat.EidJamatFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.HajjGuideFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjpreRegistrationDetailsFragment
+import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
 import com.gakk.noorlibrary.ui.fragments.instructiveVideo.InstructiveVideoFragment
 import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
 import com.gakk.noorlibrary.ui.fragments.quranSchool.QuranSchoolHomeFragment
-import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SslSubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionOptionListFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.ZakatCalculatorFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.*
-import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import java.io.Serializable
 
 
@@ -43,12 +42,7 @@ object FragmentProvider {
         pageTitle: String? = null,
         scholar: Scholar? = null,
         catName: String? = null,
-        itemCount: Int? = null,
-        times: Int? = null,
-        userInfo: com.gakk.noorlibrary.model.profile.Data? = null,
-        literature: Literature? = null,
-        listNamesOfAllah: List<com.gakk.noorlibrary.model.names.Data>? = null,
-        isFromHomeEvent: Boolean = false
+        literature: Literature? = null
     ): Fragment? {
 
         return when (name) {
@@ -173,10 +167,6 @@ object FragmentProvider {
             PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
             PAGE_SUBSCRIPTION_OPTION_LIST -> SubscriptionOptionListFragment.newInstance()
             PAGE_SUBSCRIPTION_SSL -> SslSubscriptionFragment.newInstance()
-
-            PAGE_QURBANI_HOME ->
-                QurbaniHomeFragment.newInstance()
-
 
             PAGE_EID_E_MILADUNNOBI -> when (Util.checkSub()) {
                 true -> {
