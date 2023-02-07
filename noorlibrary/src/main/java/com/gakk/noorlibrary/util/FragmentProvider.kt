@@ -13,10 +13,7 @@ import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.HajjGuideFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjpreRegistrationDetailsFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
-import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
-import com.gakk.noorlibrary.ui.fragments.instructiveVideo.InstructiveVideoFragment
 import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
-import com.gakk.noorlibrary.ui.fragments.quranSchool.QuranSchoolHomeFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SslSubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionFragment
 import com.gakk.noorlibrary.ui.fragments.subscription.SubscriptionOptionListFragment
@@ -140,26 +137,6 @@ object FragmentProvider {
 
             PAGE_JAKAT_NEW_CALCULATION -> ZakatCalculatorFragment.newInstance()
 
-            PAGE_QURAN_SCHOOL -> QuranSchoolHomeFragment.newInstance(
-                scholar = scholar
-            )
-            PAGE_CAT_QURAN_SCHOOL -> when (Util.checkSub()) {
-                true -> {
-                    QuranSchoolHomeFragment.newInstance(
-                        isCatQuranSchool = true
-                    )
-                }
-                else -> {
-                    SubscriptionOptionListFragment.newInstance()
-                }
-            }
-
-
-            PAGE_CAT_LIVE_QA ->
-                InstructiveVideoFragment.newInstance(
-                    "Live Qa"
-                )
-
 
             PAGE_HAJJ_HOME ->
                 HajjHomeFragment.newInstance()
@@ -167,23 +144,6 @@ object FragmentProvider {
             PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
             PAGE_SUBSCRIPTION_OPTION_LIST -> SubscriptionOptionListFragment.newInstance()
             PAGE_SUBSCRIPTION_SSL -> SslSubscriptionFragment.newInstance()
-
-            PAGE_EID_E_MILADUNNOBI -> when (Util.checkSub()) {
-                true -> {
-                    LiteratureListFragment.newInstance(
-                        false,
-                        catId = R.string.miladunnobi_cateogry_id.getLocalisedTextFromResId(),
-                        subCatId = "undefined",
-                        pageTitle = "",
-                        showHeaderImageMiladunnobi = true
-                    )
-                }
-
-                else -> {
-                    SubscriptionOptionListFragment.newInstance()
-                }
-            }
-
 
             PAGE_DONATION_HOME -> DonationHomeFragment.newInstance()
 
@@ -210,8 +170,6 @@ object FragmentProvider {
                 subCatId = "undefined",
                 pageTitle = ""
             )
-
-            PAGE_IJTEMA -> BishwaIjtemaFragment.newInstance()
 
             PAGE_HAJJ_GUIDE -> HajjGuideFragment.newInstance()
 

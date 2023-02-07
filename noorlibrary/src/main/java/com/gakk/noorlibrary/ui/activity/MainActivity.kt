@@ -409,7 +409,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
     override fun onDestroy() {
         super.onDestroy()
-       // AppPreference.clearCachedUser()
+        // AppPreference.clearCachedUser()
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -616,43 +616,13 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         Log.i("QURAN_", "id :$surahId size:${surahList?.size ?: 0}")
 
                     }
-                    PAGE_LIVE_VIDEO -> {
-
-                        startActivity(
-                            Intent(this, YoutubePlayerActivity::class.java).apply {
-                                putExtra(IS_IJTEMA_LIVE_VIDEO, false)
-                            }
-                        )
-                    }
-                    else -> {
-                        openDetailsActivityWithPageName(
-                            it,
-                        )
-                    }
-                }
-            }
-
-            pageNotification?.let {
-
-                when (it) {
-                    PAGE_LIVE_VIDEO -> {
-                        BaseApplication.LIVE_VIDEO_ID =
-                            intent.extras?.get(NOTIFICATION_CATEGORY_ID_TAG) as String?
-                        startActivity(
-                            Intent(this, YoutubePlayerActivity::class.java).apply {
-                                putExtra(IS_IJTEMA_LIVE_VIDEO, false)
-                            }
-                        )
-                    }
 
                     else -> {
                         openDetailsActivityWithPageName(
                             it,
                         )
                     }
-
                 }
-
             }
         }
 
@@ -668,67 +638,6 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
     override fun onResume() {
         super.onResume()
-
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (!alarmManager.canScheduleExactAlarms()) {
-                requestExactAlarmPerm()
-            }
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.S)
-    private fun requestExactAlarmPerm() {
-        showSettingsDialog()
-    }
-
-    fun showSettingsDialog() {
-        val customDialog =
-            MaterialAlertDialogBuilder(
-                this,
-                R.style.MaterialAlertDialog_rounded
-            )
-        val binding: View =
-            LayoutInflater.from(this).inflate(
-                R.layout.dialog_already_attempt,
-                null,
-                false
-            )
-
-
-        val dialogView: View = binding
-        customDialog.setView(dialogView)
-
-        val alertDialog = customDialog.show()
-        alertDialog.window?.setLayout(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-
-        alertDialog.window?.setGravity(Gravity.CENTER)
-        alertDialog.setCancelable(true)
-        alertDialog.show()
-        val tvTitleExit: AppCompatTextView = findViewById(R.id.tvTitleExit)
-        val btnComplete: AppCompatButton = findViewById(R.id.btnComplete)
-        (tvTitleExit.layoutParams as ConstraintLayout.LayoutParams).apply {
-            marginStart = 50.toPx()
-            topMargin = 8.toPx()
-            marginEnd = 30.toPx()
-            bottomMargin = 8.toPx()
-            width = ConstraintLayout.LayoutParams.MATCH_PARENT
-        }
-        tvTitleExit.setText("On Android S and higher, the app needs permission to schedule exact alarms. Without this, no alarm can be set. Please go to Settings and enable this permission to continue setting an alarm.")
-        btnComplete.setText("Go to Settings")
-
-        btnComplete.handleClickEvent {
-            alertDialog.dismiss()
-            val intent = Intent()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                intent.action = ACTION_REQUEST_SCHEDULE_EXACT_ALARM
-                intent.setData(Uri.parse("package:com.gakk.noorlibrary"))
-            }
-            settingsActLauncher.launch(intent)
-        }
 
     }
 

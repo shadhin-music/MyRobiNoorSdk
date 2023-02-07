@@ -333,9 +333,6 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
 
     fun updateToolbarForThisFragment() {
 
-        val txtMiladunnobi: String
-        txtMiladunnobi = getString(R.string.title_eid_e_miladunnobi_robi)
-
         val title: String?
         title = when (mCatId) {
             R.string.namaz_rules_cat_id.getLocalisedTextFromResId() -> resources.getString(R.string.cat_namaz_sikhha)
@@ -345,7 +342,6 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
             R.string.animation_cat_id.getLocalisedTextFromResId() -> resources.getString(R.string.cat_animation)
             R.string.jakat_cat_id.getLocalisedTextFromResId() -> resources.getString(R.string.txt_jakat_calculator)
             R.string.hajj_cateogry_id.getLocalisedTextFromResId() -> resources.getString(R.string.cat_hajj)
-            R.string.miladunnobi_cateogry_id.getLocalisedTextFromResId() -> txtMiladunnobi
             R.string.donation_importance_id.getLocalisedTextFromResId() -> resources.getString(R.string.txt_charity_importance)
 
             "625cf907bf0f1370b2ed535d" -> mPageTitle

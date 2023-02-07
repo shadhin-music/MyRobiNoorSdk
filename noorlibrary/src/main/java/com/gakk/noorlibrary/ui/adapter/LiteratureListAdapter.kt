@@ -191,12 +191,7 @@ internal class LiteratureListAdapter(
 
                 return LiteratureViewHolder(NO_DATA, view)
             }
-            DOWNLOADABLE -> {
 
-                view = LayoutInflater.from(parent.context).inflate(R.layout.layout_downloadable,parent,false)
-
-                return LiteratureViewHolder(DOWNLOADABLE, view)
-            }
             FOOTER -> {
 
                 view = LayoutInflater.from(parent.context).inflate(R.layout.layout_footer,parent,false)
@@ -247,17 +242,6 @@ internal class LiteratureListAdapter(
 
             }
 
-            DOWNLOADABLE ->
-            {
-
-                val imgThumb = holder.view.findViewById<ImageView>(R.id.imgThumb)
-                val downloadable = mList?.get(position)
-                val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
-                if (progressBar != null) {
-                    setImageFromUrl(imgThumb,downloadable?.fullImageUrl,progressBar,PLACE_HOLDER_2_3)
-                }
-
-            }
 
             FOOTER ->
             {

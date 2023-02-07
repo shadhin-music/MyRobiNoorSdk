@@ -19,7 +19,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatCheckBox
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +29,10 @@ import com.gakk.noorlibrary.ui.adapter.DivisionAdapter
 import com.gakk.noorlibrary.ui.adapter.DivisionCallbackFunc
 import com.gakk.noorlibrary.ui.adapter.SurahListAdapter
 import com.gakk.noorlibrary.ui.fragments.PageReloadCallBack
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.SurahListControl
+import com.gakk.noorlibrary.util.copyToClipboard
+import com.gakk.noorlibrary.util.handleClickEvent
+import com.gakk.noorlibrary.util.setDivider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 open class BaseActivity : AppCompatActivity() {
@@ -88,17 +90,6 @@ open class BaseActivity : AppCompatActivity() {
                 showDivisionListDialog(binding, divisionCallbackFunc = divisionCallbackFunc)
             }
 
-            DialogType.ImagePickOptionDialog -> {
-                showImagePickOptioneDialog(
-                    actionCamera = actionOneWithNoParameter,
-                    actionGalley = actionTwoWithNoParameter
-                )
-            }
-
-            DialogType.DownloadConfirmDialog -> {
-                showDownloadDialog(actionOneWithNoParameter)
-            }
-
             else -> {
                 showZakatInfoDialog(title, description)
             }
@@ -108,7 +99,7 @@ open class BaseActivity : AppCompatActivity() {
     fun showZakatInfoDialog(title: String?, description: String?) {
 
         val view = LayoutInflater.from(this).inflate(
-            R.layout.layout_info_show, null,false
+            R.layout.layout_info_show, null, false
         )
 
         val dialogView: View = view
@@ -137,7 +128,7 @@ open class BaseActivity : AppCompatActivity() {
     fun showSurahListDialog(adapter: SurahListAdapter?, pageReloadCallBack: PageReloadCallBack) {
 
         val view = LayoutInflater.from(this).inflate(
-            R.layout.layout_surah_list, null,false
+            R.layout.layout_surah_list, null, false
         )
 
         val dialogView: View = view
@@ -181,53 +172,6 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun showImagePickOptioneDialog(actionCamera: (() -> Unit)?, actionGalley: (() -> Unit)?) {
-
-
-        val view = LayoutInflater.from(this).inflate(
-            R.layout.layout_photo_option, null,false
-        )
-
-
-        val dialogView: View = view
-        val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        customDialog.setView(dialogView)
-
-        alertDialog = customDialog.show()
-        alertDialog.window?.setLayout(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        alertDialog.window?.setGravity(Gravity.CENTER)
-        alertDialog.setCancelable(true)
-
-        setImagePickDialogViewClickEvents(
-            view,
-            actionCamera = actionCamera,
-            actionGalley = actionGalley
-        )
-
-    }
-
-
-    fun setImagePickDialogViewClickEvents(
-        binding: View,
-        actionCamera: (() -> Unit)?,
-        actionGalley: (() -> Unit)?
-    ) {
-
-        val btnCamera = binding.findViewById<AppCompatImageButton>(R.id.btnCamera)
-        val btnGallery = binding.findViewById<ImageButton>(R.id.btnGallery)
-
-        btnCamera.handleClickEvent {
-            actionCamera?.invoke()
-            alertDialog.dismiss()
-        }
-        btnGallery.handleClickEvent {
-            actionGalley?.invoke()
-            alertDialog.dismiss()
-        }
-    }
 
     fun showSurahOrAyahActionsDialog(
         dilogType: DialogType,
@@ -236,7 +180,7 @@ open class BaseActivity : AppCompatActivity() {
     ) {
 
         val view = LayoutInflater.from(this).inflate(
-            R.layout.layout_surah_or_ayah_action_list, null,false
+            R.layout.layout_surah_or_ayah_action_list, null, false
         )
 
         val dialogView: View = view
@@ -325,11 +269,13 @@ open class BaseActivity : AppCompatActivity() {
                 btnAction.setImageResource(R.drawable.ic_copy)
                 when (dilogType) {
                     DialogType.SurahActionListDialog -> {
-                        val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+                        val tvActionName =
+                            binding.findViewById<AppCompatTextView>(R.id.tvActionName)
                         tvActionName.setText(resources.getString(R.string.copy_surah))
                     }
                     DialogType.AyahActionListDialog -> {
-                        val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+                        val tvActionName =
+                            binding.findViewById<AppCompatTextView>(R.id.tvActionName)
                         tvActionName.setText(resources.getString(R.string.copy_ayah))
                     }
                     else -> {}
@@ -363,14 +309,16 @@ open class BaseActivity : AppCompatActivity() {
         when (dilogType) {
             DialogType.SurahActionListDialog -> {
                 val layoutFavAction = binding.findViewById<ConstraintLayout>(R.id.layoutFavAction)
-                val layoutPlayAudioAction = binding.findViewById<ConstraintLayout>(R.id.layoutPlayAudioAction)
+                val layoutPlayAudioAction =
+                    binding.findViewById<ConstraintLayout>(R.id.layoutPlayAudioAction)
 
                 layoutFavAction.visibility = VISIBLE
                 layoutPlayAudioAction.visibility = VISIBLE
             }
             DialogType.AyahActionListDialog -> {
                 val layoutFavAction = binding.findViewById<ConstraintLayout>(R.id.layoutFavAction)
-                val layoutPlayAudioAction = binding.findViewById<ConstraintLayout>(R.id.layoutPlayAudioAction)
+                val layoutPlayAudioAction =
+                    binding.findViewById<ConstraintLayout>(R.id.layoutPlayAudioAction)
 
                 layoutFavAction.visibility = GONE
                 layoutPlayAudioAction.visibility = GONE
@@ -379,44 +327,10 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun showDownloadDialog(action: (() -> Unit)?) {
-
-
-        val view = LayoutInflater.from(this).inflate(
-            R.layout.layout_confirmation_dialog, null,false
-        )
-
-
-        val dialogView: View = view
-        val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        customDialog.setView(dialogView)
-
-        alertDialog = customDialog.show()
-        alertDialog.window?.setLayout(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        alertDialog.window?.setGravity(Gravity.CENTER)
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-
-        val btnYes = view.findViewById<AppCompatButton>(R.id.btnYes)
-
-        btnYes.handleClickEvent {
-            action?.invoke()
-            alertDialog.dismiss()
-        }
-        val btnNo = view.findViewById<AppCompatButton>(R.id.btnNo)
-
-        btnNo.handleClickEvent {
-            alertDialog.dismiss()
-        }
-    }
-
     fun showRozaNotificationSettingAlert() {
 
         val view = LayoutInflater.from(this).inflate(
-            R.layout.layout_roza_notification_settings, null,false
+            R.layout.layout_roza_notification_settings, null, false
         )
 
 
@@ -443,12 +357,14 @@ open class BaseActivity : AppCompatActivity() {
 
     fun setUpRozaNotificationControls(binding: View) {
 
-        val layoutSehriAlertControl = binding.findViewById<ConstraintLayout>(R.id.layoutSehriAlertControl)
+        val layoutSehriAlertControl =
+            binding.findViewById<ConstraintLayout>(R.id.layoutSehriAlertControl)
 
         layoutSehriAlertControl.let {
 
             val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
-            val checkboxActionIcon = binding.findViewById<AppCompatCheckBox>(R.id.checkboxActionIcon)
+            val checkboxActionIcon =
+                binding.findViewById<AppCompatCheckBox>(R.id.checkboxActionIcon)
             tvActionName.setText(R.string.sehri_alert)
             checkboxActionIcon.setButtonDrawable(R.drawable.selector_notification)
 
@@ -473,7 +389,8 @@ open class BaseActivity : AppCompatActivity() {
 
         }
 
-        val layoutIfterAlertControl = binding.findViewById<ConstraintLayout>(R.id.layoutIfterAlertControl)
+        val layoutIfterAlertControl =
+            binding.findViewById<ConstraintLayout>(R.id.layoutIfterAlertControl)
 
         val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
         val checkboxActionIcon = binding.findViewById<AppCompatCheckBox>(R.id.checkboxActionIcon)
@@ -500,7 +417,8 @@ open class BaseActivity : AppCompatActivity() {
 
         }
 
-        val layoutNotificationSoundControl = binding.findViewById<ConstraintLayout>(R.id.layoutNotificationSoundControl)
+        val layoutNotificationSoundControl =
+            binding.findViewById<ConstraintLayout>(R.id.layoutNotificationSoundControl)
 
 
 
@@ -524,7 +442,8 @@ open class BaseActivity : AppCompatActivity() {
 
         }
 
-        val layoutNotificationVibrationControl = binding.findViewById<ConstraintLayout>(R.id.layoutNotificationVibrationControl)
+        val layoutNotificationVibrationControl =
+            binding.findViewById<ConstraintLayout>(R.id.layoutNotificationVibrationControl)
 
         layoutNotificationVibrationControl.let {
             tvActionName.setText(R.string.notification_vibration)
@@ -612,6 +531,5 @@ sealed class DialogType {
     object RozaNotificationSettingDialog : DialogType()
     object RozaDivisionListDialog : DialogType()
     object ImagePickOptionDialog : DialogType()
-    object DownloadConfirmDialog : DialogType()
     object ZakatInfoShow : DialogType()
 }

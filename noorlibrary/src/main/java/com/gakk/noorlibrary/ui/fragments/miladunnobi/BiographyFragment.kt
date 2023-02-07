@@ -223,9 +223,7 @@ internal class BiographyFragment : Fragment(), SliderControl {
     fun updateToolbarForThisFragment() {
 
         val txtMiladunnobi: String
-        txtMiladunnobi = getString(R.string.title_eid_e_miladunnobi_robi)
 
-        mDetailsCallBack?.setToolBarTitle(txtMiladunnobi)
     }
 
     override fun getitem(position: Int) = literatureList.get(position)

@@ -105,7 +105,6 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
 
         arguments?.let {
             categoryType = it.getString(CATEGORY_TYPE) ?: PAGE_NEAREST_MOSQUE
-            if (categoryType == PAGE_NEAREST_RESTAURANT) MAP_TYPE = "restaurant"
         }
 
         mCallback = requireActivity() as DetailsCallBack
@@ -367,11 +366,7 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (categoryType == PAGE_NEAREST_MOSQUE) {
-            mCallback.setToolBarTitle(getString(R.string.title_near_mosque))
-        } else {
-            mCallback.setToolBarTitle(getString(R.string.cat_nearest_retuarant))
-        }
+        mCallback.setToolBarTitle(getString(R.string.title_near_mosque))
 
         layoutMap.handleClickEvent {
             mCallback.addFragmentToStackAndShow(
