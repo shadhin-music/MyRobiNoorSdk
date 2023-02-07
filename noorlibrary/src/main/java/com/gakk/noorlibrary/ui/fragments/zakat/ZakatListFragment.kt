@@ -1,7 +1,6 @@
 package com.gakk.noorlibrary.ui.fragments.zakat
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.rest.api.RestRepository
-import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.zakat.ZakatModel
 import com.gakk.noorlibrary.ui.adapter.ZakatListAdapter
 import com.gakk.noorlibrary.util.*
