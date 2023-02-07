@@ -348,7 +348,6 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
             R.string.qurbani_cateogry_id.getLocalisedTextFromResId() -> resources.getString(R.string.cat_qurbani)
             R.string.miladunnobi_cateogry_id.getLocalisedTextFromResId() -> txtMiladunnobi
             R.string.donation_importance_id.getLocalisedTextFromResId() -> resources.getString(R.string.txt_charity_importance)
-            R.string.event_cateogry_id.getLocalisedTextFromResId() -> resources.getString(R.string.cat_islamic_event)
 
             "625cf907bf0f1370b2ed535d" -> mPageTitle
 

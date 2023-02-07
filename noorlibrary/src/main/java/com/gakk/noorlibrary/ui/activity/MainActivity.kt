@@ -521,13 +521,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
                     putExtra(IS_FAV, false)
                 }
 
-                if (pageName == PAGE_ISLAMIC_EVENT && isFromHomeEvent == true) {
 
-                    putExtra(CAT_ID, catId)
-                    putExtra(SUB_CAT_ID, subCatId)
-                    putExtra(PAGE_TITLE, "")
-                    putExtra("FromHome", true)
-                }
                 surahId?.let {
                     putExtra(SURAH_ID, it)
                 }

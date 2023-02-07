@@ -129,7 +129,6 @@ class FragmentDestinationMap {
                 context.resources.getString(R.string.cat_ijtema) -> PAGE_IJTEMA
                 context.resources.getString(R.string.cat_quiz) -> PAGE_QUIZ_LEADERBOARD
                 context.resources.getString(R.string.cat_hajj_tracker) -> PAGE_HAJJ_SHARE_LOCATION
-                context.resources.getString(R.string.cat_islamic_event) -> PAGE_ISLAMIC_EVENT
                 context.resources.getString(R.string.cat_islamic_podcast) -> PAGE_ISLAMIC_PODCAST
                 context.resources.getString(R.string.cat_khatam_quran) -> PAGE_KHATAM_QURAN
                 context.resources.getString(R.string.cat_eid_jamat) -> PAGE_EID_JAMAT

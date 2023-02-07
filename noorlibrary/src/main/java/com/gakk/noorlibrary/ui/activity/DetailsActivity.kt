@@ -27,12 +27,12 @@ import com.gakk.noorlibrary.ui.fragments.BiographyFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationListFragment
+import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import com.gakk.noorlibrary.ui.fragments.ijtema.BishwaIjtemaFragment
 import com.gakk.noorlibrary.ui.fragments.qurbani.QurbaniHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.DonationHomeFragment
 import com.gakk.noorlibrary.ui.fragments.zakat.donation.OrganizationDetailsFragment
 import com.gakk.noorlibrary.util.*
-import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import java.util.*
 
 
@@ -88,25 +88,6 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
                     subCatId = intent.getStringExtra(SUB_CAT_ID),
                     isFav = intent.getBooleanExtra(IS_FAV, false)
                 )
-            }
-            PAGE_ISLAMIC_EVENT -> {
-                val isFav = intent.getBooleanExtra("FromHome", false)
-                if (isFav) {
-                    Log.e("sss", "home${isFav}")
-
-                    FragmentProvider.getFragmentByName(
-                        PAGE_LITERATURE_LILIST_BY_SUB_CATEGORY,
-                        this,
-                        catId = intent.getStringExtra(CAT_ID),
-                        subCatId = intent.getStringExtra(SUB_CAT_ID),
-                        isFromHomeEvent = isFav
-                    )
-                } else {
-                    Log.e("sss", "home${isFav}")
-
-                    FragmentProvider.getFragmentByName(name = mPage, detailsActivityCallBack = this)
-                }
-
             }
             PAGE_QURAN_SCHOOL -> FragmentProvider.getFragmentByName(
                 name = mPage,

@@ -362,7 +362,6 @@
     <string name="corona_funeral_id">61dff7c43f2e99556e5fa6af</string>
     <string name="corona_funeral_subcategory_id">61dff9d93f2e99556e5fa6b0</string>
     <string name="ambulance_subcategory_id">61dffa763f2e99556e5fa6b1</string>
-    <string name="event_cateogry_id">62022d5f680c4f8afc5a6317</string>
     <string name="eid_jamat_id">623053463468b928f271d8d9</string>
     <string name="live_qa_cat_id">62415b6dfa79873a11c9000a</string>
     <string name="hajj_refund_category_id">628b19bf265a6b36210e5df5</string>
@@ -486,7 +485,6 @@
     <string name="cat_tracker">ট্র্যাকার</string>
     <string name="cat_qurbani">কুরবানী</string>
     <string name="cat_corona_funeral_service">করোনা দাফন সেবা</string>
-    <string name="cat_islamic_event">ইসলামিক ইভেন্ট</string>
     <string name="title_online_hut">অনলাইন গরুর হাট</string>
     <string name="cat_islamic_podcast">ইসলামিক পডকাস্ট</string>
     <string name="cat_khatam_quran">খতমে কুরআন</string>

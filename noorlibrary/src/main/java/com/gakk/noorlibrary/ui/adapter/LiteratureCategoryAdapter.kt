@@ -279,7 +279,7 @@ internal class LiteratureCategoryAdapter(
             if (list == null)
                 return NO_DATA
             when (catId) {
-                R.string.namaz_rules_cat_id.getLocalisedTextFromResId(), R.string.event_cateogry_id.getLocalisedTextFromResId() -> {
+                R.string.namaz_rules_cat_id.getLocalisedTextFromResId() -> {
                     if (position == 0) {
                         return CATEGORY_NAMAZ_RULES_MALE_FEMALE_INSTRUCTION
                     }

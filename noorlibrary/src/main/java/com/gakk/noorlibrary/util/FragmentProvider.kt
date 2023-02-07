@@ -95,9 +95,7 @@ object FragmentProvider {
 
                 }
             }
-            PAGE_ISLAMIC_EVENT -> LiteratureCategoryListFragment.newInstance(
-                LiteratureType.NamazRules, R.string.event_cateogry_id.getLocalisedTextFromResId()
-            )
+
 
             PAGE_EID_JAMAT -> EidJamatFragment.newInstance()
             PAGE_ISLAMIC_PODCAST -> IslamicDiscussFragment.newInstance()

@@ -272,12 +272,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         }
 
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_islamic_event,
-                getString(R.string.cat_islamic_event)
-            )
-        )
+
 
         bottomSheetItems.add(
             BottomSheetItem(
