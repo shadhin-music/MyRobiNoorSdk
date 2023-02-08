@@ -51,7 +51,7 @@ class AudioPlayerService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         Log.e("ClearFromRecentService", "END")
-        Intent(Noor.appContext, AudioPlayerService::class.java).also {
+        Intent(this, AudioPlayerService::class.java).also {
             stopService(it)
         }
         stopSelf()

@@ -482,14 +482,14 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                         when (AudioPlayerService.isServiceRunning) {
                             null, false -> {
                                 AudioPlayerServiceInstanceControl.startService(
-                                    Noor.appContext,
+                                    requireContext(),
                                     SURAH_LIST_TYPE,
                                     SurahListControl.curIndex!!,
                                     SurahListControl.surahList!!
                                 )
                             }
                             true -> {
-                                when (com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.getIsNotPaused()) {
+                                when (AudioManager.PlayerControl.getIsNotPaused()) {
                                     true -> {
                                         AudioPlayerService.executePlayerCommand(PAUSE_COMMAND)
 
@@ -510,7 +510,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
     override fun inflateMiniPlayerWithSelectedSurah() {
 
-        if (AudioPlayerService?.isServiceRunning ?: false && com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl?.getPlayListType() == SURAH_LIST_TYPE) {
+        if (AudioPlayerService?.isServiceRunning ?: false && AudioManager.PlayListControl?.getPlayListType() == SURAH_LIST_TYPE) {
             AudioManager.PlayListControl?.getCurrentSurah()?.let {
 
                 val surah = it
@@ -538,7 +538,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
 
                         override fun onStopTrackingTouch(seekBar: SeekBar?) {
                             var seekPos = seekBar?.progress?.toLong()
-                            com.gakk.noorlibrary.audioPlayer.AudioManager.getAudioPlayer()
+                            AudioManager.getAudioPlayer()
                                 ?.seekTo(seekPos ?: 0)
 
                         }
@@ -620,7 +620,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                 var currentSurahId = "-1"
                 try {
                     currentSurahId =
-                        com.gakk.noorlibrary.audioPlayer.AudioManager.PlayListControl.getCurrentSurah()?.id
+                        AudioManager.PlayListControl.getCurrentSurah()?.id
                             ?: "-1"
                 } catch (e: Exception) {
 
@@ -636,7 +636,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                             )
                         }
                         true -> {
-                            when (com.gakk.noorlibrary.audioPlayer.AudioManager.PlayerControl.getIsNotPaused()) {
+                            when (AudioManager.PlayerControl.getIsNotPaused()) {
                                 true -> {
                                     AudioPlayerService.executePlayerCommand(PAUSE_COMMAND)
                                 }
@@ -650,7 +650,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                 }//different surah
                 else {
                     AudioPlayerServiceInstanceControl.startService(
-                        Noor.appContext,
+                        requireContext(),
                         SURAH_LIST_TYPE,
                         SurahListControl.curIndex!!,
                         SurahListControl.surahList!!

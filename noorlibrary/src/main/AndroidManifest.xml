@@ -24,7 +24,6 @@
     </queries>
 
     <application
-        android:allowBackup="false"
         android:extractNativeLibs="false"
         android:hardwareAccelerated="true"
         android:installLocation="preferExternal"
@@ -34,7 +33,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
-        tools:replace="android:allowBackup,android:usesCleartextTraffic">
+        tools:replace="android:usesCleartextTraffic">
 
         <activity
             android:name=".ui.activity.podcast.PodcastActivity"
@@ -45,9 +44,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.fragments.hajj.hajjtracker.HajjTrackerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
             android:name="androidx.media.session.MediaButtonReceiver"
@@ -92,10 +88,7 @@
             android:name=".ui.activity.DetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activity.QuranSchoolPlayerActivity"
-            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ui.activity.SubscriptionBrowserActivity"
             android:launchMode="singleInstance"

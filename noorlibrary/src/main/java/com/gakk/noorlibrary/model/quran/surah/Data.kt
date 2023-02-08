@@ -98,7 +98,7 @@ data class Data(
 
     var ayahCountWithPrefix: String
         get() {
-            return "${Noor.appContext?.resources?.getString(R.string.ayah)} ${
+            return "আয়াত ${
                 TimeFormtter.getNumberByLocale(
                     totalAyat.toString()
                 )
