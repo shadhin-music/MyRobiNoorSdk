@@ -2,7 +2,7 @@
 buildscript {
     ext {
         // global variables
-        kotlin_version = "1.7.10"
+        kotlin_version = "1.6.0"
 
         libraries = [
         ]
