@@ -17,6 +17,7 @@ import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjData
 import com.gakk.noorlibrary.util.PLACE_HOLDER_16_9
+import com.gakk.noorlibrary.util.getNumberInBangla
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.util.setImageFromUrl
 
@@ -106,7 +107,9 @@ class UmrahDetailsFragment : Fragment()  {
         description.text = packageData.packageDescription?.description
         includeFeature.text = packageData.packageDescription?.includedFeatures
         contactInfo.text = packageData.packageDescription?.contactDetails
-        total_cost.text = packageData.packagePrice
+
+        total_cost.text = context?.getString(R.string.hajj_total_booking_format)?.format(packageData.bookingMoney?.getNumberInBangla())
+
 
         contactInfo.handleClickEvent {
 
@@ -121,7 +124,7 @@ class UmrahDetailsFragment : Fragment()  {
         btnNext.handleClickEvent {
 
             mDetailsCallBack?.toggleToolBarActionIconsVisibility(false)
-            mDetailsCallBack?.addFragmentToStackAndShow(UmrahPersonalInfoFragment.newInstance(packageData.umrahPackageId.toString(),packageData.packPrice.toString()))
+            mDetailsCallBack?.addFragmentToStackAndShow(UmrahPersonalInfoFragment.newInstance(packageData.umrahPackageId.toString(),packageData.bookingMoney.toString()))
         }
 
     }

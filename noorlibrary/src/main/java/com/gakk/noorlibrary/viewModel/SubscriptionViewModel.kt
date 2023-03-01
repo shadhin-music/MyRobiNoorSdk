@@ -29,7 +29,7 @@ internal class SubscriptionViewModel(private val repository: RestRepository) : V
     var sslSubInfoYearly: MutableLiveData<Resource<NagadSubStatusResponse>> = MutableLiveData()
 
     private val _subscription_robi : MutableLiveData<SubsResource> = MutableLiveData()
-
+    val subscription_robi : LiveData<SubsResource> get() = _subscription_robi
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::SubscriptionViewModel)

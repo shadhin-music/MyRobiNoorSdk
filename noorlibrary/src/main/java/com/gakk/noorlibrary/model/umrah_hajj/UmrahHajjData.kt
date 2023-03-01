@@ -14,7 +14,8 @@ data class UmrahHajjData(
     var packageDescription: UmrahHajjPackageDescription?,
     var packageName: String?,
     var startDate: String?,
-    var umrahPackageId: String?
+    var umrahPackageId: String?,
+    var bookingMoney:String?
 ) : Parcelable {
 
     var packagePrice: String?

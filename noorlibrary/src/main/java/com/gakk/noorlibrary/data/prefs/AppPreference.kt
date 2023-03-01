@@ -47,6 +47,13 @@ object AppPreference {
     private val IS_SUB_WEEKLY_ROBI = Pair(ISSUBWEEKLYROBI, false)
     private val IS_SUB_MONTHLY_ROBI = Pair(ISSUBMONTHLYROBI, false)
 
+
+    private const val ISSUBWEEKLYROBIONDEMAND = "is_sub_weekly_robi_on_demand"
+    private const val ISSUBMONTHLYROBIONDEMAND = "is_sub_monthly_robi_on_demand"
+
+    private val IS_SUB_WEEKLY_ROBI_ON_DEMAND = Pair(ISSUBWEEKLYROBIONDEMAND, false)
+    private val IS_SUB_MONTHLY_ROBI_ON_DEMAND = Pair(ISSUBMONTHLYROBIONDEMAND, false)
+
     private const val ISSUBMONTHLYSSL = "is_sub_monthly_ssl"
     private const val ISSUBHALFYEARLYSSL = "is_sub_half_yearly_ssl"
     private const val ISSUBYEARLYSSL = "is_sub_yearly_ssl"
@@ -274,6 +281,25 @@ object AppPreference {
         )
         set(value) = preferences.edit {
             it.putBoolean(IS_SUB_MONTHLY_ROBI.first, value)
+        }
+
+
+
+    var subWeeklyRobiOnDemand: Boolean
+        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
+            IS_SUB_WEEKLY_ROBI_ON_DEMAND.first,
+            IS_SUB_WEEKLY_ROBI_ON_DEMAND.second
+        )
+        set(value) = preferences.edit {
+            it.putBoolean(IS_SUB_WEEKLY_ROBI_ON_DEMAND.first, value)
+        }
+    var subMonthlyRobiOnDemand: Boolean
+        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
+            IS_SUB_MONTHLY_ROBI_ON_DEMAND.first,
+            IS_SUB_MONTHLY_ROBI_ON_DEMAND.second
+        )
+        set(value) = preferences.edit {
+            it.putBoolean(IS_SUB_MONTHLY_ROBI_ON_DEMAND.first, value)
         }
 
     var subMonthlySsl: Boolean

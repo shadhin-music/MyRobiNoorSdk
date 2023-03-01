@@ -31,6 +31,7 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.quran.surah.Data
 import com.gakk.noorlibrary.ui.adapter.SliderAdapter
 import com.gakk.noorlibrary.ui.fragments.LiteratureHomeFragment
+import com.gakk.noorlibrary.ui.fragments.subscription.SubsResource
 import com.gakk.noorlibrary.ui.fragments.tabs.HomeFragment
 import com.gakk.noorlibrary.ui.fragments.tabs.MoreFragment
 import com.gakk.noorlibrary.util.*
@@ -310,6 +311,65 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 }
             }
 
+
+            // all sub
+
+            modelSubscription.subscription_robi.observe(this@MainActivity) {
+
+                when(it)
+                {
+                    is SubsResource.Error -> Log.e("Sub", "Error" + it.msg)
+                    SubsResource.Loading -> Log.e("Sub", "loading")
+                    is SubsResource.SubscriptionRobi ->
+                    {
+
+                        when(it.subscriptionId)
+                        {
+
+                            SUBSCRIPTION_ID_WEEKLY_ROBI -> {
+
+                                when (it.data.data) {
+
+                                    "1AK" ->  AppPreference.subWeeklyRobi = true
+                                    "0AK" -> AppPreference.subWeeklyRobi = false
+                                }
+                            }
+
+                            SUBSCRIPTION_ID_MONTHLY_ROBI -> {
+
+                                when (it.data.data) {
+
+
+                                    "1AK" ->  AppPreference.subMonthlyRobi = true
+                                    "0AK" -> AppPreference.subMonthlyRobi = false
+                                }
+
+                            }
+                            SUBSCRIPTION_ID_WEEKLY_ROBI_ON_DEMAND -> {
+
+                                when (it.data.data) {
+
+                                    "1AK" ->  AppPreference.subWeeklyRobiOnDemand = true
+                                    "0AK" -> AppPreference.subWeeklyRobiOnDemand = false
+                                }
+
+                            }
+
+                            SUBSCRIPTION_ID_MONTHLY_ROBI_ON_DEMAND -> {
+
+                                when (it.data.data) {
+
+                                    "1AK" ->  AppPreference.subMonthlyRobiOnDemand = true
+                                    "0AK" -> AppPreference.subMonthlyRobiOnDemand = false
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+            }
+
             modelLiterature.loadTextBasedLiteratureListBySubCategory(
                 getString(R.string.live_video_id),
                 "undefined",
@@ -327,6 +387,18 @@ internal class MainActivity : BaseActivity(), MainCallback {
                         SUBSCRIPTION_ID_FIFTEENDAYS
                     )
 
+                    // On demand subs
+
+                    modelSubscription.subscriptionCheckRobi(
+                        AppPreference.userNumber!!,
+                        SUBSCRIPTION_ID_WEEKLY_ROBI_ON_DEMAND
+                    )
+
+                    modelSubscription.subscriptionCheckRobi(
+                        AppPreference.userNumber!!,
+                        SUBSCRIPTION_ID_MONTHLY_ROBI_ON_DEMAND
+                    )
+
                     modelSubscription.checkSslSubStatusMonthly(
                         AppPreference.userNumber!!,
                         SSL_SERVICE_ID_MONTHLY
@@ -342,6 +414,9 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 }
 
             }
+
+
+
         }
 
 

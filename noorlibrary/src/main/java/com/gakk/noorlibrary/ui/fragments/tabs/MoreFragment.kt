@@ -193,6 +193,13 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         bottomSheetItems.add(
             BottomSheetItem(
+                R.drawable.ic_umrah_hajj,
+                getString(R.string.cat_umrah_hajj)
+            )
+        )
+
+        bottomSheetItems.add(
+            BottomSheetItem(
                 R.drawable.ic_cat_donation,
                 getString(R.string.cat_donation)
             )
@@ -208,12 +215,6 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
 
 
-        bottomSheetItems.add(
-            BottomSheetItem(
-                R.drawable.ic_umrah_hajj,
-                getString(R.string.cat_umrah_hajj)
-            )
-        )
 
 
         return bottomSheetItems

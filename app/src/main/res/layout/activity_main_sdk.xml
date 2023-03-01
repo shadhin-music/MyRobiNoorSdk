@@ -10,13 +10,33 @@
         android:id="@+id/btnHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_below="@id/phone_number"
-        android:layout_margin="@dimen/standard_margin"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
         android:background="@color/white"
         android:paddingTop="@dimen/standard_margin"
         android:paddingBottom="@dimen/standard_margin"
         android:text="Noor Home"
+        android:textColor="@color/deep_red" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPage"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phone_number"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:background="@color/white"
+        android:paddingTop="@dimen/standard_margin"
+        android:paddingBottom="@dimen/standard_margin"
+        android:text="Go To Page"
         android:textColor="@color/deep_red" />
 
     <EditText

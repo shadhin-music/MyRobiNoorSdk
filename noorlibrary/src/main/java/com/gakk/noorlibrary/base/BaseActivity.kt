@@ -90,9 +90,60 @@ open class BaseActivity : AppCompatActivity() {
                 showDivisionListDialog(binding, divisionCallbackFunc = divisionCallbackFunc)
             }
 
+            DialogType.ImagePickOptionDialog -> {
+                showImagePickOptioneDialog(
+                    actionCamera = actionOneWithNoParameter,
+                    actionGalley = actionTwoWithNoParameter
+                )
+            }
+
             else -> {
                 showZakatInfoDialog(title, description)
             }
+        }
+    }
+
+    fun showImagePickOptioneDialog(actionCamera: (() -> Unit)?, actionGalley: (() -> Unit)?) {
+
+
+        val view = LayoutInflater.from(this).inflate(
+            R.layout.layout_photo_option, null, false
+        )
+
+
+        val dialogView: View = view
+        val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
+        customDialog.setView(dialogView)
+
+        alertDialog = customDialog.show()
+        alertDialog.window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        alertDialog.window?.setGravity(Gravity.CENTER)
+        alertDialog.setCancelable(true)
+
+        setImagePickDialogViewClickEvents(
+            view,
+            actionCamera = actionCamera,
+            actionGalley = actionGalley
+        )
+
+    }
+
+
+    fun setImagePickDialogViewClickEvents(
+        binding: View,
+        actionCamera: (() -> Unit)?,
+        actionGalley: (() -> Unit)?
+    ) {
+        binding.findViewById<AppCompatButton>(R.id.btnCamera).handleClickEvent {
+            actionCamera?.invoke()
+            alertDialog.dismiss()
+        }
+        binding.findViewById<AppCompatButton>(R.id.btnGallery).handleClickEvent {
+            actionGalley?.invoke()
+            alertDialog.dismiss()
         }
     }
 

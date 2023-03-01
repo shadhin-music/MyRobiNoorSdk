@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "667608357486",
+    "project_id": "noorrobisdk",
+    "storage_bucket": "noorrobisdk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667608357486:android:f9f73d9789f9046200e47f",
+        "android_client_info": {
+          "package_name": "com.noor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667608357486-7v2cc8fit23n1urj64bgq19emojo9j3f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPtqABtq9auEOqOLYmRbQkJxoV-uwuNFk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667608357486-7v2cc8fit23n1urj64bgq19emojo9j3f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,9 +14,11 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 
@@ -146,19 +148,27 @@ internal class RozaInformationAdapter(
             _HEADER -> {
 
 //                holder.primaryHeaderBinding?.let {
-                    val item = ImageFromOnline("bg_ramadan.png")
-                val tvIfterOrSehriTitle:AppCompatTextView = holder.view.findViewById(R.id.tvInfo)
+
+
+                val layoutIfterInfo = holder.view.findViewById<CardView>(R.id.layoutIfterInfo)
+                val layoutSehriInfo = holder.view.findViewById<CardView>(R.id.layoutSehriInfo)
+                val item = ImageFromOnline("bg_ramadan.png")
+                val tvIfterOrSehriTitle:AppCompatTextView = layoutIfterInfo.findViewById(R.id.tvInfo)
                 val tvTitle:AppCompatTextView = holder.view.findViewById(R.id.tvTitle)
-                val  imageAlarm:ImageView = holder.view.findViewById(R.id.imageAlarm)
+                val  imageAlarm1:ImageView = layoutIfterInfo.findViewById(R.id.imageAlarm)
+                val  imageAlarm2:ImageView = layoutSehriInfo.findViewById(R.id.imageAlarm)
                 val  imageFilterView:AppCompatImageView = holder.view.findViewById(R.id.imageFilterView)
                      Glide.with(holder.itemView.context).load(item.fullImageUrl).into(imageFilterView)
                     tvTitle.setText(R.string.today_sehri_iftar_robi)
-                val tvIfterOrSehriTime = holder.view.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
+                val tvIfterOrSehriTime1 = layoutSehriInfo.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
+                val tvIfterOrSehriTime2 = layoutIfterInfo.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
                 val tvInfo = holder.view.findViewById<AppCompatTextView>(R.id.tvInfo)
                 val tvInfoLarge = holder.view.findViewById<AppCompatTextView>(R.id.tvInfoLarge)
                 val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
                 progressBar.visibility = View.GONE
-                val   imgSehriOrIfter: ImageView = holder.view.findViewById(R.id.imgSehriOrIfter)
+
+
+                val   imgSehriOrIfter: ImageView =layoutIfterInfo.findViewById(R.id.imgSehriOrIfter)
 
                   imgSehriOrIfter.setImageResource(R.drawable.ic_islam)
                           tvIfterOrSehriTitle.setText(R.string.ifter_time_today)
@@ -169,14 +179,14 @@ internal class RozaInformationAdapter(
                     holder.view.context.resources.getText(R.string.evening)
                 holder.view.context.resources.getText(R.string.txt_minute)
 
-                    tvIfterOrSehriTime.setText(
+                    tvIfterOrSehriTime1.setText(
                         "${todaysIfterSehri?.sehriTimeStr} ${
                             holder.view.context.resources.getText(
                                 R.string.txt_minute
                             )
                         }"
                     )
-                   tvIfterOrSehriTime.setText(
+                   tvIfterOrSehriTime2.setText(
                         "${todaysIfterSehri?.ifterTimeStr} ${
                             holder.view.context.resources.getText(
                                 R.string.txt_minute
@@ -226,7 +236,7 @@ internal class RozaInformationAdapter(
                         tvInfoLarge?.visibility = GONE
                         imageFilterView?.visibility = GONE
                     }
-                    imageAlarm.setOnClickListener { it ->
+                    imageAlarm1.setOnClickListener { it ->
 
                         gotoDefaultAlarm(
                             todaysIfterSehri?.ifterTimeStr!!,
@@ -236,7 +246,7 @@ internal class RozaInformationAdapter(
                         )
                     }
 
-                    imageAlarm.setOnClickListener { it ->
+                    imageAlarm2.setOnClickListener { it ->
                         gotoDefaultAlarm(
                             todaysIfterSehri?.sehriTimeStr!!,
                             it.context,

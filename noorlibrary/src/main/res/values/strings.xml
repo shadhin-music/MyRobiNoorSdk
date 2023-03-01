@@ -402,7 +402,7 @@
     <string name="txt_monthly_service">নূর মাসিক সার্ভিস</string>
     <string name="txt_amount_robi">২.৬৭ টাকা</string>
     <string name="txt_fifteen_day_service">নূর ১৫ দিন সার্ভিস</string>
-    <string name="txt_amount_fifteen_robi">৯.৩৩ টাকা</string>
+    <string name="txt_amount_fifteen_robi">১৯.৯৯ টাকা</string>
     <string name="txt_seven_day_service">নূর ৭ দিন সার্ভিস</string>
     <string name="txt_thirty_day_service">নূর ৩০ দিন সার্ভিস</string>
     <string name="txt_amount_seven_robi">৯.৩৩ টাকা</string>
@@ -423,7 +423,7 @@
     <string name="txt_subscribed">সাবস্ক্রাইবড</string>
     <string name="txt_dialog_sub_des_daily">আপনি কি নূর ডেইলি সার্ভিস টি এক্টিভেট করতে চান? চার্জ ২.৬৭ টাকা প্রতি দিনের জন্য (অটো রিনিউয়াল)</string>
     <string name="txt_dialog_unsub_des_daily">আপনি কি নূর ডেইলি সার্ভিস টি আনসাবস্ক্রাইব করতে চান?</string>
-    <string name="txt_dialog_sub_des_fifteen_robi">আপনি কি নূর ১৫ দিনের সার্ভিস টি এক্টিভেট করতে চান? চার্জ ৯.৩৩ টাকা প্রতি ১৫ দিনের জন্য (অটো রিনিউয়াল)</string>
+    <string name="txt_dialog_sub_des_fifteen_robi">আপনি কি নূর ১৫ দিনের সার্ভিস টি এক্টিভেট করতে চান? চার্জ ১৯.৯৯ টাকা প্রতি ১৫ দিনের জন্য (অটো রিনিউয়াল)</string>
     <string name="txt_dialog_unsub_des_fifteen_robi">আপনি কি নূর ১৫ দিনের সার্ভিস টি আনসাবস্ক্রাইব করতে চান?</string>
     <string name="unsubscribe_daily">Please unsubscribe Daily plan first !</string>
     <string name="unsubscribe_fifteen_robi">Please unsubscribe 15 days plan first !</string>
@@ -587,5 +587,6 @@
     <string name="payment_title">পেমেন্ট করুন</string>
     <string name="cat_umrah_pay_history">বুকিং হিস্ট্রি</string>
     <string name="umrah_hajj_pay_history_price">%1$s %2$s %3$s</string>
-    <string name="cat_umrah_hajj">উমরাহ‌\nপ্যাকেজ</string>
+    <string name="cat_umrah_hajj">উমরাহ‌ প্যাকেজ</string>
+    <string name="hajj_total_booking_format">৳%1$s</string>
 </resources>

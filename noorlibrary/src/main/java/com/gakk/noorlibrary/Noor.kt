@@ -10,10 +10,7 @@ import android.widget.Toast
 import androidx.annotation.Keep
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.ui.activity.MainActivity
-import com.gakk.noorlibrary.util.RepositoryProvider
-import com.gakk.noorlibrary.util.VIDEO_PLAYER_NOTIFICATION_CHANNEL_DESC
-import com.gakk.noorlibrary.util.VIDEO_PLAYER_NOTIFICATION_CHANNEL_ID
-import com.gakk.noorlibrary.util.VIDEO_PLAYER_NOTIFICATION_CHANNEL_NAME
+import com.gakk.noorlibrary.util.*
 import kotlinx.coroutines.*
 
 @Keep
@@ -48,6 +45,32 @@ object Noor {
     fun destroySDK() {
         scope.cancel()
         appContext = null
+    }
+
+    @JvmStatic
+    fun openQuran(context: Context, msisdn: String)
+    {
+
+        this.appContext = context.applicationContext
+        AppPreference.init(appContext!!)
+        createNotificationChannel()
+        scope.launch {
+            val token = RepositoryProvider.getRepository().login(msisdn)
+            withContext(Dispatchers.Main) {
+                if (token != null) {
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.putExtra(DESTINATION_FRAGMENT, PAGE_QURAN_HOME)
+                    context.startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+
+
+
+
     }
 
     fun createNotificationChannel() {

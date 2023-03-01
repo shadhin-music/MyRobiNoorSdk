@@ -28,7 +28,19 @@ class MainSdkActivity : AppCompatActivity() {
                 Toast.makeText(this,"Enter number",Toast.LENGTH_SHORT).show()
             }
 
+            //throw IOException()
 
+
+        }
+
+        binding.btnPage.handleClickEvent {
+
+            val number = findViewById<EditText>(R.id.phone_number).text.trim().toString()
+            if(number.isNotEmpty()){
+                Noor.openQuran(this,number)
+            }else{
+                Toast.makeText(this,"Enter number",Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
