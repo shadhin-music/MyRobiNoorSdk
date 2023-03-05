@@ -37,9 +37,18 @@ internal class SubscriptionFragment : Fragment() {
     private lateinit var btnSubscribeDaily: AppCompatButton
     private lateinit var tvAmount: AppCompatTextView
     private lateinit var tvContent: AppCompatTextView
+    private lateinit var tvContentFifteen: AppCompatTextView
+    private lateinit var tvContentSeven: AppCompatTextView
+    private lateinit var tvContentMonthly: AppCompatTextView
     private lateinit var ivShapeSubFifteen: AppCompatImageView
+    private lateinit var ivShapeSubWeekly: AppCompatImageView
+    private lateinit var ivShapeSubMonthly: AppCompatImageView
     private lateinit var btnSubscribeFiftten: AppCompatButton
+    private lateinit var btnSubscribeWeekly: AppCompatButton
+    private lateinit var btnSubscribeMonthly: AppCompatButton
     private lateinit var tvAmountFifteen: AppCompatTextView
+    private lateinit var tvAmountWeekly: AppCompatTextView
+    private lateinit var tvAmountMonthly: AppCompatTextView
     private lateinit var ivBg: AppCompatImageView
 
     companion object {
@@ -76,9 +85,18 @@ internal class SubscriptionFragment : Fragment() {
         btnSubscribeDaily = view.findViewById(R.id.btnSubscribeDaily)
         tvAmount = view.findViewById(R.id.tvAmount)
         tvContent = view.findViewById(R.id.tvContent)
+        tvContentFifteen = view.findViewById(R.id.tvContentFifteen)
+        tvContentSeven = view.findViewById(R.id.tvContentSeven)
+        tvContentMonthly = view.findViewById(R.id.tvContentMonthly)
         ivShapeSubFifteen = view.findViewById(R.id.ivShapeSubFifteen)
+        ivShapeSubWeekly = view.findViewById(R.id.ivShapeSubWeekly)
+        ivShapeSubMonthly = view.findViewById(R.id.ivShapeSubMonthly)
         btnSubscribeFiftten = view.findViewById(R.id.btnSubscribeFiftten)
+        btnSubscribeWeekly = view.findViewById(R.id.btnSubscribeWeekly)
+        btnSubscribeMonthly = view.findViewById(R.id.btnSubscribeMonthly)
         tvAmountFifteen = view.findViewById(R.id.tvAmountFifteen)
+        tvAmountWeekly = view.findViewById(R.id.tvAmountWeekly)
+        tvAmountMonthly = view.findViewById(R.id.tvAmountMonthly)
         ivBg = view.findViewById(R.id.ivBg)
     }
 
@@ -105,6 +123,12 @@ internal class SubscriptionFragment : Fragment() {
             model.checkSubscriptionFifteenDays(
                 AppPreference.userNumber!!,
                 SUBSCRIPTION_ID_FIFTEENDAYS
+            )
+
+            model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_WEEKLY_ROBI)
+            model.subscriptionCheckRobi(
+                AppPreference.userNumber!!,
+                SUBSCRIPTION_ID_MONTHLY_ROBI
             )
 
 
@@ -174,7 +198,7 @@ internal class SubscriptionFragment : Fragment() {
                                         R.color.txt_color_title
                                     )
                                 )
-                                tvContent.setTextColor(
+                                tvContentFifteen.setTextColor(
                                     ContextCompat.getColor(
                                         requireContext(),
                                         R.color.txt_color_title
@@ -197,6 +221,104 @@ internal class SubscriptionFragment : Fragment() {
                     }
                 }
             }
+
+
+
+            // robi new subscription package
+
+            model.subscription_robi.observe(viewLifecycleOwner)
+            {
+                when (it) {
+                    is SubsResource.Error -> Log.e("Sub", "Error" + it.msg)
+                    SubsResource.Loading -> Log.e("Sub", "loading")
+                    is SubsResource.SubscriptionRobi -> {
+
+                        when (it.subscriptionId) {
+
+                            SUBSCRIPTION_ID_WEEKLY_ROBI -> {
+
+                                Log.e("Sub", "ROBI SUB" + it.data)
+
+                                when (it.data.data) {
+
+                                    "1AK" -> {
+
+                                        AppPreference.subWeeklyRobi = true
+                                        ivShapeSubWeekly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                        btnSubscribeWeekly.text =
+                                            getString(R.string.txt_unsub)
+                                        btnSubscribeWeekly.setTextColor(Color.WHITE)
+                                        tvAmountWeekly.setTextColor(
+                                            ContextCompat.getColor(
+                                                requireContext(),
+                                                R.color.txt_color_title
+                                            )
+                                        )
+                                        tvContentSeven.setTextColor(
+                                            ContextCompat.getColor(
+                                                requireContext(),
+                                                R.color.txt_color_title
+                                            )
+                                        )
+                                        btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                    }
+                                    else -> {
+                                        AppPreference.subWeeklyRobi = false
+                                        setImageFromUrlNoProgress(ivShapeSubWeekly, ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl)
+
+                                        btnSubscribeWeekly.text =
+                                            getString(R.string.txt_sub)
+
+                                        btnSubscribeWeekly.setBackgroundResource(R.drawable.ic_button_small)
+                                    }
+                                }
+                            }
+
+                            SUBSCRIPTION_ID_MONTHLY_ROBI -> {
+
+                                when (it.data.data) {
+
+                                    "1AK" -> {
+
+                                        AppPreference.subMonthlyRobi = true
+                                        ivShapeSubMonthly.setImageResource(R.drawable.ic_shape_sub_disable)
+                                        btnSubscribeMonthly.text =
+                                            getString(R.string.txt_unsub)
+                                        btnSubscribeMonthly.setTextColor(Color.WHITE)
+                                        tvAmountMonthly.setTextColor(
+                                            ContextCompat.getColor(
+                                                requireContext(),
+                                                R.color.txt_color_title
+                                            )
+                                        )
+                                        tvContentMonthly.setTextColor(
+                                            ContextCompat.getColor(
+                                                requireContext(),
+                                                R.color.txt_color_title
+                                            )
+                                        )
+                                        btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_unsub)
+                                    }
+                                    else -> {
+                                        AppPreference.subMonthlyRobi = false
+                                        setImageFromUrlNoProgress(ivShapeSubMonthly, ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl)
+                                        btnSubscribeMonthly.text =
+                                            getString(R.string.txt_sub)
+
+                                        btnSubscribeMonthly.setBackgroundResource(R.drawable.ic_button_small)
+                                    }
+                                }
+
+
+                            }
+
+
+                        }
+                    }
+                }
+            }
+
+
             model.canelSubInfo.observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.LOADING -> {
@@ -326,6 +448,84 @@ internal class SubscriptionFragment : Fragment() {
 
             }
 
+
+
+            btnSubscribeWeekly.handleClickEvent {
+
+
+                if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
+                    mCallback?.showToastMessage("You are Already subscribed")
+                } else {
+                    val unSubDialogTxt: String
+                    val planTitle: String
+                    val planDes: String
+
+                    subscriptionId = PRODUCT_ID_SEVEN_DAYS_ROBI
+                    unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_weekly)
+                    planTitle = getString(R.string.txt_weekly_service)
+                    planDes = getString(R.string.txt_dialog_sub_des_weekly_robi)
+
+
+                    when (AppPreference.subWeeklyRobi) {
+                        true -> {
+                            showSubDialog(
+                                PLAN_NAME_WEEKLY_ROBI,
+                                getString(R.string.txt_unsub),
+                                unSubDialogTxt
+                            )
+                        }
+
+                        else -> {
+
+                            showSubDialog(
+                                PLAN_NAME_WEEKLY_ROBI,
+                                planTitle,
+                                planDes
+                            )
+                        }
+                    }
+                }
+            }
+
+
+
+            btnSubscribeMonthly.handleClickEvent {
+
+                if (AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl) {
+                    mCallback?.showToastMessage("You are Already subscribed")
+                } else {
+                    val unSubDialogTxt: String
+                    val planTitle: String
+                    val planDes: String
+
+                    subscriptionId = PRODUCT_ID_THIRTY_DAYS_ROBI
+                    unSubDialogTxt = getString(R.string.txt_dialog_unsub_des_monthly)
+                    planTitle = getString(R.string.txt_monthly_service)
+                    planDes = getString(R.string.txt_dialog_sub_des_monthly_robi)
+
+                    Log.e("monthly product code", subscriptionId)
+
+                    when (AppPreference.subMonthlyRobi) {
+                        true -> {
+                            showSubDialog(
+                                PLAN_NAME_MONTHLY_ROBI,
+                                getString(R.string.txt_unsub),
+                                unSubDialogTxt
+                            )
+                        }
+
+                        else -> {
+                            showSubDialog(
+                                PLAN_NAME_MONTHLY_ROBI,
+                                planTitle,
+                                planDes
+                            )
+                        }
+                    }
+                }
+            }
+
+
         }
     }
 
@@ -369,6 +569,13 @@ internal class SubscriptionFragment : Fragment() {
                 AppPreference.userNumber!!,
                 SUBSCRIPTION_ID_FIFTEENDAYS
             )
+
+            model.subscriptionCheckRobi(AppPreference.userNumber!!, SUBSCRIPTION_ID_WEEKLY_ROBI)
+            model.subscriptionCheckRobi(
+                AppPreference.userNumber!!,
+                SUBSCRIPTION_ID_MONTHLY_ROBI
+            )
+
         } else {
             Log.e("chkSub", "not initialized")
         }
@@ -416,7 +623,31 @@ internal class SubscriptionFragment : Fragment() {
                     icon.setImageResource(R.drawable.ic_premium)
                 }
             }
-        } else {
+        }
+        else if (planName == PLAN_NAME_WEEKLY_ROBI) {
+            when (AppPreference.subWeeklyRobi) {
+                true -> {
+                    btnSub.setText(getString(R.string.txt_unsub))
+                    icon.setImageResource(R.drawable.ic_close_rounded)
+                }
+                else -> {
+                    btnSub.setText(getString(R.string.txt_sub))
+                    icon.setImageResource(R.drawable.ic_premium)
+                }
+            }
+        } else if (planName == PLAN_NAME_MONTHLY_ROBI) {
+            when (AppPreference.subMonthlyRobi) {
+                true -> {
+                    btnSub.setText(getString(R.string.txt_unsub))
+                    icon.setImageResource(R.drawable.ic_close_rounded)
+                }
+                else -> {
+                    btnSub.setText(getString(R.string.txt_sub))
+                    icon.setImageResource(R.drawable.ic_premium)
+                }
+            }
+        }
+        else {
             when (AppPreference.subFifteenDays) {
                 true -> {
                     btnSub.setText(getString(R.string.txt_unsub))
@@ -456,7 +687,23 @@ internal class SubscriptionFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
 
-                } else {
+                }
+                else if (AppPreference.subWeeklyRobi) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_seven_robi),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (AppPreference.subMonthlyRobi) {
+
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_thirty_robi),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
+                else {
                     when (AppPreference.subDaily) {
                         true -> {
                             model.cancelSubscriptionRobi(
@@ -482,7 +729,124 @@ internal class SubscriptionFragment : Fragment() {
                         }
                     }
                 }
-            } else {
+            }
+
+            // weekly sub click robi
+
+            else if (planName == PLAN_NAME_WEEKLY_ROBI) {
+                if (AppPreference.subFifteenDays) {
+
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_fifteen_robi),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (AppPreference.subDaily) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_daily),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (AppPreference.subMonthlyRobi) {
+
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_thirty_robi),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                } else {
+
+                    when (AppPreference.subWeeklyRobi) {
+                        true -> {
+
+                            model.cancelSubscriptionRobi(
+                                AppPreference.userNumber!!,
+                                SUBSCRIPTION_ID_WEEKLY_ROBI
+                            )
+
+                            alertDialog.dismiss()
+                        }
+                        else -> {
+                            alertDialog.dismiss()
+
+                            if (checkOtherNumber()) {
+                                model.checkNetworkStatus()
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Use airtel or robi number to upgrade!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+
+                        }
+
+                    }
+
+                }
+            }
+
+            // monthly sub click robi
+
+            else if (planName == PLAN_NAME_MONTHLY_ROBI) {
+                if (AppPreference.subFifteenDays) {
+
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_fifteen_robi),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (AppPreference.subDaily) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_daily),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (AppPreference.subWeeklyRobi) {
+
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_weekly),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                } else {
+
+                    when (AppPreference.subMonthlyRobi) {
+                        true -> {
+
+                            model.cancelSubscriptionRobi(
+                                AppPreference.userNumber!!,
+                                SUBSCRIPTION_ID_MONTHLY_ROBI
+                            )
+
+                            alertDialog.dismiss()
+                        }
+                        else -> {
+                            alertDialog.dismiss()
+
+                            if (checkOtherNumber()) {
+                                model.checkNetworkStatus()
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Use airtel or robi number to upgrade!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+
+                        }
+
+                    }
+
+                }
+
+
+            }
+            else {
                 if (AppPreference.subDaily) {
                     val unsubText: String
                     unsubText = getString(R.string.unsubscribe_daily)
@@ -492,7 +856,22 @@ internal class SubscriptionFragment : Fragment() {
                         unsubText,
                         Toast.LENGTH_LONG
                     ).show()
-                } else {
+                } else if (AppPreference.subMonthlyRobi) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_monthly),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (AppPreference.subWeeklyRobi) {
+
+                    Toast.makeText(
+                        context,
+                        getString(R.string.unsubscribe_weekly),
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
+                else {
                     when (AppPreference.subFifteenDays) {
                         true -> {
                             model.cancelSubscriptionRobi(

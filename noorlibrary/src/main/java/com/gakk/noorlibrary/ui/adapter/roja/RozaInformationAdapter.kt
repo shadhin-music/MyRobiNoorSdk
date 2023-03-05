@@ -1,6 +1,5 @@
 package com.gakk.noorlibrary.ui.adapter.roja
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
@@ -15,19 +14,17 @@ import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
-
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.gakk.noorlibrary.BuildConfig
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
 import com.gakk.noorlibrary.roza.CalenderUtil
 import com.gakk.noorlibrary.ui.fragments.DivisionSelectionCallback
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.TimeFormtter
+import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.views.TextViewNormalArabic
 import com.github.eltohamy.materialhijricalendarview.CalendarDay
 import com.google.android.material.tabs.TabLayout
@@ -153,7 +150,7 @@ internal class RozaInformationAdapter(
                 val layoutIfterInfo = holder.view.findViewById<CardView>(R.id.layoutIfterInfo)
                 val layoutSehriInfo = holder.view.findViewById<CardView>(R.id.layoutSehriInfo)
                 val item = ImageFromOnline("bg_ramadan.png")
-                val tvIfterOrSehriTitle:AppCompatTextView = layoutIfterInfo.findViewById(R.id.tvInfo)
+                val tvIfterOrSehriTitle:AppCompatTextView = layoutIfterInfo.findViewById(R.id.tvIfterOrSehriTitle)
                 val tvTitle:AppCompatTextView = holder.view.findViewById(R.id.tvTitle)
                 val  imageAlarm1:ImageView = layoutIfterInfo.findViewById(R.id.imageAlarm)
                 val  imageAlarm2:ImageView = layoutSehriInfo.findViewById(R.id.imageAlarm)

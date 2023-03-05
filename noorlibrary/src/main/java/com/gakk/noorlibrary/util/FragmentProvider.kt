@@ -142,6 +142,7 @@ object FragmentProvider {
             PAGE_SUBSCRIPTION -> SubscriptionFragment.newInstance()
             PAGE_SUBSCRIPTION_OPTION_LIST -> SubscriptionOptionListFragment.newInstance()
             PAGE_SUBSCRIPTION_SSL -> SslSubscriptionFragment.newInstance()
+            PAGE_SUBSCRIPTION_GPAY -> SslSubscriptionFragment.newInstance(PAGE_SUBSCRIPTION_GPAY)
 
             PAGE_DONATION_HOME -> DonationHomeFragment.newInstance()
 

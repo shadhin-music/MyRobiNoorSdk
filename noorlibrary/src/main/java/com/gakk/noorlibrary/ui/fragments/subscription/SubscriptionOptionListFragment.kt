@@ -16,6 +16,7 @@ class SubscriptionOptionListFragment : Fragment() {
     private var mCallback: DetailsCallBack? = null
     private lateinit var cardRobi: CardView
     private lateinit var cardMfs: CardView
+    private lateinit var CardGpay:CardView
 
     companion object {
 
@@ -40,6 +41,7 @@ class SubscriptionOptionListFragment : Fragment() {
         )
         cardRobi = view.findViewById(R.id.cardRobi)
         cardMfs = view.findViewById(R.id.cardMfs)
+        CardGpay = view.findViewById(R.id.CardGpay)
 
         return view
     }
@@ -62,6 +64,16 @@ class SubscriptionOptionListFragment : Fragment() {
                 isFav = false
             )
             mCallback?.addFragmentToStackAndShow(fragment!!)
+        }
+
+        CardGpay.handleClickEvent {
+
+            val fragment = FragmentProvider.getFragmentByName(
+                PAGE_SUBSCRIPTION_GPAY, detailsActivityCallBack = mCallback,
+                isFav = false
+            )
+            mCallback?.addFragmentToStackAndShow(fragment!!)
+
         }
     }
 }

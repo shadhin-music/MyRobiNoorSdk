@@ -87,6 +87,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.github.eltohamy:material-hijri-calendarview:1.1.2'
 
+    //gpay
+    implementation 'com.android.billingclient:billing-ktx:5.1.0'
+
 
     implementation 'io.coil-kt:coil:1.1.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'

@@ -339,12 +339,13 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
                                 when (it.data.data) {
 
-
                                     "1AK" ->  AppPreference.subMonthlyRobi = true
                                     "0AK" -> AppPreference.subMonthlyRobi = false
                                 }
 
                             }
+
+
                             SUBSCRIPTION_ID_WEEKLY_ROBI_ON_DEMAND -> {
 
                                 when (it.data.data) {
@@ -385,6 +386,16 @@ internal class MainActivity : BaseActivity(), MainCallback {
                     modelSubscription.checkSubscriptionFifteenDays(
                         AppPreference.userNumber!!,
                         SUBSCRIPTION_ID_FIFTEENDAYS
+                    )
+
+                    modelSubscription.subscriptionCheckRobi(
+                        AppPreference.userNumber!!,
+                        SUBSCRIPTION_ID_WEEKLY_ROBI
+                    )
+
+                    modelSubscription.subscriptionCheckRobi(
+                        AppPreference.userNumber!!,
+                        SUBSCRIPTION_ID_MONTHLY_ROBI
                     )
 
                     // On demand subs

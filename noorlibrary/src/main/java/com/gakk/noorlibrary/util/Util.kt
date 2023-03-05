@@ -55,8 +55,9 @@ object Util {
 
     fun checkSub(): Boolean {
 
-        if (AppPreference.subDaily || AppPreference.subFifteenDays
+        if (AppPreference.subDaily || AppPreference.subFifteenDays || AppPreference.subWeeklyRobi || AppPreference.subMonthlyRobi
             || AppPreference.subMonthlySsl || AppPreference.subHalfYearlySsl || AppPreference.subYearlySsl
+            || AppPreference.subWeeklyRobiOnDemand || AppPreference.subMonthlyRobiOnDemand
         ) {
             return true
         }

@@ -18,7 +18,7 @@ object AppPreference {
     private lateinit var mGSonInstance: Gson
 
     private val whiteListNumber =
-        arrayListOf("8801537673977","8801680396647")
+        arrayListOf("8801537673977")
 
     private const val PREF_FILE_NAME = "NoorPreference"
     private const val LANGUAGE = "Language"
@@ -57,9 +57,14 @@ object AppPreference {
     private const val ISSUBMONTHLYSSL = "is_sub_monthly_ssl"
     private const val ISSUBHALFYEARLYSSL = "is_sub_half_yearly_ssl"
     private const val ISSUBYEARLYSSL = "is_sub_yearly_ssl"
+    private const val ISSUBMONTHLYGPAY = "is_sub_monthly_gpay"
+    private const val ISSUBYEARLYGPAY = "is_sub_yearly_gpay"
     private val IS_SUB_MONTHLY_SSL = Pair(ISSUBMONTHLYSSL, false)
     private val IS_SUB_HALF_YEARLY_SSL = Pair(ISSUBHALFYEARLYSSL, false)
     private val IS_SUB_YEARLY_SSL = Pair(ISSUBYEARLYSSL, false)
+    private val IS_SUB_MONTHLY_GPAY = Pair(ISSUBMONTHLYGPAY, false)
+
+    private val IS_SUB_YEARLY_GPAY = Pair(ISSUBMONTHLYGPAY, false)
 
     private const val MODE = Context.MODE_PRIVATE
     private lateinit var preferences: SharedPreferences
@@ -326,5 +331,23 @@ object AppPreference {
         )
         set(value) = preferences.edit {
             it.putBoolean(IS_SUB_YEARLY_SSL.first, value)
+        }
+
+    var subMonthlyGpay: Boolean
+        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
+            IS_SUB_MONTHLY_GPAY.first,
+            IS_SUB_MONTHLY_GPAY.second
+        )
+        set(value) = preferences.edit {
+            it.putBoolean(IS_SUB_MONTHLY_GPAY.first, value)
+        }
+
+    var subYearlyGpay: Boolean
+        get() = if (whiteListNumber.contains(userNumber)) true else preferences.getBoolean(
+            IS_SUB_YEARLY_GPAY.first,
+            IS_SUB_YEARLY_GPAY.second
+        )
+        set(value) = preferences.edit {
+            it.putBoolean(IS_SUB_YEARLY_GPAY.first, value)
         }
 }

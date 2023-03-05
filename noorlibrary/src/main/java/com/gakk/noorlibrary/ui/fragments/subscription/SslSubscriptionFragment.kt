@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -15,6 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.QueryPurchasesParams
+import com.android.billingclient.api.SkuDetails
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
@@ -25,6 +31,8 @@ import com.gakk.noorlibrary.ui.activity.SubscriptionBrowserActivity
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import org.json.JSONTokener
 
 /**
  * @AUTHOR: Taslima Sumi
@@ -32,7 +40,9 @@ import kotlinx.coroutines.launch
  */
 
 
-internal class SslSubscriptionFragment : Fragment() {
+private const val ARG_PAGE_TAG = "subscriotion_page"
+
+internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurchaseListener {
 
     private var mCallback: DetailsCallBack? = null
     private lateinit var viewModel: SubscriptionViewModel
@@ -50,18 +60,53 @@ internal class SslSubscriptionFragment : Fragment() {
     private lateinit var tvAmountYearly: AppCompatTextView
     private lateinit var tvContentYearly: AppCompatTextView
     private lateinit var progressLayout: ConstraintLayout
+    private lateinit var layoutMonthlyNagad:ConstraintLayout
+    private lateinit var layoutHalfYearly:ConstraintLayout
+    private lateinit var layoutYearly:ConstraintLayout
+
+
+    // get bundle extra
+
+    private  var PAGE_TAG :String = ""
+
+    // gPAY layout
+    private lateinit var gpayLayout:ConstraintLayout
+    private lateinit var btnSubscribeYearly_gpay:AppCompatButton
+    private lateinit var btnSubscribeMonthly_gpay:AppCompatButton
+    private lateinit var ivShapeSubMonthly_gpay:AppCompatImageView
+    private lateinit var ivShapeSubWeekly_gpay:AppCompatImageView
+    private lateinit var tvContent_gpay:AppCompatTextView
+    private lateinit var tvContentFifteen_gpay:AppCompatTextView
+    private lateinit var tvAmount_gpay:AppCompatTextView
+    private lateinit var tvAmountMonthly_gpay:AppCompatTextView
+    private lateinit var tvDailyService_gpay:AppCompatTextView
+    private lateinit var tvFifteenService_gpay:AppCompatTextView
+    lateinit var billingClientWrapper: BillingClientWrapper
+
 
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            SslSubscriptionFragment()
+        fun newInstance(page_tag:String="") =
+            SslSubscriptionFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PAGE_TAG,page_tag)
+                }
+            }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        billingClientWrapper = BillingClientWrapper(requireContext())
+
         mCallback = requireActivity() as DetailsCallBack
+
+        arguments.let {
+            if (it != null) {
+                PAGE_TAG = it.getString(ARG_PAGE_TAG).toString()
+            }
+        }
     }
 
     override fun onCreateView(
@@ -94,89 +139,157 @@ internal class SslSubscriptionFragment : Fragment() {
         tvAmountYearly = view.findViewById(R.id.tvAmountYearly)
         tvContentYearly = view.findViewById(R.id.tvContentYearly)
         progressLayout = view.findViewById(R.id.progressLayout)
+
+        // main pack layout
+        layoutMonthlyNagad = view.findViewById(R.id.layoutMonthlyNagad)
+        layoutHalfYearly = view.findViewById(R.id.layoutHalfYearly)
+        layoutYearly = view.findViewById(R.id.layoutYearly)
+
+        //gpay layout
+        gpayLayout = view.findViewById(R.id.gpayLayout)
+        btnSubscribeYearly_gpay = gpayLayout.findViewById(R.id.btnSubscribeYearly)
+        btnSubscribeMonthly_gpay = gpayLayout.findViewById(R.id.btnSubscribeMonthly)
+        ivShapeSubMonthly_gpay = gpayLayout.findViewById(R.id.ivShapeSubMonthly)
+        ivShapeSubWeekly_gpay = gpayLayout.findViewById(R.id.ivShapeSubWeekly)
+        tvContent_gpay = gpayLayout.findViewById(R.id.tvContent)
+        tvContentFifteen_gpay = gpayLayout.findViewById(R.id.tvContentFifteen)
+        tvAmount_gpay = gpayLayout.findViewById(R.id.tvAmount)
+        tvAmountMonthly_gpay = gpayLayout.findViewById(R.id.tvAmountMonthly)
+        tvDailyService_gpay = gpayLayout.findViewById(R.id.tvDailyService)
+        tvFifteenService_gpay = gpayLayout.findViewById(R.id.tvFifteenService)
+
+
+    }
+
+    private fun hideMainPack()
+    {
+        layoutMonthlyNagad.hide()
+        layoutHalfYearly.hide()
+        layoutYearly.hide()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mCallback?.setToolBarTitle(getString(R.string.page_title_subscription))
-        lifecycleScope.launch {
-            val job = launch {
-                repository = RepositoryProvider.getRepository()
+
+
+        // check page tag
+
+        when(PAGE_TAG)
+        {
+            PAGE_SUBSCRIPTION_GPAY ->
+            {
+
+               initGpay()
+
             }
-            job.join()
-            viewModel = ViewModelProvider(
-                this@SslSubscriptionFragment,
-                SubscriptionViewModel.FACTORY(repository)
-            ).get(SubscriptionViewModel::class.java)
+            else ->
+            {
+                lifecycleScope.launch {
+                    val job = launch {
+                        repository = RepositoryProvider.getRepository()
+                    }
+                    job.join()
+                    viewModel = ViewModelProvider(
+                        this@SslSubscriptionFragment,
+                        SubscriptionViewModel.FACTORY(repository)
+                    ).get(SubscriptionViewModel::class.java)
 
-            AppPreference.userNumber?.let {
-                viewModel.checkSslSubStatusMonthly(it, SSL_SERVICE_ID_MONTHLY)
-                viewModel.checkSslSubStatusHalfYearly(it, SSL_SERVICE_ID_HALF_YEARLY)
-                viewModel.checkSslSubStatusYearly(it, SSL_SERVICE_ID_YEARLY)
-            }
+                    AppPreference.userNumber?.let {
+                        viewModel.checkSslSubStatusMonthly(it, SSL_SERVICE_ID_MONTHLY)
+                        viewModel.checkSslSubStatusHalfYearly(it, SSL_SERVICE_ID_HALF_YEARLY)
+                        viewModel.checkSslSubStatusYearly(it, SSL_SERVICE_ID_YEARLY)
+                    }
 
-            subscribeObserver()
-        }
+                    subscribeObserver()
+                }
 
-        btnSubscribeMonthly.handleClickEvent {
-            if (AppPreference.subHalfYearlySsl) {
-                mCallback?.showToastMessage("Please unsubscribe Half Yearly plan first!")
-            } else if (AppPreference.subYearlySsl) {
-                mCallback?.showToastMessage("Please unsubscribe Yearly plan first!")
-            } else if (AppPreference.subDaily || AppPreference.subFifteenDays) {
-                mCallback?.showToastMessage("You are Already subscribed")
-            } else {
-                if (AppPreference.subMonthlySsl) {
-                    Log.e("Monthly", "Subscribed")
-                } else {
-                    val serviceId: String
-                    serviceId = SSL_SERVICE_ID_MONTHLY
-                    paymentApiLoad(serviceId)
+                btnSubscribeMonthly.handleClickEvent {
+                    if (AppPreference.subHalfYearlySsl) {
+                        mCallback?.showToastMessage("Please unsubscribe Half Yearly plan first!")
+                    } else if (AppPreference.subYearlySsl) {
+                        mCallback?.showToastMessage("Please unsubscribe Yearly plan first!")
+                    } else if (AppPreference.subDaily || AppPreference.subFifteenDays) {
+                        mCallback?.showToastMessage("You are Already subscribed")
+                    } else {
+                        if (AppPreference.subMonthlySsl) {
+                            Log.e("Monthly", "Subscribed")
+                        } else {
+                            val serviceId: String
+                            serviceId = SSL_SERVICE_ID_MONTHLY
+                            paymentApiLoad(serviceId)
+                        }
+                    }
+                }
+
+                btnSubscribeHalfYearly.handleClickEvent {
+
+                    if (AppPreference.subMonthlySsl) {
+                        mCallback?.showToastMessage("Please unsubscribe Monthly plan first!")
+                    } else if (AppPreference.subYearlySsl) {
+                        mCallback?.showToastMessage("Please unsubscribe Yearly plan first!")
+                    } else if (AppPreference.subDaily || AppPreference.subFifteenDays) {
+                        mCallback?.showToastMessage("You are Already subscribed")
+                    } else {
+                        if (AppPreference.subHalfYearlySsl) {
+                            Log.e("HalfYearly", "Subscribed")
+                        } else {
+                            val serviceId: String
+
+                            serviceId = SSL_SERVICE_ID_HALF_YEARLY
+
+                            paymentApiLoad(serviceId)
+                        }
+                    }
+
+                }
+                btnSubscribeYearly.handleClickEvent {
+
+                    if (AppPreference.subMonthlySsl) {
+                        mCallback?.showToastMessage("Please unsubscribe Monthly plan first!")
+                    } else if (AppPreference.subHalfYearlySsl) {
+                        mCallback?.showToastMessage("Please unsubscribe Half Yearly plan first!")
+                    } else if (AppPreference.subDaily || AppPreference.subFifteenDays) {
+                        mCallback?.showToastMessage("You are Already subscribed")
+                    } else {
+                        if (AppPreference.subYearlySsl) {
+                            Log.e("yearly", "Subscribed")
+                        } else {
+
+                            val serviceId: String
+                            serviceId = SSL_SERVICE_ID_YEARLY
+                            paymentApiLoad(serviceId)
+                        }
+                    }
                 }
             }
         }
+    }
 
-        btnSubscribeHalfYearly.handleClickEvent {
+    private fun initGpay()
+    {
+        billingClientWrapper.onPurchaseListener = this@SslSubscriptionFragment
+        queryPurchaseHistory()
+        hideMainPack()
 
-            if (AppPreference.subMonthlySsl) {
-                mCallback?.showToastMessage("Please unsubscribe Monthly plan first!")
-            } else if (AppPreference.subYearlySsl) {
-                mCallback?.showToastMessage("Please unsubscribe Yearly plan first!")
-            } else if (AppPreference.subDaily || AppPreference.subFifteenDays) {
-                mCallback?.showToastMessage("You are Already subscribed")
-            } else {
-                if (AppPreference.subHalfYearlySsl) {
-                    Log.e("HalfYearly", "Subscribed")
-                } else {
-                    val serviceId: String
+        setImageFromUrlNoProgress(
+            ivShapeSubWeekly_gpay,
+            ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl
+        )
 
-                    serviceId = SSL_SERVICE_ID_HALF_YEARLY
+        setImageFromUrlNoProgress(
+            ivShapeSubMonthly_gpay,
+            ImageFromOnline("Drawable/ic_shape_sub.webp").fullImageUrl
+        )
 
-                    paymentApiLoad(serviceId)
-                }
-            }
+        gpayLayout.show()
 
-        }
-        btnSubscribeYearly.handleClickEvent {
+        tvDailyService_gpay.text = getString(R.string.txt_yearly_service)
+        tvAmount_gpay.text = getString(R.string.txt_amount_yearly_g_pay)
 
-            if (AppPreference.subMonthlySsl) {
-                mCallback?.showToastMessage("Please unsubscribe Monthly plan first!")
-            } else if (AppPreference.subHalfYearlySsl) {
-                mCallback?.showToastMessage("Please unsubscribe Half Yearly plan first!")
-            } else if (AppPreference.subDaily || AppPreference.subFifteenDays) {
-                mCallback?.showToastMessage("You are Already subscribed")
-            } else {
-                if (AppPreference.subYearlySsl) {
-                    Log.e("yearly", "Subscribed")
-                } else {
-
-                    val serviceId: String
-                    serviceId = SSL_SERVICE_ID_YEARLY
-                    paymentApiLoad(serviceId)
-                }
-            }
-        }
+        tvFifteenService_gpay.text = getString(R.string.txt_monthly_service)
+        tvAmountMonthly_gpay.text = getString(R.string.txt_amount_monthly_g_pay)
     }
 
     private fun paymentApiLoad(serviceId: String) {
@@ -421,5 +534,208 @@ internal class SslSubscriptionFragment : Fragment() {
                 btnSubscribeYearly.setBackgroundResource(R.drawable.ic_button_small)
             }
         }
+    }
+
+
+    fun queryPurchaseHistory() {
+        billingClientWrapper.queryActivePurchasesForType(
+            QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
+        ) { billingResult, purchasesList ->
+            val responseCode = billingResult.responseCode
+            if (responseCode == BillingClient.BillingResponseCode.OK) {
+                if (purchasesList.size == 0) {
+                    displayProducts()
+                    AppPreference.subYearlyGpay = false
+                    AppPreference.subMonthlyGpay = false
+
+                } else {
+                    for (purchase: Purchase in purchasesList) {
+
+                        val jsonObject =
+                            JSONTokener(purchase.originalJson).nextValue() as JSONObject
+
+                        val id = jsonObject.getString("productId")
+                        if (id == "noor_yearly_pack") {
+
+                            ivShapeSubWeekly_gpay.setImageResource(R.drawable.ic_shape_sub_disable)
+                            btnSubscribeYearly_gpay.text = getString(R.string.txt_unsub)
+                            btnSubscribeYearly_gpay.setTextColor(Color.WHITE)
+                            tvAmount_gpay.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.txt_color_title
+                                )
+                            )
+                            tvContent_gpay.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.txt_color_title
+                                )
+                            )
+                            btnSubscribeMonthly_gpay.setOnClickListener {
+                                if (AppPreference.subMonthlyRobi ||
+                                    AppPreference.subWeeklyRobi ||
+                                    AppPreference.subDaily ||
+                                    AppPreference.subFifteenDays ||
+                                    AppPreference.subMonthlySsl ||
+                                    AppPreference.subYearlySsl ||
+                                    AppPreference.subHalfYearlySsl ||
+                                    AppPreference.subYearlyGpay ||
+                                    AppPreference.subMonthlyGpay) {
+                                    mCallback?.showToastMessage("You are Already subscribed")
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "You are already subscribed to a plan please unsubscribe it first from google play",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+
+                            }
+                            btnSubscribeYearly_gpay.setOnClickListener {
+                                if (
+                                    AppPreference.subMonthlyRobi ||
+                                    AppPreference.subWeeklyRobi ||
+                                    AppPreference.subDaily ||
+                                    AppPreference.subFifteenDays ||
+                                    AppPreference.subMonthlySsl ||
+                                    AppPreference.subYearlySsl ||
+                                    AppPreference.subHalfYearlySsl ||
+                                    AppPreference.subYearlyGpay ||
+                                    AppPreference.subMonthlyGpay
+
+                                ) {
+                                    mCallback?.showToastMessage("You are Already subscribed")
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "To unsubscribe please go to google play store (manage subscription)",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                            btnSubscribeYearly_gpay.setBackgroundResource(R.drawable.ic_button_unsub)
+                        }
+                        if (id == "noor_monthly_pack") {
+//                                showSubDialog("noor yearly pack","To unsubcribe please go to google play")
+//
+                            ivShapeSubMonthly_gpay.setImageResource(R.drawable.ic_shape_sub_disable)
+                            btnSubscribeMonthly_gpay.text = getString(R.string.txt_unsub)
+                            btnSubscribeMonthly_gpay.setTextColor(Color.WHITE)
+                            tvAmountMonthly_gpay.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.txt_color_title
+                                )
+                            )
+                            tvContentFifteen_gpay.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.txt_color_title
+                                )
+                            )
+                            btnSubscribeYearly_gpay.setOnClickListener {
+                                if (
+                                    AppPreference.subMonthlyRobi ||
+                                    AppPreference.subWeeklyRobi ||
+                                    AppPreference.subDaily ||
+                                    AppPreference.subFifteenDays ||
+                                    AppPreference.subMonthlySsl ||
+                                    AppPreference.subYearlySsl ||
+                                    AppPreference.subHalfYearlySsl ||
+                                    AppPreference.subYearlyGpay ||
+                                    AppPreference.subMonthlyGpay
+                                ) {
+                                    mCallback?.showToastMessage("You are Already subscribed")
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "You are already subscribed to a plan please unsubscribe it first from google play",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+
+                            }
+                            btnSubscribeMonthly_gpay.setOnClickListener {
+                                if (
+                                    AppPreference.subMonthlyRobi ||
+                                    AppPreference.subWeeklyRobi ||
+                                    AppPreference.subDaily ||
+                                    AppPreference.subFifteenDays ||
+                                    AppPreference.subMonthlySsl ||
+                                    AppPreference.subYearlySsl ||
+                                    AppPreference.subHalfYearlySsl ||
+                                    AppPreference.subYearlyGpay ||
+                                    AppPreference.subMonthlyGpay
+                                ) {
+                                    mCallback?.showToastMessage("You are Already subscribed")
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "To unsubscribe please go to google play store (manage subscription)",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+
+                            }
+                            btnSubscribeMonthly_gpay.setBackgroundResource(R.drawable.ic_button_unsub)
+                        }
+                        Log.d("Tag", "clicked: " + purchase.originalJson + "\n")
+                    }
+                }
+            } else {
+                Log.d("Tag", "ERROR: " + responseCode)
+                //showResponseCode(responseCode)
+            }
+        }
+    }
+
+    private val purchaseButtonsMap: Map<String, Button> by lazy(LazyThreadSafetyMode.NONE) {
+        mapOf(
+            "noor_yearly_pack" to btnSubscribeYearly_gpay,
+            "noor_monthly_pack" to btnSubscribeMonthly_gpay,
+        )
+    }
+
+    private fun displayProducts() {
+
+        billingClientWrapper.queryProducts(object : BillingClientWrapper.OnQueryProductsListener {
+
+            override fun onSuccess(products: List<SkuDetails>) {
+
+                Log.e("GPAY",products.toString())
+                products.forEach { product ->
+                    Log.d("TAG", "Product map: " + product.sku)
+                    purchaseButtonsMap[product.sku]?.apply {
+                        setOnClickListener {
+                            billingClientWrapper.purchase(requireActivity(), product)
+                            Log.d("Tag", "clicked4321: " + product.title)
+
+                        }
+                    }
+
+                }
+            }
+
+            override fun onFailure(error: BillingClientWrapper.Error) {
+                Log.d("TAG", "Product map: " + error)
+            }
+        })
+
+    }
+
+    override fun onPurchaseSuccess(purchase: Purchase?) {
+        val jsonObject = JSONTokener(purchase?.originalJson).nextValue() as JSONObject
+        val id = jsonObject.getString("productId")
+        Log.d("Tag", "clicked123: " + id)
+        AppPreference.subYearlyGpay = id == "noor_yearly_pack"
+
+        AppPreference.subMonthlyGpay = id == "noor_monthly_pack"
+
+        queryPurchaseHistory()
+    }
+
+    override fun onPurchaseFailure(error: BillingClientWrapper.Error) {
+        Toast.makeText(requireContext(), "Your purchase failed!", Toast.LENGTH_LONG).show()
     }
 }

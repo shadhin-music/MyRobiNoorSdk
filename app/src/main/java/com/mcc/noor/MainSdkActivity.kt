@@ -6,8 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.noor.R
-import com.noor.databinding.ActivityMainSdkBinding
+import com.mcc.noor.databinding.ActivityMainSdkBinding
 
 class MainSdkActivity : AppCompatActivity() {
 

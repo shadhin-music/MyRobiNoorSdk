@@ -45,6 +45,7 @@ internal class HajjPaymentFragment : Fragment() {
     private lateinit var cardBankPayment: CardView
     private lateinit var progressLayout: ConstraintLayout
     private lateinit var tvFee: AppCompatTextView
+    private lateinit var tvTerm:AppCompatTextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +69,7 @@ internal class HajjPaymentFragment : Fragment() {
         cardBankPayment = view.findViewById(R.id.cardBankPayment)
         progressLayout = view.findViewById(R.id.progressLayout)
         tvFee = view.findViewById(R.id.tvFee)
+        tvTerm = view.findViewById(R.id.tvTerm)
 
         return view
     }
@@ -108,6 +110,10 @@ internal class HajjPaymentFragment : Fragment() {
 
         cardBankPayment.handleClickEvent {
             cardMfsPayment.performClick()
+        }
+
+        tvTerm.handleClickEvent {
+            mCallback?.openUrl(HAJJ_PRE_REG_TERM)
         }
 
         lifecycleScope.launch {

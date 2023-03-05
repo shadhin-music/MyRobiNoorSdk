@@ -49,6 +49,7 @@ const val PAGE_HAJJ_HOME = "Hajj"
 const val PAGE_TASBIH = "Tasbih"
 const val PAGE_SUBSCRIPTION = "subscription"
 const val PAGE_SUBSCRIPTION_SSL = "subscriptionSsl"
+const val PAGE_SUBSCRIPTION_GPAY = "subscriptiongpay"
 const val PAGE_SUBSCRIPTION_OPTION_LIST = "Subscription Option List"
 const val PAGE_EID_JAMAT = "Eid Jamat"
 const val PAGE_DONATION_HOME = "DonationHome"
@@ -135,6 +136,9 @@ const val CAT_WOMEN = "Women"
 const val SUBSCRIPTION_ID_TAG = "SubscriptionId"
 
 const val SUB_BASE_URL_ROBI = "http://27.131.15.12/sdpdcg/default.aspx?msisdn="
+
+const val HAJJ_PRE_REG_TERM = "https://docs.google.com/document/d/1ndxFRjPvdevo4KZ6QewTVgbOolBHNh7jrtmDJY_X8SI/edit?usp=sharing"
+
 
 const val SUBSCRIPTION_ID_DAILY = "244"
 const val SUBSCRIPTION_ID_FIFTEENDAYS = "245"

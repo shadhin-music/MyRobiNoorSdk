@@ -4,10 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +17,7 @@ import com.gakk.noorlibrary.ui.adapter.BottomSheetAdapter
 import com.gakk.noorlibrary.util.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack {
@@ -78,9 +76,15 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
             dialog.dismiss()
 
+
             if (isNetworkConnected(requireContext())) {
 
-                if (AppPreference.subDaily || AppPreference.subFifteenDays) {
+                if (AppPreference.subWeeklyRobiOnDemand || AppPreference.subMonthlyRobiOnDemand) {
+                    showNoorServiceDialog()
+
+                }
+
+                else if (AppPreference.subDaily || AppPreference.subFifteenDays || AppPreference.subWeeklyRobi || AppPreference.subMonthlyRobi) {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION)
                         startActivity(this)
@@ -91,7 +95,8 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                         this.putExtra(IS_FAV, false)
                         startActivity(this)
                     }
-                } else {
+                }
+                else {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                         startActivity(this)
@@ -102,6 +107,22 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                 mCallback.showToastMessage("Please check internet connection!")
             }
         }
+    }
+
+    fun showNoorServiceDialog() {
+        val customDialog =
+            MaterialAlertDialogBuilder(
+                requireContext(),
+                R.style.MaterialAlertDialog_rounded
+            )
+        .setMessage(resources.getString(R.string.text_sub_soft_bundle_robi))
+                .setCancelable(false)
+            .setPositiveButton("Ok") { dialog, which ->
+                // Respond to positive button press
+            }
+
+        customDialog.show()
+
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
