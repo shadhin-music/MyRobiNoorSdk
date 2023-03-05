@@ -30,6 +30,7 @@ import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.ui.activity.SubscriptionBrowserActivity
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.SubscriptionViewModel
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.json.JSONTokener
@@ -557,21 +558,26 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
                         val id = jsonObject.getString("productId")
                         if (id == "noor_yearly_pack") {
 
-                            ivShapeSubWeekly_gpay.setImageResource(R.drawable.ic_shape_sub_disable)
-                            btnSubscribeYearly_gpay.text = getString(R.string.txt_unsub)
-                            btnSubscribeYearly_gpay.setTextColor(Color.WHITE)
-                            tvAmount_gpay.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.txt_color_title
+                            MainScope().launch {
+
+                                ivShapeSubWeekly_gpay.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeYearly_gpay.text = getString(R.string.txt_unsub)
+                                btnSubscribeYearly_gpay.setTextColor(Color.WHITE)
+                                tvAmount_gpay.setTextColor(
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.txt_color_title
+                                    )
                                 )
-                            )
-                            tvContent_gpay.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.txt_color_title
+                                tvContent_gpay.setTextColor(
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.txt_color_title
+                                    )
                                 )
-                            )
+                            }
+
+
                             btnSubscribeMonthly_gpay.setOnClickListener {
                                 if (AppPreference.subMonthlyRobi ||
                                     AppPreference.subWeeklyRobi ||
@@ -619,21 +625,25 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
                         if (id == "noor_monthly_pack") {
 //                                showSubDialog("noor yearly pack","To unsubcribe please go to google play")
 //
-                            ivShapeSubMonthly_gpay.setImageResource(R.drawable.ic_shape_sub_disable)
-                            btnSubscribeMonthly_gpay.text = getString(R.string.txt_unsub)
-                            btnSubscribeMonthly_gpay.setTextColor(Color.WHITE)
-                            tvAmountMonthly_gpay.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.txt_color_title
+                            MainScope().launch {
+
+                                ivShapeSubMonthly_gpay.setImageResource(R.drawable.ic_shape_sub_disable)
+                                btnSubscribeMonthly_gpay.text = getString(R.string.txt_unsub)
+                                btnSubscribeMonthly_gpay.setTextColor(Color.WHITE)
+                                tvAmountMonthly_gpay.setTextColor(
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.txt_color_title
+                                    )
                                 )
-                            )
-                            tvContentFifteen_gpay.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.txt_color_title
+                                tvContentFifteen_gpay.setTextColor(
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.txt_color_title
+                                    )
                                 )
-                            )
+                            }
+
                             btnSubscribeYearly_gpay.setOnClickListener {
                                 if (
                                     AppPreference.subMonthlyRobi ||

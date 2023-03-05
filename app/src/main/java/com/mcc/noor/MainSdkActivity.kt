@@ -36,7 +36,7 @@ class MainSdkActivity : AppCompatActivity() {
 
             val number = findViewById<EditText>(R.id.phone_number).text.trim().toString()
             if(number.isNotEmpty()){
-                Noor.openQuran(this,number)
+                Noor.openQuran(this)
             }else{
                 Toast.makeText(this,"Enter number",Toast.LENGTH_SHORT).show()
             }

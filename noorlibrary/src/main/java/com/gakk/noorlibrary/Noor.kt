@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.Keep
 import com.gakk.noorlibrary.data.prefs.AppPreference
@@ -22,17 +23,22 @@ object Noor {
     var appContext: Context? = null
 
     @JvmStatic
+    var token: String? = null
+
+    @JvmStatic
     fun openNoor(context: Context, msisdn: String) {
 
         this.appContext = context.applicationContext
         AppPreference.init(appContext!!)
         createNotificationChannel()
         scope.launch {
-            val token = RepositoryProvider.getRepository().login(msisdn)
+             token = RepositoryProvider.getRepository().login(msisdn)
             withContext(Dispatchers.Main) {
                 if (token != null) {
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
+                    //val intent = Intent(context, MainActivity::class.java)
+                    //context.startActivity(intent)
+                    Toast.makeText(context, "Authentication Success", Toast.LENGTH_SHORT).show()
+
                 } else {
                     Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
                 }
@@ -48,10 +54,18 @@ object Noor {
     }
 
     @JvmStatic
-    fun openQuran(context: Context, msisdn: String)
+    fun openQuran(context: Context)
     {
 
-        this.appContext = context.applicationContext
+            if (token != null) {
+                val intent = Intent(context, MainActivity::class.java)
+                intent.putExtra(DESTINATION_FRAGMENT, PAGE_QURAN_HOME)
+                context.startActivity(intent)
+            } else {
+                Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+            }
+
+        /*this.appContext = context.applicationContext
         AppPreference.init(appContext!!)
         createNotificationChannel()
         scope.launch {
@@ -66,7 +80,7 @@ object Noor {
                 }
             }
 
-        }
+        }*/
 
 
 
