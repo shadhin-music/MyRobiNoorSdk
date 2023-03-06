@@ -10,6 +10,7 @@ import com.gakk.noorlibrary.ui.fragments.*
 import com.gakk.noorlibrary.ui.fragments.eidjamat.EidJamatFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.HajjHomeFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.hajjguide.HajjGuideFragment
+import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistrationFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjpreRegistrationDetailsFragment
 import com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj.UmrahHajjFragment
 import com.gakk.noorlibrary.ui.fragments.islamicdiscuss.IslamicDiscussFragment
@@ -120,6 +121,8 @@ object FragmentProvider {
                 catName
             )
             PAGE_BIOGRAPHY -> BiographyFragment.newInstance()
+
+            PAGE_HAJJ_PRE_HOME -> HajjPreRegistrationFragment.newInstance()
 
 
             PAGE_JAKAT -> when (Util.checkSub()) {

@@ -16,11 +16,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.lifecycleScope/*
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.QueryPurchasesParams
-import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.SkuDetails*/
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
 import com.gakk.noorlibrary.data.prefs.AppPreference
@@ -43,7 +43,7 @@ import org.json.JSONTokener
 
 private const val ARG_PAGE_TAG = "subscriotion_page"
 
-internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurchaseListener {
+internal class SslSubscriptionFragment : Fragment()/*, BillingClientWrapper.OnPurchaseListener*/ {
 
     private var mCallback: DetailsCallBack? = null
     private lateinit var viewModel: SubscriptionViewModel
@@ -82,7 +82,7 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
     private lateinit var tvAmountMonthly_gpay:AppCompatTextView
     private lateinit var tvDailyService_gpay:AppCompatTextView
     private lateinit var tvFifteenService_gpay:AppCompatTextView
-    lateinit var billingClientWrapper: BillingClientWrapper
+    //lateinit var billingClientWrapper: BillingClientWrapper
 
 
 
@@ -99,7 +99,7 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        billingClientWrapper = BillingClientWrapper(requireContext())
+        //billingClientWrapper = BillingClientWrapper(requireContext())
 
         mCallback = requireActivity() as DetailsCallBack
 
@@ -270,8 +270,8 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
 
     private fun initGpay()
     {
-        billingClientWrapper.onPurchaseListener = this@SslSubscriptionFragment
-        queryPurchaseHistory()
+        //billingClientWrapper.onPurchaseListener = this@SslSubscriptionFragment
+        //queryPurchaseHistory()
         hideMainPack()
 
         setImageFromUrlNoProgress(
@@ -538,7 +538,7 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
     }
 
 
-    fun queryPurchaseHistory() {
+   /* fun queryPurchaseHistory() {
         billingClientWrapper.queryActivePurchasesForType(
             QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
         ) { billingResult, purchasesList ->
@@ -699,7 +699,7 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
             }
         }
     }
-
+*/
     private val purchaseButtonsMap: Map<String, Button> by lazy(LazyThreadSafetyMode.NONE) {
         mapOf(
             "noor_yearly_pack" to btnSubscribeYearly_gpay,
@@ -707,7 +707,7 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
         )
     }
 
-    private fun displayProducts() {
+    /*private fun displayProducts() {
 
         billingClientWrapper.queryProducts(object : BillingClientWrapper.OnQueryProductsListener {
 
@@ -747,5 +747,5 @@ internal class SslSubscriptionFragment : Fragment(), BillingClientWrapper.OnPurc
 
     override fun onPurchaseFailure(error: BillingClientWrapper.Error) {
         Toast.makeText(requireContext(), "Your purchase failed!", Toast.LENGTH_LONG).show()
-    }
+    }*/
 }

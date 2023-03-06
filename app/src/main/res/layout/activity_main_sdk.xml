@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +6,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnHome"
+        android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/phone_number"
@@ -19,15 +18,14 @@
         android:background="@color/white"
         android:paddingTop="@dimen/standard_margin"
         android:paddingBottom="@dimen/standard_margin"
-        android:text="Login"
+        android:text="Authentication"
         android:textColor="@color/deep_red" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnPage"
-        android:visibility="visible"
+        android:id="@+id/homeBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnHome"
+        android:layout_below="@id/login"
         android:layout_centerInParent="true"
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginTop="@dimen/standard_margin"
@@ -36,18 +34,90 @@
         android:background="@color/white"
         android:paddingTop="@dimen/standard_margin"
         android:paddingBottom="@dimen/standard_margin"
-        android:text="Go To Page"
-        android:textColor="@color/deep_red" />
+        android:text="Home"
+        android:textColor="@color/deep_red"
+        android:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/quranBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/homeBtn"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:background="@color/white"
+        android:paddingTop="@dimen/standard_margin"
+        android:paddingBottom="@dimen/standard_margin"
+        android:text="Quran"
+        android:textColor="@color/deep_red"
+        android:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ramadanBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quranBtn"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:background="@color/white"
+        android:paddingTop="@dimen/standard_margin"
+        android:paddingBottom="@dimen/standard_margin"
+        android:text="Ramadan"
+        android:textColor="@color/deep_red"
+        android:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/podcastBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ramadanBtn"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:background="@color/white"
+        android:paddingTop="@dimen/standard_margin"
+        android:paddingBottom="@dimen/standard_margin"
+        android:text="Podcast"
+        android:textColor="@color/deep_red"
+        android:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/hajjPreRegBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/podcastBtn"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:background="@color/white"
+        android:paddingTop="@dimen/standard_margin"
+        android:paddingBottom="@dimen/standard_margin"
+        android:text="Hajj Pre registration"
+        android:textColor="@color/deep_red"
+        android:visibility="visible" />
 
     <EditText
         android:id="@+id/phone_number"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:hint="Phone number"
-        android:textAlignment="center"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
         android:background="@color/white"
-        android:layout_centerInParent="true"
+        android:hint="Phone number"
         android:inputType="number"
-        android:text="8801680396647"
-        android:layout_margin="@dimen/standard_margin"/>
+        android:text="8801672219992"
+        android:textAlignment="center"
+        android:textColor="@color/black" />
 </RelativeLayout>

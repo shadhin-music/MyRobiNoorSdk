@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -76,6 +77,10 @@ internal class MainActivity : BaseActivity(), MainCallback {
         setSlider()
 
         checkGPS()
+
+        findViewById<ImageButton>(R.id.btnBack).handleClickEvent {
+            finish()
+        }
 
         if (ContextCompat.checkSelfPermission(
                 this@MainActivity,

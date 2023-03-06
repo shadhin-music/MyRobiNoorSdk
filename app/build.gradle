@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace 'com.mcc.noor'
+    namespace 'com.noor'
     compileSdkVersion 33
     buildToolsVersion "30.0.3"
 

@@ -6,7 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.util.handleClickEvent
-import com.mcc.noor.databinding.ActivityMainSdkBinding
+import com.noor.R
+import com.noor.databinding.ActivityMainSdkBinding
 
 class MainSdkActivity : AppCompatActivity() {
 
@@ -18,28 +19,40 @@ class MainSdkActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        binding.btnHome.handleClickEvent {
+        binding.login.handleClickEvent {
 
             val number = findViewById<EditText>(R.id.phone_number).text.trim().toString()
             if(number.isNotEmpty()){
-                Noor.openNoor(this,number)
+                Noor.authNoor(this,number)
             }else{
                 Toast.makeText(this,"Enter number",Toast.LENGTH_SHORT).show()
             }
-
-            //throw IOException()
-
 
         }
 
-        binding.btnPage.handleClickEvent {
+        binding.homeBtn.handleClickEvent {
 
-            val number = findViewById<EditText>(R.id.phone_number).text.trim().toString()
-            if(number.isNotEmpty()){
+            Noor.openHome(this)
+        }
+
+        binding.quranBtn.handleClickEvent {
+
                 Noor.openQuran(this)
-            }else{
-                Toast.makeText(this,"Enter number",Toast.LENGTH_SHORT).show()
-            }
+        }
+
+        binding.ramadanBtn.handleClickEvent {
+
+            Noor.openRamadan(this)
+        }
+
+        binding.podcastBtn.handleClickEvent {
+
+            Noor.openPodcast(this)
+        }
+
+        binding.hajjPreRegBtn.handleClickEvent {
+
+            Noor.openHajjPreRegistration(this)
         }
 
     }

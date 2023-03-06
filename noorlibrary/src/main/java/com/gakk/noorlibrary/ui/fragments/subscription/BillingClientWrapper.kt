@@ -1,9 +1,10 @@
+/*
 package com.gakk.noorlibrary.ui.fragments.subscription
 
 import android.app.Activity
 import android.content.Context
 import android.util.Log
-import com.android.billingclient.api.*
+//import com.android.billingclient.api.*
 
 
 class  BillingClientWrapper(context: Context) : PurchasesUpdatedListener{
@@ -222,4 +223,4 @@ class  BillingClientWrapper(context: Context) : PurchasesUpdatedListener{
 
 
 
-}
+}*/

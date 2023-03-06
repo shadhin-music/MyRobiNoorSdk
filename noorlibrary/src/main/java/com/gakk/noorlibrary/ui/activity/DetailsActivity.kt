@@ -39,6 +39,7 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
     private lateinit var mPage: String
     private var mFrament: Fragment? = null
     private lateinit var mFragmentStack: Stack<Fragment>
+    private var SdkPageCall:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
@@ -49,6 +50,10 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
         mFragmentStack = Stack()
 
         mPage = intent.getStringExtra(PAGE_NAME)!!
+
+        intent.getStringExtra(SDK_PAGE_CALL).apply {
+            SdkPageCall =  intent.getBooleanExtra(SDK_PAGE_CALL,false)
+        }
 
 
 
@@ -127,6 +132,9 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
         }
 
         findViewById<View>(R.id.btnBack)?.handleClickEvent {
+            if (SdkPageCall)
+                finish()
+            else
             handleNavigationUpAction()
         }
 

@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.Keep
 import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.ui.activity.DetailsActivity
 import com.gakk.noorlibrary.ui.activity.MainActivity
 import com.gakk.noorlibrary.util.*
 import kotlinx.coroutines.*
@@ -26,7 +27,7 @@ object Noor {
     var token: String? = null
 
     @JvmStatic
-    fun openNoor(context: Context, msisdn: String) {
+    fun authNoor(context: Context, msisdn: String) {
 
         this.appContext = context.applicationContext
         AppPreference.init(appContext!!)
@@ -54,38 +55,81 @@ object Noor {
     }
 
     @JvmStatic
+    fun openHome(context: Context)
+    {
+
+        if (token != null) {
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+        } else {
+            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    @JvmStatic
     fun openQuran(context: Context)
     {
 
-            if (token != null) {
-                val intent = Intent(context, MainActivity::class.java)
-                intent.putExtra(DESTINATION_FRAGMENT, PAGE_QURAN_HOME)
-                context.startActivity(intent)
-            } else {
-                Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
-            }
-
-        /*this.appContext = context.applicationContext
-        AppPreference.init(appContext!!)
-        createNotificationChannel()
-        scope.launch {
-            val token = RepositoryProvider.getRepository().login(msisdn)
-            withContext(Dispatchers.Main) {
-                if (token != null) {
-                    val intent = Intent(context, MainActivity::class.java)
-                    intent.putExtra(DESTINATION_FRAGMENT, PAGE_QURAN_HOME)
-                    context.startActivity(intent)
-                } else {
-                    Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-        }*/
-
-
-
+        if (token != null) {
+            val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra(PAGE_NAME, PAGE_QURAN_HOME)
+            intent.putExtra(SDK_PAGE_CALL, true)
+            context.startActivity(intent)
+        } else {
+            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+        }
 
     }
+
+    @JvmStatic
+    fun openRamadan(context: Context)
+    {
+
+        if (token != null) {
+            val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra(PAGE_NAME, PAGE_ROZA)
+            intent.putExtra(SDK_PAGE_CALL, true)
+            context.startActivity(intent)
+        } else {
+            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+
+    @JvmStatic
+    fun openPodcast(context: Context)
+    {
+
+        if (token != null) {
+            val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra(PAGE_NAME, PAGE_ISLAMIC_PODCAST)
+            intent.putExtra(SDK_PAGE_CALL, true)
+            context.startActivity(intent)
+        } else {
+            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    @JvmStatic
+    fun openHajjPreRegistration(context: Context)
+    {
+
+        if (token != null) {
+            val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra(PAGE_NAME, PAGE_HAJJ_PRE_HOME)
+            intent.putExtra(SDK_PAGE_CALL, true)
+            context.startActivity(intent)
+        } else {
+            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+
+
 
     fun createNotificationChannel() {
 
