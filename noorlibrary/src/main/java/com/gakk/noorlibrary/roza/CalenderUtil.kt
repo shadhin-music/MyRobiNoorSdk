@@ -110,7 +110,7 @@ object CalenderUtil {
     fun daysLeftTillRamadanFor2022():Long{
         var uCal= UmmalquraCalendar()
         var todayInMs=uCal.timeInMillis
-        var date = TimeFormtter.MillisecondFromDateString("2022-04-03T00:00:00")
+        var date = TimeFormtter.MillisecondFromDateString("2023-03-24T00:00:00")
 
         //uCal= UmmalquraCalendar(getCurrentHizriYear(),UmmalquraCalendar.RAMADHAN,1)
 //        var firstRamadanInMs=uCal.timeInMillis

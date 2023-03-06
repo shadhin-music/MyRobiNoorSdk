@@ -29,6 +29,7 @@ import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.HomeViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import com.gakk.noorlibrary.viewModel.RamadanTimingViewModel
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 
@@ -132,6 +133,8 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                          )
                          Log.e("TAG","Message: "+ list)
                          binding.rvRozaInfo.adapter = adapter*/
+
+                        Log.e("RAMADAN DATA","HELLO"+Gson().toJson(ramadanIfterSehriTimes))
                         if (rvRozaInfo.adapter == null) {
                             adapter = RozaInformationAdapter(
                                 this@RozaInformationFragment,
