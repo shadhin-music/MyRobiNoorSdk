@@ -16,13 +16,9 @@ import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
-
-import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.model.roza.Data
 import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
@@ -154,8 +150,7 @@ internal class RozaInformationAdapter(
                    imgSehriOrIfter.setImageResource(R.drawable.ic_islam)
                     tvIfterOrSehriTitle.setText(R.string.ifter_time_today)
                    // tvDivision.text = selectedDivision
-                    var todaysIfterSehri =
-                        todaySehriIfterControl.getSehriIfterTimeForToday(mDisplayableSehriIfterList)!!
+                    var todaysIfterSehri = todaySehriIfterControl.getSehriIfterTimeForToday(mDisplayableSehriIfterList)
 
 
                     holder.itemView.context.resources.getText(R.string.evening)
@@ -163,16 +158,16 @@ internal class RozaInformationAdapter(
 
                     // if(CalenderUtil.isRamadanNow()== false) {
                     tvIfterOrSehriTime.setText(
-                        "${todaysIfterSehri.sehriTimeStr} ${
+                        "${todaysIfterSehri?.sehriTimeStr} ${
                             holder.itemView.context.resources.getText(
                                 R.string.txt_minute
                             )
                         }"
 
                     )
-                    Log.d("TIME", "Time123: " + todaysIfterSehri.sehriTimeStr)
+                    Log.d("TIME", "Time123: " + todaysIfterSehri?.sehriTimeStr)
                     tvIfterOrSehriTime.setText(
-                        "${todaysIfterSehri.ifterTimeStr} ${
+                        "${todaysIfterSehri?.ifterTimeStr} ${
                             holder.itemView.context.resources.getText(
                                 R.string.txt_minute
                             )
