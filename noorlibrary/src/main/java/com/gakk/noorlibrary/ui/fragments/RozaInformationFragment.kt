@@ -224,8 +224,13 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                         } else {
                             adapter.mRamadanSehriIfterTimesFromAPI = list2!!
                             adapter.mNextTenDaysSehriIfterTimesFromAPI = list2!!
-                            adapter.initData()
-                            adapter.notifyDataSetChanged()
+
+                            rvRozaInfo.post {
+                                adapter.initDataNew()
+                                adapter.notifyDataSetChanged()
+
+                            }
+                            //adapter.notifyDataSetChanged()
                         }
                         progressLayout.visibility = GONE
                     }

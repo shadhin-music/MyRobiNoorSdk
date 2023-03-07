@@ -89,6 +89,13 @@ internal class RozaInformationAdapter(
         duaItemCount = mDuaList?.size ?: 0
     }
 
+    fun initDataNew()
+    {
+        mListControlFromAPI = DisplayableSehriIfterListControlFromAPI()
+        mDisplayableSehriIfterListFromAPI = mListControlFromAPI.getDisplayableListFromAPI()
+
+    }
+
 
 
     inner class RozaInformationViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
