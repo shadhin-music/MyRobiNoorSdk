@@ -87,8 +87,8 @@ object Noor {
     {
 
         if (token != null) {
-            val intent = Intent(context, DetailsActivity::class.java)
-            intent.putExtra(PAGE_NAME, PAGE_ROZA)
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra(DESTINATION_FRAGMENT, PAGE_ROZA)
             intent.putExtra(SDK_PAGE_CALL, true)
             context.startActivity(intent)
         } else {

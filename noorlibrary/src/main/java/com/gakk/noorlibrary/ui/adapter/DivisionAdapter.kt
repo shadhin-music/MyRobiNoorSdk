@@ -91,7 +91,7 @@ class DivisionSelectionControl{
               var layout=item.value
             val  imgChecked: ImageView? =layout?.findViewById(R.id.imgChecked)
               Log.i("DivisionMap","${layout!!.rootView.tag} && $selectedIndex")
-              when(layout!!.rootView.tag== selectedIndex){
+              when(layout.rootView.tag== selectedIndex){
                   true->imgChecked?.visibility= VISIBLE
                   false->imgChecked?.visibility= INVISIBLE
               }

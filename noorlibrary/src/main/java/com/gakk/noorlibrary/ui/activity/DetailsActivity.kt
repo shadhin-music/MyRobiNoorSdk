@@ -51,11 +51,7 @@ internal class DetailsActivity : BaseActivity(), DetailsCallBack {
 
         mPage = intent.getStringExtra(PAGE_NAME)!!
 
-        intent.getStringExtra(SDK_PAGE_CALL).apply {
             SdkPageCall =  intent.getBooleanExtra(SDK_PAGE_CALL,false)
-        }
-
-
 
         mFrament = when (mPage) {
             PAGE_DUA -> FragmentProvider.getFragmentByName(

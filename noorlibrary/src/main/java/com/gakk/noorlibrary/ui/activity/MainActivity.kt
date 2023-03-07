@@ -61,6 +61,8 @@ internal class MainActivity : BaseActivity(), MainCallback {
     private var moreFragment: MoreFragment? = null
     var mainCallback: MainCallback? = null
 
+    var SdkPageCall:Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -598,6 +600,8 @@ internal class MainActivity : BaseActivity(), MainCallback {
 
             }
         startActivity(intent)
+        if(SdkPageCall)
+            finish()
 
     }
 
@@ -626,6 +630,7 @@ internal class MainActivity : BaseActivity(), MainCallback {
         intent?.let { intent ->
 
             val page: String? = intent.getStringExtra(DESTINATION_FRAGMENT)
+             SdkPageCall = intent.getBooleanExtra(SDK_PAGE_CALL,false)
             var pageNotification: String? = null
             /* val segment = intent.getStringExtra(HAJJ_TRACKER_SEGMENT_TAG)
 
