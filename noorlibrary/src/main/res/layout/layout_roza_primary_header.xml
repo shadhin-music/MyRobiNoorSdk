@@ -92,6 +92,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageFilterView"
         app:layout_constraintTop_toTopOf="@+id/imageFilterView"></ProgressBar>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutDivisionContainer"
         android:layout_width="0dp"

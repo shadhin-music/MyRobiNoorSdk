@@ -16,6 +16,7 @@ import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
@@ -25,6 +26,7 @@ import com.gakk.noorlibrary.model.roza.IfterAndSehriTime
 import com.gakk.noorlibrary.roza.CalenderUtil
 import com.gakk.noorlibrary.ui.fragments.DivisionSelectionCallback
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.Util.checkSelectedDate
 import com.gakk.noorlibrary.views.TextViewNormalArabic
 import com.google.android.material.tabs.TabLayout
 import java.text.SimpleDateFormat
@@ -133,6 +135,8 @@ internal class RozaInformationAdapter(
 
                 val tvIfterOrSehriTitle: AppCompatTextView = holder.view.findViewById(R.id.tvInfo)
                 val tvTitle: AppCompatTextView = holder.view.findViewById(R.id.tvTitle)
+                val tvDivision:AppCompatTextView = holder.view.findViewById(R.id.tvDivision)
+                val layoutDivisionContainer:ConstraintLayout = holder.view.findViewById(R.id.layoutDivisionContainer)
                 val  imageAlarm: ImageView = holder.view.findViewById(R.id.imageAlarm)
                 val  imageFilterView: AppCompatImageView = holder.view.findViewById(R.id.imageFilterView)
                // Glide.with(holder.itemView.context).load(item.fullImageUrl).into(imageFilterView)
@@ -145,11 +149,21 @@ internal class RozaInformationAdapter(
                 val   imgSehriOrIfter: ImageView = holder.view.findViewById(R.id.imgSehriOrIfter)
                //     it.item = ImageFromOnline("bg_ramadan.png")
 
+
+                if(checkSelectedDate("24/03/2023"))
+                    layoutDivisionContainer.show()
+
                  tvTitle.setText(R.string.today_sehri_iftar_robi)
 
                    imgSehriOrIfter.setImageResource(R.drawable.ic_islam)
                     tvIfterOrSehriTitle.setText(R.string.ifter_time_today)
-                   // tvDivision.text = selectedDivision
+                    tvDivision.text = selectedDivision
+
+
+                layoutDivisionContainer.handleClickEvent {
+
+                    mCallBack?.showDivisionListAlert(layoutDivisionContainer)
+                }
                     var todaysIfterSehri = todaySehriIfterControl.getSehriIfterTimeForToday(mDisplayableSehriIfterList)
 
 
@@ -435,6 +449,8 @@ internal class RozaInformationAdapter(
                     val tvDate = holder.view.findViewById<AppCompatTextView>(R.id.tvDate)
                     val scrim = holder.view.findViewById<LinearLayout>(R.id.scrim)
                     var pos = position - 3 + mPeriodControl.mSelectedPeriod * 10
+
+
                     var sehriIfterTime = mDisplayableSehriIfterList.get(pos)
 //                    var todaysIfterSehriFromAPI =
 //                        todaySehriIfterControlFromAPI.getSehriIfterTimeForTodayFromAPI(mDisplayableSehriIfterListFromAPI)
@@ -597,6 +613,7 @@ internal class RozaInformationAdapter(
         return 14 + duaItemCount
     }
 
+
     override fun getItemViewType(position: Int): Int {
         if (fromMalaysia) {
             return when (position) {
@@ -633,6 +650,8 @@ internal class RozaInformationAdapter(
             else -> _DUA_INFO
         }
     }
+
+
 
     inner class DisplayableSehriIfterListControlFromAPI {
         fun getDisplayableListFromAPI(): MutableList<Data> {

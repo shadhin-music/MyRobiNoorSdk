@@ -39,6 +39,7 @@ open class BaseActivity : AppCompatActivity() {
 
     companion object {
         lateinit var alertDialog: AlertDialog
+         var selectedDivision: Int = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -535,6 +536,7 @@ open class BaseActivity : AppCompatActivity() {
         // val divisions = resources.getStringArray(R.array.bd_divisions).toList()
         val adapter = divisions?.let { DivisionAdapter(it) }
         binding.findViewById<RecyclerView>(R.id.rvDistricts).adapter = adapter
+        adapter?.selectionControl?.setSelectedIndex(selectedDivision)
         adapter?.divisionCallbackFunc = divisionCallbackFunc
 
         val dialogView: View = binding
