@@ -33,6 +33,7 @@ import com.gakk.noorlibrary.viewModel.HomeViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import com.gakk.noorlibrary.viewModel.RamadanTimingViewModel
 import com.google.gson.Gson
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
@@ -91,8 +92,6 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
         AppPreference.nextTenDaysSehriIfterTimes?.let {
             nextTenDaysIfterSehriTimes = it
         }
-
-
         lifecycleScope.launch {
 
             val job = launch {
@@ -109,7 +108,6 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                 this@RozaInformationFragment,
                 HomeViewModel.FACTORY(repository)
             ).get(HomeViewModel::class.java)
-
 
             loadData("Dhaka", "0")
 
@@ -174,18 +172,22 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
 
                         Log.e("ROZA CRASH",Gson().toJson(ramadanIfterSehriTimes))
 
-                        if (rvRozaInfo.adapter == null && ramadanIfterSehriTimes.size>0) {
-                            adapter = RozaInformationAdapter(
-                                this@RozaInformationFragment,
-                                ramadanIfterSehriTimes,
-                                nextTenDaysIfterSehriTimes,
-                                null,
-                                list2!!,
-                                fromMalaysia
+                        if (rvRozaInfo.adapter == null) {
 
-                            )
-                            Log.e("TAG", "Message: " + list2)
-                            rvRozaInfo.adapter = adapter
+                            MainScope().launch {
+                                adapter = RozaInformationAdapter(
+                                    this@RozaInformationFragment,
+                                    ramadanIfterSehriTimes,
+                                    nextTenDaysIfterSehriTimes,
+                                    null,
+                                    list2!!,
+                                    fromMalaysia
+
+                                )
+                                Log.e("TAG", "Message: " + list2)
+                                rvRozaInfo.adapter = adapter
+                            }
+
                         } else {
                             adapter.mRamadanSehriIfterTimesFromAPI = list2!!
                             adapter.mNextTenDaysSehriIfterTimesFromAPI = list2!!
@@ -209,6 +211,9 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
     }
 
     fun loadData(name: String, index: String) {
+
+
+
         if (fromMalaysia == false) {
             model.loadRamadanTimingData(name)
             model.loadTextBasedLiteratureListBySubCategory(

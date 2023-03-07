@@ -451,6 +451,7 @@ internal class RozaInformationAdapter(
                     var pos = position - 3 + mPeriodControl.mSelectedPeriod * 10
 
 
+
                     var sehriIfterTime = mDisplayableSehriIfterList.get(pos)
 //                    var todaysIfterSehriFromAPI =
 //                        todaySehriIfterControlFromAPI.getSehriIfterTimeForTodayFromAPI(mDisplayableSehriIfterListFromAPI)
