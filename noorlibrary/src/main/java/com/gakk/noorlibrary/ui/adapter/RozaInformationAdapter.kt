@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.ui.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.AlarmClock
@@ -16,6 +17,7 @@ import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.Noor
@@ -133,15 +135,19 @@ internal class RozaInformationAdapter(
             _HEADER -> {
 
 
-                val tvIfterOrSehriTitle: AppCompatTextView = holder.view.findViewById(R.id.tvInfo)
+                val layoutIfterInfo = holder.view.findViewById<CardView>(R.id.layoutIfterInfo)
+                val layoutSehriInfo = holder.view.findViewById<CardView>(R.id.layoutSehriInfo)
+                val tvIfterOrSehriTitle:AppCompatTextView = layoutIfterInfo.findViewById(R.id.tvIfterOrSehriTitle)
                 val tvTitle: AppCompatTextView = holder.view.findViewById(R.id.tvTitle)
                 val tvDivision:AppCompatTextView = holder.view.findViewById(R.id.tvDivision)
                 val layoutDivisionContainer:ConstraintLayout = holder.view.findViewById(R.id.layoutDivisionContainer)
-                val  imageAlarm: ImageView = holder.view.findViewById(R.id.imageAlarm)
+                val  imageAlarm1:ImageView = layoutIfterInfo.findViewById(R.id.imageAlarm)
+                val  imageAlarm2:ImageView = layoutSehriInfo.findViewById(R.id.imageAlarm)
                 val  imageFilterView: AppCompatImageView = holder.view.findViewById(R.id.imageFilterView)
                // Glide.with(holder.itemView.context).load(item.fullImageUrl).into(imageFilterView)
                 tvTitle.setText(R.string.today_sehri_iftar_robi)
-                val tvIfterOrSehriTime = holder.view.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
+                val tvIfterOrSehriTime1 = layoutSehriInfo.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
+                val tvIfterOrSehriTime2 = layoutIfterInfo.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
                 val tvInfo = holder.view.findViewById<AppCompatTextView>(R.id.tvInfo)
                 val tvInfoLarge = holder.view.findViewById<AppCompatTextView>(R.id.tvInfoLarge)
                 val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
@@ -171,22 +177,22 @@ internal class RozaInformationAdapter(
                     holder.itemView.context.resources.getText(R.string.txt_minute)
 
                     // if(CalenderUtil.isRamadanNow()== false) {
-                    tvIfterOrSehriTime.setText(
-                        "${todaysIfterSehri?.sehriTimeStr} ${
-                            holder.itemView.context.resources.getText(
-                                R.string.txt_minute
-                            )
-                        }"
 
-                    )
-                    Log.d("TIME", "Time123: " + todaysIfterSehri?.sehriTimeStr)
-                    tvIfterOrSehriTime.setText(
-                        "${todaysIfterSehri?.ifterTimeStr} ${
-                            holder.itemView.context.resources.getText(
-                                R.string.txt_minute
-                            )
-                        }"
-                    )
+                tvIfterOrSehriTime1.setText(
+                    "${todaysIfterSehri?.sehriTimeStr} ${
+                        holder.view.context.resources.getText(
+                            R.string.txt_minute
+                        )
+                    }"
+                )
+                tvIfterOrSehriTime2.setText(
+                    "${todaysIfterSehri?.ifterTimeStr} ${
+                        holder.view.context.resources.getText(
+                            R.string.txt_minute
+                        )
+                    }"
+                )
+
                     // }
                     tvInfo?.visibility = VISIBLE
                   tvInfoLarge?.visibility = VISIBLE
@@ -270,75 +276,47 @@ internal class RozaInformationAdapter(
 //                                    )
 //                                } ${it?.root?.context?.getText(R.string.cat_roja)}"
 
-                        tvIfterOrSehriTime.setText(
+
+                        tvIfterOrSehriTime1.setText(
                             "${todaysIfterSehriFromAPI?.sehriTimeStr1} ${
                                 holder.itemView.context.resources.getText(
                                     R.string.txt_minute
                                 )
                             }"
                         )
-                     tvIfterOrSehriTime.setText(
+                        tvIfterOrSehriTime2.setText(
                             "${todaysIfterSehriFromAPI?.ifterTimeStr1} ${
                                 holder.itemView.context.resources.getText(
                                     R.string.txt_minute
                                 )
                             }"
                         )
-                    }
-                   imageAlarm.setOnClickListener { it ->
-                        val todaysIfterSehriFromAPI =
-                            todaySehriIfterControlFromAPI.getSehriIfterTimeForTodayFromAPI(
-                                mDisplayableSehriIfterListFromAPI
-                            )
-                        val hm = todaysIfterSehriFromAPI?.ifterTimeStr1
 
-                        val sdf: SimpleDateFormat =
-                            SimpleDateFormat("HH:mm") // or "hh:mm" for 12 hour format
-
-                        val date: Date = sdf.parse(hm)
-
-                        val hour = date.hours
-
-                        val min = date.minutes
-
-                        val i = Intent(AlarmClock.ACTION_SET_ALARM)
-
-                        i.putExtra(AlarmClock.EXTRA_MESSAGE, "Ifter time")
-                        i.putExtra(AlarmClock.EXTRA_HOUR, 12 + hour)
-                        i.putExtra(AlarmClock.EXTRA_MINUTES, min)
-                        it.context.startActivity(i)
-                        Log.d("Time", "Time: " + hour)
-                        Log.d("Time", "Time: " + min)
-                        Log.d("Time", "Time: " + hm)
-                    }
-                   imageAlarm.setOnClickListener { it ->
-                        val todaysIfterSehriFromAPI =
-                            todaySehriIfterControlFromAPI.getSehriIfterTimeForTodayFromAPI(
-                                mDisplayableSehriIfterListFromAPI
-                            )
-                        val hm = todaysIfterSehriFromAPI?.sehriTimeStr1
-
-                        val sdf: SimpleDateFormat =
-                            SimpleDateFormat("HH:mm") // or "hh:mm" for 12 hour format
-
-                        val date: Date = sdf.parse(hm)
-
-                        val hour = date.hours
-
-                        val min = date.minutes // int
-
-                        val i = Intent(AlarmClock.ACTION_SET_ALARM)
-
-                        i.putExtra(AlarmClock.EXTRA_MESSAGE, "Sehri time")
-                        i.putExtra(AlarmClock.EXTRA_HOUR, hour)
-                        i.putExtra(AlarmClock.EXTRA_MINUTES, min)
-
-                        it.context.startActivity(i)
-                        Log.d("Time", "Time: " + hour)
-                        Log.d("Time", "Time: " + min)
-                        Log.d("Time", "Time: " + hm)
 
                     }
+
+                imageAlarm1.setOnClickListener {
+
+                    Log.e("IFTER TIME", todaysIfterSehri?.ifterTimeStr!!)
+
+                    gotoDefaultAlarm(
+                        todaysIfterSehri?.ifterTimeStr!!,
+                        it.context,
+                        "Ifter time",
+                        0
+                    )
+                }
+
+                imageAlarm2.setOnClickListener {
+
+                    gotoDefaultAlarm(
+                        todaysIfterSehri?.sehriTimeStr!!,
+                        it.context,
+                        "Sehri time",
+                        1
+                    )
+                }
+
                     if (CalenderUtil.isShabanNow() == true) {
                        tvInfo?.text =
                            holder.itemView.context.getText(R.string.time_left_till_ramadan)
@@ -451,13 +429,15 @@ internal class RozaInformationAdapter(
                     var pos = position - 3 + mPeriodControl.mSelectedPeriod * 10
 
 
-
                     var sehriIfterTime = mDisplayableSehriIfterList.get(pos)
 //                    var todaysIfterSehriFromAPI =
 //                        todaySehriIfterControlFromAPI.getSehriIfterTimeForTodayFromAPI(mDisplayableSehriIfterListFromAPI)
                     var sehriIfterTimeForRamadan = mDisplayableSehriIfterListFromAPI.get(pos)
                     // var sehriIfterTimeForRamadan = mDisplayableSehriIfterListFromAPI.get()
                     //Log.e("TAG", "Position123: "+ mDisplayableSehriIfterListFromAPI.size)
+
+                    Log.e("ROZA ACTIVE TIME",sehriIfterTime.dateMs.toString())
+
                     when (sehriIfterTime.isToday) {
                         true -> {
                            scrim?.visibility = VISIBLE
@@ -469,7 +449,7 @@ internal class RozaInformationAdapter(
                     if (CalenderUtil.isRamadanNow() && !fromMalaysia) {
                       tvDay?.setText(sehriIfterTime.dayOfHizriMonth)
                         ///       var sehriIfterTimeForRamadan = mDisplayableSehriIfterListFromAPI.get(pos)
-                        when (sehriIfterTimeForRamadan?.isToday) {
+                        when (sehriIfterTimeForRamadan.isToday) {
                             true -> {
                              scrim?.visibility = VISIBLE
                             }
@@ -602,15 +582,21 @@ internal class RozaInformationAdapter(
     }
 
     override fun getItemCount(): Int {
+
         if (fromMalaysia) {
-            return 3 + mDisplayableSehriIfterList.size + duaItemCount //mDisplayableSehriIfterListFromAPI
+            //todo change
+            val x = 3 + mDisplayableSehriIfterList.size + duaItemCount //mDisplayableSehriIfterListFromAPI
+            Log.e("getItemCount", "size1:"+x)
+            return x
         }
 //        if(fromMalaysia==false){
 //            return 3+mDisplayableSehriIfterListFromAPI.size+duaItemCount
 //        }
         if (mDisplayableSehriIfterListFromAPI == null || mDisplayableSehriIfterListFromAPI.isEmpty()) {
+            Log.e("getItemCount", "size2:"+0)
             return 0
         }
+        Log.e("getItemCount", "size3:"+(14 + duaItemCount))
         return 14 + duaItemCount
     }
 
@@ -652,6 +638,36 @@ internal class RozaInformationAdapter(
         }
     }
 
+    private fun gotoDefaultAlarm(
+        alarmTime: String,
+        context: Context,
+        message: String,
+        alarmType: Int
+    ) {
+        val sdf =
+            SimpleDateFormat(
+                "HH:mm",
+                Locale.ENGLISH
+            ) // or "hh:mm" for 12 hour format
+
+        val date: Date = sdf.parse(alarmTime)
+
+        val hour = date.hours
+
+        val min = date.minutes
+
+        val i = Intent(AlarmClock.ACTION_SET_ALARM)
+
+        i.putExtra(AlarmClock.EXTRA_MESSAGE, message)
+        if (alarmType == 0) {
+            i.putExtra(AlarmClock.EXTRA_HOUR, 12 + hour)
+        } else {
+            i.putExtra(AlarmClock.EXTRA_HOUR, hour)
+        }
+
+        i.putExtra(AlarmClock.EXTRA_MINUTES, min)
+        context.startActivity(i)
+    }
 
 
     inner class DisplayableSehriIfterListControlFromAPI {

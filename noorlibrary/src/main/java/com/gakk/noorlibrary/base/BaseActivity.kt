@@ -549,7 +549,7 @@ open class BaseActivity : AppCompatActivity() {
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         alertDialog.window?.setGravity(Gravity.CENTER)
-        alertDialog.setCancelable(false)
+        alertDialog.setCancelable(true)
         alertDialog.show()
         binding.findViewById<TextView>(R.id.tvDivision).setText("")
         binding.findViewById<View>(R.id.btnDismiss).handleClickEvent {
