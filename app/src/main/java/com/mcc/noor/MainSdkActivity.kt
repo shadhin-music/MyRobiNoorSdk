@@ -17,12 +17,11 @@ class MainSdkActivity : AppCompatActivity(), NoorAuthCallBack {
         super.onCreate(savedInstanceState)
         var binding = ActivityMainSdkBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Noor.CallBackListener = this
         binding.login.handleClickEvent {
 
             val number = findViewById<EditText>(R.id.phone_number).text.trim().toString()
             if(number.isNotEmpty()){
-                Noor.authNoor(this,number)
+                Noor.authNoor(this,number, this@MainSdkActivity)
             }else{
                 Toast.makeText(this,"Enter number",Toast.LENGTH_SHORT).show()
             }

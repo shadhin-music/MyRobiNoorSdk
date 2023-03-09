@@ -17,7 +17,7 @@ import kotlinx.coroutines.*
 object Noor {
 
     private var scope = CoroutineScope(Dispatchers.IO)
-    var  CallBackListener : NoorAuthCallBack? =null
+    private var  CallBackListener : NoorAuthCallBack? =null
 
     @JvmStatic
     var appContext: Context? = null
@@ -26,9 +26,10 @@ object Noor {
     var token: String? = null
 
     @JvmStatic
-    fun authNoor(context: Context, msisdn: String) {
+    fun authNoor(context: Context, msisdn: String,callback:NoorAuthCallBack?) {
 
         this.appContext = context.applicationContext
+        this.CallBackListener = callback
         AppPreference.init(appContext!!)
         createNotificationChannel()
         scope.launch {
