@@ -6,8 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.Keep
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.ui.activity.DetailsActivity
@@ -19,6 +17,7 @@ import kotlinx.coroutines.*
 object Noor {
 
     private var scope = CoroutineScope(Dispatchers.IO)
+    var  CallBackListener : NoorAuthCallBack? =null
 
     @JvmStatic
     var appContext: Context? = null
@@ -38,10 +37,10 @@ object Noor {
                 if (token != null) {
                     //val intent = Intent(context, MainActivity::class.java)
                     //context.startActivity(intent)
-                    Toast.makeText(context, "Authentication Success", Toast.LENGTH_SHORT).show()
+                    CallBackListener?.onAuthSuccess()
 
                 } else {
-                    Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+                    CallBackListener?.onAuthFailed()
                 }
             }
 
@@ -62,7 +61,7 @@ object Noor {
             val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
         } else {
-            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+            CallBackListener?.onAuthFailed()
         }
 
     }
@@ -77,7 +76,7 @@ object Noor {
             intent.putExtra(SDK_PAGE_CALL, true)
             context.startActivity(intent)
         } else {
-            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+            CallBackListener?.onAuthFailed()
         }
 
     }
@@ -92,7 +91,7 @@ object Noor {
             intent.putExtra(SDK_PAGE_CALL, true)
             context.startActivity(intent)
         } else {
-            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+            CallBackListener?.onAuthFailed()
         }
 
     }
@@ -108,7 +107,7 @@ object Noor {
             intent.putExtra(SDK_PAGE_CALL, true)
             context.startActivity(intent)
         } else {
-            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+            CallBackListener?.onAuthFailed()
         }
 
     }
@@ -123,7 +122,7 @@ object Noor {
             intent.putExtra(SDK_PAGE_CALL, true)
             context.startActivity(intent)
         } else {
-            Toast.makeText(context, "Authentication Error", Toast.LENGTH_SHORT).show()
+            CallBackListener?.onAuthFailed()
         }
 
     }
@@ -148,4 +147,14 @@ object Noor {
             notificationManager.createNotificationChannel(mChannel)
         }
     }
+
+
 }
+
+interface NoorAuthCallBack
+{
+    fun onAuthSuccess()
+    fun onAuthFailed()
+}
+
+

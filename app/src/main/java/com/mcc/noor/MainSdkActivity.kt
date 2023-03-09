@@ -5,20 +5,19 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.gakk.noorlibrary.Noor
+import com.gakk.noorlibrary.NoorAuthCallBack
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.noor.R
 import com.noor.databinding.ActivityMainSdkBinding
 
-class MainSdkActivity : AppCompatActivity() {
+class MainSdkActivity : AppCompatActivity(), NoorAuthCallBack {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         var binding = ActivityMainSdkBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
+        Noor.CallBackListener = this
         binding.login.handleClickEvent {
 
             val number = findViewById<EditText>(R.id.phone_number).text.trim().toString()
@@ -60,5 +59,13 @@ class MainSdkActivity : AppCompatActivity() {
     override fun onDestroy() {
         Noor.destroySDK()
         super.onDestroy()
+    }
+
+    override fun onAuthSuccess() {
+        Toast.makeText(this, "Auth Success Callback", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onAuthFailed() {
+        Toast.makeText(this, "Auth Failed Callback", Toast.LENGTH_SHORT).show()
     }
 }
