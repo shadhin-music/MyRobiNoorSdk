@@ -26,7 +26,7 @@ object Noor {
     var token: String? = null
 
     @JvmStatic
-    fun authNoor(context: Context, msisdn: String,callback:NoorAuthCallBack?) {
+    fun authNoor(context: Context, msisdn: String,callback:NoorAuthCallBack?=null) {
 
         this.appContext = context.applicationContext
         this.CallBackListener = callback

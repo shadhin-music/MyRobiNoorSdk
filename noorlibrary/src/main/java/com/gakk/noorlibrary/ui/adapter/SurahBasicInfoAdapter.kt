@@ -61,9 +61,9 @@ class SurahBasicInfoAdapter(
 
                         it.handleClickEvent {
                             Log.i("AdapterPos", "$adapterPosition")
-                            if (adapterPosition != -1) {
+                            if (absoluteAdapterPosition != -1) {
                                 mSurahList?.let {
-                                    var id = it.get(adapterPosition).id
+                                    var id = it.get(absoluteAdapterPosition).id
                                     val fragment = mAction?.invoke(id!!, mDetailsCallBack, it)
                                     mDetailsCallBack.addFragmentToStackAndShow(fragment!!)
                                 }
@@ -77,11 +77,29 @@ class SurahBasicInfoAdapter(
                 CELL_OTHER ->
                 {
 
+                    view.let {
+
+                        it.handleClickEvent {
+                            if(absoluteAdapterPosition!=-1){
+                                mSurahList?.let {
+                                    var id=it.get(absoluteAdapterPosition).id
+                                    val fragment=mAction?.invoke(id!!, mDetailsCallBack, it)
+                                    mDetailsCallBack?.addFragmentToStackAndShow(fragment!!)
+                                }
+                            }
+                        }
+                    }
+
                     val favourite = view.findViewById<ImageView>(R.id.favourite)
 
                     favourite.handleClickEvent {
-                            var id = mSurahList?.get(adapterPosition)!!.id
-                            mFavUnFavActionCallBack.unFavSurah(id!!, adapterPosition)
+
+                        mSurahList?.let {
+                            var id= it[absoluteAdapterPosition].id
+                            mFavUnFavActionCallBack.unFavSurah(id!!, absoluteAdapterPosition)
+                            // Log.e("SURAH FAV",id)
+                        }
+
 
                     }
 
@@ -150,7 +168,10 @@ class SurahBasicInfoAdapter(
             {
                 mSurahList?.let { list ->
                     val number = holder.view.findViewById<AppCompatTextView>(R.id.number)
+                    val title = holder.view.findViewById<AppCompatTextView>(R.id.title)
+
                     number?.text = list[position].surahNumber
+                    title?.text = list[position].name
                 }
             }
 
