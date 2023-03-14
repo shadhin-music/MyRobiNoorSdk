@@ -132,8 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cardImg"
                     android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:orientation="horizontal">
 
                     <RelativeLayout
                         android:id="@+id/rlRead"
@@ -155,11 +154,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/small_spacing"
                             android:layout_toEndOf="@id/imgRead"
-                            android:text="@string/txt_read_surah"
                             android:fontFamily="sans-serif"
+                            android:text="@string/txt_read_surah"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                             android:textColor="@color/ash" />
                     </RelativeLayout>
@@ -169,6 +167,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:gravity="center"
                         android:padding="@dimen/standard_margin">
 
