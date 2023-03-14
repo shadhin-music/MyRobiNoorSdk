@@ -114,7 +114,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.noorlibrary.provider"
+            android:authorities="myrobiapp.noorlibrary.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

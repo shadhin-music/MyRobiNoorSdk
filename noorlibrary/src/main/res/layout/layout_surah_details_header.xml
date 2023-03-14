@@ -133,6 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
+            android:visibility="gone"
             android:background="@drawable/bg_border_rounded_green"
             app:layout_constraintBottom_toBottomOf="@+id/CLPlay"
             app:layout_constraintEnd_toEndOf="parent"

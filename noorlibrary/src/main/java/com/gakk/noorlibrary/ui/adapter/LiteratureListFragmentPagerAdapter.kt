@@ -26,7 +26,16 @@ internal class LiteratureListFragmentPagerAdapter(
     val mCatId = catId
     val mLiteratureType = literatureType
 
-    override fun getCount() = 2
+    override fun getCount() =
+        run {
+            var getCount = 0
+            when(mLiteratureType)
+            {
+                LiteratureType.Jakat -> getCount = 2
+                else-> getCount = 1
+            }
+            getCount
+        }
 
     override fun getItem(position: Int): Fragment {
         return when (position) {

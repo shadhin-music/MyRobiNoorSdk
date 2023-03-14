@@ -10,6 +10,7 @@ import com.gakk.noorlibrary.util.handleClickEvent
 import com.noor.R
 import com.noor.databinding.ActivityMainSdkBinding
 
+
 class MainSdkActivity : AppCompatActivity(), NoorAuthCallBack {
 
 

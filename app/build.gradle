@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    namespace 'com.noor'
     compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
-    defaultConfig {
 
+    defaultConfig {
+        applicationId 'com.myapplicationid'
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 232
@@ -24,6 +24,7 @@ android {
         useLibrary 'org.apache.http.legacy'
     }
     buildTypes {
+
         getByName("release") {
             minifyEnabled false
             shrinkResources false

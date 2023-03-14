@@ -410,21 +410,22 @@ internal class LiteratureDetailsFragment : Fragment(), PrevNextPanelControlCallB
     }
 
     fun updateToolbarForThisFragment() {
-        mDetailsCallback?.toggleToolBarActionIconsVisibility(true, ActionButtonType.TypeOne)
-        mDetailsCallback?.toggleToolBarActionIconsVisibility(false, ActionButtonType.TypeTwo)
+        //mDetailsCallback?.toggleToolBarActionIconsVisibility(true, ActionButtonType.TypeOne)
+        //mDetailsCallback?.toggleToolBarActionIconsVisibility(false, ActionButtonType.TypeTwo)
         when (literature?.category) {
             R.string.namaz_rules_cat_id.getLocalisedTextFromResId(),
             R.string.animation_cat_id.getLocalisedTextFromResId(),
-            R.string.wallpaper_cat_id.getLocalisedTextFromResId() -> mDetailsCallback?.toggleToolBarActionIconsVisibility(
-                false,
-                ActionButtonType.TypeOne
-            )
-
-            R.string.hajj_cateogry_id.getLocalisedTextFromResId() -> {
+            R.string.wallpaper_cat_id.getLocalisedTextFromResId() -> {/*
                 mDetailsCallback?.toggleToolBarActionIconsVisibility(
                     false,
                     ActionButtonType.TypeOne
-                )
+                )*/
+            }
+            R.string.hajj_cateogry_id.getLocalisedTextFromResId() -> {
+                /*mDetailsCallback?.toggleToolBarActionIconsVisibility(
+                    false,
+                    ActionButtonType.TypeOne
+                )*/
             }
 
         }
