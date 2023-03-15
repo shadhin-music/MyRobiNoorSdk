@@ -4,6 +4,7 @@ package com.gakk.noorlibrary.data.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.gakk.noorlibrary.model.UserLocation
 import com.gakk.noorlibrary.model.billboard.Data
 import com.gakk.noorlibrary.model.roza.IftarAndSheriTimeforBD
@@ -233,6 +234,7 @@ object AppPreference {
         }
         val type: Type = genericType<UserLocation>()
         return mGSonInstance.fromJson(userCurLocString, type)
+
     }
 
     var nitificationflag: Boolean
