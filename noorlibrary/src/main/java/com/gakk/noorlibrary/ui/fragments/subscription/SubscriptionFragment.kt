@@ -721,7 +721,8 @@ internal class SubscriptionFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Use airtel or robi number to upgrade!",
+                                    //"Use airtel or robi number to upgrade!",
+                                    "${AppPreference.userNumber!!} this number is not eligible",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
@@ -775,7 +776,8 @@ internal class SubscriptionFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Use airtel or robi number to upgrade!",
+                                    //"Use airtel or robi number to upgrade!",
+                                    "${AppPreference.userNumber!!} this number is not eligible",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
@@ -832,7 +834,8 @@ internal class SubscriptionFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Use airtel or robi number to upgrade!",
+                                    //"Use airtel or robi number to upgrade!",
+                                    "${AppPreference.userNumber!!} this number is not eligible",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
@@ -889,7 +892,8 @@ internal class SubscriptionFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Use airtel or robi number to upgrade!",
+                                    //"Use airtel or robi number to upgrade!",
+                                    "${AppPreference.userNumber!!} this number is not eligible",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
