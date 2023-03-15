@@ -531,14 +531,14 @@ internal class SubscriptionFragment : Fragment() {
 
     private fun checkMSISDN(output: String) {
 
-        if (output.isEmpty() && output.equals(TAG_COULD_NOT_TRACK_DATA, false)) {
+/*        if (output.isEmpty() && output.equals(TAG_COULD_NOT_TRACK_DATA, false)) {
             Toast.makeText(
                 context,
                 "$output Use Robi or Airtel mobile data for subscription!",
                 Toast.LENGTH_LONG
             ).show()
-        } else {
-            val operatorName = getOperatorTypeClass(output)
+        } else {*/
+            /*val operatorName = getOperatorTypeClass(output)
 
             operatorName?.let {
                 if (operatorName.contains("Robi") or operatorName.contains("Airtel")) {
@@ -555,9 +555,18 @@ internal class SubscriptionFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                 }
-            }
+            }*/
 
-        }
+        context?.startActivity(
+            Intent(
+                context,
+                SubscriptionBrowserActivity::class.java
+            ).putExtra(SUBSCRIPTION_ID_TAG, subscriptionId)
+        )
+
+
+
+    //    }
     }
 
     override fun onResume() {
