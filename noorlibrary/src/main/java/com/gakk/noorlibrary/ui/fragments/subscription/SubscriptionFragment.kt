@@ -534,7 +534,7 @@ internal class SubscriptionFragment : Fragment() {
         if (output.isEmpty() && output.equals(TAG_COULD_NOT_TRACK_DATA, false)) {
             Toast.makeText(
                 context,
-                "Use Robi or Airtel mobile data for subscription!",
+                "$output Use Robi or Airtel mobile data for subscription!",
                 Toast.LENGTH_LONG
             ).show()
         } else {
@@ -551,7 +551,7 @@ internal class SubscriptionFragment : Fragment() {
                 } else {
                     Toast.makeText(
                         context,
-                        "Use Robi or Airtel mobile data for subscription!",
+                        "$output Use Robi or Airtel mobile data for subscription!",
                         Toast.LENGTH_LONG
                     ).show()
                 }
