@@ -7,6 +7,7 @@ import com.gakk.noorlibrary.base.BaseApplication
 import com.gakk.noorlibrary.extralib.azan.Time
 import com.gakk.noorlibrary.roza.CalenderUtil
 import com.gakk.noorlibrary.util.TimeFormtter
+import com.gakk.noorlibrary.util.fixRegularRamadanTime
 import com.gakk.noorlibrary.util.in12HrFormat
 
 @Keep
@@ -27,7 +28,7 @@ data class IfterAndSehriTime(
         get() = "${
             TimeFormtter.getNumberByLocale(sehriTIme.hour.in12HrFormat().toString())!!}:${
             TimeFormtter.getNumberByLocale(
-                sehriTIme.minute.toString()
+                sehriTIme.minute.fixRegularRamadanTime()
             )!!
         }"
         set(value) {
@@ -40,7 +41,7 @@ data class IfterAndSehriTime(
     var ifterTimeStr: String
         get() = "${TimeFormtter.getNumberByLocale(ifterTime.hour.in12HrFormat().toString())!!}:${
             TimeFormtter.getNumberByLocale(
-                ifterTime.minute.toString()
+                ifterTime.minute.fixRegularRamadanTime()
             )!!
         }"
         set(value) {

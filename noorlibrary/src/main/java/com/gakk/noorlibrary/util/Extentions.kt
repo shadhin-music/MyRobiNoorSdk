@@ -157,6 +157,10 @@ fun Int.in12HrFormat(): Int {
     }
 }
 
+fun Int.fixRegularRamadanTime():String =
+    if (this < 10) "0$this" else this.toString()
+
+
 
 fun View.show() {
     this.visibility = View.VISIBLE
