@@ -113,6 +113,9 @@ internal class MainActivity : BaseActivity(), MainCallback {
                 )
             }
         }
+        else
+            location_permission_manually()
+
 
         lifecycleScope.launch {
 
@@ -438,6 +441,19 @@ internal class MainActivity : BaseActivity(), MainCallback {
         }
 
 
+    }
+
+    private fun location_permission_manually()
+    {
+        if(
+            checkCallingOrSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && checkCallingOrSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
+        )
+        {
+            val locationHelper = LocationHelper(this)
+            locationHelper.requestLocation()
+        }
     }
 
     private fun setupUi() {

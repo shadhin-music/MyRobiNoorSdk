@@ -157,6 +157,10 @@ fun Int.in12HrFormat(): Int {
     }
 }
 
+fun Int.fixRegularRamadanTime():String =
+    if (this < 10) "0$this" else this.toString()
+
+
 
 fun View.show() {
     this.visibility = View.VISIBLE
@@ -235,7 +239,8 @@ fun Activity.shareCacheDirBitmapV2(uri: Uri?) {
     try {
         val file = File("${this.cacheDir}/prayer.png")
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
-        val auth = ""+packageName+".noorlibrary.provider"
+        val auth = ""+packageName+".provider"
+        //val auth = "myrobiapp.noorlibrary.provider"
         val contentUri = FileProvider.getUriForFile(this, auth, file)
 
         val shareIntent = Intent()

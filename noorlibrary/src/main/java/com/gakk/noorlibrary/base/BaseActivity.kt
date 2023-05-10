@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -235,6 +236,8 @@ open class BaseActivity : AppCompatActivity() {
             R.layout.layout_surah_or_ayah_action_list, null, false
         )
 
+
+
         val dialogView: View = view
         val customDialog = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         customDialog.setView(dialogView)
@@ -251,7 +254,7 @@ open class BaseActivity : AppCompatActivity() {
         val tvSurahNameOrAyahTxt = view.findViewById<AppCompatTextView>(R.id.tvSurahNameOrAyahTxt)
         val tvSurahOrAyahNumber = view.findViewById<AppCompatTextView>(R.id.tvSurahOrAyahNumber)
         val layoutCopyAction = view.findViewById<ConstraintLayout>(R.id.layoutCopyAction)
-        val layoutShareAction = view.findViewById<ConstraintLayout>(R.id.layoutShareAction)
+        val layoutShareAction  = view.findViewById<ConstraintLayout>(R.id.layoutShareAction)
 
         if (dilogType == DialogType.AyahActionListDialog) {
             tvSurahNameOrAyahTxt.setText(resources.getText(R.string.ayah))
@@ -288,16 +291,16 @@ open class BaseActivity : AppCompatActivity() {
             binding = view,
             dilogType = dilogType
         )
-        setUpActionLayouts(
+       /* setUpActionLayouts(
             layoutType = ActionLayoutType.FavouriteActionLayout,
             binding = view,
             dilogType = dilogType
-        )
-        setUpActionLayouts(
+        )*/
+       /* setUpActionLayouts(
             layoutType = ActionLayoutType.PlayActionLayout,
             binding = view,
             dilogType = dilogType
-        )
+        )*/
         setSurahOrAyahActionViewsClickEvents(view)
     }
 
@@ -317,17 +320,21 @@ open class BaseActivity : AppCompatActivity() {
 
         when (layoutType) {
             ActionLayoutType.CopyActionLayout -> {
-                val btnAction = binding.findViewById<ImageView>(R.id.btnAction)
+
+                Log.e("COPY CHECK","OK")
+
+                val layoutCopyAction = binding.findViewById<ConstraintLayout>(R.id.layoutCopyAction)
+                val btnAction = layoutCopyAction.findViewById<ImageView>(R.id.btnAction)
                 btnAction.setImageResource(R.drawable.ic_copy)
                 when (dilogType) {
                     DialogType.SurahActionListDialog -> {
                         val tvActionName =
-                            binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+                            layoutCopyAction.findViewById<AppCompatTextView>(R.id.tvActionName)
                         tvActionName.setText(resources.getString(R.string.copy_surah))
                     }
                     DialogType.AyahActionListDialog -> {
                         val tvActionName =
-                            binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+                            layoutCopyAction.findViewById<AppCompatTextView>(R.id.tvActionName)
                         tvActionName.setText(resources.getString(R.string.copy_ayah))
                     }
                     else -> {}
@@ -336,8 +343,10 @@ open class BaseActivity : AppCompatActivity() {
             }
             ActionLayoutType.ShareActionLayout -> {
 
-                val btnAction = binding.findViewById<ImageButton>(R.id.btnAction)
-                val tvActionName = binding.findViewById<AppCompatTextView>(R.id.tvActionName)
+                val layoutShareAction  = binding.findViewById<ConstraintLayout>(R.id.layoutShareAction)
+
+                val btnAction = layoutShareAction.findViewById<ImageButton>(R.id.btnAction)
+                val tvActionName = layoutShareAction.findViewById<AppCompatTextView>(R.id.tvActionName)
 
                 btnAction.setImageResource(R.drawable.ic_share)
                 tvActionName.setText(resources.getString(R.string.share))

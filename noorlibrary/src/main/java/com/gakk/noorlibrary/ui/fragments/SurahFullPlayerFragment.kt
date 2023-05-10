@@ -305,11 +305,10 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
 
     fun updateToolbarForThisFragment() {
         mDetailsCallBack?.setToolBarTitle(resources.getString(R.string.cat_quran))
-        mDetailsCallBack?.toggleToolBarActionIconsVisibility(true)
-
-        setFavButtonIcon(SurahListControl.getSelectedSurah()!!.isSurahFavByThisUser)
-        setFavButtonAction(SurahListControl.getSelectedSurah()!!.isSurahFavByThisUser)
-        mDetailsCallBack?.setOrUpdateActionButtonTag(SHARE, ActionButtonType.TypeTwo)
+        //mDetailsCallBack?.toggleToolBarActionIconsVisibility(true,ActionButtonType.TypeOne)
+        //setFavButtonIcon(SurahListControl.getSelectedSurah()!!.isSurahFavByThisUser)
+        //setFavButtonAction(SurahListControl.getSelectedSurah()!!.isSurahFavByThisUser)
+        //mDetailsCallBack?.setOrUpdateActionButtonTag(SHARE, ActionButtonType.TypeTwo)
 
     }
 
@@ -334,14 +333,14 @@ internal class SurahFullPlayerFragment : Fragment(), SurahFullPlayerAudioPlayerC
     private fun showUI() {
         playerControl.visibility = VISIBLE
         rvFullPlayer.visibility = VISIBLE
-        mDetailsCallBack?.toggleToolBarActionIconsVisibility(true)
+        //mDetailsCallBack?.toggleToolBarActionIconsVisibility(true)
 
     }
 
     private fun hideUI() {
         playerControl.visibility = INVISIBLE
         rvFullPlayer.visibility = INVISIBLE
-        mDetailsCallBack?.toggleToolBarActionIconsVisibility(false)
+        //mDetailsCallBack?.toggleToolBarActionIconsVisibility(false)
     }
 
     override fun loadUIWithUpdatedIndex() {

@@ -24,7 +24,7 @@ internal class SurahListFragmentPagerAdapter(
     val mActionGetSurahDetailFragment = actionGetSurahDetailFragment
 
     override fun getCount(): Int {
-        return 2
+        return 1
     }
 
     override fun getItem(position: Int): Fragment {

@@ -531,14 +531,14 @@ internal class SubscriptionFragment : Fragment() {
 
     private fun checkMSISDN(output: String) {
 
-        if (output.isEmpty() && output.equals(TAG_COULD_NOT_TRACK_DATA, false)) {
+/*        if (output.isEmpty() && output.equals(TAG_COULD_NOT_TRACK_DATA, false)) {
             Toast.makeText(
                 context,
-                "Use Robi or Airtel mobile data for subscription!",
+                "$output Use Robi or Airtel mobile data for subscription!",
                 Toast.LENGTH_LONG
             ).show()
-        } else {
-            val operatorName = getOperatorTypeClass(output)
+        } else {*/
+            /*val operatorName = getOperatorTypeClass(output)
 
             operatorName?.let {
                 if (operatorName.contains("Robi") or operatorName.contains("Airtel")) {
@@ -551,13 +551,22 @@ internal class SubscriptionFragment : Fragment() {
                 } else {
                     Toast.makeText(
                         context,
-                        "Use Robi or Airtel mobile data for subscription!",
+                        "$output Use Robi or Airtel mobile data for subscription!",
                         Toast.LENGTH_LONG
                     ).show()
                 }
-            }
+            }*/
 
-        }
+        context?.startActivity(
+            Intent(
+                context,
+                SubscriptionBrowserActivity::class.java
+            ).putExtra(SUBSCRIPTION_ID_TAG, subscriptionId)
+        )
+
+
+
+    //    }
     }
 
     override fun onResume() {
@@ -721,7 +730,8 @@ internal class SubscriptionFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Use airtel or robi number to upgrade!",
+                                    //"Use airtel or robi number to upgrade!",
+                                    "${AppPreference.userNumber!!} this number is not eligible",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
@@ -775,7 +785,8 @@ internal class SubscriptionFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Use airtel or robi number to upgrade!",
+                                    //"Use airtel or robi number to upgrade!",
+                                    "${AppPreference.userNumber!!} this number is not eligible",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
@@ -832,7 +843,8 @@ internal class SubscriptionFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Use airtel or robi number to upgrade!",
+                                    //"Use airtel or robi number to upgrade!",
+                                    "${AppPreference.userNumber!!} this number is not eligible",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
@@ -889,7 +901,8 @@ internal class SubscriptionFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Use airtel or robi number to upgrade!",
+                                    //"Use airtel or robi number to upgrade!",
+                                    "${AppPreference.userNumber!!} this number is not eligible",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }

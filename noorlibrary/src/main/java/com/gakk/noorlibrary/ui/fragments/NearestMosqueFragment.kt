@@ -108,6 +108,8 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
         }
 
         mCallback = requireActivity() as DetailsCallBack
+
+        checkPermission()
     }
 
     override fun onCreateView(
@@ -145,7 +147,8 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
             ).get(NearbyViewModel::class.java)
 
             setUpHeader()
-            checkPermission()
+
+
 
             model.nearbyInfo.observe(viewLifecycleOwner) {
                 when (it.status) {
@@ -228,6 +231,8 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+
+        Log.e("PERMISSION MOS","ok")
         when (requestCode) {
             1 -> {
                 // If request is cancelled, the result arrays are empty.
@@ -259,6 +264,7 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
                 requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     requireActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -280,6 +286,25 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
                     ), 1
                 )
             }
+        }
+        else
+            location_permission_manually()
+
+
+
+
+    }
+
+    private fun location_permission_manually()
+    {
+        if(
+            requireContext().checkCallingOrSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && requireContext().checkCallingOrSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
+        )
+        {
+            val locationHelper = LocationHelper(requireContext())
+            locationHelper.requestLocation()
         }
     }
 
