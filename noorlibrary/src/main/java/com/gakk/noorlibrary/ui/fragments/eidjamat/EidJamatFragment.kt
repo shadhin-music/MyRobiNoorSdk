@@ -3,6 +3,7 @@ package com.gakk.noorlibrary.ui.fragments.eidjamat
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +19,11 @@ import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.adapter.eidjamat.EidJamatAdapter
+import com.gakk.noorlibrary.util.PAGE_EID_JAMAT
 import com.gakk.noorlibrary.util.PermissionManager
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -29,11 +32,12 @@ internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
     private var mDetailsCallBack: DetailsCallBack? = null
     private lateinit var repository: RestRepository
     private lateinit var model: LiteratureViewModel
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
     private var literatureList: MutableList<Literature> = mutableListOf()
 
     //view
 
-    private lateinit var progressLayout : ConstraintLayout
+    private lateinit var progressLayout: ConstraintLayout
     private lateinit var rvEidJamat: RecyclerView
 
 
@@ -66,8 +70,7 @@ internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
         return view
     }
 
-    private fun initView(view:View)
-    {
+    private fun initView(view: View) {
         progressLayout = view.findViewById(R.id.progressLayout)
         rvEidJamat = view.findViewById(R.id.rvEidJamat)
 
@@ -89,12 +92,21 @@ internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
                 LiteratureViewModel.FACTORY(repository)
             ).get(LiteratureViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@EidJamatFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
 
             model.loadTextBasedLiteratureListBySubCategory(
                 R.string.eid_jamat_id.getLocalisedTextFromResId(),
                 "undefined",
                 "1"
             )
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_EID_JAMAT)
+            }
 
             subscribeObserver()
         }
@@ -119,6 +131,21 @@ internal class EidJamatFragment : Fragment(), MapOpenControllerJamat {
                     rvEidJamat.adapter =
                         EidJamatAdapter(sortedList, mDetailsCallBack!!, this)
                     progressLayout.visibility = View.GONE
+                }
+            }
+        }
+
+        modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    Log.e("trackUser", "LOADING")
+                }
+                Status.ERROR -> {
+                    Log.e("trackUser", "ERROR")
+                }
+
+                Status.SUCCESS -> {
+                    Log.e("trackUser", "SUCCESS")
                 }
             }
         }

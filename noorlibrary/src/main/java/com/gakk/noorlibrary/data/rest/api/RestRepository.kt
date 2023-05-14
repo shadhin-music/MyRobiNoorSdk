@@ -7,17 +7,15 @@ import com.gakk.noorlibrary.model.CommonApiResponse
 import com.gakk.noorlibrary.model.UserLocation
 import com.gakk.noorlibrary.model.auth.AuthPayload
 import com.gakk.noorlibrary.model.billboard.BillboardResponse
-import com.gakk.noorlibrary.model.currency.CurrentCurrencyModel
-import com.gakk.noorlibrary.model.hajjpackage.*
-import com.gakk.noorlibrary.model.hajjtracker.*
+import com.gakk.noorlibrary.model.hajjpackage.HajjPackageRegistrationResponse
+import com.gakk.noorlibrary.model.hajjpackage.HajjPreRegistrationListResponse
+import com.gakk.noorlibrary.model.hajjpackage.HajjpackageRegPayload
+import com.gakk.noorlibrary.model.hajjtracker.HajjLocationShareRequestResponse
 import com.gakk.noorlibrary.model.home.HomeDataResponse
-import com.gakk.noorlibrary.model.islamicName.IslamicNameResponse
 import com.gakk.noorlibrary.model.khatam.AddCommentPayload
 import com.gakk.noorlibrary.model.khatam.KhatamQuranVideosResponse
 import com.gakk.noorlibrary.model.literature.*
-import com.gakk.noorlibrary.model.nagad.NagadInitiatePaylaod
 import com.gakk.noorlibrary.model.nagad.NagadSubStatusResponse
-import com.gakk.noorlibrary.model.nagad.PaymentInitiateResponse
 import com.gakk.noorlibrary.model.nearby.NearbyResponse
 import com.gakk.noorlibrary.model.podcast.AddCommentResponse
 import com.gakk.noorlibrary.model.podcast.CommentListResponse
@@ -32,17 +30,19 @@ import com.gakk.noorlibrary.model.ssl.SslInitiatePayload
 import com.gakk.noorlibrary.model.ssl.SslPaymentInitiateResponse
 import com.gakk.noorlibrary.model.subcategory.SubcategoriesByCategoryIdResponse
 import com.gakk.noorlibrary.model.subs.CheckSubResponse
+import com.gakk.noorlibrary.model.trackuser.TrackUserResponse
 import com.gakk.noorlibrary.model.umrah_hajj.*
 import com.gakk.noorlibrary.model.video.category.VideosByCategoryApiResponse
 import com.gakk.noorlibrary.model.zakat.SaveZakatResponse
 import com.gakk.noorlibrary.model.zakat.ZakatDelResponse
 import com.gakk.noorlibrary.model.zakat.ZakatListResponse
 import com.gakk.noorlibrary.model.zakat.ZakatModel
-import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.util.DONATION_CHANNEL
+import com.gakk.noorlibrary.util.ImageHelper
+import com.gakk.noorlibrary.util.SSL_PUSER
+import com.gakk.noorlibrary.util.safeApiCall
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -297,8 +297,8 @@ class RestRepository(
         serviceId: String,
         customerName: String,
         customerEmail: String,
-        channel:String = DONATION_CHANNEL,
-        amount:String = ""
+        channel: String = DONATION_CHANNEL,
+        amount: String = ""
     ): SslPaymentInitiateResponse {
 
         val paymentModel =
@@ -319,6 +319,7 @@ class RestRepository(
 
         return subApiServiceSsl.initiateSslPaymentRange("application/json", body)
     }
+
     suspend fun checkSubStatusSsl(
         msisdn: String,
         serviceId: String
@@ -332,6 +333,7 @@ class RestRepository(
 
         return subApiServiceSsl.checkSslSubStatus("application/json", body)
     }
+
     suspend fun hajjPreregistration(
         image: File?,
         payload: HajjpackageRegPayload
@@ -374,7 +376,7 @@ class RestRepository(
     // zakat calculator save data
 
     suspend fun saveZakatData(
-        payload : ZakatModel
+        payload: ZakatModel
     ): SaveZakatResponse {
 
         val gson = Gson()
@@ -391,11 +393,10 @@ class RestRepository(
         return contentApiService.getZakatList()
     }
 
-    suspend fun deleteZakat(id:String): ZakatDelResponse {
+    suspend fun deleteZakat(id: String): ZakatDelResponse {
 
         return contentApiService.delZakat(id)
     }
-
 
 
     suspend fun postUmrahHajjPersoanlInfo(data: UmrahHajjPersonalPostModel): UmrahHajjRegResponse {
@@ -434,5 +435,19 @@ class RestRepository(
         return AppPreference.userToken
     }
 
+    suspend fun userTrackAdd(
+        msisdn: String,
+        pagename: String
+    ): TrackUserResponse {
+        val jsonParams: MutableMap<String?, Any?> = ArrayMap()
+        jsonParams["msisdn"] = msisdn
+        jsonParams["pagename"] = pagename
+
+        val JSON = "application/json; charset=utf-8".toMediaType()
+        val body = JSONObject(jsonParams).toString().toRequestBody(JSON)
+
+        val result = contentApiService.addTrackerData(body)
+        return result
+    }
 }
 

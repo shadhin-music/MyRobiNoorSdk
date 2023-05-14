@@ -19,7 +19,7 @@ object AppPreference {
     private lateinit var mGSonInstance: Gson
 
     private val whiteListNumber =
-        arrayListOf("8801537673977")
+        arrayListOf("8801537673977", "8801672219992")
 
     private const val PREF_FILE_NAME = "NoorPreference"
     private const val LANGUAGE = "Language"

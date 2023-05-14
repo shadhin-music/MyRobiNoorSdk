@@ -24,6 +24,7 @@ import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.LiteratureCategoryAdapter
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -49,6 +50,7 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
 
     private var pageNo: Int = 0
     private var hasMoreData = false
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +94,11 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
                 this@LiteratureCategoryListFragment,
                 LiteratureViewModel.FACTORY(repository)
             ).get(LiteratureViewModel::class.java)
+
+            modelUserTracking = ViewModelProvider(
+                this@LiteratureCategoryListFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
 
             model.subCategoryListData.observe(viewLifecycleOwner, Observer {
 
@@ -159,8 +166,27 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
                 }
             })
 
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
+
             initPagingProperties()
             loadData()
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_NAMAZ_RULES)
+            }
 
            btnRetry.handleClickEvent {
                 loadData()

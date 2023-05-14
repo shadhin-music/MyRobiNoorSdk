@@ -29,6 +29,7 @@ import com.gakk.noorlibrary.model.nearby.PlaceInfo
 import com.gakk.noorlibrary.model.nearby.Result
 import com.gakk.noorlibrary.ui.adapter.NearestMosqueAdapter
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.NearbyViewModel
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -50,6 +51,9 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
 
     @Transient
     private lateinit var model: NearbyViewModel
+
+    @Transient
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     @Transient
     var placeInfoList = arrayListOf<PlaceInfo>()
@@ -146,9 +150,31 @@ internal class NearestMosqueFragment : Fragment(), DistanceControl {
                 NearbyViewModel.FACTORY(repository)
             ).get(NearbyViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@NearestMosqueFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
             setUpHeader()
 
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_NEAREST_MOSQUE)
+            }
 
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
 
             model.nearbyInfo.observe(viewLifecycleOwner) {
                 when (it.status) {

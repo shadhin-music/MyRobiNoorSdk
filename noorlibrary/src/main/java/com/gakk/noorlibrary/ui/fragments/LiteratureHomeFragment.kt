@@ -1,17 +1,24 @@
 package com.gakk.noorlibrary.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
+import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.LiteratureListFragmentPagerAdapter
-import com.gakk.noorlibrary.util.LiteratureType
-import com.gakk.noorlibrary.util.getLocalisedTextFromResId
+import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.views.CustomTabLayout
+import kotlinx.coroutines.launch
 
 
 private const val ARG_LITERATURE_TYPE = "literatureType"
@@ -21,6 +28,8 @@ internal class LiteratureHomeFragment : Fragment() {
     private var mLiteratureType: LiteratureType? = null
     private lateinit var pager: ViewPager
     private lateinit var tabLayout: CustomTabLayout
+    private lateinit var repository: RestRepository
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +100,44 @@ internal class LiteratureHomeFragment : Fragment() {
         tabLayout.setupWithViewPager(pager)
 
         updateToolbarForThisFragment()
+
+        lifecycleScope.launch {
+            val job = launch {
+                repository = RepositoryProvider.getRepository()
+            }
+            job.join()
+
+            modelUserTracking = ViewModelProvider(
+                this@LiteratureHomeFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
+            val pageName = when (mLiteratureType) {
+                LiteratureType.Hadis -> PAGE_HADIS
+                LiteratureType.Dua -> PAGE_DUA
+                LiteratureType.Jakat -> PAGE_JAKAT
+                else -> PAGE_HADIS
+            }
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, pageName)
+            }
+
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
+        }
     }
 
 

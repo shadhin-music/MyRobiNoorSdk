@@ -31,6 +31,7 @@ import com.gakk.noorlibrary.model.roza.IftarAndSheriTimeforBD
 import com.gakk.noorlibrary.model.ssl.SslPaymentInitiateResponse
 import com.gakk.noorlibrary.model.subcategory.SubcategoriesByCategoryIdResponse
 import com.gakk.noorlibrary.model.subs.CheckSubResponse
+import com.gakk.noorlibrary.model.trackuser.TrackUserResponse
 import com.gakk.noorlibrary.model.umrah_hajj.CheckUmrahReg
 import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjModel
 import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjRegResponse
@@ -371,4 +372,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("account/RobiLogin")
     suspend fun login(@Field("payload") payload: String): AuthResponse
+
+    @POST("tracker/add")
+    suspend fun addTrackerData(@Body param: RequestBody) : TrackUserResponse
 }

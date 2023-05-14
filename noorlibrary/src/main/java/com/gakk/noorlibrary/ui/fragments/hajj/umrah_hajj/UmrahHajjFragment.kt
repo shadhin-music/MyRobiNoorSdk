@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.ui.fragments.hajj.umrah_hajj
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.umrahhajj.UmrahPackAdapter
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.viewModel.UmrahHajjViewModel
 import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjData
+import com.gakk.noorlibrary.util.PAGE_DONATION_HOME
+import com.gakk.noorlibrary.util.PAGE_UMRAH_HAJJ
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import kotlinx.coroutines.launch
 
 
@@ -35,6 +41,7 @@ class UmrahHajjFragment : Fragment(), UmrahPackAdapter.OnItemClickListener, Umra
     private lateinit var noInternetLayout: ConstraintLayout
     private lateinit var btnRetry: AppCompatButton
     private lateinit var progressLayout : ConstraintLayout
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
 
     private var historyIconClick: () -> Unit = {
@@ -68,7 +75,16 @@ class UmrahHajjFragment : Fragment(), UmrahPackAdapter.OnItemClickListener, Umra
                 UmrahHajjViewModel.FACTORY(repository)
             ).get(UmrahHajjViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@UmrahHajjFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
             viewModel.getUmrahHajjPackageList()
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_UMRAH_HAJJ)
+            }
 
             initObserver()
 
@@ -155,6 +171,21 @@ class UmrahHajjFragment : Fragment(), UmrahPackAdapter.OnItemClickListener, Umra
 
                 }
                 else -> Unit
+            }
+        }
+
+        modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    Log.e("trackUser", "LOADING")
+                }
+                Status.ERROR -> {
+                    Log.e("trackUser", "ERROR")
+                }
+
+                Status.SUCCESS -> {
+                    Log.e("trackUser", "SUCCESS")
+                }
             }
         }
     }

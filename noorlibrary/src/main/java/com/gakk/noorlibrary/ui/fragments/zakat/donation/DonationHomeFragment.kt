@@ -2,6 +2,7 @@ package com.gakk.noorlibrary.ui.fragments.zakat.donation
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,10 +21,12 @@ import com.bumptech.glide.request.target.Target
 import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -43,6 +46,7 @@ internal class DonationHomeFragment : Fragment() {
     private lateinit var appCompatImageView5:AppCompatImageView
     private lateinit var appCompatImageView9:AppCompatImageView
     private lateinit var appCompatImageView7:AppCompatImageView
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -161,6 +165,15 @@ internal class DonationHomeFragment : Fragment() {
                 LiteratureViewModel.FACTORY(repository)
             ).get(LiteratureViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@DonationHomeFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_DONATION_HOME)
+            }
 
             model.literatureListData.observe(viewLifecycleOwner) {
                 when (it.status) {
@@ -178,6 +191,22 @@ internal class DonationHomeFragment : Fragment() {
                     }
                 }
             }
+
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
+
         }
 
         val ic_donate =ImageFromOnline("Drawable/ic_donate.png")
