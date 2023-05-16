@@ -97,8 +97,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
 
     implementation group: 'com.github.msarhan', name: 'ummalqura-calendar', version: '1.1.9'
-    implementation 'androidx.core:core-ktx:+'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 }
 
 //For Maven Publish
