@@ -216,6 +216,9 @@ internal class HajjHomeFragment : Fragment() {
                     progressLayout.visibility = View.VISIBLE
                 }
                 Status.SUCCESS -> {
+                    AppPreference.userNumber?.let { userNumber ->
+                        modelUserTracking.addTrackDataUser(userNumber, ROAMING)
+                    }
                     if (isRobiNumber()) {
                         mCallback?.openUrl(it.data?.data?.get(0)?.title!!)
                     } else if (isAirtelNumber()) {

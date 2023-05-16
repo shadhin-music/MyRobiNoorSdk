@@ -23,6 +23,7 @@ import com.gakk.noorlibrary.model.billboard.Data
 import com.gakk.noorlibrary.model.tracker.SalahStatus
 import com.gakk.noorlibrary.ui.adapter.HomeFragmentAdapter
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 import java.io.Serializable
@@ -45,7 +46,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     private lateinit var adapter: HomeFragmentAdapter
     var prayerDataList: List<com.gakk.noorlibrary.model.tracker.Data>? = null
     private lateinit var upCommingPrayer: UpCommingPrayer
-    private var totalCount = 0
     private lateinit var dua: Array<String>
 
     //view
@@ -55,6 +55,8 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
     private lateinit var noInternetLayout: ConstraintLayout
     private lateinit var noDataLayout: ConstraintLayout
     private lateinit var btnRetry: AppCompatButton
+
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +115,10 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
             ).get(HomeViewModel::class.java)
 
 
-
+            modelUserTracking = ViewModelProvider(
+                this@HomeFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
 
             subscribeObserver()
 
@@ -199,7 +204,9 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                             homeRecycle.adapter = adapter
                             adapter.nextWaqt = upCommingPrayer.nextWaqtNameTracker
 
-
+                            AppPreference.userNumber?.let { userNumber ->
+                                modelUserTracking.addTrackDataUser(userNumber, PAGE_HOME)
+                            }
                         }
                         STATUS_NO_DATA -> {
                             noDataLayout.visibility = View.VISIBLE
@@ -210,6 +217,21 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                 }
                 Status.ERROR -> {
                     progressLayout.visibility = View.GONE
+                }
+            }
+        }
+
+        modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    Log.e("trackUser", "LOADING")
+                }
+                Status.ERROR -> {
+                    Log.e("trackUser", "ERROR")
+                }
+
+                Status.SUCCESS -> {
+                    Log.e("trackUser", "SUCCESS")
                 }
             }
         }

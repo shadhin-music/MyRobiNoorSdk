@@ -38,6 +38,7 @@ import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.util.TimeFormtter.getBanglaMonthName
 import com.gakk.noorlibrary.util.TimeFormtter.getNumberByLocale
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.HomeViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import com.github.eltohamy.materialhijricalendarview.CalendarDay
@@ -95,6 +96,7 @@ internal class NamazTimingFragment : Fragment() {
     private lateinit var ic_dhuhr:AppCompatImageView
     private lateinit var ic_isha:AppCompatImageView
     private lateinit var ic_maghrib:AppCompatImageView
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -207,6 +209,11 @@ internal class NamazTimingFragment : Fragment() {
                 this@NamazTimingFragment, LiteratureViewModel.FACTORY(repository)
             ).get(LiteratureViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@NamazTimingFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
             subscribeObserver()
 
             setNamazTime()
@@ -247,6 +254,20 @@ internal class NamazTimingFragment : Fragment() {
             }
         }
 
+        modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    Log.e("trackUser", "LOADING")
+                }
+                Status.ERROR -> {
+                    Log.e("trackUser", "ERROR")
+                }
+
+                Status.SUCCESS -> {
+                    Log.e("trackUser", "SUCCESS")
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -313,6 +334,11 @@ internal class NamazTimingFragment : Fragment() {
 
 
         ivNamazDak.handleClickEvent {
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_NAMAZER_DAK)
+            }
+
             modelLiterature.loadImageBasedLiteratureListBySubCategory(
                 getString(R.string.namaz_dak_id), "undefined", "1"
             )
