@@ -1,6 +1,7 @@
 package com.gakk.noorlibrary.ui.fragments.zakat.donation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.literature.Literature
 import com.gakk.noorlibrary.ui.adapter.donation.CharityAdapter
 import com.gakk.noorlibrary.ui.adapter.donation.DonationAdapter
+import com.gakk.noorlibrary.util.PAGE_DONATION_DETAILS
+import com.gakk.noorlibrary.util.PAGE_DONATION_HOME
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.getLocalisedTextFromResId
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -35,6 +40,7 @@ internal class DonationFragment : Fragment() {
     private var catId: String? = null
     private lateinit var rvDonation: RecyclerView
     private lateinit var progressLayout: ConstraintLayout
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +105,16 @@ internal class DonationFragment : Fragment() {
                 LiteratureViewModel.FACTORY(repository)
             ).get(LiteratureViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@DonationFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
 
+            if (catName.equals("Donation")) {
+                AppPreference.userNumber?.let { userNumber ->
+                    modelUserTracking.addTrackDataUser(userNumber, PAGE_DONATION_DETAILS)
+                }
+            }
             loadData()
 
             model.literatureListData.observe(viewLifecycleOwner) {
@@ -139,6 +154,21 @@ internal class DonationFragment : Fragment() {
                         }
 
                         progressLayout.visibility = View.GONE
+                    }
+                }
+            }
+
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
                     }
                 }
             }

@@ -115,7 +115,7 @@ internal class LiteratureHomeFragment : Fragment() {
             val pageName = when (mLiteratureType) {
                 LiteratureType.Hadis -> PAGE_HADIS
                 LiteratureType.Dua -> PAGE_DUA
-                LiteratureType.Jakat -> PAGE_JAKAT
+                LiteratureType.Jakat -> PAGE_JAKAT_HOME
                 else -> PAGE_HADIS
             }
 

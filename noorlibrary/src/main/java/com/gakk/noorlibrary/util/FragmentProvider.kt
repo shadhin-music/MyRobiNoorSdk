@@ -47,9 +47,16 @@ object FragmentProvider {
                 id!!, detailsActivityCallBack!!, surahList
             )
 
-            PAGE_NEAREST_MOSQUE -> NearestMosqueFragment.newInstance(
-                PAGE_NEAREST_MOSQUE
-            )
+            PAGE_NEAREST_MOSQUE -> when (Util.checkSub()) {
+                true -> {
+                    NearestMosqueFragment.newInstance(
+                        PAGE_NEAREST_MOSQUE
+                    )
+                }
+                else -> {
+                    SubscriptionOptionListFragment.newInstance()
+                }
+            }
 
             PAGE_FULL_PLAYER -> SurahFullPlayerFragment.newInstance()
             PAGE_ROZA -> com.gakk.noorlibrary.ui.fragments.roja.RozaInformationFragment.newInstance()

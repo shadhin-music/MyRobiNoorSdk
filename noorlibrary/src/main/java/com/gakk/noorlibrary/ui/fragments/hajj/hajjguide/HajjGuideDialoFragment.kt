@@ -10,11 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.gakk.noorlibrary.R
+import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.hajjguide.HajjGuideAdapter
+import com.gakk.noorlibrary.util.PAGE_HAJJ_GUIDE
+import com.gakk.noorlibrary.util.PAGE_HAJJ_PRE_REGISTRATION
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.util.SUB_CAT_ID_UNDEFINED
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
@@ -26,6 +30,7 @@ internal class HajjGuideDialoFragment : Fragment() {
     private lateinit var model: LiteratureViewModel
     private lateinit var imageChangeListener: ImageChangeListener
     private lateinit var rvStep: RecyclerView
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +82,16 @@ internal class HajjGuideDialoFragment : Fragment() {
                 LiteratureViewModel.FACTORY(repository)
             ).get(LiteratureViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@HajjGuideDialoFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_HAJJ_GUIDE)
+            }
+
             model.loadTextBasedLiteratureListBySubCategory(
                 getString(R.string.hajj_guide_category_id),
                 SUB_CAT_ID_UNDEFINED,
@@ -102,6 +117,21 @@ internal class HajjGuideDialoFragment : Fragment() {
                     rvStep.adapter = adapter
                 }
                 Status.ERROR -> {
+                }
+            }
+        }
+
+        modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    Log.e("trackUser", "LOADING")
+                }
+                Status.ERROR -> {
+                    Log.e("trackUser", "ERROR")
+                }
+
+                Status.SUCCESS -> {
+                    Log.e("trackUser", "SUCCESS")
                 }
             }
         }

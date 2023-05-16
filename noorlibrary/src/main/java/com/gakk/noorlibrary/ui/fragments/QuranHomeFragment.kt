@@ -1,18 +1,25 @@
 package com.gakk.noorlibrary.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
+import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.SurahListFragmentPagerAdapter
-import com.gakk.noorlibrary.util.FragmentProvider
-import com.gakk.noorlibrary.util.PAGE_SURAH_DETAILS
+import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.views.CustomTabLayout
+import kotlinx.coroutines.launch
 
 
 internal class QuranHomeFragment : Fragment() {
@@ -21,6 +28,8 @@ internal class QuranHomeFragment : Fragment() {
     private lateinit var mPageTitles: Array<String>
     private lateinit var pager: ViewPager
     private lateinit var tabLayout: CustomTabLayout
+    private lateinit var repository: RestRepository
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     private val getSurahDetailFragment: (String, DetailsCallBack, MutableList<com.gakk.noorlibrary.model.quran.surah.Data>) -> Fragment? =
         { id, callBack, list ->
@@ -72,6 +81,38 @@ internal class QuranHomeFragment : Fragment() {
         tabLayout.setupWithViewPager(pager)
         mDetailsCallBack.toggleToolBarActionIconsVisibility(false)
         updateToolbarForThisFragment()
+
+        lifecycleScope.launch {
+            val job = launch {
+                repository = RepositoryProvider.getRepository()
+            }
+            job.join()
+
+            modelUserTracking = ViewModelProvider(
+                this@QuranHomeFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_QURAN_HOME)
+            }
+
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
+        }
     }
 
     fun updateToolbarForThisFragment() {

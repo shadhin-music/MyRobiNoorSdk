@@ -167,6 +167,16 @@ fun checkOtherNumber(): Boolean {
     return (numberUser.startsWith("88016") or numberUser.startsWith("88018"))
 }
 
+fun isRobiNumber(): Boolean {
+    val numberUser = AppPreference.userNumber!!
+    return (numberUser.startsWith("88018"))
+}
+
+fun isAirtelNumber(): Boolean {
+    val numberUser = AppPreference.userNumber!!
+    return (numberUser.startsWith("88016"))
+}
+
 fun getOperatorTypeClass(Number: String?): String? {
     var operatorType = ""
     if (Number != null) {

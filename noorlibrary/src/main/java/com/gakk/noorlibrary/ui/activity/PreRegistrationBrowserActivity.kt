@@ -18,31 +18,33 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
+import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.ui.fragments.payment.PaymentResource
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.HajjViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.gakk.noorlibrary.ui.fragments.payment.PaymentResource
 import kotlinx.coroutines.launch
 
 
 internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
-    private lateinit var progressBar:ProgressBar
-    private lateinit var webview:WebView
-    private lateinit var toolBar:ConstraintLayout
+    private lateinit var progressBar: ProgressBar
+    private lateinit var webview: WebView
+    private lateinit var toolBar: ConstraintLayout
 
-
-    //private lateinit var binding: ActivitySubscriptionBrowserBinding
     private lateinit var viewModelHajj: HajjViewModel
     private lateinit var repository: RestRepository
-    private  lateinit var paymentTag: String
+    private lateinit var paymentTag: String
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView( R.layout.activity_subscription_browser)
+        setContentView(R.layout.activity_subscription_browser)
         setupUi()
 
         val url: String?
@@ -55,10 +57,12 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
         }
 
 
-        if(trackongNo == null || paymentTag == null) {
+        if (trackongNo == null || paymentTag == null) {
             finish()
             return
         }
+
+
 
         toolBar.visibility = View.GONE
 
@@ -69,7 +73,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
 
         if (url != null) {
-           webview.loadUrl(url)
+            webview.loadUrl(url)
         }
 
         webview.setWebViewClient(object : WebViewClient() {
@@ -85,15 +89,14 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 Log.e("onPageFinished", url)
                 if (url.contains("SSLPaySuccessCallBack")) {
                     trackongNo.let {
-                        when(paymentTag)
-                        {
+                        when (paymentTag) {
                             PAYMENT_DONATION -> showPaymentStatusDialog(1)
-                            else -> viewModelHajj.updatePaymentStatus(it,paymentTag)
+                            else -> viewModelHajj.updatePaymentStatus(it, paymentTag)
                         }
 
                     }
                 } else if (url.contains("SSLPayFailCallBack")) {
-                    Log.e("TEST","OK")
+                    Log.e("TEST", "OK")
                     showPaymentStatusDialog(0)
                 }
             }
@@ -109,6 +112,16 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 HajjViewModel.FACTORY(this@PreRegistrationBrowserActivity.repository)
             ).get(HajjViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@PreRegistrationBrowserActivity,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
+            if (paymentTag.equals(PAYMENT_DONATION)) {
+                AppPreference.userNumber?.let { userNumber ->
+                    modelUserTracking.addTrackDataUser(userNumber, PAGE_DONATION_SSL)
+                }
+            }
 
             subscribeObserver()
         }
@@ -125,11 +138,9 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
 
         viewModelHajj.paymentStatus.observe(this@PreRegistrationBrowserActivity) {
 
-            when(it)
-            {
-                is PaymentResource.Error ->
-                {
-                    showPaymentStatusDialog(0,)
+            when (it) {
+                is PaymentResource.Error -> {
+                    showPaymentStatusDialog(0)
                     progressBar.visibility = View.GONE
                 }
                 PaymentResource.Loading -> progressBar.visibility = View.VISIBLE
@@ -138,9 +149,24 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
             }
 
         }
+
+        modelUserTracking.trackUser.observe(this@PreRegistrationBrowserActivity) {
+            when (it.status) {
+                Status.LOADING -> {
+                    Log.e("trackUser", "LOADING")
+                }
+                Status.ERROR -> {
+                    Log.e("trackUser", "ERROR")
+                }
+
+                Status.SUCCESS -> {
+                    Log.e("trackUser", "SUCCESS")
+                }
+            }
+        }
     }
-    private fun paymentSuccess()
-    {
+
+    private fun paymentSuccess() {
         showPaymentStatusDialog(1)
 
         progressBar.visibility = View.GONE
@@ -153,7 +179,7 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
                 R.style.MaterialAlertDialog_rounded
             )
 
-        val view = layoutInflater.inflate(R.layout.dialog_hajj_refund, null,false)
+        val view = layoutInflater.inflate(R.layout.dialog_hajj_refund, null, false)
 
         val dialogView: View = view
         customDialog.setView(dialogView)
@@ -175,12 +201,11 @@ internal class PreRegistrationBrowserActivity : AppCompatActivity() {
             tvTitleThank.setText("ধন্যবাদ মুহতারাম!")
             tvDesRefund.setText("আপনার পেমেন্ট সম্পন্ন হয়েছে। খুব শীঘ্রই আমাদের প্রতিনিধি আপনার সাথে যোগাযোগ করবে, ইনশাআল্লাহ।")
 
-            when(paymentTag)
-            {
-                PAYMENT_DONATION ->
-                {
+            when (paymentTag) {
+                PAYMENT_DONATION -> {
                     tvTitleThank.text = "ধন্যবাদ মুহতারাম!"
-                    tvDesRefund.text = "আপনার পেমেন্টটি সফল হয়েছে। আপনি শীঘ্রই নিশ্চিতকরণ ই-মেইল পাবেন।"
+                    tvDesRefund.text =
+                        "আপনার পেমেন্টটি সফল হয়েছে। আপনি শীঘ্রই নিশ্চিতকরণ ই-মেইল পাবেন।"
 
                 }
             }

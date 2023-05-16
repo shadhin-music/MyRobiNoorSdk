@@ -149,12 +149,12 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
 
                         }
                         progressLayout.visibility = GONE
-                       progressLayout.visibility = GONE
+                        progressLayout.visibility = GONE
 
 
                     }
                     Status.LOADING -> {
-                       noInternetLayout.visibility = GONE
+                        noInternetLayout.visibility = GONE
                         if (pageNo == 1) {
                             progressLayout.visibility = VISIBLE
                         }
@@ -185,10 +185,12 @@ internal class LiteratureCategoryListFragment : Fragment(), PagingViewCallBack {
             loadData()
 
             AppPreference.userNumber?.let { userNumber ->
-                modelUserTracking.addTrackDataUser(userNumber, PAGE_NAMAZ_RULES)
+                if (mCatId.equals(R.string.namaz_rules_cat_id.getLocalisedTextFromResId())) {
+                    modelUserTracking.addTrackDataUser(userNumber, PAGE_NAMAZ_RULES)
+                }
             }
 
-           btnRetry.handleClickEvent {
+            btnRetry.handleClickEvent {
                 loadData()
             }
 

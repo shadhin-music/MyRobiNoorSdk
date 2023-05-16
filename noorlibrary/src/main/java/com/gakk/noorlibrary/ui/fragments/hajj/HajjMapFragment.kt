@@ -21,10 +21,20 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
+import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.util.PAGE_HAJJ_HOME
+import com.gakk.noorlibrary.util.PAGE_HAJJ_MAP
+import com.gakk.noorlibrary.util.RepositoryProvider
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
+import kotlinx.coroutines.launch
 
 
 internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
@@ -36,6 +46,8 @@ internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
     private var mIsSpinnerFirstCall = true
     private lateinit var spinnerTo: Spinner
     private lateinit var spinnerFrom: Spinner
+    private lateinit var repository: RestRepository
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +81,37 @@ internal class HajjMapFragment : Fragment(), OnMapReadyCallback {
 
         initDistanceSpinner()
         setUpMapFragment()
+
+        lifecycleScope.launch {
+            val job = launch {
+                repository = RepositoryProvider.getRepository()
+            }
+            job.join()
+
+            modelUserTracking = ViewModelProvider(
+                this@HajjMapFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_HAJJ_MAP)
+            }
+
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
+        }
     }
 
     private fun initAllLocation() {

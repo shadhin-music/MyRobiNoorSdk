@@ -35,6 +35,7 @@ import com.gakk.noorlibrary.ui.fragments.hajj.preregistration.HajjPreRegistratio
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.HajjViewModel
+import com.gakk.noorlibrary.viewModel.LiteratureViewModel
 import kotlinx.coroutines.launch
 
 
@@ -52,6 +53,7 @@ internal class HajjHomeFragment : Fragment() {
     private lateinit var sub_cat_rv: RecyclerView
     private lateinit var btnRetry: AppCompatButton
     private lateinit var modelUserTracking: AddUserTrackigViewModel
+    private lateinit var modelLiterature: LiteratureViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,6 +140,11 @@ internal class HajjHomeFragment : Fragment() {
                 AddUserTrackigViewModel.FACTORY(repository)
             ).get(AddUserTrackigViewModel::class.java)
 
+            modelLiterature = ViewModelProvider(
+                this@HajjHomeFragment,
+                LiteratureViewModel.FACTORY(repository)
+            ).get(LiteratureViewModel::class.java)
+
             subscribeObserver()
             loadData()
             AppPreference.userNumber?.let { userNumber ->
@@ -202,10 +209,32 @@ internal class HajjHomeFragment : Fragment() {
                 }
             }
         }
+
+        modelLiterature.literatureListData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.LOADING -> {
+                    progressLayout.visibility = View.VISIBLE
+                }
+                Status.SUCCESS -> {
+                    if (isRobiNumber()) {
+                        mCallback?.openUrl(it.data?.data?.get(0)?.title!!)
+                    } else if (isAirtelNumber()) {
+                        mCallback?.openUrl(it.data?.data?.get(0)?.text!!)
+                    }
+
+                    progressLayout.visibility = View.GONE
+                }
+                Status.ERROR -> {
+                    progressLayout.visibility = View.GONE
+                    mCallback?.showToastMessage(getString(R.string.api_error_msg))
+                }
+            }
+        }
     }
 
     private fun setUpRV(list: MutableList<Data>) {
         val currencyCat = requireContext().getString(R.string.hajj_currency_cateogry_id)
+
         val sortedList = list.filterNot { it.id.equals(currencyCat) }
         sub_cat_rv.apply {
             adapter = HajjCategoryAdapter().apply {
@@ -217,6 +246,10 @@ internal class HajjHomeFragment : Fragment() {
 
                     val hajjGuideCat =
                         requireContext().getString(R.string.hajj_guide_sub_category_id)
+
+                    val simRoamingCat =
+                        requireContext().getString(R.string.sim_roaming_sub_category_id)
+
                     it.category?.let { catID ->
                         when (it.id) {
                             mapCat -> {
@@ -256,6 +289,28 @@ internal class HajjHomeFragment : Fragment() {
                                             .putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
                                     )
                                 }
+                            }
+
+                            simRoamingCat -> {
+                                Log.e("simRoamingCat", "Called")
+                                AppPreference.userNumber?.let { number ->
+                                    when (checkOtherNumber()) {
+
+                                        true -> {
+
+                                            modelLiterature.loadTextBasedLiteratureListBySubCategory(
+                                                getString(R.string.hajj_cateogry_id),
+                                                simRoamingCat,
+                                                "1"
+                                            )
+                                        }
+
+                                        false -> {
+                                            mCallback?.showToastMessage(getString(R.string.sim_roaming_other_operator))
+                                        }
+                                    }
+                                }
+
                             }
 
                             else -> {

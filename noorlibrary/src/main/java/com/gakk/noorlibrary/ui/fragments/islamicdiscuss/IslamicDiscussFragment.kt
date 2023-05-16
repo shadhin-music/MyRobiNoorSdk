@@ -19,6 +19,7 @@ import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.podcast.IslamicDiscussAdapter
 import com.gakk.noorlibrary.util.PAGE_EID_JAMAT
 import com.gakk.noorlibrary.util.PAGE_ISLAMIC_PODCAST
+import com.gakk.noorlibrary.util.PAGE_ISLAMIC_PODCAST_HOME
 import com.gakk.noorlibrary.util.RepositoryProvider
 import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.LiteratureViewModel
@@ -97,7 +98,7 @@ internal class IslamicDiscussFragment : Fragment() {
             ).get(AddUserTrackigViewModel::class.java)
 
             AppPreference.userNumber?.let { userNumber ->
-                modelUserTracking.addTrackDataUser(userNumber, PAGE_ISLAMIC_PODCAST)
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_ISLAMIC_PODCAST_HOME)
             }
 
             modelLiterature.loadImageBasedLiteratureListBySubCategory(

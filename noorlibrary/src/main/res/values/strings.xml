@@ -354,6 +354,7 @@
     <string name="hajj_guide_category_id">62bc022291776fe33f8b9fe1</string>
     <string name="hajj_guide_sub_category_id">62c687407441a12ee460d041</string>
     <string name="hajj_package_id">62d4f2d7f91b8f49a6bfca8d</string>
+    <string name="sim_roaming_sub_category_id">6459d6d118483f1869ce7a92</string>
 
     <string name="default_content_des">content description image</string>
     <string name="digital_school">নূর কুরআন স্কুল</string>
@@ -595,4 +596,6 @@
     <string name="umrah_hajj_pay_history_price">%1$s %2$s %3$s</string>
     <string name="cat_umrah_hajj">উমরাহ‌ প্যাকেজ</string>
     <string name="hajj_total_booking_format">৳%1$s</string>
+
+    <string name="sim_roaming_other_operator">এই রোমিং সার্ভিসটি শুধুমাত্র রবি এবং এয়ারটেল গ্রাহকদের জন্য</string>
 </resources>

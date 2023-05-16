@@ -17,9 +17,12 @@ import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.base.DialogType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.zakat.ZakatModel
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.ZakatViewModel
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -104,6 +107,8 @@ internal class ZakatCalculatorFragment : Fragment() {
     private lateinit var textTotalJakat: AppCompatTextView
     private lateinit var progressLayout: ConstraintLayout
     private lateinit var rootView : ConstraintLayout
+
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     companion object {
         @JvmStatic
@@ -215,6 +220,39 @@ internal class ZakatCalculatorFragment : Fragment() {
 
         mCallback.setToolBarTitle(getString(R.string.txt_new_calculation))
 
+
+        lifecycleScope.launch {
+            val job = launch {
+                repository = RepositoryProvider.getRepository()
+            }
+            job.join()
+
+            modelUserTracking = ViewModelProvider(
+                this@ZakatCalculatorFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_JAKAT)
+            }
+
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
+
+        }
 
         tvTitleHeaderNagadTaka.text = getText(R.string.title_nogod_taka)
         contentTitleNagadTaka.text = getText(R.string.title_nogod_taka)

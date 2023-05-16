@@ -8,14 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.*
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -46,6 +39,7 @@ import com.gakk.noorlibrary.service.AudioPlayerService
 import com.gakk.noorlibrary.ui.adapter.podcast.CommentPagingAdapter
 import com.gakk.noorlibrary.ui.adapter.podcast.LiveVideoAdapter
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.PodcastViewModel
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -103,27 +97,28 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
     }
 
     // view
-    private lateinit var cardLiveCollapse:RelativeLayout
-    private lateinit var tvLiveVideos:AppCompatTextView
-    private lateinit var rvLiveVideos:RecyclerView
-    private lateinit var cardLive:CardView
-    private lateinit var imgNoInternet:ImageView
-    private lateinit var llNoLiveVideos:LinearLayout
-    private lateinit var ivOverlay:AppCompatImageView
-    private lateinit var tvCount:AppCompatTextView
-    private lateinit var tvCountCollapse : AppCompatTextView
-    private lateinit var comment_root:RelativeLayout
-    private lateinit var commentLayout:ConstraintLayout
+    private lateinit var cardLiveCollapse: RelativeLayout
+    private lateinit var tvLiveVideos: AppCompatTextView
+    private lateinit var rvLiveVideos: RecyclerView
+    private lateinit var cardLive: CardView
+    private lateinit var imgNoInternet: ImageView
+    private lateinit var llNoLiveVideos: LinearLayout
+    private lateinit var ivOverlay: AppCompatImageView
+    private lateinit var tvCount: AppCompatTextView
+    private lateinit var tvCountCollapse: AppCompatTextView
+    private lateinit var comment_root: RelativeLayout
+    private lateinit var commentLayout: ConstraintLayout
     private lateinit var comment_ed: AppCompatEditText
-    private lateinit var comment_rv:RecyclerView
-    private lateinit var ivComment:ImageView
-    private lateinit var playerLayout:FrameLayout
-    private lateinit var playerView:PlayerView
-    private lateinit var videoView:RelativeLayout
-    private lateinit var bufferProgress:ProgressBar
-    private lateinit var videoTitle:TextView
-    private lateinit var tvSpeaker:AppCompatTextView
-    private lateinit var progressBar:ProgressBar
+    private lateinit var comment_rv: RecyclerView
+    private lateinit var ivComment: ImageView
+    private lateinit var playerLayout: FrameLayout
+    private lateinit var playerView: PlayerView
+    private lateinit var videoView: RelativeLayout
+    private lateinit var bufferProgress: ProgressBar
+    private lateinit var videoTitle: TextView
+    private lateinit var tvSpeaker: AppCompatTextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,27 +145,36 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
                 factory
             ).get(PodcastViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@PodcastActivity,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
             var number = ""
             AppPreference.userNumber.let {
                 number = it!!
             }
 
+            val pageName: String
             // val categoryId: String
             if (subCategoryId.equals("6243e1b0807cf5d3bb259b19")) {
                 cardLiveCollapse.visibility = View.GONE
                 tvLiveVideos.setText("ভিডিও সমূহ")
                 categoryId = "62457f53577c4a348361ded2"
-
-
+                pageName = PAGE_ISLAMIC_PODCAST_RECORDED
             } else {
                 cardLiveCollapse.visibility = View.VISIBLE
                 tvLiveVideos.setText("Live Videos")
                 categoryId = "62457f6b577c4a348361ded3"
+                pageName = PAGE_ISLAMIC_PODCAST_LIVE
             }
 
             model.loadLiveVideos(categoryId)
             model.loadLiveUrl("622f0159803daefd93291ba3", subCategoryId)
 
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, pageName)
+            }
 
             subscribeObserver()
         }
@@ -180,7 +184,20 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
     }
 
     private fun subscribeObserver() {
+        modelUserTracking.trackUser.observe(this@PodcastActivity) {
+            when (it.status) {
+                Status.LOADING -> {
+                    Log.e("trackUser", "LOADING")
+                }
+                Status.ERROR -> {
+                    Log.e("trackUser", "ERROR")
+                }
 
+                Status.SUCCESS -> {
+                    Log.e("trackUser", "SUCCESS")
+                }
+            }
+        }
         model.livevideosResponse.observe(this@PodcastActivity) {
             when (it.status) {
                 Status.LOADING -> {
@@ -198,7 +215,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
                         }
                         STATUS_NO_DATA -> {
                             val itemNoData = ImageFromOnline("bg_no_data.png")
-                            setImageFromUrlNoProgress(imgNoInternet,itemNoData.fullImageUrl)
+                            setImageFromUrlNoProgress(imgNoInternet, itemNoData.fullImageUrl)
                             llNoLiveVideos.visibility = View.VISIBLE
                         }
                     }
@@ -234,9 +251,9 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
                             textContentId = liveData.id!!
 
                             val item = liveData
-                            videoTitle.text =item.title
+                            videoTitle.text = item.title
                             tvSpeaker.text = item.text
-                            setImageFromUrl(ivOverlay,item.fullImageUrl,progressBar)
+                            setImageFromUrl(ivOverlay, item.fullImageUrl, progressBar)
 
                             if (subCategoryId.equals("6243e1ca807cf5d3bb259b1a")) {
                                 showAndHandleCommentSection()
@@ -397,9 +414,9 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
             ivOverlay.visibility = View.GONE
         }
         val item = liveData
-        videoTitle.text =item.title
+        videoTitle.text = item.title
         tvSpeaker.text = item.text
-        setImageFromUrl(ivOverlay,item.fullImageUrl,progressBar)
+        setImageFromUrl(ivOverlay, item.fullImageUrl, progressBar)
 
         val id = liveData.refUrl
         handleYoutubeAndNormalVideo(id!!, isYoutube)
@@ -417,7 +434,7 @@ internal class PodcastActivity : BaseActivity(), ItemClickListener {
         ivOverlay = findViewById(R.id.ivOverlay)
         rvLiveVideos = findViewById(R.id.rvLiveVideos)
         tvCount = findViewById(R.id.tvCount)
-        tvCountCollapse =findViewById(R.id.tvCountCollapse)
+        tvCountCollapse = findViewById(R.id.tvCountCollapse)
         comment_root = findViewById(R.id.comment_root)
         commentLayout = findViewById(R.id.commentLayout)
         comment_ed = findViewById(R.id.comment_ed)

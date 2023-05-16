@@ -18,12 +18,9 @@ import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.ui.adapter.umrahhajj.UmrahPackAdapter
-import com.gakk.noorlibrary.util.RepositoryProvider
-import com.gakk.noorlibrary.util.handleClickEvent
 import com.gakk.noorlibrary.viewModel.UmrahHajjViewModel
 import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjData
-import com.gakk.noorlibrary.util.PAGE_DONATION_HOME
-import com.gakk.noorlibrary.util.PAGE_UMRAH_HAJJ
+import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import kotlinx.coroutines.launch
 
@@ -83,7 +80,7 @@ class UmrahHajjFragment : Fragment(), UmrahPackAdapter.OnItemClickListener, Umra
             viewModel.getUmrahHajjPackageList()
 
             AppPreference.userNumber?.let { userNumber ->
-                modelUserTracking.addTrackDataUser(userNumber, PAGE_UMRAH_HAJJ)
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_UMRAH_PACKAGE)
             }
 
             initObserver()

@@ -212,11 +212,6 @@ internal class LiteratureListFragment : Fragment(), PagingViewCallBack, FavUnFav
             }
 
             layoutNewCalculation.handleClickEvent {
-                /* Intent(context, DetailsActivity::class.java).apply {
-                     this.putExtra(PAGE_NAME, PAGE_JAKAT_NEW_CALCULATION)
-                     startActivity(this)
-                 }*/
-
                 mDetailsCallBack?.addFragmentToStackAndShow(
                     ZakatCalculatorFragment.newInstance()
                 )

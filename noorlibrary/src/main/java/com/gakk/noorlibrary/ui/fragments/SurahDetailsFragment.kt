@@ -25,6 +25,7 @@ import com.gakk.noorlibrary.Noor
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.audioPlayer.AudioManager
 import com.gakk.noorlibrary.callbacks.*
+import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.ImageFromOnline
@@ -32,6 +33,7 @@ import com.gakk.noorlibrary.model.quran.surahDetail.Data
 import com.gakk.noorlibrary.service.AudioPlayerService
 import com.gakk.noorlibrary.ui.adapter.SurahDetailsAdapter
 import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
 import com.gakk.noorlibrary.viewModel.QuranViewModel
 import kotlinx.coroutines.launch
 import java.io.Serializable
@@ -77,6 +79,7 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
     private lateinit var imgQuranMini:ImageView
 
     private lateinit var exoProgressMini: AppCompatSeekBar
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,9 +143,17 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                 QuranViewModel.FACTORY(repository)
             ).get(QuranViewModel::class.java)
 
+            modelUserTracking = ViewModelProvider(
+                this@SurahDetailsFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
 
             initPagingProperties()
             loadData()
+
+            AppPreference.userNumber?.let { userNumber ->
+                modelUserTracking.addTrackDataUser(userNumber, PAGE_QURAN_LIST)
+            }
 
             model.surahDetailsResponse.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -266,6 +277,21 @@ internal class SurahDetailsFragment : Fragment(), SurahDetailsCallBack, PagingVi
                     }
                 }
             })
+
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
 
             btnRetry.handleClickEvent {
                 loadData()

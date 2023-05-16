@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +13,18 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.ActionButtonType
 import com.gakk.noorlibrary.callbacks.DetailsCallBack
+import com.gakk.noorlibrary.data.prefs.AppPreference
+import com.gakk.noorlibrary.data.rest.Status
+import com.gakk.noorlibrary.data.rest.api.RestRepository
 import com.gakk.noorlibrary.model.umrah_hajj.UmrahHajjData
-import com.gakk.noorlibrary.util.PLACE_HOLDER_16_9
-import com.gakk.noorlibrary.util.getNumberInBangla
-import com.gakk.noorlibrary.util.handleClickEvent
-import com.gakk.noorlibrary.util.setImageFromUrl
+import com.gakk.noorlibrary.util.*
+import com.gakk.noorlibrary.viewModel.AddUserTrackigViewModel
+import kotlinx.coroutines.launch
 
 private const val ARG_PACKAGE_DATA = "umrahHajjData"
 
@@ -40,6 +45,9 @@ class UmrahDetailsFragment : Fragment()  {
     private lateinit var description:TextView
     private lateinit var includeFeature:TextView
     private lateinit var total_cost:TextView
+
+    private lateinit var repository: RestRepository
+    private lateinit var modelUserTracking: AddUserTrackigViewModel
 
     companion object {
 
@@ -127,6 +135,37 @@ class UmrahDetailsFragment : Fragment()  {
             mDetailsCallBack?.addFragmentToStackAndShow(UmrahPersonalInfoFragment.newInstance(packageData.umrahPackageId.toString(),packageData.bookingMoney.toString()))
         }
 
+        lifecycleScope.launch {
+            val job = launch {
+                repository = RepositoryProvider.getRepository()
+            }
+            job.join()
+
+            modelUserTracking = ViewModelProvider(
+                this@UmrahDetailsFragment,
+                AddUserTrackigViewModel.FACTORY(repository)
+            ).get(AddUserTrackigViewModel::class.java)
+
+            AppPreference.userNumber?.let { userNumber ->
+                packageData.packageName?.let { modelUserTracking.addTrackDataUser(userNumber, it) }
+            }
+
+            modelUserTracking.trackUser.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Log.e("trackUser", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.e("trackUser", "ERROR")
+                    }
+
+                    Status.SUCCESS -> {
+                        Log.e("trackUser", "SUCCESS")
+                    }
+                }
+            }
+        }
+
     }
 
     override fun onDestroyView() {
@@ -134,8 +173,6 @@ class UmrahDetailsFragment : Fragment()  {
         mDetailsCallBack?.toggleToolBarActionIconsVisibility(false)
         mDetailsCallBack?.toggleToolBarActionIconsVisibility(true, ActionButtonType.TypeThree,R.drawable.ic_payment_history)
    }
-
-
 
 }
 
