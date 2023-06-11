@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/standard_margin"
                 android:fontFamily="sans-serif"
-                android:text="@string/txt_amount_monthly"
+                android:text="@string/txt_amount_monthly_ssl"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/deep_green"
                 android:textFontWeight="700"
