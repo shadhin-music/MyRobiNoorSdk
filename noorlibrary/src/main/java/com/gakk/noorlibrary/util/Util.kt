@@ -60,6 +60,8 @@ object Util {
             || AppPreference.subWeeklyRobiOnDemand || AppPreference.subMonthlyRobiOnDemand
         ) {
             return true
+        } else if (isRobiNumber(AppPreference.userNumber!!)) {
+            return true
         }
         return false
     }

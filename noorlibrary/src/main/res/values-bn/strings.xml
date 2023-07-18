@@ -261,11 +261,11 @@
     <string name="female_islamic_names">মেয়েদের ইসলামিক নাম</string>
     <string name="nam_meaning">নামের অর্থ</string>
     <string name="favourite_name">প্রিয় নাম</string>
-    <string name="cat_hajj">হজ্জ</string>
+    <string name="cat_hajj">হজ</string>
     <string name="hajj_header_dua_one">"লাব্বাইকা <br />আল্লাহুম্মা লাব্বাইক"</string>
     <string name="hajj_header_dua_two">লাব্বাইকা লা শারিকা লাকা লাব্বাইক … </string>
 
-    <string name="hajj_map_title">হজ্জ্ব ম্যাপ </string>
+    <string name="hajj_map_title">হজ ম্যাপ </string>
     <string name="select_currency">মুদ্রা নির্বাচন করুন</string>
     <string name="currency_update">"সর্বশেষ আপডেট "</string>
 
@@ -310,6 +310,7 @@
     <string name="txt_amount_yearly">২০০ টাকা</string>
     <string name="txt_subscribed">সাবস্ক্রাইবড</string>
     <string name="text_sub_soft_bundle_robi">আপনি নূর সার্ভিসে সাবস্ক্রাইবড আছেন!</string>
+    <string name="text_sub_robi_customer">রবি গ্রাহক হিসেবে আপনি নূরের প্রিমিয়াম ফিচারগুলো ফ্রি ব্যবহার করতে পারবেন!</string>
     <string name="txt_amount_monthly_ssl">৩০ টাকা</string>
 
     <string name="currency_converter">কারেন্সি কনভার্টার </string>
@@ -395,7 +396,7 @@
     <string name="txt_dua_eight">লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ</string>
 
     <string name="title_notification">নোটিফিকেশন</string>
-    <string name="cat_umrah_details">উমরাহ হজ্জ প্যাকেজ</string>
+    <string name="cat_umrah_details">উমরাহ হজ প্যাকেজ</string>
     <string name="umrah_package_book_btn">প্যাকেজ বুক করুন</string>
     <string name="hint_passport_number">পাসপোর্ট নম্বর</string>
     <string name="txt_next1">পরবর্তী ধাপ</string>

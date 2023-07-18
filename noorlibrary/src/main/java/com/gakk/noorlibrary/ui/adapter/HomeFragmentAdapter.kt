@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.gakk.noorlibrary.R
 import com.gakk.noorlibrary.callbacks.MainCallback
+import com.gakk.noorlibrary.model.BottomSheetItem
 import com.gakk.noorlibrary.model.ImageFromOnline
 import com.gakk.noorlibrary.model.home.Data
 import com.gakk.noorlibrary.ui.fragments.NamazTimingFragment
@@ -27,9 +28,9 @@ import com.gakk.noorlibrary.ui.fragments.tabs.HomeCellItemControl
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.views.IndicatorLayout
 
-
 @Keep
-class HomeFragmentAdapter(
+internal class HomeFragmentAdapter(
+    val bottomSheetItemList: List<BottomSheetItem>,
     homeList: MutableList<Data>,
     callback: MainCallback,
     billBoardCallback: BillboardItemControl,
@@ -37,16 +38,13 @@ class HomeFragmentAdapter(
     homeCellItemControl: HomeCellItemControl
 ) : RecyclerView.Adapter<HomeFragmentAdapter.HomeFragmentViewHolder>() {
 
-
     private val homeList: List<Data>
     private val mCallBack: MainCallback
     private val mBillBoardCallback: BillboardItemControl
     private val fragmentList = ArrayList<Fragment>()
-    var prayerData: List<com.gakk.noorlibrary.model.tracker.Data>? = null
     var nextWaqt: String = ""
     private val mPrayerTimeCalculator: PrayerTimeCalculator
     private val mHomeCellItemControl: HomeCellItemControl
-    private var personalTrackerPos = -1
 
     init {
         this.homeList = homeList.sortedBy { it.order }
@@ -54,10 +52,7 @@ class HomeFragmentAdapter(
         mBillBoardCallback = billBoardCallback
         mPrayerTimeCalculator = prayerTimeCalculator
         mHomeCellItemControl = homeCellItemControl
-
-
     }
-
 
     companion object {
         private const val CELL_PRAYER_TIMING = 0
@@ -68,6 +63,7 @@ class HomeFragmentAdapter(
         private const val CELL_NAMAZ_VISUAL = 8
         private const val CELL_ISLAM_PILLER = 9
         private const val CELL_NEAREST_MOSQUE = 11
+        private const val CELL_HOME_CATEGORIES = 12
         private const val CELL_EMPTY = -1
     }
 
@@ -79,18 +75,15 @@ class HomeFragmentAdapter(
 
         init {
 
-
             when (layoutId) {
                 CELL_PRAYER_TIMING -> {
 
                     //view
-
                     val vpSliderPrayer = layoutView.findViewById<ViewPager2>(R.id.vpSliderPrayer)
                     val indicatorLayout =
                         layoutView.findViewById<IndicatorLayout>(R.id.indicatorLayout)
 
-                    val adapter =
-                        SliderAdapter(layoutView.context as FragmentActivity)
+                    val adapter = SliderAdapter(layoutView.context as FragmentActivity)
 
                     vpSliderPrayer.adapter = adapter
                     indicatorLayout.setIndicatorCount(mBillBoardCallback.getListSize() + 1)
@@ -99,17 +92,13 @@ class HomeFragmentAdapter(
                         ViewPager2.OnPageChangeCallback() {
 
                         override fun onPageScrolled(
-                            position: Int,
-                            positionOffset: Float,
-                            positionOffsetPixels: Int
+                            position: Int, positionOffset: Float, positionOffsetPixels: Int
                         ) {
                             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                             indicatorLayout.selectCurrentPosition(position)
 
                         }
                     })
-
-
 
                     fragmentList.add(NamazTimingFragment())
                     for (i in 0..mBillBoardCallback.getListSize() - 1) {
@@ -124,15 +113,18 @@ class HomeFragmentAdapter(
                     adapter.setFragmentList(fragmentList)
 
                 }
+
+                CELL_HOME_CATEGORIES -> {
+
+                    layoutView.findViewById<RecyclerView>(R.id.rvCategoriesHome).adapter =
+                        HomeCategoriesAdapter(bottomSheetItemList, mCallBack)
+                }
             }
         }
     }
 
-
     override fun getItemCount(): Int {
-
         return homeList.size + 1
-
     }
 
     override fun onBindViewHolder(holder: HomeFragmentViewHolder, position: Int) {
@@ -144,6 +136,8 @@ class HomeFragmentAdapter(
                 position
             }
         }
+
+        Log.e("homeList", "${pos}")
         val list = homeList.get(pos)
 
         when (holder.layoutTag) {
@@ -176,7 +170,6 @@ class HomeFragmentAdapter(
                     if (isNetworkConnected(rlRead.context)) {
                         item?.textInArabic?.let { it1 -> mCallBack.openCurrentSurahById(it1) }
                     } else {
-                        Log.e("sss", "called")
                         mCallBack.showToastMessage(rlRead.context?.getString(R.string.txt_check_internet)!!)
                     }
                 }
@@ -185,8 +178,7 @@ class HomeFragmentAdapter(
 
                     mHomeCellItemControl.shareBitMap(
                         getBitmapFromView(
-                            clImg?.context!!,
-                            clImg
+                            clImg?.context!!, clImg
                         )
                     )
                 }
@@ -203,10 +195,10 @@ class HomeFragmentAdapter(
                 setPatchImageFromUrl(imgRomjanAmol, data.fullImageUrl)
                 tvRomjanAmol.text = data.patchName
 
-                recyclerViewRomjanAmol.adapter = RomjanAmolAdapter(list.contentBaseUrl!!, mCallBack)
-                    .apply {
-                        submitList(list.items)
-                    }
+                recyclerViewRomjanAmol.adapter =
+                    RomjanAmolAdapter(list.contentBaseUrl!!, mCallBack).apply {
+                            submitList(list.items)
+                        }
             }
 
             CELL_PRAYER -> {
@@ -218,13 +210,9 @@ class HomeFragmentAdapter(
                 val data = list
                 setPatchImageFromUrl(imgAyat, data.fullImageUrl)
                 tvAyat.text = data.patchName
-                recyclerViewPrayer.adapter =
-                    HomePrayerAdapter(
-                        data.contentBaseUrl!!,
-                        data.items!!,
-                        mCallBack,
-                        mHomeCellItemControl
-                    )
+                recyclerViewPrayer.adapter = HomePrayerAdapter(
+                    data.contentBaseUrl!!, data.items!!, mCallBack, mHomeCellItemControl
+                )
             }
 
             CELL_HAJJ -> {
@@ -245,18 +233,15 @@ class HomeFragmentAdapter(
 
 
                 setImageFromUrl(
-                    mainbg,
-                    contentbaseurl + "/" + hajj?.imageUrl,
-                    progressBar,
-                    PLACE_HOLDER_16_9
+                    mainbg, contentbaseurl + "/" + hajj?.imageUrl, progressBar, PLACE_HOLDER_16_9
                 )
 
                 cardBanner!!.handleClickEvent {
                     list.about.let { it1 ->
                         it1?.let { it2 ->
-                                mCallBack.openDetailsActivityWithPageName(
-                                    it2,
-                                )
+                            mCallBack.openDetailsActivityWithPageName(
+                                it2,
+                            )
                         }
                     }
                 }
@@ -287,8 +272,7 @@ class HomeFragmentAdapter(
                     tvShareAyat.setText(tvShareAyat.context.getString(R.string.txt_learn_more))
                     tvShareAyat.setTextColor(
                         ContextCompat.getColor(
-                            tvShareAyat.context,
-                            R.color.ash
+                            tvShareAyat.context, R.color.ash
                         )
                     )
                     imgShare.setImageResource(R.drawable.ic_read)
@@ -344,7 +328,6 @@ class HomeFragmentAdapter(
 
     }
 
-
     override fun getItemViewType(position: Int): Int {
         if (position == 0) {
             return CELL_PRAYER_TIMING
@@ -373,6 +356,10 @@ class HomeFragmentAdapter(
                     CELL_NEAREST_MOSQUE
                 }
 
+                PATCH_TYPE_HOME_CATEGORIES -> {
+                    CELL_HOME_CATEGORIES
+                }
+
                 else -> {
                     CELL_EMPTY
                 }
@@ -393,6 +380,11 @@ class HomeFragmentAdapter(
                 return HomeFragmentViewHolder(CELL_PRAYER_TIMING, view)
             }
 
+            CELL_HOME_CATEGORIES -> {
+                view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_item_categories_home, parent, false)
+                return HomeFragmentViewHolder(CELL_HOME_CATEGORIES, view)
+            }
 
             CELL_TODAY_AYAT -> {
 
@@ -410,7 +402,6 @@ class HomeFragmentAdapter(
                 return HomeFragmentViewHolder(CELL_PRAYER, view)
             }
 
-
             CELL_NEAREST_MOSQUE -> {
 
                 view = LayoutInflater.from(parent.context)
@@ -419,8 +410,6 @@ class HomeFragmentAdapter(
                 return HomeFragmentViewHolder(CELL_NEAREST_MOSQUE, view)
             }
             CELL_HAJJ -> {
-
-
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_item_hajj, parent, false)
 
@@ -467,12 +456,6 @@ class HomeFragmentAdapter(
             else -> throw IllegalStateException("Illegal view type")
         }
 
-    }
-
-    fun invalidatePersonalTracker() {
-        if (personalTrackerPos != -1) {
-            notifyItemChanged(personalTrackerPos)
-        }
     }
 }
 

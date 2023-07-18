@@ -17,8 +17,7 @@ internal class BottomSheetAdapter(
     bottomSheetItemList: List<BottomSheetItem>,
     callback: MainCallback,
     moreFragmentCallBack: MoreFragmentCallBack
-) :
-    RecyclerView.Adapter<BottomSheetAdapter.BottomSheetViewHolder>() {
+) : RecyclerView.Adapter<BottomSheetAdapter.BottomSheetViewHolder>() {
     var bottomSheetItemList: List<BottomSheetItem>
     private val mCallBack: MainCallback
     private val mMoreFragmentCallBack: MoreFragmentCallBack
@@ -27,24 +26,20 @@ internal class BottomSheetAdapter(
         this.bottomSheetItemList = bottomSheetItemList
         mCallBack = callback
         mMoreFragmentCallBack = moreFragmentCallBack
-
     }
 
-    inner class BottomSheetViewHolder// open youtube player activity direct if live video menu is selected
+    inner class BottomSheetViewHolder
         (binding: View) : RecyclerView.ViewHolder(binding) {
 
         init {
             binding.let {
                 it.resizeView(
-                    ViewDimension.OneFourthScreenWidth,
-                    mCallBack.getScreenWith(),
-                    it.context
+                    ViewDimension.OneFourthScreenWidth, mCallBack.getScreenWith(), it.context
                 )
 
                 it.handleClickEvent {
                     val title = FragmentDestinationMap.getDestinationFragmentName(
-                        bottomSheetItemList.get(adapterPosition).title,
-                        it.context!!
+                        bottomSheetItemList.get(adapterPosition).title, it.context!!
                     )
                     if (isNetworkConnected(it.context)) {
                         title?.let { it1 ->
@@ -64,8 +59,8 @@ internal class BottomSheetAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomSheetViewHolder {
 
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_menu_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_menu_item, parent, false)
         return BottomSheetViewHolder(view)
     }
 

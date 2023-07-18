@@ -45,7 +45,7 @@
         android:layout_marginTop="@dimen/small_spacing"
         android:layout_marginEnd="@dimen/standard_margin"
         android:fontFamily="sans-serif"
-        android:text="হজ্জ এর জন্য প্রথম ধাপ হল প্রাক-নিবন্ধন"
+        android:text="হজ এর জন্য প্রথম ধাপ হল প্রাক-নিবন্ধন"
         android:textAlignment="center" />
 
     <androidx.appcompat.widget.AppCompatButton

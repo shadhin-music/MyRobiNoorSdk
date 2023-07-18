@@ -93,6 +93,7 @@ const val PATCH_TYPE_LOCAL_CONTENT = "LocalContent"
 const val PATCH_TYPE_ROMJAN_AMOL = "RamadanAmols"
 const val PATCH_TYPE_ISLAM_PILLER = "IslamPillers"
 const val PATCH_TYPE_NEAREST_MOSQUE = "NearestMosque"
+const val PATCH_TYPE_HOME_CATEGORIES = "HomeCategories"
 
 const val HIZRI_YR_OFFSET = 579
 
