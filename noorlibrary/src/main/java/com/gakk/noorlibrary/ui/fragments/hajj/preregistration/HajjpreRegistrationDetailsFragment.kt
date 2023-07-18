@@ -59,7 +59,7 @@ internal class HajjpreRegistrationDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mCallback?.setToolBarTitle("হজ্জ প্রাক-নিবন্ধন")
+        mCallback?.setToolBarTitle("হজ প্রাক-নিবন্ধন")
 
 
         viewModel = ViewModelProvider(requireActivity())[PreregistrationViewModel::class.java]

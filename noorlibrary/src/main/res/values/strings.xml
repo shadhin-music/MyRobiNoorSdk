@@ -368,11 +368,11 @@
 
     <string name="tab_home">হোম</string>
     <string name="tab_more">আরও</string>
-    <string name="cat_hajj">হজ্জ</string>
+    <string name="cat_hajj">হজ</string>
     <string name="hajj_header_dua_one">"লাব্বাইকা <br />আল্লাহুম্মা লাব্বাইক"</string>
     <string name="hajj_header_dua_two">লাব্বাইকা লা শারিকা লাকা লাব্বাইক … </string>
 
-    <string name="hajj_map_title">হজ্জ্ব ম্যাপ </string>
+    <string name="hajj_map_title">হজ ম্যাপ </string>
     <string name="select_currency">মুদ্রা নির্বাচন করুন</string>
     <string name="currency_update">"সর্বশেষ আপডেট "</string>
 
@@ -434,7 +434,8 @@
     <string name="unsubscribe_fifteen_robi">Please unsubscribe 15 days plan first !</string>
     <string name="unsubscribe_seven_robi">Please unsubscribe 7 days plan first !</string>
     <string name="unsubscribe_thirty_robi">Please unsubscribe 30 days plan first !</string>
-
+    <string name="txt_amount_monthly_ssl">৩০ টাকা</string>
+    <string name="text_sub_robi_customer">রবি গ্রাহক হিসেবে আপনি নূরের প্রিমিয়াম ফিচারগুলো ফ্রি ব্যবহার করতে পারবেন!</string>
 
     <string name="currency_converter">কারেন্সি কনভার্টার </string>
     <string name="name">নাম</string>
@@ -442,8 +443,6 @@
     <string name="cat_tracker">ট্র্যাকার</string>
     <string name="cat_islamic_podcast">ইসলামিক পডকাস্ট</string>
     <string name="cat_eid_jamat">ঈদ জামাতের স্থান</string>
-    <string name="cat_hajj_package">হজ্জ প্যাকেজ</string>
-
 
     <string name="cat_quran_learning">কুরআন শিক্ষা ক্লাস</string>
 
@@ -524,8 +523,8 @@
     <string name="see_more_text">see more</string>
 
     <!--Hajj preregistration Page !-->
-    <string name="hajj_pre_registration">হজ্জ প্রাক নিবন্ধন</string>
-    <string name="do_hajj_pre_reg">হজ্জ প্রাক নিবন্ধন করুন</string>
+    <string name="hajj_pre_registration">হজ প্রাক নিবন্ধন</string>
+    <string name="do_hajj_pre_reg">হজ প্রাক নিবন্ধন করুন</string>
 
     <string name="hint_dob">জন্ম তারিখ</string>
     <string name="hint_gender">লিঙ্গ</string>
@@ -551,7 +550,7 @@
     <string name="permanent_address">স্থায়ী ঠিকানা</string>
     <string name="choose_a_payment_option">একটি পেমেন্ট অপশন চয়ন করুন</string>
     <string name="present_address">বর্তমান ঠিকানা</string>
-    <string name="hajj_pre_registration_fee">হজ্জ প্রাক-নিবন্ধন ফি</string>
+    <string name="hajj_pre_registration_fee">হজ প্রাক-নিবন্ধন ফি</string>
     <string name="hajj_payment_term">অর্থপ্রদানের <font color='#009966'>শর্তাবলীর এবং রিফান্ড</font> নীতিমালার সাথে একমত পোষণ করছি।</string>
     <string name="txt_error_tracking_no">আপনার ট্র্যাকিং নম্বর লিখুন</string>
 
@@ -559,7 +558,7 @@
     <string name="api_error_msg">Something went wrong, try again!</string>
     <string name="txt_check_internet">Please check internet connection!</string>
 
-    <string name="title_hajj_guide">হজ্জ গাইড</string>
+    <string name="title_hajj_guide">হজ গাইড</string>
     <string name="txt_have_you_done">আপনি কি এই ধাপটি সম্পন্ন করেছেন?</string>
     <string name="txt_done">হ্যা</string>
 
@@ -585,7 +584,7 @@
     <string name="material_calendar_today_button">Today</string>
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Cancel</string>
-    <string name="cat_umrah_details">উমরাহ হজ্জ প্যাকেজ</string>
+    <string name="cat_umrah_details">উমরাহ হজ প্যাকেজ</string>
     <string name="umrah_package_book_btn">প্যাকেজ বুক করুন</string>
     <string name="hint_passport_number">পাসপোর্ট নম্বর</string>
     <string name="txt_next1">পরবর্তী ধাপ</string>

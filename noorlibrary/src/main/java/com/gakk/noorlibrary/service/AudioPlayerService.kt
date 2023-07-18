@@ -239,9 +239,6 @@ class AudioPlayerService : Service() {
                 }
 
 
-
-
-
                 delay(1000)
             }
         }
@@ -261,45 +258,49 @@ class AudioPlayerService : Service() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        mediaSession = MediaSessionCompat(baseContext, "Media Session", null, pendingItent).also {
-            it.isActive = true
+        try {
+            mediaSession = MediaSessionCompat(baseContext, "Media Session", null, pendingItent).also {
+                it.isActive = true
+            }
+
+            mediaSession.release()
+            connector = MediaSessionConnector(mediaSession)
+
+            mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS or MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
+            connector.setPlayer(AudioManager.getAudioPlayer())
+            mediaSession.isActive = true
+
+            mediaSession.setCallback(object : MediaSessionCompat.Callback() {
+                override fun onPlay() {
+                    executePlayerCommand(RESUME_COMMAND)
+                }
+
+                override fun onPause() {
+                    executePlayerCommand(PAUSE_COMMAND)
+                }
+
+                override fun onSkipToNext() {
+                    executePlayerCommand(NEXT_COMMAND)
+                }
+
+                override fun onSkipToPrevious() {
+                    executePlayerCommand(PREV_COMMAND)
+                }
+
+                override fun onSeekTo(pos: Long) {
+                    AudioManager?.getAudioPlayer()?.seekTo(pos)
+                    surahDetailsCallBack?.updateMiniPlayerCurrentDuration(pos)
+                }
+            })
+        } catch (e: Exception) {
+            Log.e("MediaSessionCompat", "error${e.message}")
         }
 
-
-        connector = MediaSessionConnector(mediaSession)
-
-        mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS or MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
-        connector.setPlayer(AudioManager.getAudioPlayer())
-        mediaSession.isActive = true
-
-        mediaSession.setCallback(object : MediaSessionCompat.Callback() {
-            override fun onPlay() {
-                executePlayerCommand(RESUME_COMMAND)
-            }
-
-            override fun onPause() {
-                executePlayerCommand(PAUSE_COMMAND)
-            }
-
-            override fun onSkipToNext() {
-                executePlayerCommand(NEXT_COMMAND)
-            }
-
-            override fun onSkipToPrevious() {
-                executePlayerCommand(PREV_COMMAND)
-            }
-
-            override fun onSeekTo(pos: Long) {
-                AudioManager?.getAudioPlayer()?.seekTo(pos)
-                surahDetailsCallBack?.updateMiniPlayerCurrentDuration(pos)
-            }
-        })
 
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         AudioManager.PlayListControl.setPlayListType(SURAH_LIST_TYPE)
-
 
         var currentSurahIndex = intent?.getIntExtra(CURRENT_INDEX, 0)
         if (currentSurahIndex != null) {

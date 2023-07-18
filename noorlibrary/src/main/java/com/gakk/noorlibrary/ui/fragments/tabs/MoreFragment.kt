@@ -1,7 +1,6 @@
 package com.gakk.noorlibrary.ui.fragments.tabs
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,6 +13,7 @@ import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.model.BottomSheetItem
 import com.gakk.noorlibrary.ui.activity.DetailsActivity
 import com.gakk.noorlibrary.ui.adapter.BottomSheetAdapter
+import com.gakk.noorlibrary.ui.adapter.HomeCategoriesAdapter
 import com.gakk.noorlibrary.util.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -26,7 +26,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
     private lateinit var mCallback: MainCallback
     private lateinit var rvCategory: RecyclerView
     private lateinit var imgDrag: AppCompatImageView
-    private lateinit var layoutSubscribeCon: ConstraintLayout
+   // private lateinit var layoutSubscribeCon: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         rvCategory = view.findViewById(R.id.rvCategory)
         imgDrag = view.findViewById(R.id.imgDrag)
-        layoutSubscribeCon = view.findViewById(R.id.layoutSubscribeCon)
+        //layoutSubscribeCon = view.findViewById(R.id.layoutSubscribeCon)
 
         return view
     }
@@ -66,13 +66,12 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Log.e("subchk", "${Util.checkSub()}")
         imgDrag.handleClickEvent {
             dialog.dismiss()
         }
 
 
-        layoutSubscribeCon.handleClickEvent {
+        /*layoutSubscribeCon.handleClickEvent {
 
             dialog.dismiss()
 
@@ -80,7 +79,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             if (isNetworkConnected(requireContext())) {
 
                 if (AppPreference.subWeeklyRobiOnDemand || AppPreference.subMonthlyRobiOnDemand) {
-                    showNoorServiceDialog()
+                    showNoorServiceDialog(resources.getString(R.string.text_sub_soft_bundle_robi))
 
                 }
 
@@ -96,6 +95,9 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                         startActivity(this)
                     }
                 }
+                else if (isRobiNumber(AppPreference.userNumber!!)) {
+                    showNoorServiceDialog(getString(R.string.text_sub_robi_customer))
+                }
                 else {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
@@ -106,19 +108,20 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             } else {
                 mCallback.showToastMessage("Please check internet connection!")
             }
-        }
+        }*/
     }
 
-    fun showNoorServiceDialog() {
+    fun showNoorServiceDialog(title: String) {
         val customDialog =
             MaterialAlertDialogBuilder(
                 requireContext(),
                 R.style.MaterialAlertDialog_rounded
             )
-        .setMessage(resources.getString(R.string.text_sub_soft_bundle_robi))
+        .setMessage(title)
                 .setCancelable(false)
             .setPositiveButton("Ok") { dialog, which ->
                 // Respond to positive button press
+                dismiss()
             }
 
         customDialog.show()
@@ -184,12 +187,12 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             )
         )
 
-        bottomSheetItems.add(
+       /* bottomSheetItems.add(
             BottomSheetItem(
                 R.drawable.ic_cat_mosque,
                 getString(R.string.cat_nearest_mosque)
             )
-        )
+        )*/
 
         bottomSheetItems.add(
             BottomSheetItem(

@@ -18,6 +18,7 @@ import com.gakk.noorlibrary.callbacks.MainCallback
 import com.gakk.noorlibrary.data.prefs.AppPreference
 import com.gakk.noorlibrary.data.rest.Status
 import com.gakk.noorlibrary.data.rest.api.RestRepository
+import com.gakk.noorlibrary.model.BottomSheetItem
 import com.gakk.noorlibrary.model.UpCommingPrayer
 import com.gakk.noorlibrary.model.billboard.Data
 import com.gakk.noorlibrary.model.tracker.SalahStatus
@@ -137,7 +138,94 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
             }
         }
     }
+    fun getBottomSheetItemList(): List<BottomSheetItem> {
+        val bottomSheetItems: ArrayList<BottomSheetItem> = ArrayList()
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_cat_quran,
+                getString(R.string.cat_quran)
+            )
+        )
 
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_cat_roja,
+                getString(R.string.cat_roja)
+            )
+        )
+
+        bottomSheetItems.add(BottomSheetItem(R.drawable.ic_cat_dua, getString(R.string.cat_dua)))
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_cat_hadis,
+                getString(R.string.cat_hadith)
+            )
+        )
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_cat_jakat,
+                getString(R.string.txt_jakat_calculator)
+            )
+        )
+
+        /* bottomSheetItems.add(
+             BottomSheetItem(
+                 R.drawable.ic_cat_mosque,
+                 getString(R.string.cat_nearest_mosque)
+             )
+         )*/
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_islamic_podcast,
+                getString(R.string.cat_islamic_podcast)
+            )
+        )
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_cat_namaz_sikhha,
+                getString(R.string.cat_namaz_sikhha)
+            )
+        )
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_cat_hajj,
+                getString(R.string.cat_hajj)
+            )
+        )
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_umrah_hajj,
+                getString(R.string.cat_umrah_hajj)
+            )
+        )
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_cat_donation,
+                getString(R.string.cat_donation)
+            )
+        )
+
+
+        bottomSheetItems.add(
+            BottomSheetItem(
+                R.drawable.ic_eid_jamater_location,
+                getString(R.string.cat_eid_jamat)
+            )
+        )
+
+
+
+
+
+        return bottomSheetItems
+    }
     private fun subscribeObserver() {
         model.billboardResponse.observe(viewLifecycleOwner) {
             when (it.status) {
@@ -150,8 +238,10 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                         200 -> {
                             val list = it.data.data
                             biilboradList = list.filterNot {
-                                it.categoryName.trim().equals("আল্লাহর ৯৯ নাম") ||
-                                        it.categoryName.trim().equals("ট্র্যাকার")
+                                it.categoryName.trim().equals("আল্লাহর ৯৯ নাম")
+                                        || it.categoryName.trim().equals("ট্র্যাকার")
+                                        || it.categoryName.trim().equals("ডিজিটাল কুরআন ক্লাস")
+                                        || it.categoryName.trim().equals("খতমে কুরআন")
                             }
                             model.getHomeData()
                         }
@@ -166,7 +256,6 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
 
                 }
                 Status.ERROR -> {
-                    Log.e("homeerror", "${it.message}")
                     progressLayout.visibility = View.GONE
                     noInternetLayout.visibility = View.VISIBLE
                 }
@@ -182,17 +271,20 @@ internal class HomeFragment : Fragment(), BillboardItemControl, HomeCellItemCont
                 Status.SUCCESS -> {
                     when (it.data?.status) {
                         STATUS_SUCCESS -> {
-                            //have to configure only for robi
+
                             var homeList: MutableList<com.gakk.noorlibrary.model.home.Data> =
                                 mutableListOf()
                             homeList.clear()
                             homeList =
                                 it.data.data as MutableList<com.gakk.noorlibrary.model.home.Data>
 
-                            val sortedList = homeList.filterNot { it.about.equals("Virtual Kafela") }
+                            val sortedList = homeList.filterNot { it.about.equals("Virtual Kafela") ||
+                                    it.about.equals("Nearest Mosque")
+                            }
 
+                            val menuList = getBottomSheetItemList()
 
-                            adapter = HomeFragmentAdapter(
+                            adapter = HomeFragmentAdapter(menuList,
                                 sortedList as MutableList<com.gakk.noorlibrary.model.home.Data>,
 
                                 mCallback,
