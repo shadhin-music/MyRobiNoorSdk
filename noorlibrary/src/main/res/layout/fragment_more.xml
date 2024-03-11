@@ -49,7 +49,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvMore">
 
-                <!--<androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSubscribe"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -63,20 +63,9 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />-->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvSubscribe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_margin"
-                    android:layout_marginTop="@dimen/standard_margin"
-                    android:text="@string/title_subscribe"
-                    android:textColor="@color/colorPrimary"
-                    android:fontFamily="sans-serif-medium"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-                <androidx.appcompat.widget.AppCompatTextView
+
+                <!--<androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/standard_margin"
@@ -93,11 +82,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_10"
                     android:src="@drawable/ic_premium"
+                    app:layout_constraintBottom_toBottomOf="@id/tvSubscribe"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvSubscribe" />
+                    app:layout_constraintTop_toTopOf="@id/tvSubscribe" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!--<androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutSubscribeCon"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
@@ -131,7 +121,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCategory"
@@ -144,7 +134,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutSubscribeCon"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSubscribe"
                 app:spanCount="4"
                 tools:listitem="@layout/layout_menu_item">
 

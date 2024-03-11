@@ -46,6 +46,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.InputStream
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.floor
 
@@ -332,6 +337,7 @@ internal class NamazTimingFragment : Fragment() {
             }
         }
 
+        setRamadanAzan()
 
         ivNamazDak.handleClickEvent {
 
@@ -345,7 +351,64 @@ internal class NamazTimingFragment : Fragment() {
         }
 
     }
+    private fun setRamadanAzan() {
+        context?.let {
 
+            val currencyIS: InputStream = it.assets.open("ramadan_dhaka.json")
+            val ramadanJsonArray = JSONArray(loadJSONFromAsset(currencyIS))
+
+            ramadanJsonArray.let { ramadanDB ->
+                for (i in 0 until ramadanDB.length()) {
+                    try {
+                        val jb = ramadanDB[i] as JSONObject
+                        val ramadanDate = jb.getString("RamadanDate")
+                        val fajrData = jb.getString("Fajr").toString()
+                        val magribData = jb.getString("Magrib").toString()
+                        val dateToday = Date()
+                        val dateFormat: DateFormat = SimpleDateFormat("dd/M/yyyy", Locale.ENGLISH)
+                        val formatedDate = dateFormat.format(dateToday)
+
+
+                        if (formatedDate == ramadanDate) {
+
+                            Log.e("DIV_TODAY", jb.toString())
+
+                            when (AppPreference.language) {
+                                LAN_BANGLA -> {
+
+                                    Log.e("NAMAZ_HOME", jb.toString())
+
+                                   tvFajrTime.text =
+                                        fajrData.getNumberInBangla() + " " + getString(
+                                            R.string.txt_am
+                                        )
+                                    tvMagribTime.text =
+                                        magribData.getNumberInBangla() + " " + getString(
+                                            R.string.txt_pm
+                                        )
+                                }
+
+                                else -> {
+                                    tvFajrTime.text = fajrData + " " + getString(
+                                        R.string.txt_am
+                                    )
+                                   tvMagribTime.text = magribData + " " + getString(
+                                        R.string.txt_pm
+                                    )
+                                }
+                            }
+
+                        }
+
+                    } catch (e: Exception) {
+                        e.stackTrace
+                        e.message?.let { it1 -> Log.e("Ramadan Time error", e.message.toString()) }
+                    }
+                }
+            }
+        }
+
+    }
     private fun showNamazerDakDialog(waqtName: String) {
         val customDialog = MaterialAlertDialogBuilder(
             requireActivity(), R.style.MaterialAlertDialog_rounded

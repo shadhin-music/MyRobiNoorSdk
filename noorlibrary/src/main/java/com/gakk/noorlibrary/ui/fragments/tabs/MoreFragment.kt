@@ -1,7 +1,6 @@
 package com.gakk.noorlibrary.ui.fragments.tabs
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -27,7 +26,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
     private lateinit var mCallback: MainCallback
     private lateinit var rvCategory: RecyclerView
     private lateinit var imgDrag: AppCompatImageView
-    private lateinit var layoutSubscribeCon: ConstraintLayout
+   // private lateinit var layoutSubscribeCon: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +52,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
 
         rvCategory = view.findViewById(R.id.rvCategory)
         imgDrag = view.findViewById(R.id.imgDrag)
-        layoutSubscribeCon = view.findViewById(R.id.layoutSubscribeCon)
+        //layoutSubscribeCon = view.findViewById(R.id.layoutSubscribeCon)
 
         return view
     }
@@ -72,7 +71,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
         }
 
 
-        layoutSubscribeCon.handleClickEvent {
+        /*layoutSubscribeCon.handleClickEvent {
 
             dialog.dismiss()
 
@@ -96,9 +95,9 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
                         startActivity(this)
                     }
                 }
-               /* else if (isRobiNumber(AppPreference.userNumber!!)) {
+                else if (isRobiNumber(AppPreference.userNumber!!)) {
                     showNoorServiceDialog(getString(R.string.text_sub_robi_customer))
-                }*/
+                }
                 else {
                     Intent(context, DetailsActivity::class.java).apply {
                         this.putExtra(PAGE_NAME, PAGE_SUBSCRIPTION_OPTION_LIST)
@@ -109,7 +108,7 @@ internal class MoreFragment : BottomSheetDialogFragment(), MoreFragmentCallBack 
             } else {
                 mCallback.showToastMessage("Please check internet connection!")
             }
-        }
+        }*/
     }
 
     fun showNoorServiceDialog(title: String) {
