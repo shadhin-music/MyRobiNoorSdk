@@ -29,8 +29,10 @@ import com.gakk.noorlibrary.roza.CalenderUtil
 import com.gakk.noorlibrary.ui.fragments.DivisionSelectionCallback
 import com.gakk.noorlibrary.util.*
 import com.gakk.noorlibrary.util.Util.checkSelectedDate
+import com.gakk.noorlibrary.util.Util.checkTodayDate
 import com.gakk.noorlibrary.views.TextViewNormalArabic
 import com.google.android.material.tabs.TabLayout
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -89,13 +91,11 @@ internal class RozaInformationAdapter(
         duaItemCount = mDuaList?.size ?: 0
     }
 
-    fun initDataNew()
-    {
+    fun initDataNew() {
         mListControlFromAPI = DisplayableSehriIfterListControlFromAPI()
         mDisplayableSehriIfterListFromAPI = mListControlFromAPI.getDisplayableListFromAPI()
 
     }
-
 
 
     inner class RozaInformationViewHolder(layoutView: View) : RecyclerView.ViewHolder(layoutView) {
@@ -106,28 +106,36 @@ internal class RozaInformationAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RozaInformationViewHolder {
         when (viewType) {
             _HEADER -> {
-                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_primary_header,parent,false)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_roza_primary_header, parent, false)
                 return RozaInformationViewHolder(view)
 
             }
+
             _SEHRI_IFTER_HEADER -> {
-                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_sehri_ifter_header,parent,false)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_roza_sehri_ifter_header, parent, false)
                 return RozaInformationViewHolder(view)
 
             }
+
             _ROZA_INFO -> {
-                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_info_cell,parent,false)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_roza_info_cell, parent, false)
                 return RozaInformationViewHolder(view)
 
             }
 
             _ESSENTIAL_DUA_HEADER -> {
-                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_dua_header,parent,false)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_roza_dua_header, parent, false)
                 return RozaInformationViewHolder(view)
 
             }
+
             else -> {
-                val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_roza_dua,parent,false)
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_roza_dua, parent, false)
                 return RozaInformationViewHolder(view)
 
             }
@@ -144,46 +152,52 @@ internal class RozaInformationAdapter(
 
                 val layoutIfterInfo = holder.view.findViewById<CardView>(R.id.layoutIfterInfo)
                 val layoutSehriInfo = holder.view.findViewById<CardView>(R.id.layoutSehriInfo)
-                val tvIfterOrSehriTitle:AppCompatTextView = layoutIfterInfo.findViewById(R.id.tvIfterOrSehriTitle)
+                val tvIfterOrSehriTitle: AppCompatTextView =
+                    layoutIfterInfo.findViewById(R.id.tvIfterOrSehriTitle)
                 val tvTitle: AppCompatTextView = holder.view.findViewById(R.id.tvTitle)
-                val tvDivision:AppCompatTextView = holder.view.findViewById(R.id.tvDivision)
-                val layoutDivisionContainer:ConstraintLayout = holder.view.findViewById(R.id.layoutDivisionContainer)
-                val  imageAlarm1:ImageView = layoutIfterInfo.findViewById(R.id.imageAlarm)
-                val  imageAlarm2:ImageView = layoutSehriInfo.findViewById(R.id.imageAlarm)
-                val  imageFilterView: AppCompatImageView = holder.view.findViewById(R.id.imageFilterView)
-               // Glide.with(holder.itemView.context).load(item.fullImageUrl).into(imageFilterView)
+                val tvDivision: AppCompatTextView = holder.view.findViewById(R.id.tvDivision)
+                val layoutDivisionContainer: ConstraintLayout =
+                    holder.view.findViewById(R.id.layoutDivisionContainer)
+                val imageAlarm1: ImageView = layoutIfterInfo.findViewById(R.id.imageAlarm)
+                val imageAlarm2: ImageView = layoutSehriInfo.findViewById(R.id.imageAlarm)
+                val imageFilterView: AppCompatImageView =
+                    holder.view.findViewById(R.id.imageFilterView)
+                // Glide.with(holder.itemView.context).load(item.fullImageUrl).into(imageFilterView)
                 tvTitle.setText(R.string.today_sehri_iftar_robi)
-                val tvIfterOrSehriTime1 = layoutSehriInfo.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
-                val tvIfterOrSehriTime2 = layoutIfterInfo.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
+                val tvIfterOrSehriTime1 =
+                    layoutSehriInfo.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
+                val tvIfterOrSehriTime2 =
+                    layoutIfterInfo.findViewById<AppCompatTextView>(R.id.tvIfterOrSehriTime)
                 val tvInfo = holder.view.findViewById<AppCompatTextView>(R.id.tvInfo)
                 val tvInfoLarge = holder.view.findViewById<AppCompatTextView>(R.id.tvInfoLarge)
                 val progressBar = holder.view.findViewById<ProgressBar>(R.id.progressBar)
                 progressBar.visibility = View.GONE
-                val   imgSehriOrIfter: ImageView = holder.view.findViewById(R.id.imgSehriOrIfter)
-               //     it.item = ImageFromOnline("bg_ramadan.png")
+                val imgSehriOrIfter: ImageView = holder.view.findViewById(R.id.imgSehriOrIfter)
+                //     it.item = ImageFromOnline("bg_ramadan.png")
 
 
-                if(checkSelectedDate("24/03/2023"))
+                if (checkSelectedDate("12/03/2024"))
                     layoutDivisionContainer.show()
 
-                 tvTitle.setText(R.string.today_sehri_iftar_robi)
+                tvTitle.setText(R.string.today_sehri_iftar_robi)
 
-                   imgSehriOrIfter.setImageResource(R.drawable.ic_islam)
-                    tvIfterOrSehriTitle.setText(R.string.ifter_time_today)
-                    tvDivision.text = selectedDivision
+                imgSehriOrIfter.setImageResource(R.drawable.ic_islam)
+                tvIfterOrSehriTitle.setText(R.string.ifter_time_today)
+                tvDivision.text = selectedDivision
 
 
                 layoutDivisionContainer.handleClickEvent {
 
                     mCallBack?.showDivisionListAlert(layoutDivisionContainer)
                 }
-                    var todaysIfterSehri = todaySehriIfterControl.getSehriIfterTimeForToday(mDisplayableSehriIfterList)
+                val todaysIfterSehri =
+                    todaySehriIfterControl.getSehriIfterTimeForToday(mDisplayableSehriIfterList)
 
 
-                    holder.itemView.context.resources.getText(R.string.evening)
-                    holder.itemView.context.resources.getText(R.string.txt_minute)
+                holder.itemView.context.resources.getText(R.string.evening)
+                holder.itemView.context.resources.getText(R.string.txt_minute)
 
-                    // if(CalenderUtil.isRamadanNow()== false) {
+                // if(CalenderUtil.isRamadanNow()== false) {
 
                 tvIfterOrSehriTime1.setText(
                     "${todaysIfterSehri?.sehriTimeStr} ${
@@ -200,11 +214,11 @@ internal class RozaInformationAdapter(
                     }"
                 )
 
-                    // }
-                    tvInfo?.visibility = VISIBLE
-                  tvInfoLarge?.visibility = VISIBLE
-                    imageFilterView?.visibility = VISIBLE
-                    //This will work after ramadan 2022
+                // }
+                tvInfo?.visibility = VISIBLE
+                tvInfoLarge?.visibility = VISIBLE
+                imageFilterView?.visibility = VISIBLE
+                //This will work after ramadan 2022
 //                    when {
 //                        CalenderUtil.isRamadanNow() == false && CalenderUtil.isShabanNow() == false -> {
 //                            //hide both tvInfo & tvInfoLarge
@@ -257,25 +271,23 @@ internal class RozaInformationAdapter(
 //                    }
 
 
-                    if (CalenderUtil.isRamadanNow() == false && CalenderUtil.isShabanNow() == false) {
+                if (CalenderUtil.isRamadanNow() == false && CalenderUtil.isShabanNow() == false) {
 //                            //hide both tvInfo & tvInfoLarge
-                     tvInfo?.visibility = GONE
-                      tvInfoLarge?.visibility = GONE
-                      imageFilterView?.visibility = GONE
-
-
-                    }
-                    val date = Calendar.getInstance().time
-                    val formatter =
-                        SimpleDateFormat.getDateTimeInstance() //or use getDateInstance()
-                    val formatedDate = formatter.format(date)
-                    if (CalenderUtil.isRamadanNow() == true) {
-                        val todaysIfterSehriFromAPI =
-                            todaySehriIfterControlFromAPI.getSehriIfterTimeForTodayFromAPI(
-                                mDisplayableSehriIfterListFromAPI
-                            )
-                        tvInfo?.text =  holder.itemView.context.getText(R.string.holy_ramadan)
-                       tvInfoLarge?.visibility = GONE
+                    tvInfo?.visibility = GONE
+                    tvInfoLarge?.visibility = GONE
+                    imageFilterView?.visibility = GONE
+                }
+                val date = Calendar.getInstance().time
+                val formatter =
+                    SimpleDateFormat.getDateTimeInstance() //or use getDateInstance()
+                val formatedDate = formatter.format(date)
+                if (CalenderUtil.isRamadanNow() == true) {
+                    val todaysIfterSehriFromAPI =
+                        todaySehriIfterControlFromAPI.getSehriIfterTimeForTodayFromAPI(
+                            mDisplayableSehriIfterListFromAPI
+                        )
+                    tvInfo?.text = holder.itemView.context.getText(R.string.holy_ramadan)
+                    tvInfoLarge?.visibility = GONE
 //                            it?.tvInfoLarge?.text =
 //                                "${it?.root?.context?.getText(R.string.today)} ${
 //                                    TimeFormtter.getNumberByLocale(
@@ -283,24 +295,42 @@ internal class RozaInformationAdapter(
 //                                    )
 //                                } ${it?.root?.context?.getText(R.string.cat_roja)}"
 
+                    val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
 
+                    if (checkTodayDate("11/03/2024", dateFormat.format(Date()))) {
                         tvIfterOrSehriTime1.setText(
-                            "${todaysIfterSehriFromAPI?.sehriTimeStr1} ${
+                            "৪:৫৬ ${
                                 holder.itemView.context.resources.getText(
                                     R.string.txt_minute
                                 )
                             }"
                         )
                         tvIfterOrSehriTime2.setText(
-                            "${todaysIfterSehriFromAPI?.ifterTimeStr1} ${
+                            "৬:০৬ ${
                                 holder.itemView.context.resources.getText(
                                     R.string.txt_minute
                                 )
                             }"
                         )
-
-
+                    } else {
+                        tvIfterOrSehriTime1.setText(
+                            "${TimeFormtter.getNumberByLocale(todaysIfterSehriFromAPI?.sehriTimeStr1?.convertTo12HourFormatWithoutAMPM()!!)} ${
+                                holder.itemView.context.resources.getText(
+                                    R.string.txt_minute
+                                )
+                            }"
+                        )
+                        tvIfterOrSehriTime2.setText(
+                            "${TimeFormtter.getNumberByLocale(todaysIfterSehriFromAPI?.ifterTimeStr1?.convertTo12HourFormatWithoutAMPM()!!)} ${
+                                holder.itemView.context.resources.getText(
+                                    R.string.txt_minute
+                                )
+                            }"
+                        )
                     }
+
+
+                }
 
                 imageAlarm1.setOnClickListener {
 
@@ -324,35 +354,35 @@ internal class RozaInformationAdapter(
                     )
                 }
 
-                    if (CalenderUtil.isShabanNow() == true) {
-                       tvInfo?.text =
-                           holder.itemView.context.getText(R.string.time_left_till_ramadan)
-                        tvInfoLarge?.text =
-                            "${ holder.itemView.context.getText(R.string.only_more)} ${
-                                TimeFormtter.getNumberByLocale(
-                                    CalenderUtil.daysLeftTillRamadanFor2022().toString()
-                                )
-                            } ${ holder.itemView.context.getText(R.string.day_meaning_v2)}"
+                if (CalenderUtil.isShabanNow() == true) {
+                    tvInfo?.text =
+                        holder.itemView.context.getText(R.string.time_left_till_ramadan)
+                    tvInfoLarge?.text =
+                        "${holder.itemView.context.getText(R.string.only_more)} ${
+                            TimeFormtter.getNumberByLocale(
+                                CalenderUtil.daysLeftTillRamadanFor2022().toString()
+                            )
+                        } ${holder.itemView.context.getText(R.string.day_meaning_v2)}"
 
-                    }
-                    if (fromMalaysia) {
-                        //hide both tvInfo & tvInfoLarge
-                        tvInfo?.visibility = GONE
-                        tvInfoLarge?.visibility = GONE
-                     imageFilterView?.visibility = GONE
-                    }
+                }
+                if (fromMalaysia) {
+                    //hide both tvInfo & tvInfoLarge
+                    tvInfo?.visibility = GONE
+                    tvInfoLarge?.visibility = GONE
+                    imageFilterView?.visibility = GONE
+                }
 
 
             }
 
             _SEHRI_IFTER_HEADER -> {
-                val tvTitle:AppCompatTextView =holder.view.findViewById(R.id.tvTitle)
-                val tabRamadanPeriod:TabLayout = holder.view.findViewById(R.id.tabRamadanPeriod)
-                val tvDate:AppCompatTextView =holder.view.findViewById(R.id.tvDate)
+                val tvTitle: AppCompatTextView = holder.view.findViewById(R.id.tvTitle)
+                val tabRamadanPeriod: TabLayout = holder.view.findViewById(R.id.tabRamadanPeriod)
+                val tvDate: AppCompatTextView = holder.view.findViewById(R.id.tvDate)
                 tabRamadanPeriod?.selectTab(tabRamadanPeriod.getTabAt(mPeriodControl.mSelectedPeriod))
 
                 tvTitle?.setText(R.string.today_sehri_iftar_time_table_robi)
-                      tabRamadanPeriod?.addOnTabSelectedListener(
+                tabRamadanPeriod?.addOnTabSelectedListener(
                     object : TabLayout.OnTabSelectedListener {
                         override fun onTabSelected(tab: TabLayout.Tab?) {
 
@@ -360,7 +390,7 @@ internal class RozaInformationAdapter(
                             notifyItemRangeChanged(3, 10)
                             Log.e(
                                 "MSELECTEDPOS",
-                               tabRamadanPeriod?.selectedTabPosition.toString()
+                                tabRamadanPeriod?.selectedTabPosition.toString()
                             )
                         }
 
@@ -379,10 +409,11 @@ internal class RozaInformationAdapter(
                 //  if(formatedDate =="2022-04-03"&& !fromMalaysia){
                 when (CalenderUtil.isRamadanNow() && !fromMalaysia) {
                     true -> {
-                      tabRamadanPeriod?.visibility =
+                        tabRamadanPeriod?.visibility =
                             VISIBLE
                     }
-                    false ->tabRamadanPeriod?.visibility =
+
+                    false -> tabRamadanPeriod?.visibility =
                         GONE
                 }
 //                else{
@@ -392,13 +423,16 @@ internal class RozaInformationAdapter(
 
 
             }
+
             _ROZA_INFO -> {
                 if (position == 2) {
                     val tvDay = holder.view.findViewById<AppCompatTextView>(R.id.tvDay)
 
                     val tvDate = holder.view.findViewById<AppCompatTextView>(R.id.tvDate)
-                    val tvLastTimeOfSehri = holder.view.findViewById<AppCompatTextView>(R.id.tvLastTimeOfSehri)
-                    val tvTimeOfIftari = holder.view.findViewById<AppCompatTextView>(R.id.tvTimeOfIftari)
+                    val tvLastTimeOfSehri =
+                        holder.view.findViewById<AppCompatTextView>(R.id.tvLastTimeOfSehri)
+                    val tvTimeOfIftari =
+                        holder.view.findViewById<AppCompatTextView>(R.id.tvTimeOfIftari)
                     when (CalenderUtil.isRamadanNow() && !fromMalaysia) {
                         true -> tvDay?.setText(
                             Noor.appContext?.resources?.getText(
@@ -414,23 +448,25 @@ internal class RozaInformationAdapter(
                         )
 
                     }
-                   tvDate?.text =
+                    tvDate?.text =
                         Noor.appContext?.resources?.getText(
                             R.string.day
                         )
-                  tvLastTimeOfSehri?.text =
+                    tvLastTimeOfSehri?.text =
                         Noor.appContext?.resources?.getText(
                             R.string.last_sehri_time_today
                         )
-                   tvTimeOfIftari?.text =
+                    tvTimeOfIftari?.text =
                         Noor.appContext?.resources?.getText(
                             R.string.ifter_time_today
                         )
 
                 } else {
                     val tvDay = holder.view.findViewById<AppCompatTextView>(R.id.tvDay)
-                    val tvLastTimeOfSehri = holder.view.findViewById<AppCompatTextView>(R.id.tvLastTimeOfSehri)
-                    val tvTimeOfIftari = holder.view.findViewById<AppCompatTextView>(R.id.tvTimeOfIftari)
+                    val tvLastTimeOfSehri =
+                        holder.view.findViewById<AppCompatTextView>(R.id.tvLastTimeOfSehri)
+                    val tvTimeOfIftari =
+                        holder.view.findViewById<AppCompatTextView>(R.id.tvTimeOfIftari)
                     val tvDate = holder.view.findViewById<AppCompatTextView>(R.id.tvDate)
                     val scrim = holder.view.findViewById<LinearLayout>(R.id.scrim)
                     var pos = position - 3 + mPeriodControl.mSelectedPeriod * 10
@@ -443,39 +479,46 @@ internal class RozaInformationAdapter(
                     // var sehriIfterTimeForRamadan = mDisplayableSehriIfterListFromAPI.get()
                     //Log.e("TAG", "Position123: "+ mDisplayableSehriIfterListFromAPI.size)
 
-                    Log.e("ROZA ACTIVE TIME",sehriIfterTime.dateMs.toString())
+                    Log.e("ROZA ACTIVE TIME", sehriIfterTime.dateMs.toString())
 
                     when (sehriIfterTime.isToday) {
                         true -> {
-                           scrim?.visibility = VISIBLE
+                            scrim?.visibility = VISIBLE
                         }
+
                         else -> {
-                           scrim?.visibility = GONE
+                            scrim?.visibility = GONE
                         }
                     }
                     if (CalenderUtil.isRamadanNow() && !fromMalaysia) {
-                      tvDay?.setText(sehriIfterTime.dayOfHizriMonth)
+                        tvDay?.setText(sehriIfterTime.dayOfHizriMonth)
                         ///       var sehriIfterTimeForRamadan = mDisplayableSehriIfterListFromAPI.get(pos)
                         when (sehriIfterTimeForRamadan.isToday) {
                             true -> {
-                             scrim?.visibility = VISIBLE
+                                scrim?.visibility = VISIBLE
                             }
+
                             else -> {
                                 scrim?.visibility = GONE
                             }
                         }
 
-                      tvDate?.setText(sehriIfterTimeForRamadan.dayOfWeek)
-                       tvLastTimeOfSehri?.setText(
-                            sehriIfterTimeForRamadan?.sehriTimeStr1
+                        tvDate?.setText(sehriIfterTimeForRamadan.dayOfWeek)
+                        Log.e("sehriTimeStr1", "${sehriIfterTimeForRamadan?.sehriTimeStr1}")
+                        tvLastTimeOfSehri?.setText(
+                            TimeFormtter.getNumberByLocale(sehriIfterTimeForRamadan?.sehriTimeStr1?.convertTo12HourFormat()!!)
                         )
-                      tvTimeOfIftari?.setText(sehriIfterTimeForRamadan?.ifterTimeStr1)
+                        tvTimeOfIftari?.setText(
+                            TimeFormtter.getNumberByLocale(
+                                sehriIfterTimeForRamadan?.ifterTimeStr1?.convertTo12HourFormat()!!
+                            )
+                        )
                     } else {
-                       tvDay?.setText(sehriIfterTime.dayOfGeorgianMonth)
+                        tvDay?.setText(sehriIfterTime.dayOfGeorgianMonth)
 
-                     tvDate?.setText(sehriIfterTime.dayOfWeek)
+                        tvDate?.setText(sehriIfterTime.dayOfWeek)
                         tvLastTimeOfSehri?.setText(sehriIfterTime.sehriTimeStr)
-                    tvTimeOfIftari?.setText(sehriIfterTime.ifterTimeStr)
+                        tvTimeOfIftari?.setText(sehriIfterTime.ifterTimeStr)
                     }
 
                     /*holder.rozaInfoCellBinding?.tvDate?.setText(sehriIfterTime.dayOfWeek)
@@ -483,108 +526,113 @@ internal class RozaInformationAdapter(
                     holder.rozaInfoCellBinding?.tvTimeOfIftari?.setText(sehriIfterTime.ifterTimeStr)*/
                 }
             }
+
             _DUA_INFO -> {
 //                holder.duaBinding?.let { binding ->
-                    mDuaList?.let {
-                        var pos = if (fromMalaysia) {
-                            position - mDisplayableSehriIfterList.size - 3
-                        } else {
-                            position - 14
-                        }
+                mDuaList?.let {
+                    var pos = if (fromMalaysia) {
+                        position - mDisplayableSehriIfterList.size - 3
+                    } else {
+                        position - 14
+                    }
 
-                        var literature = it.get(pos)
-                       // binding.dua = literature
-                        val  tvDuaTitle:AppCompatTextView = holder.view.findViewById(R.id.tvDuaTitle)
-                        val  tvDuaDesc:AppCompatTextView = holder.view.findViewById(R.id.tvDuaDesc)
-                        val  tvDesArabic: TextViewNormalArabic = holder.view.findViewById(R.id.tvDesArabic)
-                        val  tvDuaMeaning:AppCompatTextView = holder.view.findViewById(R.id.tvDuaMeaning)
-                        val btnToggleCollapse:ImageView = holder.view.findViewById(R.id.btnToggleCollapse)
-                        tvDuaTitle.text= literature.title
-                        tvDesArabic.text = literature.textInArabic
-                        tvDuaDesc.text = literature.text
-                        tvDuaMeaning.text = literature.pronunciation
+                    var literature = it.get(pos)
+                    // binding.dua = literature
+                    val tvDuaTitle: AppCompatTextView = holder.view.findViewById(R.id.tvDuaTitle)
+                    val tvDuaDesc: AppCompatTextView = holder.view.findViewById(R.id.tvDuaDesc)
+                    val tvDesArabic: TextViewNormalArabic =
+                        holder.view.findViewById(R.id.tvDesArabic)
+                    val tvDuaMeaning: AppCompatTextView =
+                        holder.view.findViewById(R.id.tvDuaMeaning)
+                    val btnToggleCollapse: ImageView =
+                        holder.view.findViewById(R.id.btnToggleCollapse)
+                    tvDuaTitle.text = literature.title
+                    tvDesArabic.text = literature.textInArabic
+                    tvDuaDesc.text = literature.text
+                    tvDuaMeaning.text = literature.pronunciation
 
-                       btnToggleCollapse?.handleClickEvent {
-                            when (tvDuaDesc?.visibility) {
-                                VISIBLE -> {
-                                   btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
-                                    tvDuaDesc?.visibility = GONE
-                                   tvDesArabic?.visibility = GONE
-                                  tvDuaMeaning?.visibility = GONE
-                                }
-                                GONE -> {
-                                   btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
-                                tvDuaDesc?.visibility = VISIBLE
-                                    literature.textInArabic?.let {
-                                        if (it.isNotEmpty()) {
-                                            tvDesArabic?.visibility = VISIBLE
-                                        }
-                                    }
-                                    literature.pronunciation?.let {
-                                        if (it.isNotEmpty()) {
-                                            tvDuaMeaning?.visibility = VISIBLE
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                      tvDuaTitle?.handleClickEvent {
-                            when (tvDuaDesc?.visibility) {
-                                VISIBLE -> {
-                                   btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
-                                   tvDuaDesc?.visibility = GONE
-                                    tvDesArabic?.visibility = GONE
+                    btnToggleCollapse?.handleClickEvent {
+                        when (tvDuaDesc?.visibility) {
+                            VISIBLE -> {
+                                btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
+                                tvDuaDesc?.visibility = GONE
+                                tvDesArabic?.visibility = GONE
                                 tvDuaMeaning?.visibility = GONE
-                                }
-                                GONE -> {
-                                    btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
-                                    tvDuaDesc?.visibility = VISIBLE
-                                    literature.textInArabic?.let {
-                                        if (it.isNotEmpty()) {
-                                          tvDesArabic?.visibility = VISIBLE
-                                        }
+                            }
+
+                            GONE -> {
+                                btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
+                                tvDuaDesc?.visibility = VISIBLE
+                                literature.textInArabic?.let {
+                                    if (it.isNotEmpty()) {
+                                        tvDesArabic?.visibility = VISIBLE
                                     }
-                                    literature.pronunciation?.let {
-                                        if (it.isNotEmpty()) {
-                                            tvDuaMeaning?.visibility = VISIBLE
-                                        }
+                                }
+                                literature.pronunciation?.let {
+                                    if (it.isNotEmpty()) {
+                                        tvDuaMeaning?.visibility = VISIBLE
                                     }
                                 }
                             }
                         }
+                    }
+                    tvDuaTitle?.handleClickEvent {
+                        when (tvDuaDesc?.visibility) {
+                            VISIBLE -> {
+                                btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
+                                tvDuaDesc?.visibility = GONE
+                                tvDesArabic?.visibility = GONE
+                                tvDuaMeaning?.visibility = GONE
+                            }
 
-                        holder.itemView.handleClickEvent {
-                            when (tvDuaDesc?.visibility) {
-                                VISIBLE -> {
-                                    btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
-                                   tvDuaDesc?.visibility = GONE
-                                    tvDesArabic?.visibility = GONE
-                                    tvDuaMeaning?.visibility = GONE
-                                }
-                                GONE -> {
-                                   btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
-                                   tvDuaDesc?.visibility = VISIBLE
-                                    literature.textInArabic?.let {
-                                        if (it.isNotEmpty()) {
-                                            tvDesArabic?.visibility = VISIBLE
-                                        }
+                            GONE -> {
+                                btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
+                                tvDuaDesc?.visibility = VISIBLE
+                                literature.textInArabic?.let {
+                                    if (it.isNotEmpty()) {
+                                        tvDesArabic?.visibility = VISIBLE
                                     }
-                                    literature.pronunciation?.let {
-                                        if (it.isNotEmpty()) {
-                                           tvDuaMeaning?.visibility = VISIBLE
-                                        }
+                                }
+                                literature.pronunciation?.let {
+                                    if (it.isNotEmpty()) {
+                                        tvDuaMeaning?.visibility = VISIBLE
                                     }
                                 }
                             }
                         }
                     }
 
+                    holder.itemView.handleClickEvent {
+                        when (tvDuaDesc?.visibility) {
+                            VISIBLE -> {
+                                btnToggleCollapse?.setImageResource(R.drawable.ic_plus)
+                                tvDuaDesc?.visibility = GONE
+                                tvDesArabic?.visibility = GONE
+                                tvDuaMeaning?.visibility = GONE
+                            }
+
+                            GONE -> {
+                                btnToggleCollapse?.setImageResource(R.drawable.ic_minus)
+                                tvDuaDesc?.visibility = VISIBLE
+                                literature.textInArabic?.let {
+                                    if (it.isNotEmpty()) {
+                                        tvDesArabic?.visibility = VISIBLE
+                                    }
+                                }
+                                literature.pronunciation?.let {
+                                    if (it.isNotEmpty()) {
+                                        tvDuaMeaning?.visibility = VISIBLE
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
 
                 //}
 
             }
-
-
         }
     }
 
@@ -592,18 +640,19 @@ internal class RozaInformationAdapter(
 
         if (fromMalaysia) {
             //todo change
-            val x = 3 + mDisplayableSehriIfterList.size + duaItemCount //mDisplayableSehriIfterListFromAPI
-            Log.e("getItemCount", "size1:"+x)
+            val x =
+                3 + mDisplayableSehriIfterList.size + duaItemCount //mDisplayableSehriIfterListFromAPI
+            Log.e("getItemCount", "size1:" + x)
             return x
         }
 //        if(fromMalaysia==false){
 //            return 3+mDisplayableSehriIfterListFromAPI.size+duaItemCount
 //        }
         if (mDisplayableSehriIfterListFromAPI == null || mDisplayableSehriIfterListFromAPI.isEmpty()) {
-            Log.e("getItemCount", "size2:"+0)
+
             return 0
         }
-        Log.e("getItemCount", "size3:"+(14 + duaItemCount))
+
         return 14 + duaItemCount
     }
 

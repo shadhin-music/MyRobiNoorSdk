@@ -463,8 +463,7 @@ object TimeFormtter {
         var number: Array<Char?>
 
         number = if (AppPreference.language
-                .equals("en") || AppPreference.language
-                .equals("ms")
+                .equals("en")
         ) {
             arrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
         } else {

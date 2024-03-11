@@ -28,9 +28,7 @@ data class Data(
      * Formatted & Localised Sehri time String
      */
     var sehriTimeStr1: String
-        get() = "${
-            TimeFormtter.getNumberByLocale(sehri)!!
-        }"
+        get() = "${sehri}"
         set(value) {
             sehriTimeStr1 = value
         }
@@ -39,7 +37,7 @@ data class Data(
      * Formatted & Localised Ifter time String
      */
     var ifterTimeStr1: String
-        get() = "${TimeFormtter.getNumberByLocale(iftar)!!}"
+        get() = "$iftar"
         set(value) {
             ifterTimeStr1 = value
         }

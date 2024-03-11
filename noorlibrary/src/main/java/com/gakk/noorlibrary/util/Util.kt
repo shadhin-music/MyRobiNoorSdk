@@ -269,3 +269,17 @@ fun formatDate(dateString: String): String? {
     }
     return ""
 }
+
+fun String.convertTo12HourFormat(): String {
+    val sdf24 = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val sdf12 = SimpleDateFormat("hh:mm a", Locale.getDefault())
+    val date24 = sdf24.parse(this)
+    return sdf12.format(date24)
+}
+
+fun String.convertTo12HourFormatWithoutAMPM(): String {
+    val sdf24 = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val sdf12 = SimpleDateFormat("hh:mm", Locale.getDefault())
+    val date24 = sdf24.parse(this)
+    return sdf12.format(date24)
+}

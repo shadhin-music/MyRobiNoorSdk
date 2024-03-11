@@ -258,7 +258,6 @@ internal class RozaInformationFragment : Fragment(), DivisionSelectionCallback {
                 noIdeaWhatList2Is = it
             }
         }
-        Log.e("crashFixHack", "duaList:"+duaList.size+",  noIdeaWhatList2Is:"+noIdeaWhatList2Is.size)
         if (duaList.isNotEmpty() && noIdeaWhatList2Is.isNotEmpty()){
             progressLayout.visibility = GONE
             if(nextTenDaysIfterSehriTimes.isNullOrEmpty()){
